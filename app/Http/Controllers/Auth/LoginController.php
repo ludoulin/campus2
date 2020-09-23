@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Auth;
+
 
 class LoginController extends Controller
 {
@@ -36,5 +39,23 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function sendLoginResponse(Request $request)
+    {   
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        $user = Auth::user();
+
+        if($user->is_admin){
+           
+            return redirect()->route('backend');
+        }
+        
+        return $this->authenticated($request, $this->guard()->user())
+                ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
+                
     }
 }

@@ -1,0 +1,27 @@
+.cust-table-cont {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.cust-table-cont .table-responsive {
+  width: 1100px;
+}
+
+.cust-table {
+  table-layout: fixed;
+}
+
+.cust-table thead,
+.cust-table tbody {
+  display: block;
+}
+
+.cust-table tbody {
+  max-height: 620px;
+  overflow-y: auto;
+}
+
+.tbody-color {
+  background-color: #f9e7eb;
+}
+

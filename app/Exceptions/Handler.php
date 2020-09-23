@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -50,6 +51,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // 查看是否有自訂錯誤頁面
+        if ($exception instanceof HttpException) {
+            $code = $exception->getStatusCode();
+
+            if (view()->exists('errors.' . $code)) {
+                $message  = $exception->getMessage();
+                return response()->view('errors.' . $code, ['message' => $message], $code);
+            }
+        }
+
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
+            return abort('404');
+          }
+          
         return parent::render($request, $exception);
     }
 }

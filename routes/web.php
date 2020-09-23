@@ -18,6 +18,13 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+
+//第三方認證相關路由
+Route::prefix('login/social')->name('social.')->group(function(){
+    Route::get('/{provider}/redirect', 'Auth\SocialController@getSocialRedirect')->name('redirect');
+    Route::get('/{provider}/callback', 'Auth\SocialController@getSocialCallback')->name('callback');
+});
+
 // 用戶註冊相關路由
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
@@ -33,4 +40,15 @@ Route::get('email/verify', 'Auth\VerificationController@show')->name('verificati
 Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify');
 Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
+
+Route::get('/admin', 'BackEnd\HomeController@landingPage')->name('backend');
+Route::get('/admin/users', 'BackEnd\UsersController@IndexPage')->name('admin.users');
+Route::get('/admin/users/{user}/edit', 'BackEnd\UsersController@AdminEdit')->name('admin.users.edit');
+Route::patch('/admin/users/{user}', 'BackEnd\UsersController@AdminUpdate')->name('admin.users.update');
+Route::patch('/admin/users/{user}/publish', 'BackEnd\UsersController@publish')->name('admin.users.publish');
+
+
+Route::get('/users/{user}', 'UsersController@show')->name('users.show');
+Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
+Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 

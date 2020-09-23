@@ -1,4 +1,8 @@
 {
-    "/js/app.js": "/js/app.js?id=f714b2233dbe11af1d88",
-    "/css/app.css": "/css/app.css?id=1cb7694bbd3076a65c33"
+    "/js/app.js": "/js/app.js?id=2cfa79d2df9799788a51",
+    "/css/app.css": "/css/app.css?id=1cb7694bbd3076a65c33",
+    "/css/login/login.css": "/css/login/login.css?id=ed06c03cfcc90af8fd74",
+    "/css/register/register.css": "/css/register/register.css?id=a96042cca6203ef17574",
+    "/css/backend/control_panel.css": "/css/backend/control_panel.css?id=18d39867d4224df8185e",
+    "/css/backend/user/index.css": "/css/backend/user/index.css?id=44455e859745e017a6a9"
 }

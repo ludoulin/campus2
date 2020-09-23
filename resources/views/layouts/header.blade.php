@@ -27,9 +27,11 @@
               {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="">個人中心</a>
-              <a class="dropdown-item" href="">編輯資料</a>
+              @if(!Auth::user()->is_admin)
+              <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">個人中心</a>
+              <a class="dropdown-item" href="{{ route('users.edit', Auth::id()) }}">編輯資料</a>
               <div class="dropdown-divider"></div>
+              @endif
               <a class="dropdown-item" id="logout" href="#">
                 <form action="{{ route('logout') }}" method="POST">
                   {{ csrf_field() }}
@@ -43,6 +45,7 @@
     </div>
   </div>
 </nav>
+
 
 
 

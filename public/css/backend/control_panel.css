@@ -1,0 +1,233 @@
+@import url(https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400;
+
+600&display=swap);* {
+  font-family: Helvetica, "Microsoft YaHei", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+
+body {
+  background: #f5f5f5;
+}
+
+.top_navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.125);
+  display: flex;
+  align-items: center;
+  z-index: 100;
+}
+
+.top_navbar .logo {
+  width: 250px;
+  font-size: 25px;
+  font-weight: 600;
+  padding: 0 25px;
+  color: #007dc3;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-right: 1px solid #f5f5f5;
+}
+
+.top_navbar .menu {
+  width: calc(100% - 250px);
+  padding: 0 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top_navbar .hamburger {
+  font-size: 25px;
+  cursor: pointer;
+  color: #005faf;
+}
+
+.top_navbar .hamburger:hover {
+  color: #007dc3;
+}
+
+.top_navbar .menu .profile_wrap {
+  padding-left: 25px;
+  border-left: 1px solid #f5f5f5;
+}
+
+.top_navbar .menu .profile img {
+  width: 25px;
+  height: 25px;
+}
+
+.top_navbar .menu .profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.top_navbar .menu .profile .name {
+  margin: 0 15px;
+}
+
+.hover_collapse .sidebar {
+  width: 70px;
+}
+
+.hover_collapse .sidebar ul li a .text {
+  display: none;
+}
+
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background: #005faf;
+  z-index: 50;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 12px 25px;
+  border-bottom: 1px solid #0e94d4;
+  color: #0e94d4;
+  transition: all 0.2s ease;
+}
+
+.sidebar ul li a .icon {
+  font-size: 18px;
+  vertical-align: middle;
+  transition: background 0.2s ease;
+}
+
+.sidebar ul li a .text {
+  margin-left: 10px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: none;
+  background: #0e94d4;
+  color: #fff;
+}
+
+.click_collapse .sidebar {
+  transition: all 0.2s ease;
+}
+
+.main_container {
+  margin-top: 60px;
+  margin-left: 70px;
+  padding: 25px;
+  width: calc(100% - 70px);
+}
+
+.main_container .content {
+  background: #fff;
+  padding: 25px;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+.click_collapse .main_container {
+  width: calc(100% - 250px);
+  margin-left: 250px;
+  transition: all 0.2s ease;
+}
+
+#control-panel-landing-page {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#control-panel-landing-page h1 {
+  -webkit-animation-name: landing-page-h1;
+          animation-name: landing-page-h1;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  border-bottom: 2px solid #cccccc;
+  padding: 0 24px 8px;
+}
+
+#control-panel-landing-page h3 {
+  opacity: 0;
+  -webkit-animation-name: landing-page-h3;
+          animation-name: landing-page-h3;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-delay: 0.8s;
+          animation-delay: 0.8s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes landing-page-h1 {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+
+  80% {
+    transform: translateX(-50px);
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes landing-page-h1 {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+
+  80% {
+    transform: translateX(-50px);
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes landing-page-h3 {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes landing-page-h3 {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
