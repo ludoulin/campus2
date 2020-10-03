@@ -126,9 +126,9 @@ body {
 
 .main_container {
   margin-top: 60px;
-  margin-left: 70px;
+  margin-left: 120px;
   padding: 25px;
-  width: calc(100% - 70px);
+  width: calc(90% - 40px);
 }
 
 .main_container .content {

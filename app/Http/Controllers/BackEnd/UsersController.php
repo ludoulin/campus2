@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackEnd;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\ForbidRequest;
 use App\Handlers\ImageUploadHandler;
@@ -35,17 +36,25 @@ class UsersController extends Controller
 
     public function AdminUpdate(UserRequest $request, ImageUploadHandler $uploader,User $user)
     {
+ 
+        $data = $request->validated();
 
-        $data = $request->all();
+        $user->name = $data['name'];
+        $user->introduction = $data['introduction'];
+        $user->password =  Hash::make($data['password']);
 
         if ($request->avatar) {
-            $result = $uploader->save($request->avatar, 'avatars', $user->id, 416);
+            $result = $uploader->save($data['avatar'], 'avatars', $user->id, 416);
             if ($result) {
                 $data['avatar'] = $result['path'];
+                $user->avatar = $data['avatar'];
             }
         }
+        // if ($request->password) {
+        //     $data['password'] = Hash::make($request->password);
+        // }
 
-        $user->update($data);
+        $user->save();
 
         return redirect()->route('admin.users');
     }
