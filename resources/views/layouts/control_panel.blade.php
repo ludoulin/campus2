@@ -72,6 +72,11 @@ hamburger.addEventListener("click", () => {
 	hamburger.closest(".wrapper").classList.toggle("click_collapse");
 	hamburger.closest(".wrapper").classList.toggle("hover_collapse");
 })
+
+
+
 </script>
+
+@yield('script2')
 
 @endsection

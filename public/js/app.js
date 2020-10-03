@@ -37335,6 +37335,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/backend/user/edit.scss":
+/*!***********************************************!*\
+  !*** ./resources/sass/backend/user/edit.scss ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/backend/user/index.scss":
 /*!************************************************!*\
   !*** ./resources/sass/backend/user/index.scss ***!
@@ -37369,9 +37380,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!****************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/login/login.scss ./resources/sass/register/register.scss ./resources/sass/backend/control_panel.scss ./resources/sass/backend/user/index.scss ***!
-  \****************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/login/login.scss ./resources/sass/register/register.scss ./resources/sass/backend/control_panel.scss ./resources/sass/backend/user/index.scss ./resources/sass/backend/user/edit.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37380,7 +37391,8 @@ __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/campus2/resources/
 __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/campus2/resources/sass/login/login.scss */"./resources/sass/login/login.scss");
 __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/campus2/resources/sass/register/register.scss */"./resources/sass/register/register.scss");
 __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/campus2/resources/sass/backend/control_panel.scss */"./resources/sass/backend/control_panel.scss");
-module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/campus2/resources/sass/backend/user/index.scss */"./resources/sass/backend/user/index.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/campus2/resources/sass/backend/user/index.scss */"./resources/sass/backend/user/index.scss");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/campus2/resources/sass/backend/user/edit.scss */"./resources/sass/backend/user/edit.scss");
 
 
 /***/ })
