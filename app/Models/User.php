@@ -55,4 +55,9 @@ class User extends Authenticatable implements MustVerifyEmailContract
     {
        return $this->is_banned; // this looks for an admin column in your users table
     }
+    public function messages(){
+
+        return $this->hasMany(Chat::class);
+        
+    }
 }
