@@ -14,6 +14,11 @@ class UsersController extends Controller
         $this->middleware('auth',['except' => ['show']]);
     }
 
+    public function index()
+    {
+        return view('chat.home');
+    }
+
     public function show(User $user)
     {
         return view('users.show', compact('user'));

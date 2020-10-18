@@ -80,7 +80,7 @@
         },
         methods: {
             fetchMessages() {
-                axios.get('messages').then(response => {
+                axios.get('chatmessages').then(response => {
                     this.messages = response.data;
                 })
             },
@@ -89,7 +89,7 @@
                     user: this.user,
                     message: this.newMessage
                 });
-                axios.post('messages', {message: this.newMessage});
+                axios.post('chatmessages', {message: this.newMessage});
                 this.newMessage = '';
             },
             sendTypingEvent() {

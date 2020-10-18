@@ -47,13 +47,19 @@ Route::get('/admin/users/{user}/edit', 'BackEnd\UsersController@AdminEdit')->nam
 Route::patch('/admin/users/{user}', 'BackEnd\UsersController@AdminUpdate')->name('admin.users.update');
 Route::patch('/admin/users/{user}/publish', 'BackEnd\UsersController@publish')->name('admin.users.publish');
 
-
+Route::get('/chathome', 'UsersController@index')->name('users.home');
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
-
+Route::get('/users/chathome', 'UsersController@index')->name('users.home');
 
 Route::get('/chats', 'ChatController@index');
-Route::get('/messages', 'ChatController@fetchAllMessages');
-Route::post('/messages', 'ChatController@sendMessage');
+Route::get('/chatmessages', 'ChatController@fetchAllMessages');
+Route::post('/chatmessages', 'ChatController@sendMessage');
+
+
+// Route::get('/chathome', 'ContactsController@index')->name('home');
+Route::get('/contacts', 'ContactsController@get');
+Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
+Route::post('/conversation/send', 'ContactsController@send');
 
