@@ -41,9 +41,9 @@
 
 <style lang="scss" scoped>
 .feed {
-    background: #f0f0f0;
+    // max-height: 570px;
+    background: #e0e5ff;
     height: 100%;
-    max-height: 470px;
     overflow: scroll;
 
     ul {
@@ -74,7 +74,8 @@
                     text-align: left;
 
                     .text {
-                        background: #81c4f9;
+                        background: #546faf;
+                        color: #eee
                     }
                 }
             }

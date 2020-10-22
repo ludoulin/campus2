@@ -1,6 +1,27 @@
 <template>
     <div class="conversation">
-        <h1>{{ contact ? contact.name : 'Select a Contact' }}</h1>
+        <div class="select">
+            <div class="contact-profile">
+            <img v-if="contact" :src="contact.avatar" class="m-r-10">
+            <p>{{ contact ? contact.name : 'Select a Contact' }}</p>
+            <div class="social-media">
+			   <a><i class="fa fa-trash" aria-hidden="true"></i></a>
+			   <a><i class="fas fa-copy"></i></a>
+                        <a href="" data-toggle="dropdown" aria-hidden="true">
+                            <i class="fa fa-sort"></i>
+                        </a>
+            
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a href="">Latest</a>
+                            </li>
+                            <li>
+                                <a href="">Oldest</a>
+                            </li>
+                        </ul>        
+			</div>
+            </div>
+        </div>
         <MessagesFeed :contact="contact" :messages="messages"/>
         <MessageComposer @send="sendMessage"/>
     </div>
@@ -19,7 +40,7 @@
             messages: {
                 type: Array,
                 default: []
-            }
+            },
         },
         methods: {
             sendMessage(text) {
@@ -41,16 +62,54 @@
 
 <style lang="scss" scoped>
 .conversation {
-    flex: 5;
+    // position:absolute;
+    // max-height: 100%;
+    // flex: 3;
+    height: 100%;
+    width: 80%;
+    float: right;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 
-    h1 {
+    .select {
         font-size: 20px;
-        padding: 10px;
-        margin: 0;
-        border-bottom: 1px dashed lightgray;
+        padding: 9px;
+        margin: o;
+        border-bottom: 1px solid lightgray;
+        box-shadow: 0 -20px 20px -5px #fff;
+        background-color: #f8f8f8;
+        .contact-profile {
+            width: 100%;
+            height: 50px;
+            line-height: 40px;
+            margin:8px;
+              
+                img {
+                    width: 40px;
+                    border-radius: 50%;
+                    float: left;
+                    margin-right:12px
+                    // margin: 9px 12px 0 9px;
+                    }
+                p {
+                    float: left;
+                  }    
+
+                 .social-media {
+                     float: right;
+                        i {
+                            margin-left: 14px;
+                            cursor: pointer;
+                          }
+                        i:nth-last-child(1) {
+                            margin-right: 20px;
+                          }
+                        i:hover {
+                            color: #435f7a;
+                            }   
+                 }      
+            }
     }
 }
 </style>

@@ -30,9 +30,6 @@
 			<div class="content">
 				@yield('content')
             </div>
-            {{-- <div class="content">
-                    @yield('content')
-                </div> --}}
 		</div>
 	</div>
 </div>

@@ -3,11 +3,11 @@
 
 @section('view')
 
-<div id="app" class="{{ route_class() }}-page">
+<div id="app" class="main">
 
   @include('layouts.header')
 
-    <div class="container">
+    <div id ="content" class="container">
 
      @include('shared.messages')
     
