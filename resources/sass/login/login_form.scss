@@ -109,6 +109,11 @@ $login-button: #20BDFF;
             background-color: $background-start;
           }
         }
+        span{
+        .invalid-feedback{
+           display: block;
+        }
+      }
       }
     }
       a {

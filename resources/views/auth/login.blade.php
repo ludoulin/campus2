@@ -16,12 +16,12 @@
               @csrf
               <div class="input-group">
                 <label for="email">{{ __('E-Mail Address') }}</label>
-                    <input id="email" type="email" class=" @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="請輸入會員信箱" required autocomplete="email" autofocus>
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    <input id="email" type="email" class=" {{ !$errors->has('email') ? : 'is-invalid' }}" name="email" value="{{ old('email') }}" placeholder="請輸入會員信箱" required autocomplete="email" autofocus>
+                    <div class="text-danger">
+                        @if ($errors->has('email'))
+                            <span><strong>{{ $errors->first('email') }}</strong></span>
+                        @endif
+                    </div>
               </div>
               <div class="input-group">
                 <label for="password">{{ __('Password') }}</label>

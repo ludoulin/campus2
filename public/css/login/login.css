@@ -120,6 +120,10 @@
   background-color: #5433FF;
 }
 
+.wrapper .content .login-form .input-group span .invalid-feedback {
+  display: block;
+}
+
 .wrapper .content a {
   color: #999;
   font-size: 14px;
