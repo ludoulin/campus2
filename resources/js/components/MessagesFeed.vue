@@ -42,7 +42,7 @@
 <style lang="scss" scoped>
 .feed {
     // max-height: 570px;
-    background: #e0e5ff;
+    background: #E6EAEA;
     height: 100%;
     overflow: scroll;
 

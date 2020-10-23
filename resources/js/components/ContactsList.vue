@@ -4,7 +4,6 @@
 			<div class="wrap">
 				<img id="profile-img" :src="user.avatar" class="online" :alt="user.name" />
 				<p>{{user.name}}</p>
-
 				<div id="status-options">
 					<ul>
 						<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
@@ -14,17 +13,9 @@
 			</div>
 		</div>
         <ul>
-            <!-- <li>
+            <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{ 'selected': contact.id == selected }">
                 <div class="avatar">
-                    <img :src="user.avatar" :alt="user.name">
-                </div>
-                <div class="contact">
-                    <p class="name">{{ user.name }}</p>
-                </div>
-            </li> -->
-            <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{ 'selected': contact == selected }">
-                <div class="avatar">
-                    <img :src="contact.avatar" :alt="contact.name">
+                    <img :src="contact.avatar? contact.avatar:'https://www.kindpng.com/picc/m/269-2697881_computer-icons-user-clip-art-transparent-png-icon.png'" :alt="contact.name">
                 </div>
                 <div class="contact">
                     <p class="name">{{ contact.name }}</p>
@@ -64,11 +55,11 @@
             sortedContacts() {
                 return _.sortBy(this.contacts, [(contact) => {
                     if (contact == this.selected) {
-                        return Infinity;
+                        return 0;
                     }
 
                     return contact.unread;
-                }]).reverse();
+                }]);
             }
         }
     }
@@ -78,12 +69,14 @@
     // position: absolute;
     // height: 600px;
     // border-left: 1px solid #eee;
+    //background-color: #120023;
+    //  background: linear-gradient(#4768b5, #35488e);
     width: 20%;
     height: 100%;
     float: left;
     overflow: scroll;
     border-right: 1px solid #eee;
-    background-color: #120023;
+    background-color: #2c3e50;
     #profile {
       width: 80%;
       margin: 25px auto;
@@ -212,6 +205,7 @@
             height: 80px;
             position: relative;
             cursor: pointer;
+            // border-bottom: 1px solid #E6EAEA;
 
             &.selected {
                 background: #1853db;
@@ -272,7 +266,7 @@
             }
         }
         li:hover {
-            background: #1853db;
+            background: #496886;
             }
     }
 }
