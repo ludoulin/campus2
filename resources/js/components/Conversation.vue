@@ -22,7 +22,7 @@
 			</div>
             </div>
         </div>
-        <MessagesFeed :contact="contact" :messages="messages"/>
+        <MessagesFeed :contact="contact" :user="user" :messages="messages"/>
         <MessageComposer @send="sendMessage"/>
     </div>
 </template>
@@ -41,6 +41,10 @@
                 type: Array,
                 default: []
             },
+            user:{
+               type: Object,
+               required: true,
+            }
         },
         methods: {
             sendMessage(text) {

@@ -13,7 +13,7 @@
 			</div>
 		</div>
         <ul>
-            <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{ 'selected': contact.id == selected }">
+            <li v-for="contact in sortedContacts"  :key="contact.id" @click="selectContact(contact)" :class="{ 'selected': contact == selected}">
                 <div class="avatar">
                     <img :src="contact.avatar? contact.avatar:'https://www.kindpng.com/picc/m/269-2697881_computer-icons-user-clip-art-transparent-png-icon.png'" :alt="contact.name">
                 </div>
@@ -50,18 +50,27 @@
 
                 this.$emit('selected', contact);
             }
+
         },
         computed: {
             sortedContacts() {
                 return _.sortBy(this.contacts, [(contact) => {
                     if (contact == this.selected) {
-                        return 0;
+                        return contact.unread;
                     }
 
-                    return contact.unread;
+                    return 0;
                 }]);
             }
-        }
+        },
+        // mounted() {
+        //     this.DefaultContact();
+        // }
+        // watch:{
+        //     contacts(){
+        //     this.$nextTick(function(){ this.DefaultContact();});
+        //     }
+        // }
     }
 </script>
 <style lang="scss" scoped>
@@ -76,7 +85,7 @@
     float: left;
     overflow: scroll;
     border-right: 1px solid #eee;
-    background-color: #2c3e50;
+    background-color: #32465a;
     #profile {
       width: 80%;
       margin: 25px auto;
@@ -208,7 +217,7 @@
             // border-bottom: 1px solid #E6EAEA;
 
             &.selected {
-                background: #1853db;
+                background: #496886;
             }
 
             span.unread {

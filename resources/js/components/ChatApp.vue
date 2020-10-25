@@ -1,7 +1,7 @@
 <template>
     <div class="chat-app">
-        <ContactsList :contacts="contacts" :user="user" @selected="startConversationWith"/>
-        <Conversation :contact="selectedContact" :messages="messages"  @new="saveNewMessage"/>
+        <ContactsList :contacts="contacts" :user="user" @selected="startConversationWith" ref="contactlist"/>
+        <Conversation :contact="selectedContact" :messages="messages" :user="user" @new="saveNewMessage"/>
     </div>
 </template>
 
@@ -14,17 +14,18 @@
             user: {
                 type: Object,
                 required: true,
-            }
+            },
         },
         data() {
             return {
-                selectedContact: null,
+                selectedContact:null,
                 messages: [],
                 contacts: [],
             };
         },
         mounted() {
              console.log(this.user); 
+             console.log(this.contacts); 
             Echo.private(`messages.${this.user.id}`)
                 .listen('NewMessage', (e) => {
                     this.hanleIncoming(e.message);
@@ -33,7 +34,8 @@
             axios.get('contacts')
                 .then((response) => {
                     this.contacts = response.data;
-                });    
+                    this.$refs.contactlist.selectContact(this.contacts[0]);  
+                });
         },
         methods: {
             startConversationWith(contact) {
@@ -71,6 +73,10 @@
                 })
             }
         },
+        // updated(){
+        //     this.yo();
+        //     console.log(this.contacts[0]);
+        // },
         components: {Conversation, ContactsList}
     }
 </script>

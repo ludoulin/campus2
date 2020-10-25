@@ -2,9 +2,13 @@
     <div class="feed" ref="feed">
         <ul v-if="contact">
             <li v-for="message in messages" :class="`message${message.to == contact.id ? ' sent' : ' received'}`" :key="message.id">
-                <div class="text">
+                <div>
+                <img :src="`${message.to == contact.id ? user.avatar : contact.avatar}`"/>
+                <div class="text"> 
                     {{ message.text }}
                 </div>
+                </div>
+                <span class="time">{{message.created_at}}</span>
             </li>
         </ul>
     </div>
@@ -19,6 +23,10 @@
             messages: {
                 type: Array,
                 required: true
+            },
+            user:{
+               type: Object,
+               required: true,
             }
         },
         methods: {
@@ -43,12 +51,11 @@
 .feed {
     // max-height: 570px;
     background: #E6EAEA;
-    height: 100%;
     overflow: scroll;
 
     ul {
         list-style-type: none;
-        padding: 5px;
+        padding: 20px;
 
         li {
             &.message {
@@ -57,7 +64,7 @@
 
                 .text {
                     max-width: 200px;
-                    border-radius: 5px;
+                    border-radius: 10px;
                     padding: 12px;
                     display: inline-block;
                 }
@@ -65,20 +72,41 @@
                 &.received {
                     text-align: right;
 
+                    img {
+                    float: right;
+                    margin: 6px 0 0 8px;
+                    }
+
                     .text {
-                        background: #b2b2b2;
+                        background: #f5f5f5;
                     }
                 }
 
                 &.sent {
                     text-align: left;
 
+                    img {
+                    margin: 6px 8px 0 0;
+                    }
+
                     .text {
-                        background: #546faf;
-                        color: #eee
+                        background: #32465a;
+                        color: whitesmoke;
                     }
                 }
             }
+            img {
+              width: 35px;
+              border-radius: 50%;
+              float: left;
+                }
+
+            span.time{
+              color: #747474;
+              display: block;
+              font-size: 12px;
+              margin: 8px 0 0;
+                }
         }
     }
 }
