@@ -47,19 +47,35 @@ Route::get('/admin/users/{user}/edit', 'BackEnd\UsersController@AdminEdit')->nam
 Route::patch('/admin/users/{user}', 'BackEnd\UsersController@AdminUpdate')->name('admin.users.update');
 Route::patch('/admin/users/{user}/publish', 'BackEnd\UsersController@publish')->name('admin.users.publish');
 
+Route::get('/admin/products', 'BackEnd\ProductsController@index')->name('admin.products.index');
+Route::get('/admin/products/{product}/edit', 'BackEnd\ProductsController@edit')->name('admin.products.edit');
+Route::patch('/admin/products/{product}', 'BackEnd\ProductsController@update')->name('admin.products.update');
+Route::delete('/admin/products/{product}', 'Backend\ProductsController@destory')->name('admin.products.destory'); 
+
+
+
+
 Route::get('/chathome', 'UsersController@index')->name('users.home');
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
-Route::get('/users/chathome', 'UsersController@index')->name('users.home');
+// Route::get('/users/chathome', 'UsersController@index')->name('users.home');
 
 Route::get('/chats', 'ChatController@index');
 Route::get('/chatmessages', 'ChatController@fetchAllMessages');
 Route::post('/chatmessages', 'ChatController@sendMessage');
 
-
-// Route::get('/chathome', 'ContactsController@index')->name('home');
 Route::get('/contacts', 'ContactsController@get');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
+
+
+Route::get('/products/create', 'ProductsController@create')->name('products.create');
+Route::post('/products/create', 'ProductsController@store')->name('products.store');
+Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
+Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
+Route::patch('/products/{product}', 'ProductsController@update')->name('products.update');
+Route::delete('/products/{product}', 'ProductsController@destory')->name('products.destroy'); 
+
+
 

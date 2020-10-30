@@ -7,7 +7,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('admin.products.index') }}">
                 <span class="icon"><i class="fas fa-book"></i></span>
                 <span class="text">二手書商品管理</span>
             </a>

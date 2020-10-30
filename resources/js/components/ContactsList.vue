@@ -63,14 +63,6 @@
                 }]);
             }
         },
-        // mounted() {
-        //     this.DefaultContact();
-        // }
-        // watch:{
-        //     contacts(){
-        //     this.$nextTick(function(){ this.DefaultContact();});
-        //     }
-        // }
     }
 </script>
 <style lang="scss" scoped>
