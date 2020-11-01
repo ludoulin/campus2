@@ -18,6 +18,7 @@
       <ul class="navbar-nav navbar-right">
         <!-- Authentication Links -->
         @guest
+          <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}">我要賣書</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">登入</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">註冊</a></li>
         @else
@@ -40,6 +41,10 @@
               </a>
             </div>
           </li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}"><i class="fas fa-book"></i>我要賣書</a></li>
+          <li class="nav-item"><a class="nav-link" href=""><i class="fas fa-cart-plus"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('users.home') }}"><i class="fab fa-facebook-messenger"></i></a></li>
+          <li class="nav-item"><a class="nav-link" href=""><i class="far fa-comment-dots"></i></a></li>
         @endguest
       </ul>
     </div>

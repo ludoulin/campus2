@@ -33,7 +33,7 @@
                         @else  
                         <tr class="text-center">
                         @endif   
-                        <td scope="row" style="width:80px;">{{ $loop->iteration }}</th>
+                        <td scope="row" style="width:80px;">{{ $loop->iteration }}</td>
                         <td style="width:150px;" class="text-center">
                             @if ($user->is_admin)
                               最高管理員
