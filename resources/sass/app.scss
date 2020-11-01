@@ -77,4 +77,16 @@ html {
   padding:10px;
   padding-bottom:80px;
 }
+
+.hide{
+  display: none!important;
+
+}
+
+.stop{
+ :disabled{
+   background: gray;
+ }
+
+}
   

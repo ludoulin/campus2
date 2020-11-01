@@ -9500,3 +9500,11 @@ html {
   padding-bottom: 80px;
 }
 
+.hide {
+  display: none !important;
+}
+
+.stop :disabled {
+  background: gray;
+}
+

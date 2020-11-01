@@ -53,6 +53,21 @@
                   @endif
                 </div>
 
+                <div class="form-group control-group increment" >
+                    <input type="file" name="filename[]" class="form-control">
+                    <div class="input-group-btn"> 
+                      <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                    </div>
+                  </div>
+                  <div class="clone hide">
+                    <div class="control-group input-group" style="margin-top:10px">
+                      <input type="file" name="filename[]" class="form-control">
+                      <div class="input-group-btn"> 
+                        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                      </div>
+                    </div>
+                  </div>
+
               <div class="well well-sm">
                 <button type="submit" class="btn btn-primary"><i class="far fa-save mr-2" aria-hidden="true"></i>刊登商品</button>
               </div>
@@ -62,4 +77,39 @@
     </div>
   </div>
 
+@endsection
+
+
+@section('script')
+<script>
+  $(document).ready(function() {
+    var max_input = 5;
+    var x = $('.increment');
+    var y = x.length;
+    $(".btn-success").click(function(){ 
+      console.log(y);
+      if(y<max_input){
+        var html = $(".clone").html();
+        $(".increment").after(html);
+        y++;
+        if(y==max_input){
+        $(".btn-success").attr('disabled', true);
+        }
+        console.log(y);
+      }
+      return false
+    });
+    $("body").on("click",".remove",function(){ 
+      if(y>1){
+        if(y==max_input){
+          $(".btn-success").attr('disabled', false);
+        }
+        $(this).parents(".control-group").remove();
+        y--;
+        console.log(y);
+      }
+      return false;
+    });
+  });
+</script>
 @endsection

@@ -2179,15 +2179,7 @@ __webpack_require__.r(__webpack_exports__);
         return 0;
       }]);
     }
-  } // mounted() {
-  //     this.DefaultContact();
-  // }
-  // watch:{
-  //     contacts(){
-  //     this.$nextTick(function(){ this.DefaultContact();});
-  //     }
-  // }
-
+  }
 });
 
 /***/ }),
@@ -6427,7 +6419,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".feed[data-v-4b6ab3f5] {\n  background: #E6EAEA;\n  overflow: scroll;\n}\n.feed ul[data-v-4b6ab3f5] {\n  list-style-type: none;\n  padding: 20px;\n}\n.feed ul li.message[data-v-4b6ab3f5] {\n  margin: 10px 0;\n  width: 100%;\n}\n.feed ul li.message .text[data-v-4b6ab3f5] {\n  max-width: 200px;\n  border-radius: 10px;\n  padding: 12px;\n  display: inline-block;\n}\n.feed ul li.message.received[data-v-4b6ab3f5] {\n  text-align: right;\n}\n.feed ul li.message.received img[data-v-4b6ab3f5] {\n  float: right;\n  margin: 6px 0 0 8px;\n}\n.feed ul li.message.received .text[data-v-4b6ab3f5] {\n  background: #f5f5f5;\n}\n.feed ul li.message.sent[data-v-4b6ab3f5] {\n  text-align: left;\n}\n.feed ul li.message.sent img[data-v-4b6ab3f5] {\n  margin: 6px 8px 0 0;\n}\n.feed ul li.message.sent .text[data-v-4b6ab3f5] {\n  background: #32465a;\n  color: whitesmoke;\n}\n.feed ul li img[data-v-4b6ab3f5] {\n  width: 35px;\n  border-radius: 50%;\n  float: left;\n}\n.feed ul li span.time[data-v-4b6ab3f5] {\n  color: #747474;\n  display: block;\n  font-size: 12px;\n  margin: 8px 0 0;\n}", ""]);
+exports.push([module.i, ".feed[data-v-4b6ab3f5] {\n  height: 100%;\n  background: #E6EAEA;\n  overflow: scroll;\n}\n.feed ul[data-v-4b6ab3f5] {\n  list-style-type: none;\n  padding: 20px;\n}\n.feed ul li.message[data-v-4b6ab3f5] {\n  margin: 10px 0;\n  width: 100%;\n}\n.feed ul li.message .text[data-v-4b6ab3f5] {\n  max-width: 200px;\n  border-radius: 10px;\n  padding: 12px;\n  display: inline-block;\n}\n.feed ul li.message.received[data-v-4b6ab3f5] {\n  text-align: right;\n}\n.feed ul li.message.received img[data-v-4b6ab3f5] {\n  float: right;\n  margin: 6px 0 0 8px;\n}\n.feed ul li.message.received .text[data-v-4b6ab3f5] {\n  background: #f5f5f5;\n}\n.feed ul li.message.sent[data-v-4b6ab3f5] {\n  text-align: left;\n}\n.feed ul li.message.sent img[data-v-4b6ab3f5] {\n  margin: 6px 8px 0 0;\n}\n.feed ul li.message.sent .text[data-v-4b6ab3f5] {\n  background: #32465a;\n  color: whitesmoke;\n}\n.feed ul li img[data-v-4b6ab3f5] {\n  width: 35px;\n  border-radius: 50%;\n  float: left;\n}\n.feed ul li span.time[data-v-4b6ab3f5] {\n  color: #747474;\n  display: block;\n  font-size: 12px;\n  margin: 8px 0 0;\n}", ""]);
 
 // exports
 
