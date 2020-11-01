@@ -60,4 +60,13 @@ class User extends Authenticatable implements MustVerifyEmailContract
         return $this->hasMany(Chat::class);
         
     }
+    public function products(){
+
+        return $this->hasMany(Product::class);
+        
+    }
+    public function isAuthorOf($model)
+    {
+        return $this->id == $model->seller_id;
+    }
 }

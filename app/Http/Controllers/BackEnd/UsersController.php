@@ -19,7 +19,7 @@ class UsersController extends Controller
 
     public function IndexPage()
     {
-        $users = User::all();
+        $users = User::select('id','name','email','created_at','updated_at','is_admin','is_banned')->get();
         return view('backend.user.index',compact('users'));
     }
 
