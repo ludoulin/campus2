@@ -18,4 +18,6 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/backend/control_panel.scss', 'public/css/backend')
    .sass('resources/sass/backend/user/index.scss', 'public/css/backend/user')
    .sass('resources/sass/backend/user/edit.scss', 'public/css/backend/user')
+   .sass('resources/sass/page/test.scss', 'public/css/page')
+   .sass('resources/sass/product/show.scss', 'public/css/product')
    .version();

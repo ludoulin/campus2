@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('sass')
+
+@yield('basic')
+
+@endsection
 
 @section('view')
 
@@ -7,7 +12,7 @@
 
   @include('layouts.header')
 
-    <div id ="content" class="container">
+    <div id ="content">
 
      @include('shared.messages')
     

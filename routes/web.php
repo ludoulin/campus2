@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'PagesController@root')->name('root');
+Route::get('/test', 'PagesController@test');
+
 
 // 用戶身份驗證相關路由
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -75,7 +77,7 @@ Route::post('/products/create', 'ProductsController@store')->name('products.stor
 Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
 Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
 Route::patch('/products/{product}', 'ProductsController@update')->name('products.update');
-Route::delete('/products/{product}', 'ProductsController@destory')->name('products.destroy'); 
+Route::delete('/products/{product}', 'ProductsController@destory')->name('products.destory'); 
 
 
 
