@@ -39,11 +39,11 @@
               </div>
 
               <div class="form-group">
-                <label for="content">價格:</label>
+                <label for="content">書況:</label>
                 <textarea id="content" name="content" class="form-control" rows="6" placeholder="請填入書況說明,至少3個字。" required>{{ old('content', $product->content ) }}</textarea>
               </div>
 
-              <div class="form-group mb-4">
+              {{-- <div class="form-group mb-4">
                   <label for="image">商品圖片上傳:</label>
                   <input type="file" id="image" name="image" class="form-control-file" required>
       
@@ -51,17 +51,18 @@
                     <br>
                     <img src="{{ $product->image }}" width="200">
                   @endif
-                </div>
+                </div> --}}
 
                 <div class="form-group control-group increment" >
-                    <input type="file" name="filename[]" class="form-control">
+                    <label for="images">商品圖片上傳:</label>
+                    <input type="file" name="images[]" class="form-control">
                     <div class="input-group-btn"> 
-                      <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                      <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus" required></i>Add</button>
                     </div>
                   </div>
                   <div class="clone hide">
                     <div class="control-group input-group" style="margin-top:10px">
-                      <input type="file" name="filename[]" class="form-control">
+                      <input type="file" name="images[]" class="form-control">
                       <div class="input-group-btn"> 
                         <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
                       </div>

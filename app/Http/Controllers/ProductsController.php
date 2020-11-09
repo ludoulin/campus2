@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Handlers\ImageUploadHandler;
 use Auth;
+use Storage;
 
 class ProductsController extends Controller
 {
@@ -23,17 +25,37 @@ class ProductsController extends Controller
     
     public function store(ProductRequest $request, Product $product,ImageUploadHandler $uploader)
     {
-        $data = $request->all();
+            $user = Auth::user();
+            $name = $request->name;
+            $price = $request->price;
+            $content = $request->content;
+            $price = $request->price;
 
-        if ($request->image) {
-            $result = $uploader->save($request->image, 'products', $product->id, 416);
-            if ($result) {
-                $data['image'] = $result['path'];
+            $product = Product::create([
+                'name' => $name,
+                'price' => $price,
+                'content' =>$content,
+                'seller_id' => $user->id,
+            ]);
+    
+
+            if($request->hasfile('images'))
+            {
+                foreach($request->file('images') as $image)
+                {
+                    // $filename=$image->getClientOriginalName();
+                    // $filepath = $image->move(public_path().'/product_image/'. $product->id, $filename);  // your folder path
+                    // $uploader->reduceSize($filepath, 416);
+                    // $data[] = $filename;  
+
+                     $imagePath = Storage::disk('product_image')->put($product->id, $image);  // your folder path
+                     $product_image = new ProductImage;
+                     $product_image->path = config('app.url') . '/product_image/' .$imagePath;
+                     $product_image->product_id = $product->id;
+                     $product_image->save();
+                }
             }
-        }
-		$product->fill($data);
-        $product->seller_id = Auth::id();
-        $product->save();
+           
          
         return redirect()->route('products.show', $product->id)->with('success', '新增成功');
     }
@@ -60,10 +82,12 @@ class ProductsController extends Controller
                 $data['image'] = $result['path'];
             }
         }
+        $product->update($data);
+
         return redirect()->route('products.show', $product->id)->with('success', '更新成功');
     }
 
-    public function destroy(Product $product)
+    public function destory(Product $product)
 	{
 		$this->authorize('destroy', $product);
 		$product->delete();

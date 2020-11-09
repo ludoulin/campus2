@@ -4,6 +4,7 @@
 
 @section('content')
 
+<div class="container">
 <div class="row">
 
   <div class="col-lg-3 col-md-3 hidden-sm hidden-xs user-info">
@@ -15,7 +16,7 @@
       @endif
       <div class="card-body">
             <h5><strong>個人賣場簡介</strong></h5>
-            <p>{{ $user->introduction }}</p>
+            <p>介紹：{{ $user->introduction }}</p>
             <hr>
             <h5><strong>註冊於</strong></h5>
             <p>{{ $user->created_at->diffForHumans() }}</p>
@@ -38,5 +39,6 @@
     </div>
 
   </div>
+</div>
 </div>
 @stop

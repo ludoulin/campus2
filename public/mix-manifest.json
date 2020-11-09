@@ -1,9 +1,11 @@
 {
-    "/js/app.js": "/js/app.js?id=cbb302c7888fd25888e3",
-    "/css/app.css": "/css/app.css?id=20f219ef22ffc9b573de",
+    "/js/app.js": "/js/app.js?id=1009561dab902f9bf4c7",
+    "/css/app.css": "/css/app.css?id=db6d8912c93c0713ec7b",
     "/css/login/login.css": "/css/login/login.css?id=091836993d23205ac7f4",
     "/css/register/register.css": "/css/register/register.css?id=a96042cca6203ef17574",
     "/css/backend/control_panel.css": "/css/backend/control_panel.css?id=0eff83ae02997a9e839b",
     "/css/backend/user/index.css": "/css/backend/user/index.css?id=44455e859745e017a6a9",
-    "/css/backend/user/edit.css": "/css/backend/user/edit.css?id=75dc33e8aa9a5f8be60b"
+    "/css/backend/user/edit.css": "/css/backend/user/edit.css?id=75dc33e8aa9a5f8be60b",
+    "/css/page/test.css": "/css/page/test.css?id=1cf3c6ae315ba2adbc28",
+    "/css/product/show.css": "/css/product/show.css?id=e58b61d28a062889e645"
 }

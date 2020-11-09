@@ -29,4 +29,6 @@ class ProductPolicy
     {
         return $user->isAuthorOf($product);
     }
+    
+
 }
