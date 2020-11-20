@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ProductImage;
+use App\Models\ProductTag;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -17,6 +18,11 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(ProductTag::class);
     }
 
     protected static function boot()

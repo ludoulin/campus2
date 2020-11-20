@@ -36,6 +36,7 @@ class ProductRequest extends FormRequest
                      'images' => 'required',
                      'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
                      'price' => 'required',
+                     'departments' => 'required'
                 ];
             }
             // UPDATE
@@ -50,6 +51,7 @@ class ProductRequest extends FormRequest
                     'images' => 'required',
                     'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:3048',
                     'price' => 'required',
+                    'department' => 'required',
                 ];
             }
             case 'GET':

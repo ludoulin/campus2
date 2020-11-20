@@ -8,16 +8,17 @@
 @section('content')
 <div class="container product">
   <div class="row">
-       <div class="col-lg-12 user-contact">賣家:{{ $product->user->name }}</div>
-      <div class="col-xl-5 col-lg-6 col-md-6 left">
-          <div class="big-image">
+      <div class="col-xl-6 col-lg-6 col-md-6 left">
+          <div class="big-image ">
+            <div class="tag-left">&#10094;</div>
              @foreach($product->images as $key => $picture)
              @if($key == 0)
              <img src="{{ $picture->path }}" class="image">
                @else 
                <img src="{{ $picture->path }}" class="image" style="display:none">
                @endif
-             @endforeach  
+             @endforeach
+             <div class="tag-right">&#10095;</div>
           </div>
           <div class="small-image">
               @foreach($product->images as $key => $picture) 
@@ -27,7 +28,8 @@
               @endforeach
           </div>
       </div>
-      <div class="col-xl-5 col-lg-6 col-md-6 mt-md-0 mt-3 right">
+      {{-- <div class="col-xl-2 center"></div> --}}
+      <div class="col-xl-6 col-lg-6 col-md-6 mt-md-0 mt-3 right">
           <div class="product-name">
               <h4 style="text-align:center">{{ $product->name }}</h4>
 
@@ -63,7 +65,7 @@
               <hr class="hr-text" data-content="決定一下吧！">
               <div><button type="button" class="btn save"><i class="far fa-heart pr-2"></i>加入收藏</button></div>
               <div><button type="button" class="btn cart"><i class="fas fa-shopping-cart pr-2"></i>加入購物車</button></div>
-              <div><button type="button" class="btn buy">立即購買</button></div>
+              <div class="mt-2"><button type="button" class="btn buy">立即購買</button></div>
               @endif
               @can('update', $product)
               <hr class="hr-text" data-content="賣家操作">
@@ -84,6 +86,25 @@
                @endcan
              </div>
           </div>
+      </div>
+      <div class="col-lg-12 col-lg-12 col-md-12 mt-3 user">
+       <div class="user-data">
+        <div class="user-avatar">
+          <img src="{{ $product->user->avatar }}"/>
+        </div>
+        <div class="user-name">
+          <p>賣家:{{ $product->user->name }}</p>
+          <p class="text-muted">x小時前上線</p>
+        </div>
+        <div class="user-contact">
+            <a href="{{route('users.show', $product->user->id) }}" class="btn btn-outline-dark" role="button">
+                <i class="fas fa-house-user pr-2"></i>賣家資訊
+              </a>
+              <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-success" role="button">
+                  <i class="fas fa-sms pr-1"></i> 訊息
+                </a>  
+              </div>
+       </div>
       </div>
   </div>  
 </div>   

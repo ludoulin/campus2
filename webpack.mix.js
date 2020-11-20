@@ -20,4 +20,5 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/backend/user/edit.scss', 'public/css/backend/user')
    .sass('resources/sass/page/test.scss', 'public/css/page')
    .sass('resources/sass/product/show.scss', 'public/css/product')
+   .sass('resources/sass/product/create.scss', 'public/css/product')
    .version();
