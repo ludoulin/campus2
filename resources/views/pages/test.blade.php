@@ -7,10 +7,10 @@
 
 @section('content')
 
-<div class="container product">
+{{-- <div class="container product">
     <div class="row">
          <div class="col-lg-12 user-contact">123</div>
-        <div class="col-xl-5 col-lg-6 col-md-6 left">
+        <div class="col-xl-6 col-lg-6 col-md-6 left">
             <div class="big-image">
                <img src="https://images.unsplash.com/photo-1580757468214-c73f7062a5cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" class="image">
             </div>
@@ -74,5 +74,77 @@
     </div>  
 </div>   
 
+<div class="spinner-grow text-secondary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div> --}}
+    <form enctype="multipart/form-data" action="" method="post">
+        <div class="preview">
+            <i class="fas fa-plus"></i>
+            <input class="file-upload form-control-file" type="file" name="imageUpload"/>
+        </div>
+        <div class="preview">
+            <i class="fas fa-plus"></i>
+            <input class="file-upload form-control-file" type="file" name="imageUpload"/>
+        </div>
+        <select class="form-control" style="width:500px" multiple >
+                <option value="">-----单选-----</option>
+                <option value="1">OPS-COFFEE-A</option>
+                <option value="2">OPS-COFFEE-B</option>
+                <option value="3">OPS-COFFEE-C</option>
+                <option value="4">OPS-COFFEE-D</option>
+                <option value="5">OPS-COFFEE-E</option>
+                <option value="6">OPS-COFFEE-F</option>
+                <option value="7">OPS-COFFEE-G</option>
+            </select>
+    </form>
+@endsection
+
+
+@section('script')
+<script type="text/javascript"> 
+var selectorx = $('#id_select2_demo1').select2({
+    tags:true,
+    allowClear: true
+});
+function preview1(file) {
+$('.upload-button').css("display","none");   
+var img = new Image(), url = img.src = URL.createObjectURL(file)
+var $img = $(img)
+img.onload = function() {
+URL.revokeObjectURL(url)
+$('#preview').append($img)
+}
+}
+function preview2(el) {
+
+ var file = el.files[0];
+ var reader = new FileReader()
+
+reader.onload = function(e) {
+
+var $img = $('<img>').attr("src", e.target.result)
+
+$img.on('click', function(event) {
+    $(event.target).siblings(".file-upload").click();
+    });
+
+$(el).siblings("img").remove();
+$(el).parents('.preview').append($img)
+
+}
+reader.readAsDataURL(file)
+}
+
+
+
+$('[type=file]').change(function(e) {
+
+preview2(e.target);
+})
+$(".preview").on('click', function(e) {
+    $(e.target).find(".file-upload").click();
+    //    $(".file-upload").click();
+    });
+  </script> 
 @endsection
 

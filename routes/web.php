@@ -71,8 +71,10 @@ Route::get('/contacts', 'ContactsController@get');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
 
+Route::get('/department/{department}', 'DepartmentController@show')->name('department.show');
 
 Route::get('/products/create', 'ProductsController@create')->name('products.create');
+Route::get('/products/department/get/{id}', 'ProductsController@getDepartment');
 Route::post('/products/create', 'ProductsController@store')->name('products.store');
 Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
 Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
