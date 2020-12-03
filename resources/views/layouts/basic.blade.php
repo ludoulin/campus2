@@ -12,7 +12,7 @@
 
   @include('layouts.header')
 
-    <div id ="content">
+    <div id ="main-content">
 
      @include('shared.messages')
     

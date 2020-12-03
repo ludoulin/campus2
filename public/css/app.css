@@ -9439,7 +9439,7 @@ a.text-dark:focus {
 /* universal */
 
 body {
-  background-color: #E8ECF5;
+  background-color: #e9ecef;
   flex-direction: column;
   height: 100%;
   margin: 0;
@@ -9450,11 +9450,8 @@ body {
 /* header */
 
 .navbar-static-top {
-  border-color: #e7e7e7;
   background-color: #262626;
   box-shadow: 0px 1px 11px 2px rgba(42, 42, 42, 0.1);
-  border-bottom: 1px solid #e8e8e8;
-  margin-bottom: 40px;
   margin-top: 0px;
 }
 
@@ -9494,9 +9491,10 @@ html {
   position: relative;
 }
 
-#content {
+#main-content {
   padding: 10px;
   padding-bottom: 80px;
+  margin-top: 60px;
 }
 
 .hide {
