@@ -1,35 +1,17 @@
-.preview {
-  position: relative;
-  width: 250px;
-  height: 300px;
-  overflow: hidden;
-  border: 1px dashed gray;
-  cursor: pointer;
+.department-list {
+  min-height: 100%;
 }
 
-.preview:hover {
-  transform: scale(1.05);
-  border: 1px dashed #46A3FF;
+.department-list .department {
+  height: 350px;
+  border-radius: 10px;
+  padding: 10px;
 }
 
-.preview i {
-  top: 35%;
-  left: 35%;
-  position: absolute;
-  color: gray;
-  font-size: 80px;
-}
-
-.preview img {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.preview .file-upload {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: none;
+.department-list .department2 {
+  height: 350px;
+  background: pink;
+  border-radius: 10px;
+  padding: 10px;
 }
 

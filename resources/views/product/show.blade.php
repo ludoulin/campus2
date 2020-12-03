@@ -13,9 +13,9 @@
             <div class="tag-left">&#10094;</div>
              @foreach($product->images as $key => $picture)
              @if($key == 0)
-             <img src="{{ $picture->path }}" class="image">
+             <img src="{{ url($picture->path) }}" class="image">
                @else 
-               <img src="{{ $picture->path }}" class="image" style="display:none">
+               <img src="{{ url($picture->path) }}" class="image" style="display:none">
                @endif
              @endforeach
              <div class="tag-right">&#10095;</div>
@@ -23,15 +23,15 @@
           <div class="small-image">
               @foreach($product->images as $key => $picture) 
               <div class="xsimage">
-                  <img src="{{ $picture->path }}" class="images w3-opacity w3-hover-opacity-off" onclick="currentDiv({{$key+1}})">
+                  <img src="{{ url($picture->path) }}" class="images w3-opacity w3-hover-opacity-off" onclick="currentDiv({{$key+1}})">
             </div>
               @endforeach
           </div>
       </div>
-      {{-- <div class="col-xl-2 center"></div> --}}
+      {{-- <div class="col-xl-1 center"></div> --}}
       <div class="col-xl-6 col-lg-6 col-md-6 mt-md-0 mt-3 right">
           <div class="product-name">
-              <h4 style="text-align:center">{{ $product->name }}</h4>
+              <h4 style="text-align:center"><b>{{ $product->name }}</b></h4>
 
               <hr class="hr-text" data-content="詳細資訊">
               
@@ -41,7 +41,7 @@
                <span style="font-size:14px;float:right;"><p class="text-muted">瀏覽次數：10</p></span>
               </div>
               <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">ISBN：XXXXXXX</p>
-              <p class="mb-3 mt-2" style="font-size:18px;color:#d9534f">二手價：<b style="font-size:22px">${{ $product->price }}</b></p>
+              <p class="mb-3 mt-2" style="font-size:18px;color:#ff5353">二手價：<b style="font-size:22px">NT${{ $product->price }}</b></p>
               <p class="mb-3 mt-2" style="font-size:16px">書況：  {!! $product->content !!}</p>
               <hr>
               <div class="mb-3 mt-2" style="font-size:16px">
@@ -56,9 +56,9 @@
               <div class="mt-2">
                   <p style="font-size:16px">適用課程:</p>
                   <div class="row classname">
-                      <div class="col-4 book1">123</div>
-                      <div class="col-4">123</div>
-                      <div class="col-4">123</div>
+                     @foreach ($product->tags as $tag)
+                  <div class="col-4 book1">{{$tag->department->name}}</div>
+                     @endforeach
                   </div>   
               </div>
                @if($product->user->id!==Auth::id())     
@@ -78,7 +78,7 @@
                 onsubmit="return confirm('您確定要刪除嗎？');">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
-                <button type="submit" class="btn btn-outline-danger">
+                <button type="submit" class="btn btn-outline-danger ml-3">
                   <i class="far fa-trash-alt"></i> 刪除
                 </button>
               </form>
@@ -100,8 +100,8 @@
             <a href="{{route('users.show', $product->user->id) }}" class="btn btn-outline-dark" role="button">
                 <i class="fas fa-house-user pr-2"></i>賣家資訊
               </a>
-              <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-success" role="button">
-                  <i class="fas fa-sms pr-1"></i> 訊息
+              <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-success mt-1" role="button">
+                  <i class="fas fa-sms pr-1"></i> 立即聯絡
                 </a>  
               </div>
        </div>

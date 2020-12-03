@@ -1,4 +1,4 @@
-.form-group {
+.increment {
   width: 100%;
 }
 
@@ -37,7 +37,31 @@
   display: none;
 }
 
+.edit_preview {
+  position: relative;
+  width: 250px;
+  height: 300px;
+  overflow: hidden;
+  border: 1px dashed gray;
+}
+
+.edit_preview:hover {
+  border: 1px dashed #46A3FF;
+}
+
+.edit_preview img {
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: block;
+}
+
 .tag_model {
   display: none;
+}
+
+.hint {
+  margin-top: 10px;
+  color: red;
 }
 

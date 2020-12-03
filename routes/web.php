@@ -72,14 +72,16 @@ Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
 
 Route::get('/department/{department}', 'DepartmentController@show')->name('department.show');
+Route::get('/department/get/{id}', 'ProductsController@getDepartment');
 
 Route::get('/products/create', 'ProductsController@create')->name('products.create');
-Route::get('/products/department/get/{id}', 'ProductsController@getDepartment');
 Route::post('/products/create', 'ProductsController@store')->name('products.store');
 Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
 Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
 Route::patch('/products/{product}', 'ProductsController@update')->name('products.update');
-Route::delete('/products/{product}', 'ProductsController@destory')->name('products.destory'); 
+Route::delete('/products/{product}', 'ProductsController@destory')->name('products.destory');
+Route::delete('/products/product_images/{product_image}', 'ProductsController@imageremove')->name('image.destory');  
+
 
 
 

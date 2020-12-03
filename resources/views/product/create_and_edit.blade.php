@@ -26,7 +26,7 @@
             <form action="{{ route('products.update', $product->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                 @method('PATCH')
           @else
-            <form action="{{ route('products.store') }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+            <form action="{{ route('products.store') }}" id="edit_product" name="edit_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="POST">
           @endif
              @csrf
@@ -35,28 +35,29 @@
               <div class="form-row">
 
               <div class="form-group col-md-6">
-                <label for="name">書名:</label>
+                <label for="name" class="text-muted">書名:</label>
                 <input id="name" class="form-control" type="text" name="name" value="{{ old('name', $product->name ) }}" placeholder="請填寫書名" required />
               </div>
 
               <div class="form-group col-md-5">
-                <label for="price">價格:</label>
+                <label for="price" class="text-muted">價格:</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                <input id="price" class="form-control" type="text" name="price" value="{{ old('price', $product->price ) }}" placeholder="請填寫價格" required />
+                <input id="price" class="form-control" type="text" name="price" value="{{ old('price', $product->price ) }}" placeholder="請填寫價格" />
                 </div>
               </div>
               </div>
             
-
+              
+             
               <div class="form-row mb-2">
 
                  <div class="form-group col-md-6">
-                    <label for="college">學院:</label>
+                    <label for="college" class="text-muted">學院:</label>
                     <div class="input-group">
-                    <select class="form-control" name="college[]" required>
+                    <select class="form-control" name="college[]">
                       <option value="">--請選擇學院--</option>
                       @foreach ($colleges as $value)
                       <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -64,46 +65,84 @@
                     </select>
                     </div>
                  </div> 
-
-
+               
                  <div class="form-group col-md-6">
-                    <label for="department">系所:</label>
+                    <label for="department" class="text-muted">系所: *選完科系請按下新增Tag*</label>
                     <div class="input-group">
-                    <select name="department[]"  class="form-control"  required>
+                    <select name="department[]"  class="form-control">
                       <option value="0">--請選擇科系--</option>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">新增Tag</button>
+                        <button class="btn btn-outline-secondary ml-2" type="button" id="button-addon2">新增Tag</button>
                       </div>
                     </div>
                  </div> 
-
                 </div>
+               
+
+
 
                 <div class="form-group tags">
-                <select class="form-control hide" id="id_select2_demo1" name="departments[]" style="width:800px" multiple="multiple" >
-                </select>
+                    {{-- <label for="department-selected" class="text-muted">你所選擇的系所:</label> --}}
+                  @if($product->id)
+                    @foreach ($product->tags as $tag)
+                      <div class="mdc-chip mr-1" role="row" style="color:#6129d6;background-color:#dfd4f7">
+                          <div class="mdc-chip__ripple"></div>
+                          <span role="gridcell">
+                            <span role="button" tabindex="0" class="mdc-chip__primary-action">
+                              <span class="mdc-chip__text">{{$tag->department->name}}</span>
+                            </span>
+                          </span>
+                          <span role="gridcell">
+                          <i id="{{$tag->department->id}}"class="material-icons mdc-chip__icon mdc-chip__icon--trailing r_tag" tabindex="-1" role="button">cancel</i>
+                          </span>
+                        </div>
+                      @endforeach
+                    <select class="form-control hide" id="id_select2_demo1" name="departments[]" style="width:800px" multiple="multiple">
+                        @foreach ($product->tags as $tag)
+                        <option value="{{ $tag->department->id }}" selected>{{ $tag->department->name }}</option>
+                        @endforeach
+                    </select>  
+                    <select class="form-control hide" id="add_select2" name="add_departments[]" style="width:800px" multiple="multiple"></select>
+                    <select class="form-control hide" id="remove_select2" name="remove_departments[]" style="width:800px" multiple="multiple"></select>
+                   @else
+                   <select class="form-control hide" id="id_select2_demo1" name="departments[]" style="width:800px" multiple="multiple">
+                  
+                  </select>
+                  @endif
                 </div>
 
               <div class="form-group">
-                <label for="content">書況:</label>
+                <label for="content" class="text-muted">書況:</label>
                 <textarea id="content" name="content" class="form-control" rows="6" placeholder="請填入書況說明,至少3個字。" required>{{ old('content', $product->content ) }}</textarea>
               </div>
 
                 <div class="form-row many">
                 <div class="form-group control-group increment" >
-                    <label for="images">商品圖片上傳:</label>
+                    <label for="images" class="text-muted">商品圖片上傳:</label>
                     <div class="form-row inner-row">
-                    <div class="input-group col-md-4 mb-2">
+                    @if(!$product->id)  
+                    <div class="input-group col-md-4 mb-2 count">
                         <div class="preview">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <input class="file-upload form-control" type="file" name="images[]" required/>
+                            <input class="file-upload form-control" type="file" name="images[]" />
                         </div>
                      </div>
-
+                     @else
+                     @foreach ($product->images as $image)
+                     <div class="input-group col-md-4 mb-2 count">
+                        <div class="edit_preview">
+                          <img id="{{ $image->id }}"src="{{ url($image->path) }}"/>
+                        </div>
+                        <div class="input-group-append"> 
+                            <button class="btn btn-danger remove_image" type="button" data-target="#btn-delete-modal-{{ $image->id }}"><i class="fas fa-trash-alt"></i>刪除照片</button>
+                        </div>   
+                     </div>
+                     @endforeach
+                     <select class="form-control hide" id="image_select2" name="remove_images[]" style="width:800px" multiple="multiple"></select>
+                     @endif
                     </div>
                   </div>
-
 
                   <div class="clone hide">
                       <div class="input-group col-md-4 mb-2">
@@ -112,14 +151,16 @@
                           <input class="file-upload form-control" type="file" name="images[]"/>
                       </div>
                       <div class="input-group-append"> 
-                        <button class="btn btn-danger remove" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                        <button class="btn btn-secondary remove" type="button"><i class="fas fa-backspace mr-1"></i></i>移除新增</button>
                       </div>
                       </div>
                   </div>
                 </div> 
                 
+              
+              
               <div class="tag_model">
-                <div class="mdc-chip mdc-chip--selected mr-1" role="row">
+                <div class="mdc-chip mr-1" role="row">
                     <div class="mdc-chip__ripple"></div>
                     <span role="gridcell">
                       <span role="button" tabindex="0" class="mdc-chip__primary-action">
@@ -134,8 +175,12 @@
 
 
               <div class="well well-sm">
-                  <button class="btn btn-success" type="button"> <i class="fas fa-plus mr-2"></i></i>新增圖片</button>
-                <button type="submit" class="btn btn-primary"><i class="far fa-save mr-2" aria-hidden="true"></i>刊登商品</button>
+                  <button class="btn btn-success" type="button"> <i class="fas fa-plus mr-2"></i>新增圖片</button>
+                @if(!$product->id)  
+                <button type="submit" class="btn btn-primary"><i class="fas fa-file-import mr-2" aria-hidden="true"></i>刊登商品</button>
+                @else 
+                <button type="submit" class="btn btn-primary edit"><i class="far fa-save mr-2" aria-hidden="true"></i>編輯完成</button>
+                @endif 
               </div>
             </form>
         </div>
@@ -156,15 +201,56 @@
     allowClear: true
     }).next().hide();
 
+    $('#add_select2').select2({
+    placeholder: "請確認新增系所Tag",
+    tags:true,
+    allowClear: true
+    }).next().hide();
+
+    $('#remove_select2').select2({
+    placeholder: "請確認移除系所Tag",
+    tags:true,
+    allowClear: true
+    }).next().hide();
+
+    $('#image_select2').select2({
+    placeholder: "請確認移除的照片",
+    tags:true,
+    allowClear: true
+    }).next().hide();
+
     const max_input = 5;
-    let y = $('.increment').length;
+
+    let y = $('.count').length;
+
     let t_selected_array = $('#id_select2_demo1 option:selected').toArray().map(item=>item.text);
+
+    let add_selected_array = $('#add_select2 option:selected').toArray().map(item=>item.text);
+    
+    let remove_selected_array = $('#remove_select2 option:selected').toArray().map(item=>item.text);
+
+    let remove_image_array = $('#image_select2 option:selected').toArray().map(item=>item.text);
+    
+
     console.log(t_selected_array);
+
+  
   
     $(".btn-success").click(function(){ 
       if(y<max_input){
+
+        if($(".many").find(".hint")){
+            $(".many").find(".hint").remove(); 
+           }
+
         const html = $(".clone").find('.input-group').clone(true).appendTo('.inner-row');
+  
+         if(document.getElementById("image_select2")){
+            html.find("input").attr("name", "new_images[]")
+        }
+
         y++;
+
         if(y==max_input){
         $(".btn-success").attr('disabled', true);
         }
@@ -181,8 +267,11 @@
         $(this).parents(".input-group").remove();
         y--;
         console.log(y);
+      }else{
+       
+        $(this).parents(".increment").append('<div class="hint">提醒:至少要有一張照片</div>');
+
       }
-      return false;
     });
 
     $("body").on("click",".r_tag",function(){
@@ -193,7 +282,34 @@
 
        const tag_ndx = t_selected_array.indexOf(tag_text);
 
-         if(tag_ndx!==-1){
+       if(document.getElementById("remove_select2")){
+
+       const tag_id = $(this).attr("id");
+
+       console.log(tag_id);
+
+       if(add_selected_array.indexOf(tag_text)=== -1&&t_selected_array.length>1){
+
+       remove_selected_array.push(tag_text);
+
+       console.log(remove_selected_array);
+            
+       $('#remove_select2').append('<option value="'+ tag_id +'" selected>' + tag_text + '</option>').trigger('change.select2');
+     
+       }else{
+            
+        $("#add_select2 option:selected").filter(function(){
+                return $.trim($(this).text()) == tag_text
+                 }).remove();
+    
+                add_selected_array.splice(add_selected_array.indexOf(tag_text),1);
+
+       }
+
+    }
+
+         if(tag_ndx!==-1&&t_selected_array.length>1){
+
 
           $("#id_select2_demo1 option:selected").filter(function(){
                 return $.trim($(this).text()) == tag_text
@@ -203,11 +319,17 @@
 
           $(this).parents(".mdc-chip").remove();
           
+       }else{
+          
+        $(this).parents(".tags").append('<div class="hint">提醒:至少要有一個tag</div>');
+
        }
        
        console.log(t_selected_array);
       
     });
+
+
 
    $('select[name="college[]"]').on("change",function(){
       var collegeId = $(this).val();
@@ -215,7 +337,7 @@
       console.log(collegeName);
       if(collegeId){
          $.ajax({
-           url: 'department/get/'+collegeId,
+           url: 'http://localhost/campus2/public/department/get/'+collegeId,
            type: "GET",
            dataType: "json",
           
@@ -246,7 +368,12 @@
       let d_name = $('select[name="department[]"] option:selected').text();
   
       if(t_selected_array.indexOf(d_name) === -1){
-       
+
+        if($(".tags").find(".hint")){
+                    
+            $(".tags").find(".hint").remove();
+                
+                }
        t_selected_array.push(d_name);
 
        console.log(t_selected_array);
@@ -258,6 +385,28 @@
        copy.find('.mdc-chip__text').text(d_name);
        
        $('.tags').append(copy);
+         
+         if(document.getElementById("add_select2")){
+
+           if(remove_selected_array.indexOf(d_name)=== -1){
+
+            add_selected_array.push(d_name);
+
+            console.log(add_selected_array);
+
+            $('#add_select2').append('<option value="'+ d_id +'" selected>' + d_name + '</option>').trigger('change.select2');
+
+           }else{
+
+            $("#remove_select2 option:selected").filter(function(){
+                return $.trim($(this).text()) == d_name
+                 }).remove();
+    
+                remove_selected_array.splice(remove_selected_array.indexOf(d_name),1);
+
+           }
+
+         }
 
 
       }
@@ -308,6 +457,37 @@ function preview2(el) {
     $(e.target).find(".file-upload").click();
 
    });
+
+
+   $(".remove_image").on('click', function(e) {
+
+    if(y>1){
+    
+    const image_id = $(e.target).parents(".input-group").find("img").attr("id");
+
+    remove_image_array.push(image_id);
+
+    console.log(remove_image_array);
+
+    $('#image_select2').append('<option value="'+ image_id +'" selected>' + image_id + '</option>').trigger('change.select2');
+
+    $(e.target).parents(".input-group").remove();
+
+    if(y==max_input){
+          $(".btn-success").attr('disabled', false);
+        }
+
+    y--;
+
+    console.log(y);
+
+    }else{
+
+      $(this).parents(".increment").append('<div class="hint">提醒:至少要有一張照片</div>');
+
+    }
+
+  }); 
 
   });
 </script>
