@@ -31,6 +31,27 @@ body {
     // border-bottom: 1px solid #e8e8e8;
     // margin-bottom: 40px;
     margin-top: 0px;
+     
+  .message{
+
+    .dropdown-toggle::after { 
+      content: none; 
+    }
+    // .dropdown-menu{
+    //   width: 300px !important;
+    // }
+      .badge-secondary {
+        background-color: #262626;
+      }
+    
+      .badge-hint {
+        background-color: #d15b47 !important;
+      }
+   .full-reply{
+     text-align: center;
+   }   
+    
+  } 
     
   }
   

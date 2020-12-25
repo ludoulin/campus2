@@ -93,6 +93,8 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
+        $product->visits()->increment();
+
         return view('product.show', compact('product'));
     }
 
@@ -202,7 +204,7 @@ class ProductsController extends Controller
         return redirect()->route('products.show', $product->id)->with('success', '更新成功');
     }
 
-    public function destory(Product $product)
+    public function destroy(Product $product)
 	{
 		$this->authorize('destroy', $product);
 		$product->delete();

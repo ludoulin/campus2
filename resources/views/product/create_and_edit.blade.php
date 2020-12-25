@@ -132,7 +132,7 @@
                      @foreach ($product->images as $image)
                      <div class="input-group col-md-4 mb-2 count">
                         <div class="edit_preview">
-                          <img id="{{ $image->id }}"src="{{ url($image->path) }}"/>
+                          <img class="keep_image"id="{{ $image->id }}"src="{{ url($image->path) }}"/>
                         </div>
                         <div class="input-group-append"> 
                             <button class="btn btn-danger remove_image" type="button" data-target="#btn-delete-modal-{{ $image->id }}"><i class="fas fa-trash-alt"></i>刪除照片</button>
@@ -233,6 +233,8 @@
     
 
     console.log(t_selected_array);
+
+    console.log(document.getElementsByClassName("keep_image").length);
 
   
   
@@ -461,7 +463,7 @@ function preview2(el) {
 
    $(".remove_image").on('click', function(e) {
 
-    if(y>1){
+    if(document.getElementsByClassName("keep_image").length>1){
     
     const image_id = $(e.target).parents(".input-group").find("img").attr("id");
 
@@ -483,7 +485,7 @@ function preview2(el) {
 
     }else{
 
-      $(this).parents(".increment").append('<div class="hint">提醒:至少要有一張照片</div>');
+      $(this).parents(".increment").append('<div class="hint">提醒:至少要保存一張原始照片</div>');
 
     }
 

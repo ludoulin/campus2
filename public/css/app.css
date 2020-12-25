@@ -9455,6 +9455,22 @@ body {
   margin-top: 0px;
 }
 
+.navbar-static-top .message .dropdown-toggle::after {
+  content: none;
+}
+
+.navbar-static-top .message .badge-secondary {
+  background-color: #262626;
+}
+
+.navbar-static-top .message .badge-hint {
+  background-color: #d15b47 !important;
+}
+
+.navbar-static-top .message .full-reply {
+  text-align: center;
+}
+
 /* Sticky footer styles */
 
 html {

@@ -1,4 +1,4 @@
-<nav data-aos="fade-down" class="navbar navbar-expand-lg navbar-dark navbar-static-top fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-static-top fixed-top">
   <div class="container">
     <!-- Branding Image -->
     <a class="navbar-brand " href="{{ url('/') }}">
@@ -41,10 +41,29 @@
               </a>
             </div>
           </li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}"><i class="fas fa-book"></i>我要賣書</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}" ><i class="fas fa-book"></i>我要賣書</a></li>
           <li class="nav-item"><a class="nav-link" href=""><i class="fas fa-cart-plus"></i></a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('users.home') }}"><i class="fab fa-facebook-messenger"></i></a></li>
-          <li class="nav-item"><a class="nav-link" href=""><i class="far fa-comment-dots"></i></a></li>
+          <li class="dropdown message">
+          <notification-app :counts="{{ auth()->user()->notification_count }}" :userid="{{ auth()->id()}}" :unreads="{{ auth()->user()->unreadNotifications}}" :reads="{{ auth()->user()->Notifications}} "></notification-app>
+              {{-- <button class="btn btn-secondary dropdown-toggle badge-{{ Auth::user()->notification_count > 0 ? 'hint' : 'secondary' }}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell"></i> {{ Auth::user()->notification_count }}</button> 
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              @php
+                  $notifications = Auth::user()->notifications()->take(4)->get();
+              @endphp  
+              @if ($notifications->count()) 
+                @foreach ($notifications as $notification)
+                @include('notifications.header.' . Str::snake(class_basename($notification->type)))
+                @endforeach
+                <hr/>
+                <div class="dropdown-item full-replay" onclick="location.href='{{ route('notifications.index') }}'"> 
+                 查看所有回覆  
+                </div>
+                @else
+               <a class="empty-block">沒有消息通知！</a>
+                @endif 
+              </div> --}}
+            </li> 
         @endguest
       </ul>
     </div>

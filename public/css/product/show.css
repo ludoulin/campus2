@@ -61,10 +61,6 @@
   border: 1px solid #FF1493;
 }
 
-.product .center {
-  background-color: #E8ECF5;
-}
-
 .product .right {
   min-height: 100%;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -160,7 +156,7 @@
 
 .product .user {
   min-height: 100px;
-  background-color: #f8f9fa;
+  background-color: #fff;
 }
 
 .product .user .user-data {
@@ -198,8 +194,17 @@
   float: right;
 }
 
+.product .user .product-comment a {
+  color: inherit;
+}
+
+.product .user .product-comment .meta {
+  font-size: 0.9em;
+  color: #b3b3b3;
+}
+
 @media screen and (max-width: 720px) {
-  .product .left {
+  .left {
     height: 550px;
   }
 }

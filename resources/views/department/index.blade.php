@@ -19,6 +19,7 @@
 <div class="container my-3">
         <div class="row row-eq-height">
          @foreach ($products as $product)
+          @if($product->product->is_stock==true)
           <div data-aos="zoom-in" class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5">
             <div class="product-card h-100 mb-0">
               <a class="product-card__content" href="{{route('products.show', $product->product->id)}}">
@@ -44,6 +45,7 @@
               </div>
             </div>
           </div>
+          @endif
           @endforeach
         </div>
       </div>
