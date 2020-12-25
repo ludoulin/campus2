@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
-                                            <form action="{{ route('admin.products.destory',$product->id) }}" method="POST">
+                                            <form action="{{ route('admin.products.destroy',$product->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger">確認</button>

@@ -1,3 +1,10 @@
+{{-- @php
+  if(Auth::check()) {
+      $AuthUser = 1;
+    }else{
+      $AuthUser = 0;
+    }
+@endphp  --}}
 @extends('layouts.basic')
 
 @section('basic')
@@ -38,7 +45,8 @@
             <div class="inner-detail">
               <div class="mb-3">     
                <span style="font-size:18px">分類：二手書</span>
-               <span style="font-size:14px;float:right;"><p class="text-muted">瀏覽次數：10</p></span>
+               {{-- <span style="font-size:14px;float:right;"><p class="text-muted"> |{{ $product->comment_count }}則留言</p></span>   --}}
+               <span style="font-size:14px;float:right;"><p class="text-muted">瀏覽次數：{{ $product->visits()->count() }}</p></span>
               </div>
               <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">ISBN：XXXXXXX</p>
               <p class="mb-3 mt-2" style="font-size:18px;color:#ff5353">二手價：<b style="font-size:22px">NT${{ $product->price }}</b></p>
@@ -73,7 +81,7 @@
               <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-dark" role="button">
                 <i class="far fa-edit"></i> 編輯
               </a>
-            <form action="{{ route('products.destory', $product->id) }}" method="post"
+            <form action="{{ route('products.destroy', $product->id) }}" method="post"
                 style="display: inline-block;"
                 onsubmit="return confirm('您確定要刪除嗎？');">
                 {{ csrf_field() }}
@@ -106,6 +114,24 @@
               </div>
        </div>
       </div>
+     {{-- <<------留言板------->>  --}}
+     <h4 class="mt-3">買賣回答</h4>
+      {{-- <div class="col-lg-12 col-lg-12 col-md-12 card mt-3 product-comment">
+          <div class="card-body">
+              @include('product.comment_list', ['comments' => $product->comments()->with('user')->get()])
+              @includeWhen(Auth::check(), 'product.comment_box', ['product' => $product])
+          </div>
+      </div>  --}}
+      <div class="col-lg-12 col-lg-12 col-md-12 card mt-3 product-comment">
+          <div class="card-body">
+          <comment-board 
+          :_comments="{{$product->comments()->with('user')->get()}}" 
+          :product_data="{{$product}}" :auth="{{Auth::check()?Auth::user():0}}"
+           >
+         </comment-board>
+          </div>
+      </div> 
+
   </div>  
 </div>   
 

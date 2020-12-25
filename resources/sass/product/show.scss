@@ -56,9 +56,6 @@
             }
         }
     }
-    .center{
-        background-color: #E8ECF5;
-    }
     .right{
         min-height: 100%;
         // border-radius: 10px;
@@ -154,7 +151,7 @@
     }
     .user{
         min-height: 100px;
-        background-color: #f8f9fa;
+        background-color: #fff;
            .user-data{
             width: 100%;
             height: 100%;
@@ -186,14 +183,19 @@
             float: right;
          }
         }
-
-    }
-
-    @media screen and (max-width: 720px) {
-        .left{
-            height: 550px;
+        .product-comment{
+            // min-height: 100%;
+            a {
+                color: inherit;
+            }
+        
+            .meta {
+                font-size: .9em;
+                color: #b3b3b3;
+            }
         }
-      }
+        
+    }
     
     //   @media screen and (max-width: 200px) {
     //      .user-contact{
@@ -203,3 +205,9 @@
     //      }
     //   }
 }
+
+@media screen and (max-width: 720px) {
+    .left{
+        height: 550px;
+    }
+  }

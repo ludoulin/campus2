@@ -255,6 +255,16 @@ a {
   background-color: #f1f2f4;
 }
 
+.news {
+  padding: 10px;
+}
+
+.news .inner-news {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+
 @media screen and (max-width: 768px) {
   .department-list {
     min-height: 100%;

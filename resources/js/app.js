@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+
+let moment = require('moment');
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -22,9 +24,15 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('chat-component', require('./components/ChatComponent.vue').default);
 Vue.component('chat-app', require('./components/ChatApp.vue').default);
+Vue.component('notification-app', require('./components/Notification.vue').default);
+Vue.component('comment-board', require('./components/CommentBoard.vue').default);
+Vue.component('reply-board', require('./components/ReplyBoard.vue').default);
+
 
 import VueChatScroll from 'vue-chat-scroll'
+
 Vue.use(VueChatScroll);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

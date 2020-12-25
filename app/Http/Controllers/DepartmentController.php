@@ -10,8 +10,9 @@ class DepartmentController extends Controller
 {
     public function show(Department $department)
     {
-        $products = ProductTag::where('department_id',$department->id)->with('product')->get();
-        // with(['product'=> function($query){$query->with("images");}])
+        $products = ProductTag::where('department_id',$department->id)->
+        with(['product'=> function($query){$query->with("images");}])->get();
+        // with('product')->get();
         return view('department.index', compact('department','products'));
     }
 }

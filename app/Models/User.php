@@ -7,11 +7,18 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use App\Models\SocialUser as SocialUserEloquent;
+use Auth;
 
 class User extends Authenticatable implements MustVerifyEmailContract
 {
-    use Notifiable, MustVerifyEmailTrait;
+    use MustVerifyEmailTrait;
 
+
+    use Notifiable {
+        notify as protected laravelNotify;
+    }
+
+    // use Notifiable;
     // const TABLE = 'users';
     /**
      * The attributes that are mass assignable.
@@ -19,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','introduction','avatar','is_admin','is_banned',
+        'name', 'email', 'password','introduction','avatar','is_admin','is_banned','notification_count'
     ];
 
     /**
@@ -43,6 +50,28 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     ];
 
+    public function notify($instance)
+    {
+        // 如果要通知的人是當前用戶，就不必通知了！
+        if ($this->id == Auth::id()) {
+            return;
+        }
+
+        // 只有數據庫類型通知才需提醒，直接發送 Email 或者其他的都 Pass
+        if (method_exists($instance, 'toDatabase')) {
+            $this->increment('notification_count');
+        }
+
+        $this->laravelNotify($instance);
+    }
+
+    public function RestUnread()
+    {
+        $this->notification_count = 0;
+        $this->save();
+
+    }
+
     public function socialuser(){
         return $this->hasOne(SocialUserEloquent::class);
     }
@@ -65,8 +94,29 @@ class User extends Authenticatable implements MustVerifyEmailContract
         return $this->hasMany(Product::class);
         
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+    
     public function isAuthorOf($model)
     {
         return $this->id == $model->seller_id;
     }
+
+    public function isAuthor_and_isCommentOf($model)
+    {
+    return $this->id == $model->user_id;
+    }
+
+    // public function receivesBroadcastNotificationOn(){
+
+    //     return 'App.User.'.$this->id;
+    // }
 }

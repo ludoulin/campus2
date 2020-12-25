@@ -52,7 +52,7 @@ Route::patch('/admin/users/{user}/publish', 'BackEnd\UsersController@publish')->
 Route::get('/admin/products', 'BackEnd\ProductsController@index')->name('admin.products.index');
 Route::get('/admin/products/{product}/edit', 'BackEnd\ProductsController@edit')->name('admin.products.edit');
 Route::patch('/admin/products/{product}', 'BackEnd\ProductsController@update')->name('admin.products.update');
-Route::delete('/admin/products/{product}', 'Backend\ProductsController@destory')->name('admin.products.destory'); 
+Route::delete('/admin/products/{product}', 'Backend\ProductsController@destroy')->name('admin.products.destroy'); 
 
 
 
@@ -79,8 +79,31 @@ Route::post('/products/create', 'ProductsController@store')->name('products.stor
 Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
 Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
 Route::patch('/products/{product}', 'ProductsController@update')->name('products.update');
-Route::delete('/products/{product}', 'ProductsController@destory')->name('products.destory');
-Route::delete('/products/product_images/{product_image}', 'ProductsController@imageremove')->name('image.destory');  
+Route::delete('/products/{product}', 'ProductsController@destroy')->name('products.destroy');
+Route::delete('/products/product_images/{product_image}', 'ProductsController@imageremove')->name('image.destory'); 
+
+// Route::resource('comments', 'CommentsController', ['only' => ['store', 'update', 'edit', 'destroy']]);
+
+
+Route::post('/comments/create', 'CommentsController@store')->name('comments.store');
+Route::post('/comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');
+Route::post('/comments/update/{comment}', 'CommentsController@update')->name('comments.update');
+Route::post('/comments/comment/get', 'CommentsController@get');
+Route::post('/comments/replies/get', 'CommentsController@reply_get');
+
+
+Route::post('/comments/replies/create', 'ReplysController@store')->name('replies.store');
+Route::post('/comments/replies/{reply}', 'ReplysController@destroy')->name('replies.destroy');
+Route::post('/comments/replies/update/{reply}', 'ReplysController@update')->name('replies.update');
+// Route::post('/comments/replies/get', 'ReplysController@get');
+
+
+Route::get('/notifications/index', 'NotificationsController@index')->name('notifications.index');
+Route::get('/notifications/reset', 'NotificationsController@reset');
+Route::post('/notifications/read', 'NotificationsController@read');
+Route::get('/notifications/sync', 'NotificationsController@sync');
+
+
 
 
 
