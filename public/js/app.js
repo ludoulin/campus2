@@ -2186,6 +2186,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 
@@ -2200,7 +2204,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       moment: moment,
       message: "",
       auth_check: this.auth,
-      board: false,
       user_id: this.auth !== 0 ? this.auth.id : 0,
       author: this.product_data.seller_id,
       product_id: this.product_data.id,
@@ -2217,22 +2220,18 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         return;
       }
 
-      console.log(123);
       axios.post("http://localhost/campus2/public/comments/create", {
         product_id: this.product_id,
         content: this.message
       }).then(function (response) {
         _this.message = '';
         _this.comments = response.data;
-        console.log(456);
       });
     },
     open: function open(comment) {
       this.the_switch = comment.id; // Remove my-component from the DOM
 
-      this.edit_message = comment.content; // this.$nextTick(() => {
-      //     // Add the component back in
-      //  this.edit_message = '';
+      this.edit_message = comment.content;
     },
     editMessage: function editMessage(comment) {
       var _this2 = this;
@@ -2266,44 +2265,38 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     sendReply: function sendReply(data) {
       var _this4 = this;
 
-      //  if (this.reply_message == '') {
-      //         return;
-      //     }
-      console.log(123);
       axios.post("http://localhost/campus2/public/comments/replies/create", {
         comment_id: data.id,
         product_id: this.product_id,
         reply_content: data.text
       }).then(function (response) {
-        // this.reply_message = '';
         _this4.the_reply = false;
         _this4.comments = response.data;
-        console.log(456);
+      });
+    },
+    deleteReply: function deleteReply(ids) {
+      var _this5 = this;
+
+      axios.post("http://localhost/campus2/public/comments/replies/".concat(ids.id), {
+        id: ids.id,
+        product_id: ids.product_id
+      }).then(function (response) {
+        _this5.comments = response.data;
       });
     },
     cancelReply: function cancelReply(close) {
       this.the_reply = close;
     },
-    board_check: function board_check() {
-      if (this.auth_check !== 0) {
-        this.board = true;
-      } else {
-        this.board = false;
-      }
-    },
     deleteComment: function deleteComment(comment) {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.post("http://localhost/campus2/public/comments/".concat(comment.id), {
         id: comment.id,
         product_id: comment.product_id
       }).then(function (response) {
-        _this5.comments = response.data;
+        _this6.comments = response.data;
       });
     }
-  },
-  mounted: function mounted() {
-    this.board_check();
   }
 });
 
@@ -2643,10 +2636,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(this.unreadNotifications);
         console.log(this.Notifications);
       } else {
-        console.log("abc");
         console.log(this.notification_count);
-        console.log(this.unreadNotifications);
-        console.log(this.Notifications);
       }
     }
   },
@@ -2656,20 +2646,41 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted. ');
     Echo["private"]('App.Models.User.' + this.userid).notification(function (notification) {
       console.log(notification);
-      var newunreadNotifications = {
-        id: notification.id,
-        data: {
-          reply_id: notification.reply_id,
-          reply_content: notification.reply_content,
-          user_id: notification.user_id,
-          user_name: notification.user_name,
-          user_avatar: notification.user_avatar,
-          product_link: notification.product_link,
-          product_id: notification.product_id,
-          product_name: notification.product_name
-        },
-        read_at: null
-      }; //  this.unreadNotifications.push(newunreadNotifications);
+      var newunreadNotifications;
+
+      if (notification.hasOwnProperty('comment_reply_id')) {
+        newunreadNotifications = {
+          id: notification.id,
+          data: {
+            comment_reply_id: notification.comment_reply_id,
+            content: notification.content,
+            user_id: notification.user_id,
+            user_name: notification.user_name,
+            user_avatar: notification.user_avatar,
+            product_link: notification.product_link,
+            product_id: notification.product_id,
+            product_name: notification.product_name
+          },
+          read_at: null
+        };
+        console.log(newunreadNotifications);
+      } else {
+        newunreadNotifications = {
+          id: notification.id,
+          data: {
+            reply_id: notification.reply_id,
+            reply_content: notification.reply_content,
+            user_id: notification.user_id,
+            user_name: notification.user_name,
+            user_avatar: notification.user_avatar,
+            product_link: notification.product_link,
+            product_id: notification.product_id,
+            product_name: notification.product_name
+          },
+          read_at: null
+        };
+      } //  this.unreadNotifications.push(newunreadNotifications);
+
 
       _this2.unreadNotifications.splice(0, 0, newunreadNotifications);
 
@@ -2693,6 +2704,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2811,17 +2835,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['comment_id', 'reply_auth_avatar', 'open'],
+  props: ['reply_comment', 'open', 'replies', 'reply_user', 'product_author'],
   data: function data() {
     return {
       reply_message: "",
+      edit_message: "",
       moment: moment,
-      reply_comment_id: this.comment_id,
-      reply_avatar: this.reply_auth_avatar,
-      replies: null
+      the_switch: false,
+      open_reply: false
     };
   },
   methods: {
@@ -2834,24 +2883,56 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 
       this.$emit('send', {
         text: this.reply_message,
-        id: this.reply_comment_id
+        id: this.reply_comment.id
       });
       this.reply_message = '';
     },
+    reply_open: function reply_open(reply) {
+      this.open_reply = this.reply_comment.id;
+    },
     reply_cancel: function reply_cancel() {
-      this.$emit('reply_cancel', false);
-    }
-  },
-  created: function created() {
-    var _this = this;
+      if (this.open == false) {
+        this.open_reply = false;
+      } else {
+        this.$emit('reply_cancel', false);
+      }
+    },
+    reply_delete: function reply_delete(reply) {
+      this.$emit('reply_delete', {
+        id: reply.id,
+        product_id: reply.product_id
+      });
+    },
+    edit: function edit(reply) {
+      this.the_switch = reply.id;
+      this.edit_message = reply.reply_content;
+    },
+    edit_ReplyMessage: function edit_ReplyMessage(reply) {
+      var _this = this;
 
-    axios.post("http://localhost/campus2/public/comments/replies/get", {
-      id: this.reply_comment_id
-    }).then(function (response) {
-      _this.replies = response.data;
-      console.log(_this.replies);
-      console.log(123);
-    });
+      if (this.edit_message.trim().length == 0) {
+        alert('內容都一定要填喔...');
+        return;
+      }
+
+      axios.post("http://localhost/campus2/public/comments/replies/update/".concat(reply.id), {
+        id: reply.id,
+        content: this.edit_message
+      }).then(function (response) {
+        _this.the_switch = false;
+        reply.reply_content = response.data;
+      });
+    },
+    edit_ReplyCancel: function edit_ReplyCancel(reply) {
+      var _this2 = this;
+
+      axios.post("http://localhost/campus2/public/comments/replies/get/".concat(reply.id), {
+        reply_id: reply.id
+      }).then(function (response) {
+        _this2.the_switch = false;
+        reply.reply_content = response.data;
+      });
+    }
   }
 });
 
@@ -6937,7 +7018,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".input_style[data-v-12932672] {\n  width: 50%;\n  border-radius: 30px !important;\n}\n.reply-cancel[data-v-12932672] {\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".input_style[data-v-12932672] {\n  width: 50%;\n  border-radius: 30px !important;\n}\n.reply-cancel[data-v-12932672], .reply-delete[data-v-12932672], .reply-edit[data-v-12932672] {\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -66296,7 +66377,7 @@ var render = function() {
                         ]
                       ),
                       _vm._v(" "),
-                      _vm.board
+                      _vm.auth_check !== 0
                         ? _c("div", { staticClass: "float-right" }, [
                             _vm.author == _vm.user_id &&
                             _vm.the_reply !== comment.id
@@ -66312,7 +66393,12 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_c("i", { staticClass: "fas fa-reply" })]
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-reply mr-2"
+                                      }),
+                                      _vm._v("回覆\n                      ")
+                                    ]
                                   )
                                 ])
                               : _vm._e(),
@@ -66331,7 +66417,12 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_c("i", { staticClass: "far fa-edit" })]
+                                    [
+                                      _c("i", {
+                                        staticClass: "far fa-edit mr-2"
+                                      }),
+                                      _vm._v("編輯\n                      ")
+                                    ]
                                   )
                                 ])
                               : _vm._e(),
@@ -66354,8 +66445,9 @@ var render = function() {
                                     },
                                     [
                                       _c("i", {
-                                        staticClass: "far fa-trash-alt"
-                                      })
+                                        staticClass: "far fa-trash-alt mr-2"
+                                      }),
+                                      _vm._v("刪除\n                      ")
                                     ]
                                   )
                                 ])
@@ -66366,59 +66458,68 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _vm.the_switch == comment.id
-                    ? _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.edit_message,
-                            expression: "edit_message"
-                          }
-                        ],
-                        staticClass: "form-control input_style",
-                        attrs: {
-                          type: "text",
-                          name: "message",
-                          placeholder: "Enter your message..."
-                        },
-                        domProps: { value: _vm.edit_message },
-                        on: {
-                          keyup: function($event) {
-                            if (
-                              !$event.type.indexOf("key") &&
-                              _vm._k(
-                                $event.keyCode,
-                                "enter",
-                                13,
-                                $event.key,
-                                "Enter"
-                              )
-                            ) {
-                              return null
-                            }
-                            return _vm.editMessage(comment)
-                          },
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.edit_message = $event.target.value
-                          }
-                        }
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.the_switch == comment.id
                     ? _c(
-                        "span",
+                        "div",
                         {
-                          on: {
-                            click: function($event) {
-                              return _vm.edit_cancel(comment)
-                            }
-                          }
+                          staticClass: "media-heading mt-0 mb-1 text-secondary"
                         },
-                        [_vm._v("取消")]
+                        [
+                          _c("div", { staticClass: "row" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.edit_message,
+                                  expression: "edit_message"
+                                }
+                              ],
+                              staticClass: "form-control input_style",
+                              attrs: {
+                                type: "text",
+                                name: "message",
+                                placeholder: "Enter your message..."
+                              },
+                              domProps: { value: _vm.edit_message },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.edit_message = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-primary btn-xs pull-left ml-3",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editMessage(comment)
+                                  }
+                                }
+                              },
+                              [_vm._v("儲存")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-secondary btn-xs pull-left ml-3",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.edit_cancel(comment)
+                                  }
+                                }
+                              },
+                              [_vm._v("取消")]
+                            )
+                          ])
+                        ]
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -66443,11 +66544,17 @@ var render = function() {
             _vm._v(" "),
             _c("reply-board", {
               attrs: {
-                comment_id: comment.id,
-                reply_auth_avatar: _vm.auth_check.avatar,
-                open: _vm.the_reply
+                reply_comment: comment,
+                reply_user: _vm.auth_check,
+                product_author: _vm.author,
+                open: _vm.the_reply,
+                replies: comment.replies
               },
-              on: { send: _vm.sendReply, reply_cancel: _vm.cancelReply }
+              on: {
+                send: _vm.sendReply,
+                reply_delete: _vm.deleteReply,
+                reply_cancel: _vm.cancelReply
+              }
             })
           ],
           1
@@ -66456,7 +66563,7 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _vm.board
+    _vm.auth_check !== 0
       ? _c("div", { staticClass: "reply-box" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("textarea", {
@@ -66968,25 +67075,50 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "media-body" }, [
-            _c(
-              "div",
-              { staticClass: "media-heading mt-0 mb-1 text-secondary" },
-              [
-                _c("a", [_vm._v(_vm._s(_vm.unread.data.user_name))]),
-                _vm._v("\n            回覆了您的\n            "),
-                _c("a", [_vm._v(_vm._s(_vm.unread.data.product_name))])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "reply-content" }, [
-              _vm._v(
-                "\n            " +
-                  _vm._s(_vm.unread.data.reply_content) +
-                  "\n          "
-              )
-            ])
-          ])
+          _vm.unread.data.hasOwnProperty("reply_id") == true
+            ? _c("div", { staticClass: "media-body" }, [
+                _c(
+                  "div",
+                  { staticClass: "media-heading mt-0 mb-1 text-secondary" },
+                  [
+                    _c("a", [_vm._v(_vm._s(_vm.unread.data.user_name))]),
+                    _vm._v("\n            回覆了您的\n            "),
+                    _c("a", [_vm._v(_vm._s(_vm.unread.data.product_name))])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "reply-content" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.unread.data.reply_content) +
+                      "\n          "
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.unread.data.hasOwnProperty("comment_reply_id") == true
+            ? _c("div", { staticClass: "media-body" }, [
+                _c(
+                  "div",
+                  { staticClass: "media-heading mt-0 mb-1 text-secondary" },
+                  [
+                    _c("a", [_vm._v(_vm._s(_vm.unread.data.user_name))]),
+                    _vm._v("\n            回覆了您在\n            "),
+                    _c("a", [_vm._v(_vm._s(_vm.unread.data.product_name))]),
+                    _vm._v("\n            底下的留言\n          ")
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "reply-content" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.unread.data.content) +
+                      "\n          "
+                  )
+                ])
+              ])
+            : _vm._e()
         ])
       ]
     ),
@@ -67061,8 +67193,6 @@ var render = function() {
                       _vm._v(
                         "\n                                " +
                           _vm._s(reply.user.name) +
-                          "--" +
-                          _vm._s(_vm.open) +
                           "\n                            "
                       )
                     ]
@@ -67079,17 +67209,148 @@ var render = function() {
                       attrs: { title: reply.created_at }
                     },
                     [_vm._v(_vm._s(_vm.moment(reply.created_at).fromNow()))]
-                  )
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "float-right" }, [
+                    (_vm.reply_comment.user_id == _vm.reply_user.id &&
+                      reply.user_id !== _vm.reply_user.id) ||
+                    (_vm.reply_user.id == _vm.product_author &&
+                      reply.user_id !== _vm.product_author)
+                      ? _c("span", { staticClass: "meta" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary btn-xs pull-left",
+                              on: {
+                                click: function($event) {
+                                  return _vm.reply_open(reply)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-reply mr-2" }),
+                              _vm._v("回覆\n                            ")
+                            ]
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    reply.user_id == _vm.reply_user.id &&
+                    _vm.the_switch !== reply.id
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "meta reply-edit mr-3",
+                            on: {
+                              click: function($event) {
+                                return _vm.edit(reply)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            編輯\n                        "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    reply.user_id == _vm.reply_user.id &&
+                    _vm.the_switch !== reply.id
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "meta reply-delete",
+                            on: {
+                              click: function($event) {
+                                return _vm.reply_delete(reply)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            刪除\n                        "
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ])
                 ]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "reply-content text-secondary" }, [
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(reply.reply_content) +
-                    "\n                     "
-                )
-              ])
+              _vm.the_switch == reply.id
+                ? _c(
+                    "div",
+                    { staticClass: "media-heading mt-1 mb-1 text-secondary" },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.edit_message,
+                              expression: "edit_message"
+                            }
+                          ],
+                          staticClass: "form-control input_style",
+                          attrs: {
+                            type: "text",
+                            name: "edit_reply",
+                            placeholder: "要編輯嗎..."
+                          },
+                          domProps: { value: _vm.edit_message },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.edit_message = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-primary btn-xs pull-left ml-3",
+                            on: {
+                              click: function($event) {
+                                return _vm.edit_ReplyMessage(reply)
+                              }
+                            }
+                          },
+                          [_vm._v("儲存")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-secondary btn-xs pull-left ml-3",
+                            on: {
+                              click: function($event) {
+                                return _vm.edit_ReplyCancel(reply)
+                              }
+                            }
+                          },
+                          [_vm._v("取消")]
+                        )
+                      ])
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.the_switch !== reply.id
+                ? _c("div", { staticClass: "reply-content text-secondary" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(reply.reply_content) +
+                        "\n                     "
+                    )
+                  ])
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),
@@ -67099,97 +67360,81 @@ var render = function() {
       0
     ),
     _vm._v(" "),
-    _c(
-      "ul",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: this.reply_comment_id == this.open,
-            expression: "this.reply_comment_id==this.open"
-          }
-        ],
-        staticClass: "list-unstyled ml-4"
-      },
-      [
-        _c("div", [
-          _c("li", { staticClass: "media" }, [
-            _c("div", { staticClass: "media-left" }, [
-              _c("a", [
-                _c("img", {
-                  staticClass: "media-object img-thumbnail mr-3",
-                  staticStyle: { width: "48px", height: "48px" },
-                  attrs: { src: _vm.reply_avatar }
-                })
+    this.reply_comment.id == this.open ||
+    _vm.open_reply == this.reply_comment.id
+      ? _c("ul", { staticClass: "list-unstyled ml-4" }, [
+          _c("div", [
+            _c("li", { staticClass: "media" }, [
+              _c("div", { staticClass: "media-left" }, [
+                _c("a", [
+                  _c("img", {
+                    staticClass: "media-object img-thumbnail mr-3",
+                    staticStyle: { width: "48px", height: "48px" },
+                    attrs: { src: _vm.reply_user.avatar }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "media-body ml-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "media-heading mt-1 mb-1 text-secondary" },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.reply_message,
+                            expression: "reply_message"
+                          }
+                        ],
+                        staticClass: "form-control input_style",
+                        attrs: {
+                          type: "text",
+                          name: "reply",
+                          placeholder: "趕快回應吧..."
+                        },
+                        domProps: { value: _vm.reply_message },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.reply_message = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-xs pull-left ml-3",
+                          on: { click: _vm.send }
+                        },
+                        [_vm._v("儲存")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-secondary btn-xs pull-left ml-3",
+                          on: { click: _vm.reply_cancel }
+                        },
+                        [_vm._v("取消")]
+                      )
+                    ])
+                  ]
+                )
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "media-body ml-2" }, [
-              _c(
-                "div",
-                { staticClass: "media-heading mt-1 mb-1 text-secondary" },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.reply_message,
-                          expression: "reply_message"
-                        }
-                      ],
-                      staticClass: "form-control input_style",
-                      attrs: {
-                        type: "text",
-                        name: "reply",
-                        placeholder: "趕快回應買家吧..."
-                      },
-                      domProps: { value: _vm.reply_message },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !$event.type.indexOf("key") &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.send($event)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.reply_message = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass: "reply-cancel mt-1 ml-3 meta",
-                        on: { click: _vm.reply_cancel }
-                      },
-                      [_vm._v("取消")]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("hr")
+            _c("hr")
+          ])
         ])
-      ]
-    )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []

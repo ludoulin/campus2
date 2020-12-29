@@ -89,13 +89,12 @@ Route::post('/comments/create', 'CommentsController@store')->name('comments.stor
 Route::post('/comments/{comment}', 'CommentsController@destroy')->name('comments.destroy');
 Route::post('/comments/update/{comment}', 'CommentsController@update')->name('comments.update');
 Route::post('/comments/comment/get', 'CommentsController@get');
-Route::post('/comments/replies/get', 'CommentsController@reply_get');
 
 
 Route::post('/comments/replies/create', 'ReplysController@store')->name('replies.store');
 Route::post('/comments/replies/{reply}', 'ReplysController@destroy')->name('replies.destroy');
 Route::post('/comments/replies/update/{reply}', 'ReplysController@update')->name('replies.update');
-// Route::post('/comments/replies/get', 'ReplysController@get');
+Route::post('/comments/replies/get/{reply}', 'ReplysController@get_reply');
 
 
 Route::get('/notifications/index', 'NotificationsController@index')->name('notifications.index');

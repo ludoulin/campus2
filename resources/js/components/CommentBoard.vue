@@ -17,33 +17,37 @@
                 <span class="text-secondary"> • </span>
                 <span class="meta text-secondary" :title="comment.created_at">{{ moment(comment.created_at).fromNow()}}</span>
                 
-                <div class="float-right" v-if="board">
+                <div class="float-right" v-if="auth_check!==0">
                 <span class="meta" v-if="author==user_id&&the_reply!==comment.id">
                       <button @click="open_reply(comment)" class="btn btn-primary btn-xs pull-left">
-                      <i class="fas fa-reply"></i>
+                      <i class="fas fa-reply mr-2"></i>回覆
                       </button>
                 </span>    
-                <span class="meta" v-if="comment.user_id== user_id&&the_switch!==comment.id">
+                <span class="meta" v-if="comment.user_id==user_id&&the_switch!==comment.id">
                       <button @click="open(comment)" class="btn btn-success btn-xs pull-left">
-                        <i class="far fa-edit"></i>
+                        <i class="far fa-edit mr-2"></i>編輯
                       </button>
                 </span>
                 <span class="meta" v-if="comment.user_id== user_id&&the_switch!==comment.id||author==user_id&&the_reply!==comment.id">
                       <button @click="deleteComment(comment)" class="btn btn-danger btn-xs pull-left">
-                        <i class="far fa-trash-alt"></i>
+                        <i class="far fa-trash-alt mr-2"></i>刪除
                       </button>
                 </span>
                 </div>
               </div>
+               <div class="media-heading mt-0 mb-1 text-secondary" v-if="the_switch==comment.id">
+                 <div class="row">
               <input
-                    @keyup.enter="editMessage(comment)"
                     v-model="edit_message"
-                    v-if="the_switch==comment.id"
                     type="text"
                     name="message"
                     placeholder="Enter your message..."
                     class="form-control input_style">
-              <span v-if="the_switch==comment.id" @click="edit_cancel(comment)">取消</span>
+                 <button class="btn btn-primary btn-xs pull-left ml-3" @click="editMessage(comment)">儲存</button>     
+                 <button class="btn btn-secondary btn-xs pull-left ml-3" @click="edit_cancel(comment)">取消</button>     
+                <!-- <span v-if="the_switch==comment.id" @click="edit_cancel(comment)">取消</span> -->
+                 </div>
+               </div>
               <div class="reply-content text-secondary" v-if="the_switch!==comment.id" >
                 {{comment.content}}
             </div>
@@ -54,12 +58,12 @@
           <div class="user-reply" role="textbox" contenteditable style="outline: none; background:gray">
           </div>
           </div> -->
-          <reply-board :comment_id="comment.id" :reply_auth_avatar="auth_check.avatar" @send="sendReply" @reply_cancel="cancelReply" :open="the_reply"></reply-board>
+          <reply-board :reply_comment="comment"  :reply_user="auth_check" :product_author="author" @send="sendReply" @reply_delete="deleteReply" @reply_cancel="cancelReply" :open="the_reply" :replies="comment.replies"></reply-board>
           
           
         </div>
       </ul>
-    <div class="reply-box" v-if="board">
+    <div class="reply-box" v-if="auth_check!==0">
         <div class="form-group">
       <textarea class="form-control" v-model="message" rows="3" placeholder="請在此輸入您的提問，賣家將會回覆您的提問~"></textarea>
     </div>
@@ -79,7 +83,6 @@
         moment:moment,
         message: "",
         auth_check: this.auth,
-        board:false,
         user_id:this.auth!==0?this.auth.id:0,
         author:this.product_data.seller_id,
         product_id:this.product_data.id,
@@ -95,15 +98,12 @@
                     return;
                 }
                 
-                console.log(123);
-
                 axios.post("http://localhost/campus2/public/comments/create", {
                     product_id: this.product_id,
                     content: this.message
                 }).then((response) => {
                         this.message = '';
                         this.comments = response.data;
-                        console.log(456);
                     });
 
             },
@@ -111,10 +111,6 @@
                     this.the_switch = comment.id;
                     // Remove my-component from the DOM
                     this.edit_message = comment.content;
-
-                    // this.$nextTick(() => {
-                    //     // Add the component back in
-                    //  this.edit_message = '';
             },
         editMessage(comment){
               if(this.edit_message.trim().length == 0){
@@ -144,36 +140,34 @@
             this.the_reply = comment.id;
         },  
         sendReply(data){
-            //  if (this.reply_message == '') {
-            //         return;
-            //     }
-                
-                console.log(123);
-
+           
                 axios.post("http://localhost/campus2/public/comments/replies/create", {
                     comment_id: data.id,
                     product_id: this.product_id,
                     reply_content: data.text,
                 }).then((response) => {
-                        // this.reply_message = '';
+        
                         this.the_reply = false;
                         this.comments = response.data;
-                        console.log(456);
+  
                     });
+        },
+        deleteReply(ids){
+
+            axios.post(`http://localhost/campus2/public/comments/replies/${ids.id}`, {
+                    id: ids.id,
+                    product_id: ids.product_id,
+                }).then((response) => {
+                        this.comments = response.data;
+                    });
+
+
         },
         cancelReply(close){
            
            this.the_reply = close;
 
         },    
-        board_check(){
-            if(this.auth_check!==0){
-                this.board = true ;
-
-            }else{
-                 this.board = false;
-            }
-       },
        deleteComment(comment){
            axios.post(`http://localhost/campus2/public/comments/${comment.id}`, {
                     id:comment.id,
@@ -184,9 +178,6 @@
                     });
        }
     },
-   mounted(){
-       this.board_check();
-   }
 }
 </script>
 <style lang="scss" scoped>
@@ -231,3 +222,12 @@ cursor: pointer;
             </div>
              <hr> 
            </div>  -->
+
+  <!-- board_check(){
+    if(this.auth_check!==0){
+        this.board = true ;
+
+        }else{
+            this.board = false;
+             }
+       }  -->         

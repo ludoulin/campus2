@@ -19,7 +19,9 @@ class ReplysController extends Controller
         $reply->save();
 
 
-        $replies = Reply::where('comment_id',$request->comment_id)->with('user','comment')->get();
+        // $replies = Reply::where('comment_id',$request->comment_id)->with('user')->get();
+
+        $replies = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
 
         return response()->json($replies);
     }
@@ -30,7 +32,7 @@ class ReplysController extends Controller
 
         $this->authorize('update', $reply);
 
-        Reply::where('id',$request->id)->update(['reply_content' => $request->reply_content ]);
+        Reply::where('id',$request->id)->update(['reply_content' => $request->content ]);
 
         $update_comment = Reply::where('id',$request->id)->value('reply_content');
 
@@ -49,18 +51,17 @@ class ReplysController extends Controller
         Reply::where('id',$request->id)->delete();
         
 
-        $replies = Reply::where('comment_id',$request->comment_id)->with('user','comment')->get();
+        $replies = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
 
         return response()->json($replies);
 
     }
 
-    // public function get(Request $request)    
-    // {
-    //     $reply = Reply::findOrFail($request->id);
+    public function get_reply(Request $request)
+    {
+        $reply = Reply::where('id', $request->reply_id)->value('reply_content');
 
-
-    //     return response()->json($reply);
-    // }
+        return response()->json($reply);
+    }
 
 }

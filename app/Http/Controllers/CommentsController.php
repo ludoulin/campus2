@@ -30,7 +30,7 @@ class CommentsController extends Controller
         $comment->save();
 
 
-        $comments = Comment::where('product_id',$request->product_id)->with('user')->get();
+        $comments = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
 
         
         return response()->json($comments);
@@ -65,7 +65,7 @@ class CommentsController extends Controller
         
         // $comment->delete();
 
-        $comments = Comment::where('product_id',$request->product_id)->with('user')->get();
+        $comments = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
 
         return response()->json($comments);
 
@@ -80,12 +80,4 @@ class CommentsController extends Controller
         return response()->json($comment);
     }
 
-    public function reply_get(Request $request){
-
-    // $replies = Comment::where('id', $request->id)->with('replies')->get();
-
-    $replies = Reply::where('comment_id', $request->id)->with('user')->get();
-
-    return response()->json($replies);
-    }
 }
