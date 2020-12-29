@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Reply;
 
 class ProductObserver
 {
@@ -15,6 +16,8 @@ class ProductObserver
         // \DB::table('replies')->where('product_id', $product->id)->delete();
         
         Comment::where('product_id', $product->id)->delete();
+
+        Reply::where('product_id', $product->id)->delete();
     }
 
 }

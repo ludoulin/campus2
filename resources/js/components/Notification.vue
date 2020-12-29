@@ -35,13 +35,9 @@
             console.log(this.Notifications);
 
          }else{
-            console.log("abc");
 
             console.log(this.notification_count);
 
-            console.log(this.unreadNotifications);
-
-             console.log(this.Notifications);
          }
      }
   },
@@ -50,20 +46,39 @@
    Echo.private('App.Models.User.' + this.userid)
      .notification((notification) => {
        console.log(notification);
-       let newunreadNotifications = {
-         id:notification.id, 
-         data:{
-            reply_id: notification.reply_id,
-            reply_content: notification.reply_content,
-            user_id: notification.user_id,
-            user_name: notification.user_name,
-            user_avatar: notification.user_avatar,
-            product_link: notification.product_link,
-            product_id: notification.product_id,
-            product_name:notification.product_name,
-         },
-         read_at:null
+       let newunreadNotifications;
+       if(notification.hasOwnProperty('comment_reply_id')){
+          newunreadNotifications = {
+            id:notification.id, 
+            data:{
+                comment_reply_id: notification.comment_reply_id,
+                content:notification.content,
+                user_id: notification.user_id,
+                user_name: notification.user_name,
+                user_avatar: notification.user_avatar,
+                product_link: notification.product_link,
+                product_id: notification.product_id,
+                product_name:notification.product_name,
+               },
+               read_at:null
          };
+           console.log(newunreadNotifications);
+       }else{
+            newunreadNotifications = {
+               id:notification.id, 
+               data:{
+                      reply_id: notification.reply_id,
+                      reply_content: notification.reply_content,
+                      user_id: notification.user_id,
+                      user_name: notification.user_name,
+                      user_avatar: notification.user_avatar,
+                      product_link: notification.product_link,
+                      product_id: notification.product_id,
+                      product_name:notification.product_name,
+                    },
+                     read_at:null
+                  };
+            }
       //  this.unreadNotifications.push(newunreadNotifications);
        this.unreadNotifications.splice(0,0,newunreadNotifications);
        this.notification_count++

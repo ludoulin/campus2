@@ -8,7 +8,7 @@
           </a>
         </div>
       
-        <div class="media-body">
+        <div class="media-body" v-if="unread.data.hasOwnProperty('reply_id')==true">
           <div class="media-heading mt-0 mb-1 text-secondary">
             <a>{{ unread.data.user_name }}</a>
             回覆了您的
@@ -18,6 +18,19 @@
             {{unread.data.reply_content}}
           </div>
         </div>
+
+        <div class="media-body" v-if="unread.data.hasOwnProperty('comment_reply_id')==true">
+          <div class="media-heading mt-0 mb-1 text-secondary">
+            <a>{{ unread.data.user_name }}</a>
+            回覆了您在
+            <a >{{ unread.data.product_name }}</a>
+            底下的留言
+          </div>
+          <div class="reply-content">
+            {{unread.data.content}}
+          </div>
+        </div>
+
     </div>
 </div>
 <hr>
@@ -29,7 +42,7 @@
     data(){
       return{
         image:this.unread.data.user_avatar,
-        url:this.unread.data.product_link
+        url:this.unread.data.product_link,
       }
     },
     methods:{

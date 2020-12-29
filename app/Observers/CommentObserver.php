@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Comment;
+use App\Models\Reply;
 use App\Notifications\ProductReplied;
 
 class CommentObserver
@@ -15,7 +16,7 @@ class CommentObserver
         
         $comment->product->updateCommentCount();
 
-        // \Debugbar::info($comment->product->user);
+        // \Debugbar::info($comment->product->user->id);
 
         // $comment->product->user->notify(new ProductReplied($comment));
 
@@ -23,15 +24,13 @@ class CommentObserver
 
     }
 
-    // public function saved(Comment $comment){
-
-    //     \Debugbar::info($comment->product->user->notify(new ProductReplied($comment)));
-    // }
 
     public function deleted(Comment $comment)
     {
         $comment->product->updateCommentCount();
-    }
 
+        Reply::where('comment_id', $comment->id)->delete();
+
+    }
 
 }
