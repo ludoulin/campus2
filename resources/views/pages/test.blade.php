@@ -6,105 +6,74 @@
 @endsection
 
 @section('content')
-<div class="container department-list">
-
-<div class="row">
-
-<div class="col-xl-4 col-lg-6 col-md-6 department" data-toggle="modal" data-target="#myModal12">電資學院</div>
-
-<div class="modal fade" id="myModal12" role="dialog">
-	<div class="modal-dialog" style="min-width:600px">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header" style="background: #0071bc;color: #fff;text-align: left;border-top-left-radius: 4px;
-    border-top-right-radius: 4px;">
-				<h4 class="modal-title" style="font-size: 20px;font-family: roboto;">Agreement</h4>
+<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-lg-4 g-mb-30">
+			  <article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+				<img class="d-inline-block img-fluid mb-4" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
+				<h4 class="h5 g-color-black g-font-weight-600 g-mb-10">Product name</h4>
+				<span class="d-block g-color-primary g-font-size-16 g-mb-10">$50.00</span>
+				<button type="button" class="btn btn-primary">Primary</button>
+				<button type="button" class="btn btn-secondary">Secondary</button>
+				<button type="button" class="btn btn-success">Success</button>
+			  </article>
 			</div>
-			<div class="modal-body">
-				<p style="font-size: 14px;color: #4a4747;font-family: roboto;line-height: 23px;margin-bottom: 0px;padding: 0px 15px 0px;height: 200px;overflow-y: scroll;text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-				<div class="text-center">
-				</div>
+			
+			<div class="col-md-6 col-lg-4 g-mb-30">
+			  <article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+				<img class="d-inline-block img-fluid mb-4" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Image Description">
+				<h4 class="h5 g-color-black g-font-weight-600 g-mb-10">Product name</h4>
+				<span class="d-block g-color-primary g-font-size-16">$50.00</span>
+				<button type="button" class="btn btn-primary">Primary</button>
+				<button type="button" class="btn btn-secondary">Secondary</button>
+				<button type="button" class="btn btn-success">Success</button>
+			  </article>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			
+			<div class="col-md-6 col-lg-4 g-mb-30">
+			  <article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+				<img class="d-inline-block img-fluid mb-4" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Image Description">
+				<h4 class="h5 g-color-black g-font-weight-600 g-mb-10">Product name</h4>
+				<span class="d-block g-color-primary g-font-size-16">$50.00</span>
+				<button type="button" class="btn btn-primary">Primary</button>
+				<button type="button" class="btn btn-secondary">Secondary</button>
+				<button type="button" class="btn btn-success">Success</button>
+			  </article>
 			</div>
-    </div>
+			<div class="col-md-6 col-lg-4 g-mb-30">
+					<article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+					  <img class="d-inline-block img-fluid mb-4" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
+					  <h4 class="h5 g-color-black g-font-weight-600 g-mb-10">Product name</h4>
+					  <span class="d-block g-color-primary g-font-size-16">$50.00</span>
+					  <button type="button" class="btn btn-primary">Primary</button>
+					  <button type="button" class="btn btn-secondary">Secondary</button>
+					  <button type="button" class="btn btn-success">Success</button>
+					</article>
+				  </div>
+				  
+				  <div class="col-md-6 col-lg-4 g-mb-30">
+					<article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+					  <img class="d-inline-block img-fluid mb-4" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Image Description">
+					  <h4 class="h5 g-color-black g-font-weight-600 g-mb-10">Product name</h4>
+					  <span class="d-block g-color-primary g-font-size-16">$50.00</span>
+					  <button type="button" class="btn btn-primary">Primary</button>
+					  <button type="button" class="btn btn-secondary">Secondary</button>
+					  <button type="button" class="btn btn-success">Success</button>
+					</article>
+				  </div>
+				  
+				  <div class="col-md-6 col-lg-4 g-mb-30">
+					<article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
+					  <img class="d-inline-block img-fluid mb-4" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Image Description">
+					  <h4 class="h5 g-color-black g-font-weight-600 g-mb-10">Product name</h4>
+					  <span class="d-block g-color-primary g-font-size-16">$50.00</span>
+					  <button type="button" class="btn btn-primary">Primary</button>
+					  <button type="button" class="btn btn-secondary">Secondary</button>
+					  <button type="button" class="btn btn-success">Success</button>
+					</article>
+				  </div>
+		</div>
 	</div>
-</div>
-
-
-<div class="col-xl-4 col-lg-6 col-md-6 department2" data-toggle="modal" data-target="#myModal2">電資學院</div>
-
-<div class="modal fade" id="myModal2" role="dialog">
-	<div class="modal-dialog" style="min-width:1200px">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header" style="background: #0071bc;color: #fff;text-align: left;border-top-left-radius: 4px;
-    border-top-right-radius: 4px;">
-				<h4 class="modal-title" style="font-size: 20px;font-family: roboto;">Agreement</h4>
-			</div>
-			<div class="modal-body">
-				<p style="font-size: 14px;color: #4a4747;font-family: roboto;line-height: 23px;margin-bottom: 0px;padding: 0px 15px 0px;height: 200px;overflow-y: scroll;text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-				<div class="text-center">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-    </div>
-  </div>
-</div>
-
-<div class="col-xl-4 col-lg-6 col-md-6 department" data-toggle="modal" data-target="#myModal12">電資學院</div>
-
-<div class="modal fade" id="myModal12" role="dialog">
-	<div class="modal-dialog" style="min-width:600px">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header" style="background: #0071bc;color: #fff;text-align: left;border-top-left-radius: 4px;
-    border-top-right-radius: 4px;">
-				<h4 class="modal-title" style="font-size: 20px;font-family: roboto;">Agreement</h4>
-			</div>
-			<div class="modal-body">
-				<p style="font-size: 14px;color: #4a4747;font-family: roboto;line-height: 23px;margin-bottom: 0px;padding: 0px 15px 0px;height: 200px;overflow-y: scroll;text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-				<div class="text-center">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-    </div>
-	</div>
-</div>
-
-<div class="col-xl-4 col-lg-6 col-md-6 department2" data-toggle="modal" data-target="#myModal2">電資學院</div>
-
-<div class="modal fade" id="myModal2" role="dialog">
-	<div class="modal-dialog" style="min-width:1200px">
-
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header" style="background: #0071bc;color: #fff;text-align: left;border-top-left-radius: 4px;
-    border-top-right-radius: 4px;">
-				<h4 class="modal-title" style="font-size: 20px;font-family: roboto;">Agreement</h4>
-			</div>
-			<div class="modal-body">
-				<p style="font-size: 14px;color: #4a4747;font-family: roboto;line-height: 23px;margin-bottom: 0px;padding: 0px 15px 0px;height: 200px;overflow-y: scroll;text-align: justify;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-				<div class="text-center">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-    </div>
-  </div>
-</div>
-
-</div>
-</div>
 @endsection
 
 @section('script')

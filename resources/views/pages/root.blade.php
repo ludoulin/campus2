@@ -127,9 +127,23 @@
    <h2><i class="fas fa-university mr-2"></i>哪個是你的學院呢</h2>
      <div class="row">  
       @foreach ($colleges as $key => $college)
-         @if($key==0)
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/ccme.png')}}')"></div></div>
-        @elseif($key==1)
+        @php
+          if ($key === 0)
+            $img = asset('images/ccme.png');
+          else if($key === 1)
+            $img = asset('images/eng.png');
+          else if($key === 2)
+            $img = asset('images/mange.png');
+          else if($key === 3)
+            $img = asset('images/design.png');
+          else if($key === 4)
+            $img = asset('images/hm.png');
+          else if($key === 5)
+             $img = asset('images/eecs.png')
+        @endphp
+         {{-- @if($key==0) --}}
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{$img}}')"></div></div>
+        {{-- @elseif($key==1)
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/eng.png')}}')"></div></div>
         @elseif($key==2)
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/mange.png')}}')"></div></div>
@@ -138,8 +152,8 @@
         @elseif($key==4)
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/hm.png')}}')"></div></div>
         @elseif($key==5)
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/eecs.png')}}')"></div></div>
-        @endif
+        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/eecs.png')}}')"></div></div> --}}
+        
         <div class="modal fade" id="{{$college->id}}" role="dialog">
             <div class="modal-dialog inner-dialog">
         
@@ -195,9 +209,11 @@
                   <i class="fas fa-plus mr-2"></i>
                     加入購物車
                 </a>
-                <a class="product-card__icon-btn" href="#">
-                  <i class="fas fa-heart"></i>
-                </a>
+                <favorite-circle
+                  :login="{{ Auth::check() ? 1 : 0 }}"
+                  :product={{ $product->id }}
+                  :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}
+                ></favorite-circle>
               </div>
             </div>
           </div>
@@ -227,9 +243,11 @@
                       <i class="fas fa-plus mr-2"></i>
                         加入購物車
                     </a>
-                    <a class="product-card__icon-btn" href="#">
-                      <i class="fas fa-heart"></i>
-                    </a>
+                    <favorite-circle
+                    :login="{{ Auth::check() ? 1 : 0 }}"
+                    :product={{ $product->id }}
+                    :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}
+                    ></favorite-circle>
                   </div>
                 </div>
               </div>

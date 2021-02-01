@@ -1,25 +1,26 @@
 @media (min-width: 0) {
   .g-mb-30 {
-      margin-bottom: 2.14286rem !important;
+    margin-bottom: 2.14286rem !important;
   }
 }
 
 @media (min-width: 0) {
   .g-py-40 {
-      padding-top: 2.85714rem !important;
-      padding-bottom: 2.85714rem !important;
+    padding-top: 2.45714rem !important;
+    padding-bottom: 2.85714rem !important;
   }
 }
 
 @media (min-width: 0) {
   .g-px-20 {
-      padding-left: 1.42857rem !important;
-      padding-right: 1.42857rem !important;
+    padding-left: 1.42857rem !important;
+    padding-right: 1.42857rem !important;
   }
 }
-@media (min-width: 0){
+
+@media (min-width: 0) {
   .g-mb-5 {
-      margin-bottom: 0.35714rem !important;
+    margin-bottom: 0.35714rem !important;
   }
 }
 
@@ -54,3 +55,18 @@
 .g-font-weight-600 {
   font-weight: 600 !important;
 }
+
+.img {
+  display: block;
+  width: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 300px;
+}
+
+.feature {
+  justify-content: center;
+  width: 100%;
+}
+

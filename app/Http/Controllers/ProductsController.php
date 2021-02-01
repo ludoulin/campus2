@@ -212,5 +212,18 @@ class ProductsController extends Controller
 		return redirect()->route('root')->with('success', '成功刪除');
     }
     
+    public function favoriteProduct(Product $product)
+    {
 
+        Auth::user()->favorites()->attach($product->id);
+
+        return back();
+    }
+
+    public function unFavoriteProduct(Product $product)
+    {
+        Auth::user()->favorites()->detach($product->id);
+
+        return back();
+    }
 }

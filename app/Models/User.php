@@ -13,6 +13,9 @@ class User extends Authenticatable implements MustVerifyEmailContract
 {
     use MustVerifyEmailTrait;
 
+    //記錄最後登入時間
+    use Traits\LastActivedAtHelper;
+
 
     use Notifiable {
         notify as protected laravelNotify;
@@ -103,6 +106,11 @@ class User extends Authenticatable implements MustVerifyEmailContract
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function favorites()
+    {
+    return $this->belongsToMany(Product::class, 'favorites', 'user_id', 'product_id')->withTimeStamps();
     }
     
     public function isAuthorOf($model)

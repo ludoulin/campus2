@@ -36,6 +36,9 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CheckBanned::class,
+
+            // 紀錄使用者最後登入時間
+            \App\Http\Middleware\RecordLastActivedTime::class,
         ],
 
         'api' => [

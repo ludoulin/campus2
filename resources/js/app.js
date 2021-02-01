@@ -10,6 +10,11 @@ window.Vue = require('vue');
 
 
 let moment = require('moment');
+
+
+const swal = (window.swal = require("sweetalert2"));
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -27,6 +32,10 @@ Vue.component('chat-app', require('./components/ChatApp.vue').default);
 Vue.component('notification-app', require('./components/Notification.vue').default);
 Vue.component('comment-board', require('./components/CommentBoard.vue').default);
 Vue.component('reply-board', require('./components/ReplyBoard.vue').default);
+Vue.component('favorite-circle', require('./components/FavoriteCircle.vue').default);
+Vue.component('favorite-button', require('./components/FavoriteButton.vue').default);
+Vue.component('my-favorite', require('./components/MyFavorite.vue').default);
+Vue.component('auto-search', require('./components/AutoSearch.vue').default);
 
 
 import VueChatScroll from 'vue-chat-scroll'

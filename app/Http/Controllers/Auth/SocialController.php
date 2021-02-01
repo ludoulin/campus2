@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Str ;
 use App\Models\User as UserEloquent;
 use App\Models\SocialUser as SocialUserEloquent;
@@ -16,6 +17,8 @@ use Socialite;
 
 class SocialController extends Controller
 {
+    use AuthenticatesUsers;
+
     public function __construct(){
         $this->middleware('guest');
     }
@@ -85,7 +88,8 @@ class SocialController extends Controller
 
         if(!is_null($login_user)){
             Auth::login($login_user);
-            return Redirect::route('root')->with('success', '您已成功登入！');
+            return $this->authenticated($request, $this->guard()->user())
+            ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
         }
         return App::abort(500);
     }
