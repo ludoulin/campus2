@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Handlers\ImageUploadHandler;
+use Auth;
 
 class UsersController extends Controller
 {
@@ -46,5 +47,12 @@ class UsersController extends Controller
 
         $user->update($data);
         return redirect()->route('users.show', $user->id)->with('success', '個人資料更新成功！');
+    }
+
+    public function myfavorites(User $user){
+
+        $myfavorites = Auth::user()->favorites;
+
+        return view('users.favorites', compact('myfavorites','user'));
     }
 }

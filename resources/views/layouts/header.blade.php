@@ -4,6 +4,11 @@
     <a class="navbar-brand " href="{{ url('/') }}">
       校園二手書交易平台
     </a>
+    {{-- <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="搜尋商品、賣家" aria-label="Search" style="width: 400px">
+      <button class="btn btn-success my-2 my-sm-0" type="submit">搜尋</button>
+    </form> --}}
+    <auto-search></auto-search>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -31,6 +36,7 @@
               @if(!Auth::user()->is_admin)
               <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">個人中心</a>
               <a class="dropdown-item" href="{{ route('users.edit', Auth::id()) }}">編輯資料</a>
+              <a class="dropdown-item" href="{{ route('users.favorite', Auth::id()) }}">收藏商品</a>
               <div class="dropdown-divider"></div>
               @endif
               <a class="dropdown-item" id="logout" href="#">
@@ -41,7 +47,7 @@
               </a>
             </div>
           </li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}" ><i class="fas fa-book"></i>我要賣書</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}" ><i class="fas fa-book mr-2"></i>我要賣書</a></li>
           <li class="nav-item"><a class="nav-link" href=""><i class="fas fa-cart-plus"></i></a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('users.home') }}"><i class="fab fa-facebook-messenger"></i></a></li>
           <li class="dropdown message">

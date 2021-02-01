@@ -219,7 +219,7 @@
     allowClear: true
     }).next().hide();
 
-    const max_input = 5;
+    const max_input = 6;
 
     let y = $('.count').length;
 

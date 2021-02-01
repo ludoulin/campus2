@@ -1,10 +1,3 @@
-{{-- @php
-  if(Auth::check()) {
-      $AuthUser = 1;
-    }else{
-      $AuthUser = 0;
-    }
-@endphp  --}}
 @extends('layouts.basic')
 
 @section('basic')
@@ -13,7 +6,7 @@
 @endsection
 
 @section('content')
-<div class="container product">
+<div class="container my-3 product">
   <div class="row">
       <div class="col-xl-6 col-lg-6 col-md-6 left">
           <div class="big-image ">
@@ -50,7 +43,7 @@
               </div>
               <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">ISBN：XXXXXXX</p>
               <p class="mb-3 mt-2" style="font-size:18px;color:#ff5353">二手價：<b style="font-size:22px">NT${{ $product->price }}</b></p>
-              <p class="mb-3 mt-2" style="font-size:16px">書況：  {!! $product->content !!}</p>
+              <p class="mb-3 mt-2" style="font-size:16px">書況：{!! $product->content !!}</p>
               <hr>
               <div class="mb-3 mt-2" style="font-size:16px">
                   <p>可付款方式：</p>
@@ -71,7 +64,9 @@
               </div>
                @if($product->user->id!==Auth::id())     
               <hr class="hr-text" data-content="決定一下吧！">
-              <div><button type="button" class="btn save"><i class="far fa-heart pr-2"></i>加入收藏</button></div>
+              <favorite-button :login="{{ Auth::check() ? 1 : 0 }}"
+                :product={{ $product->id }}
+                :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}></favorite-button>
               <div><button type="button" class="btn cart"><i class="fas fa-shopping-cart pr-2"></i>加入購物車</button></div>
               <div class="mt-2"><button type="button" class="btn buy">立即購買</button></div>
               @endif
@@ -102,7 +97,7 @@
         </div>
         <div class="user-name">
           <p>賣家:{{ $product->user->name }}</p>
-          <p class="text-muted">x小時前上線</p>
+          <p class="text-muted">{{$product->user->last_actived_at->diffForHumans()}}上線</p>
         </div>
         <div class="user-contact">
             <a href="{{route('users.show', $product->user->id) }}" class="btn btn-outline-dark" role="button">
@@ -116,18 +111,11 @@
       </div>
      {{-- <<------留言板------->>  --}}
      <h4 class="mt-3">買賣回答</h4>
-      {{-- <div class="col-lg-12 col-lg-12 col-md-12 card mt-3 product-comment">
-          <div class="card-body">
-              @include('product.comment_list', ['comments' => $product->comments()->with('user')->get()])
-              @includeWhen(Auth::check(), 'product.comment_box', ['product' => $product])
-          </div>
-      </div>  --}}
       <div class="col-lg-12 col-lg-12 col-md-12 card mt-3 product-comment">
           <div class="card-body">
           <comment-board 
           :_comments="{{$product->comments()->with(['user','replies'=> function($query){$query->with("user");}])->get()}}" 
-          :product_data="{{$product}}" :auth="{{Auth::check()?Auth::user():0}}"
-           >
+          :product_data="{{$product}}" :auth="{{Auth::check()?Auth::user():0}}">
          </comment-board>
           </div>
       </div> 

@@ -142,6 +142,10 @@ a{
       font-size:13px;
   }
 }
+.autoplay,.rank_autoplay a:focus{
+  outline:none;
+  box-shadow: none;
+}
 .slick-prev::before, .slick-next::before {
   font-family: FontAwesome;
 }

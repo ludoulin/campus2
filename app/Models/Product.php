@@ -7,6 +7,7 @@ use App\Models\ProductTag;
 use App\Models\Comment;
 use App\Models\Reply;
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Product extends Model
 {
@@ -41,6 +42,19 @@ class Product extends Model
     public function visits()
     {
         return visits($this);
+    }
+
+    // public function favorited()
+    // {
+    // return (bool) Favorite::where('user_id', Auth::id())
+    //                     ->where('product_id', $this->id)
+    //                     ->first();
+    // }
+
+    public function favorited(){
+
+
+        return $this->belongsToMany(User::class, 'favorites', 'product_id' , 'user_id')->withPivot('user_id')->wherePivot('user_id', Auth::id());
     }
 
     public function link($params  = [])

@@ -122,6 +122,19 @@
                 background-color: #D9534F;
             }
         }
+        .saved{
+            transition: all .3s ease;
+            border-radius: 50px;
+            width: 48%;
+            float: left;
+            border: 2px solid #D9534F;
+            color: #fff;
+            background-color:#D9534F;
+                i{
+                    color:#fff;
+                }
+    
+    }
         .cart{
             transition: all .3s ease;
             border: 2px solid #191970;

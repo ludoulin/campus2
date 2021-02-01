@@ -132,6 +132,20 @@
   background-color: #D9534F;
 }
 
+.product .right .saved {
+  transition: all 0.3s ease;
+  border-radius: 50px;
+  width: 48%;
+  float: left;
+  border: 2px solid #D9534F;
+  color: #fff;
+  background-color: #D9534F;
+}
+
+.product .right .saved i {
+  color: #fff;
+}
+
 .product .right .cart {
   transition: all 0.3s ease;
   border: 2px solid #191970;
