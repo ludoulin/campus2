@@ -30,3 +30,5 @@ Route::get('/search', function(Request $request){
     $merged = $merged->merge($departments);
     return response()->json($merged);
    });
+
+

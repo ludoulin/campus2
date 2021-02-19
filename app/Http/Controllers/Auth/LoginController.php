@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\CartItem;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
-
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -62,10 +63,35 @@ class LoginController extends Controller
         if($user->is_admin){
            
             return redirect()->route('backend');
+
+        }else{
+
+            if (Session::has('cart'))
+            {
+                $carts = session()->get('cart');
+
+                foreach($carts as $cart){
+
+                    $id = $cart["product_id"];
+
+                    $result = CartItem::where('user_id', Auth::id())->where('product_id', $id)->count();
+                     
+                    if($result==0){
+                    
+                    $cart_item = new CartItem();
+                    $cart_item->product_id = $cart["product_id"];
+                    $cart_item->user_id = Auth::id();
+                    $cart_item->save();
+
+                    }
+                    
+                }
+            }
+
         }
-        
+
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
+        ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
                 
     }
 }

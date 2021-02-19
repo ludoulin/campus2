@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Str ;
 use App\Models\User as UserEloquent;
 use App\Models\SocialUser as SocialUserEloquent;
+use App\Models\CartItem;
+use Illuminate\Support\Facades\Session;
 use App;
 use Auth;
 use Config;
@@ -87,7 +89,35 @@ class SocialController extends Controller
 
 
         if(!is_null($login_user)){
+
+           
             Auth::login($login_user);
+
+            if (Session::has('cart'))
+            {
+                $carts = session()->get('cart');
+
+                foreach($carts as $cart){
+                    
+                    $id = $cart["product_id"];
+
+                    $result = CartItem::where('user_id', $login_user->id)->where('product_id', $id)->count();
+                     
+                    if($result==0){
+                    
+                    $cart_item = new CartItem();
+                    $cart_item->product_id = $cart["product_id"];
+                    $cart_item->user_id = $login_user->id;
+                    $cart_item->save();
+
+                    }
+                    
+                    
+                }
+
+            }
+
+
             return $this->authenticated($request, $this->guard()->user())
             ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
         }

@@ -19,7 +19,6 @@ a{
   color:inherit;
   text-decoration:none;
 }
-
 .product-card{
   position:relative;
   margin-bottom:26px;
@@ -66,7 +65,7 @@ a{
     color:$primary;
     box-shadow:0 2px 5px 2px rgba(0,0,0,.1);
     transition:transform .3s ease-in-out, color .3s ease-in-out, background-color .3s ease-in-out, box-shadow .3s ease-in-out;
-    @include hover-focus-active{
+    &:hover,&:focus,&:active{
       text-decoration:none;
       color:$white;
       background-color:darken($primary, 5%);
@@ -92,10 +91,10 @@ a{
     text-transform:uppercase;
     letter-spacing:2px;
     font-size:10px;
-    &:hover,&:focus,&:active{
+    @include hover-focus-active{
       text-decoration:none;
-      color:$white;
-      background-color:#0f61f4;
+      color:$primary;
+      background-color:$white;
       box-shadow:0 2px 10px 2px rgba(0,0,0,.1);
       transform:translateY(-3px);
     }
@@ -143,13 +142,10 @@ a{
       font-size:13px;
   }
 }
-
-  .rank_autoplay a:focus{
+.autoplay,.rank_autoplay a:focus{
   outline:none;
   box-shadow: none;
 }
-
-  
 .slick-prev::before, .slick-next::before {
   font-family: FontAwesome;
 }
@@ -171,44 +167,10 @@ a{
      background-color: red;
   }
 }
-
-.department-list{
-    min-height: 100%;
-  .college{
-    height: 360px;
+.department{
+    height: 280px;
     padding: 10px;
-    .inner-college{
-        color:#fff;
-        height: 100%;
-        border-radius: 10px;
-        padding: 10px;
-        background-position: center;
-        background-repeat:no-repeat;
-        background-size: 100% 100%;
-        cursor: pointer;
-      }
-  }
-  
-  .inner-dialog{
-    min-width:800px;
-
-    .inner-header{
-        background: #f1f2f4;
-        text-align: left;
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
-        .inner-title{
-            font-size: 20px;
-            font-family: roboto;
-        }
-    }
-    .modal-body{
-        overflow-y: scroll;
-        min-height: 100%;
-        .department{
-            height: 280px;
-            padding: 10px;
-            .inner-department{
+     .inner-department{
                 background-color: powderblue;
                 color:#fff;
                 height: 100%;
@@ -224,43 +186,9 @@ a{
                     top:30%
                 }
             }
-        }
-    }
-    .modal-footer{
-        background-color: #f1f2f4;
-    }
-
-  }
-
-
- }
-
- .news{
-   padding: 10px;
-   .inner-news{
-     background-color: #fff;
-     border-radius: 10px;
-     padding: 10px;
-   }
- }
+        }      
 
  @media screen and (max-width: 768px) {
-    .department-list{
-        min-height: 100%;
-
-      .college{
-        height: 250px;
-
-        .inner-college{
-            height: 240px;
-          }
-      }
-      .inner-dialog{
-        min-width:600px;
-
-        .modal-body{
-            overflow-y: scroll;
-            max-height: calc(100% - 120px);  
 
             .department{
                 height: 250px;
@@ -275,31 +203,11 @@ a{
                     }
                 } 
             } 
-        }
-      }
-    }
   }
 
 
   @media screen and (max-width: 576px) {
-    .department-list{
-        min-height: 100%;
-
-      .college{
-        height: 150px;
-
-        .inner-college{
-            height: 140px;
-          }
-      }
-
-      .inner-dialog{
-        min-width:270px;
-
-        .modal-body{
-            overflow-y: scroll;
-            max-height: calc(100% - 120px);  
-
+    
             .department{
                 height: 200px;
 
@@ -313,8 +221,6 @@ a{
                     }
                 } 
             } 
-        }
+        
 
-      }
-    }
   }

@@ -106,8 +106,8 @@ a {
 .product-card__btn:focus,
 .product-card__btn:active {
   text-decoration: none;
-  color: #fff;
-  background-color: #0f61f4;
+  color: #fb6969;
+  background-color: #fff;
   box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);
   transform: translateY(-3px);
 }
@@ -158,6 +158,7 @@ a {
   font-size: 13px;
 }
 
+.autoplay,
 .rank_autoplay a:focus {
   outline: none;
   box-shadow: none;
@@ -192,53 +193,12 @@ a {
   background-color: red;
 }
 
-.department-list {
-  min-height: 100%;
-}
-
-.department-list .college {
-  height: 360px;
-  padding: 10px;
-}
-
-.department-list .college .inner-college {
-  color: #fff;
-  height: 100%;
-  border-radius: 10px;
-  padding: 10px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  cursor: pointer;
-}
-
-.department-list .inner-dialog {
-  min-width: 800px;
-}
-
-.department-list .inner-dialog .inner-header {
-  background: #f1f2f4;
-  text-align: left;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-
-.department-list .inner-dialog .inner-header .inner-title {
-  font-size: 20px;
-  font-family: roboto;
-}
-
-.department-list .inner-dialog .modal-body {
-  overflow-y: scroll;
-  min-height: 100%;
-}
-
-.department-list .inner-dialog .modal-body .department {
+.department {
   height: 280px;
   padding: 10px;
 }
 
-.department-list .inner-dialog .modal-body .department .inner-department {
+.department .inner-department {
   background-color: powderblue;
   color: #fff;
   height: 100%;
@@ -249,58 +209,23 @@ a {
   cursor: pointer;
 }
 
-.department-list .inner-dialog .modal-body .department .inner-department p {
+.department .inner-department p {
   position: relative;
   font-size: 20px;
   text-align: center;
   top: 30%;
 }
 
-.department-list .inner-dialog .modal-footer {
-  background-color: #f1f2f4;
-}
-
-.news {
-  padding: 10px;
-}
-
-.news .inner-news {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 10px;
-}
-
 @media screen and (max-width: 768px) {
-  .department-list {
-    min-height: 100%;
-  }
-
-  .department-list .college {
+  .department {
     height: 250px;
   }
 
-  .department-list .college .inner-college {
+  .department .inner-department {
     height: 240px;
   }
 
-  .department-list .inner-dialog {
-    min-width: 600px;
-  }
-
-  .department-list .inner-dialog .modal-body {
-    overflow-y: scroll;
-    max-height: calc(100% - 120px);
-  }
-
-  .department-list .inner-dialog .modal-body .department {
-    height: 250px;
-  }
-
-  .department-list .inner-dialog .modal-body .department .inner-department {
-    height: 240px;
-  }
-
-  .department-list .inner-dialog .modal-body .department .inner-department p {
+  .department .inner-department p {
     position: relative;
     font-size: 16px;
     text-align: center;
@@ -309,36 +234,15 @@ a {
 }
 
 @media screen and (max-width: 576px) {
-  .department-list {
-    min-height: 100%;
-  }
-
-  .department-list .college {
-    height: 150px;
-  }
-
-  .department-list .college .inner-college {
-    height: 140px;
-  }
-
-  .department-list .inner-dialog {
-    min-width: 270px;
-  }
-
-  .department-list .inner-dialog .modal-body {
-    overflow-y: scroll;
-    max-height: calc(100% - 120px);
-  }
-
-  .department-list .inner-dialog .modal-body .department {
+  .department {
     height: 200px;
   }
 
-  .department-list .inner-dialog .modal-body .department .inner-department {
+  .department .inner-department {
     height: 190px;
   }
 
-  .department-list .inner-dialog .modal-body .department .inner-department p {
+  .department .inner-department p {
     position: relative;
     font-size: 14px;
     text-align: center;

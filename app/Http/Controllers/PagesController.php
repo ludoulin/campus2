@@ -16,11 +16,15 @@ class PagesController extends Controller
         // dd($products);
         $colleges = College::with('departments')->get();
         $most_views = $product->visits()->top(8);
+
+        
         return view('pages.root',compact('products','colleges','most_views','product'));
 
     }
 
     public function test(){
+
+        dd(123);
 
         return view('pages.test');
     }

@@ -27,9 +27,12 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;400&display=swap" rel="stylesheet">
   
+  
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+
 
   <script>
    window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),])!!};

@@ -16,20 +16,20 @@ export default {
                     title: '確定要取消收藏嗎?',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#d33',
+                    confirmButtonColor: '#DD6B55',
                     confirmButtonText: '確定!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                      axios.post('http://localhost/campus2/public/unfavorite/'+product)
-                          .then( Swal.fire('移除成功!', '', 'success')
+                          .then( Swal.fire('成功移除!', '', 'success')
                                      .then((result) => {
                                          if (result.isConfirmed) {
                                                 location.reload();    
-                                                } 
+                                          } 
                                      })
                           )
                           .catch(response => console.log(response.data));    
-                  }
+                    }
                 })
             }
         }

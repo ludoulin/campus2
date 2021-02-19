@@ -18,7 +18,7 @@ class ProductsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['show']]);
+        $this->middleware('auth', ['except' => ['addToCart','show','removeCart']]);
     }
     
     public function create(Product $product)
@@ -68,26 +68,15 @@ class ProductsController extends Controller
             {
                 foreach($request->file('images') as $image)
                 {
-                    // $filename=$image->getClientOriginalName();
-                    // $filepath = $image->move(public_path().'/product_image/'. $product->id, $filename);  // your folder path
-                    // $uploader->reduceSize($filepath, 416);
-                    // $data[] = $filename;  
-
                      $imagePath = Storage::disk('product_image')->put($product->id, $image);  // your folder path
-                    //  $product_image = new ProductImage;
-                    //  $product_image->path = config('app.url') . '/product_image/' .$imagePath;
-                    //  $product_image->product_id = $product->id;
-                    //  $product_image->save();
+        
                      ProductImage::create([
                         'path'=> '/product_image/' .$imagePath,
                         'product_id' => $product->id,
                         ]);
                 }
             }
-
-
-           
-         
+ 
         return redirect()->route('products.show', $product->id)->with('success', '新增成功');
     }
 
@@ -153,19 +142,10 @@ class ProductsController extends Controller
 
         }
         
-
-        
-
             // $this->validate(
             //     $request, 
             //  ['new_images' => 'required'],
             //  ['new_images.required' => 'this is my custom error message for required']);
-
-
-
-
-
-
 
         if(($request->hasfile('new_images')))
             {
@@ -180,8 +160,6 @@ class ProductsController extends Controller
             }
         
         
-            
-
             if($request->remove_images){
                 foreach($request->remove_images as $remove_image){
                     if(!empty($remove_image)){
@@ -226,4 +204,95 @@ class ProductsController extends Controller
 
         return back();
     }
+
+    public function addToCart(Request $request){
+        
+        $id = $request->id;
+
+        $product = Product::find($id);
+
+        if(!$product) {
+            abort(404);
+        }
+
+        if(!Auth::check()){
+ 
+        $cart = session()->get('cart');
+        // if cart is empty then this the first product
+        if(!$cart) {
+            $cart = [
+                    $id => [
+                        "name" => $product->name,
+                        "product_id" => $product->id,
+                        "seller_name" => $product->user->name,
+                        "price" => $product->price,
+                        "image" => $product->images[0]->path,
+
+                    ]
+            ];
+            session()->put('cart', $cart);
+
+             return "加入購物車成功";
+        }
+
+        if(isset($cart[$id])) {
+           
+            return "商品已存在於購物車";
+
+        }else{
+
+        // if item not exist in cart then add to cart with quantity = 1
+        $cart[$id] = [
+           "name" => $product->name,
+           "seller_name" => $product->user->name,
+           "price" => $product->price,
+           "image" => $product->images[0]->path,
+        ];
+        session()->put('cart', $cart);
+
+        return "加入購物車成功";
+    }
+
+        }else{
+
+            Auth::user()->cartitems()->attach($product->id);
+
+            return "登入狀態加入購物車成功";
+
+        }
+
+    }
+
+    public function removeCart(Request $request)
+    {
+        if(!Auth::check()){
+        if($request->id) {
+            $cart = session()->get('cart');
+            if(isset($cart[$request->id])) {
+                unset($cart[$request->id]);
+                session()->put('cart', $cart);
+            }
+            // session()->flash('success', 'Product removed successfully');
+        }
+        }else{
+
+            $id = $request->id;
+        
+            $product = Product::find($id);
+
+            Auth::user()->cartitems()->detach($product->id);
+
+            // return back();
+        }
+    }
 }
+
+                    // $filename=$image->getClientOriginalName();
+                    // $filepath = $image->move(public_path().'/product_image/'. $product->id, $filename);  // your folder path
+                    // $uploader->reduceSize($filepath, 416);
+                    // $data[] = $filename;
+
+                    //  $product_image = new ProductImage;
+                    //  $product_image->path = config('app.url') . '/product_image/' .$imagePath;
+                    //  $product_image->product_id = $product->id;
+                    //  $product_image->save();

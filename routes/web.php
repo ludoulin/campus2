@@ -16,6 +16,8 @@ Route::get('/', 'PagesController@root')->name('root');
 // Route::get('/search', 'PagesController@search');
 Route::get('/test', 'PagesController@test');
 
+Route::get('/search', 'SearchController@index')->name('search');
+
 
 // 用戶身份驗證相關路由
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -60,6 +62,7 @@ Route::delete('/admin/products/{product}', 'Backend\ProductsController@destroy')
 
 Route::get('/chathome', 'UsersController@index')->name('users.home');
 Route::get('/users/{user}/favorites', 'UsersController@myfavorites')->name('users.favorite');
+Route::get('/users/cart', 'UsersController@cart')->name('users.cart');
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
@@ -75,16 +78,19 @@ Route::post('/conversation/send', 'ContactsController@send');
 
 Route::get('/department/{department}', 'DepartmentController@show')->name('department.show');
 Route::get('/department/get/{id}', 'ProductsController@getDepartment');
+Route::get('/department/products/search','DepartmentController@search');
 
 Route::get('/products/create', 'ProductsController@create')->name('products.create');
 Route::post('/products/create', 'ProductsController@store')->name('products.store');
+Route::get('/products/add-to-cart', 'ProductsController@addToCart')->name('products.add');
 Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
 Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
 Route::patch('/products/{product}', 'ProductsController@update')->name('products.update');
 Route::delete('/products/{product}', 'ProductsController@destroy')->name('products.destroy');
 Route::delete('/products/product_images/{product_image}', 'ProductsController@imageremove')->name('image.destory');
-Route::post('/favorite/{product}', 'ProductsController@favoriteProduct');
+Route::middleware('auth')->post('/favorite/{product}', 'ProductsController@favoriteProduct');
 Route::post('/unfavorite/{product}', 'ProductsController@unFavoriteProduct'); 
+Route::delete('/remove-from-cart', 'ProductsController@removeCart');
 
 // Route::resource('comments', 'CommentsController', ['only' => ['store', 'update', 'edit', 'destroy']]);
 
