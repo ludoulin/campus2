@@ -45,7 +45,6 @@
                     class="form-control input_style">
                  <button class="btn btn-primary btn-xs pull-left ml-3" @click="editMessage(comment)">儲存</button>     
                  <button class="btn btn-secondary btn-xs pull-left ml-3" @click="edit_cancel(comment)">取消</button>     
-                <!-- <span v-if="the_switch==comment.id" @click="edit_cancel(comment)">取消</span> -->
                  </div>
                </div>
               <div class="reply-content text-secondary" v-if="the_switch!==comment.id" >
@@ -82,19 +81,25 @@
         comments:this._comments,
         moment:moment,
         message: "",
+        edit_message:"",
         auth_check: this.auth,
         user_id:this.auth!==0?this.auth.id:0,
         author:this.product_data.seller_id,
         product_id:this.product_data.id,
         the_switch:false,
-        edit_message:"",
         the_reply:false,
       }
     },
     methods:{
         sendMessage() {
-                
                 if (this.message == '') {
+                  swal.fire({
+                    title: '留言驗證錯誤',
+                    icon: 'error',
+                    confirmButtonText: '知道了嗎！？',
+                    allowOutsideClick: false,
+                    text: '請勿無填寫內容或是少於兩字下按下送出喔',
+                 });
                     return;
                 }
                 
@@ -104,7 +109,31 @@
                 }).then((response) => {
                         this.message = '';
                         this.comments = response.data;
+                    }).catch((error) => {
+                             if(error.response.status === 500){
+                                swal.fire({
+                                  icon: 'error',
+                                  title: '抱歉！此商品已售出或是下架',
+                                  text: '系統將在您按下確認後跳至首頁',
+                                  confirmButtonText: '確認',
+                                  allowOutsideClick: false,      
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    swal.fire({
+                                    title: '系統重新整理中,請稍候',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                      swal.showLoading()
+                                    },
+                                    willClose: () => {
+                                      window.location.href = '../'
+                                    }
+                              })
+                          }
                     });
+                }   
+           });;
 
             },
             open(comment){
@@ -114,7 +143,12 @@
             },
         editMessage(comment){
               if(this.edit_message.trim().length == 0){
-                  alert('內容都一定要填喔...');
+                   swal.fire({
+                    title: '回覆驗證錯誤',
+                    icon: 'error',
+                    text: '請勿無填寫內容或是少於兩字下按下送出!!',
+                    confirmButtonText: '知道了嗎！？',
+                 });
                   return
               }
 
@@ -124,9 +158,31 @@
                 }).then((response) => {
                         this.the_switch = false;
                         comment.content = response.data;
-                    });
-
-
+                    }).catch((error) => {
+                             if(error.response.status === 404){
+                                swal.fire({
+                                  icon: 'error',
+                                  title: '留言已遭刪除,所以無法進行編輯',
+                                  text: '系統在您按下確認後將自動重整',
+                                  confirmButtonText: '確認',
+                                  allowOutsideClick: false,      
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    swal.fire({
+                                    title: '系統重新整理中,請稍候',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                      swal.showLoading()
+                                    },
+                                    willClose: () => {
+                                      window.location.reload();
+                                    }
+                              })
+                          }
+                       });
+                    }
+                }); 
             },
         edit_cancel(comment){
                axios.post("http://localhost/campus2/public/comments/comment/get", {
@@ -146,22 +202,54 @@
                     product_id: this.product_id,
                     reply_content: data.text,
                 }).then((response) => {
-        
                         this.the_reply = false;
                         this.comments = response.data;
-  
+                    })
+                   .catch((error) => {
+                             if(error.response.status === 500){
+                                swal.fire({
+                                  icon: 'error',
+                                  title: '留言已遭刪除',
+                                  text: '系統將在您按下確認後進行自動重整',
+                                  confirmButtonText: '確認',
+                                  allowOutsideClick: false,      
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    swal.fire({
+                                    title: '系統重新整理中,請稍候',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                      swal.showLoading()
+                                    },
+                                    willClose: () => {
+                                      window.location.reload(); //代改
+                                    }
+                              })
+                          }
                     });
+                }
+           });
         },
         deleteReply(ids){
-
-            axios.post(`http://localhost/campus2/public/comments/replies/${ids.id}`, {
-                    id: ids.id,
-                    product_id: ids.product_id,
-                }).then((response) => {
+            
+            swal.fire({
+                    title: '確定要刪除此留言嗎?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                     axios.post(`http://localhost/campus2/public/comments/replies/${ids.id}`, {
+                            id: ids.id,
+                            product_id: ids.product_id,
+                          }).then((response) => {
                         this.comments = response.data;
-                    });
-
-
+                 });
+              }
+          });
         },
         cancelReply(close){
            
@@ -169,13 +257,47 @@
 
         },    
        deleteComment(comment){
-           axios.post(`http://localhost/campus2/public/comments/${comment.id}`, {
-                    id:comment.id,
-                    product_id: comment.product_id,
-
-                }).then((response) => {
+         swal.fire({
+                    title: '確定要刪除此留言嗎?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                     axios.post(`http://localhost/campus2/public/comments/${comment.id}`, {
+                          id:comment.id,
+                          product_id: comment.product_id,
+                      }).then((response) => {
                         this.comments = response.data;
-                    });
+                  }).catch((error) => {
+                             if(error.response.status === 404){
+                                swal.fire({
+                                  icon: 'error',
+                                  title: '留言已遭刪除',
+                                  text: '系統將在您按下確認後進行自動重整',
+                                  confirmButtonText: '確認',
+                                  allowOutsideClick: false,      
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    swal.fire({
+                                    title: '系統重新整理中,請稍候',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                      swal.showLoading()
+                                    },
+                                    willClose: () => {
+                                      window.location.reload();
+                                    }
+                              })
+                          }
+                       });
+                    }   
+                });  
+              }
+          });
        }
     },
 }

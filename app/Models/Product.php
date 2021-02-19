@@ -53,8 +53,12 @@ class Product extends Model
 
     public function favorited(){
 
-
         return $this->belongsToMany(User::class, 'favorites', 'product_id' , 'user_id')->withPivot('user_id')->wherePivot('user_id', Auth::id());
+    }
+
+    public function carted(){
+
+        return $this->belongsToMany(User::class, 'cart_items', 'product_id' , 'user_id')->withPivot('user_id')->wherePivot('user_id', Auth::id());
     }
 
     public function link($params  = [])

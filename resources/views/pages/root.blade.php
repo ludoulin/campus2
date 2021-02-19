@@ -141,18 +141,7 @@
           else if($key === 5)
              $img = asset('images/eecs.png')
         @endphp
-         {{-- @if($key==0) --}}
         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{$img}}')"></div></div>
-        {{-- @elseif($key==1)
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/eng.png')}}')"></div></div>
-        @elseif($key==2)
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/mange.png')}}')"></div></div>
-        @elseif($key==3)
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/design.png')}}')"></div></div>
-        @elseif($key==4)
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/hm.png')}}')"></div></div>
-        @elseif($key==5)
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 college" data-toggle="modal" data-target="#{{$college->id}}"><div class="inner-college" style="background-image: url('{{ asset('images/eecs.png')}}')"></div></div> --}}
         
         <div class="modal fade" id="{{$college->id}}" role="dialog">
             <div class="modal-dialog inner-dialog">
@@ -188,7 +177,7 @@
 </div>
 <div class="container my-3">
         <h2><i class="fas fa-meteor mr-2"></i>最新二手書</h2>
-    <div class="autoplay row">
+    <div class="rank_autoplay row">
          @foreach ($products as $product)
           <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-5">
             <div class="product-card h-100 mb-0">
@@ -205,10 +194,9 @@
                  </span>
               </a>
               <div class="product-card__actions">
-                <a class="product-card__btn mr-3" href="#">
-                  <i class="fas fa-plus mr-2"></i>
-                    加入購物車
-                </a>
+                 <cart-item
+                  :product={{ $product->id }}
+                  :carted={{ !$product->carted->isEmpty() ? 'true' : 'false' }}></cart-item>
                 <favorite-circle
                   :login="{{ Auth::check() ? 1 : 0 }}"
                   :product={{ $product->id }}
@@ -239,10 +227,9 @@
                      </span>
                   </a>
                   <div class="product-card__actions">
-                    <a class="product-card__btn mr-3" href="#">
-                      <i class="fas fa-plus mr-2"></i>
-                        加入購物車
-                    </a>
+                     <cart-item
+                      :product={{ $product->id }}
+                      :carted={{ !$product->carted->isEmpty() ? 'true' : 'false' }}></cart-item>
                     <favorite-circle
                     :login="{{ Auth::check() ? 1 : 0 }}"
                     :product={{ $product->id }}
@@ -254,54 +241,10 @@
               @endforeach
             </div>
           </div>
-
-
-     
 @endsection
 @section('script')
 <script>
    $(document).ready(function(){
-    $('.autoplay').slick({
-  arrows: true,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  autoplay: true,
-  autoplaySpeed: 7000,
-  responsive: [
-        {
-          breakpoint: 1200,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true
-          }
-        },
-        {
-          breakpoint: 576,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true
-          }
-        },
-      ]
-      });
       $('.rank_autoplay').slick({
         arrows: true,
         slidesToShow: 4,
@@ -343,6 +286,7 @@
         },
       ]
       });
+
     });
 </script>
 <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>

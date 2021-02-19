@@ -12,7 +12,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth',['except' => ['show']]);
+        $this->middleware('auth',['except' => ['cart','show']]);
     }
 
     public function index()
@@ -54,5 +54,22 @@ class UsersController extends Controller
         $myfavorites = Auth::user()->favorites;
 
         return view('users.favorites', compact('myfavorites','user'));
+    }
+
+    public function cart()
+    {
+        if(Auth::check()){
+
+        $mycarts= Auth::user()->cartitems;
+
+        return view('users.cart',compact('mycarts'));
+
+        }else{
+
+            return view('users.cart');
+
+        }
+
+    
     }
 }

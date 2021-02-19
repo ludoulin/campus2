@@ -73,10 +73,6 @@
                 })
             }
         },
-        // updated(){
-        //     this.yo();
-        //     console.log(this.contacts[0]);
-        // },
         components: {Conversation, ContactsList}
     }
 </script>

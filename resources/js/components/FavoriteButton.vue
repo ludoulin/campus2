@@ -7,7 +7,6 @@
     </div>
 </template>
 <script>
-let Swal = require("sweetalert2");
 export default {
         props: ['product', 'favorited', 'login'],
 
@@ -32,76 +31,130 @@ export default {
         methods: {
             favorite(product) {
                 if(this.auth === 0){
-                      Swal.fire({
-                                    icon: 'info',
-                                    title: '想收藏嗎？',
-                                    text: '那麻煩先登入喔!',
-                                    showCancelButton: true,
-                                    confirmButtonText: `先登入`,
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                      window.location.href = 'http://localhost/campus2/public/login'
-                                    } 
-                                });
+                      swal.fire({
+                        icon: 'info',
+                        title: '想收藏嗎？',
+                        text: '那麻煩先登入喔!',
+                        showCancelButton: true,
+                        cancelButtonText: '取消',
+                        confirmButtonText: `先登入`,
+                        }).then((result) => {
+                    if (result.isConfirmed) {
+                            window.location.href = 'http://localhost/campus2/public/login'
+                        } 
+                     });
                 }else{
-                    //     axios.post('http://localhost/campus2/public/favorite/'+product)
-                    //          .then(response => this.isFavorited = true)
-                    //          .catch((error) => {
-                    //             if(error.response.status === 401){
-                    //                 Swal.fire({
-                    //                 icon: 'error',
-                    //                 title: '想收藏嗎？',
-                    //                 text: '那麻煩先登入喔',
-                    //             });
-                    //     }
-                    // })
-
-                    Swal.fire({
+                    swal.fire({
                         icon: 'info',
                         title: '確定要收藏嗎?',
                         showCancelButton: true,
                         confirmButtonText: `收藏`,
+                        cancelButtonText: '取消',
                         }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
                         if (result.isConfirmed) {
                           axios.post('http://localhost/campus2/public/favorite/'+product)
-                               .then(response => this.isFavorited = true)
-                               .catch((error) => {
-                                if(error.response.status === 401){
-                                    Swal.fire({
-                                    icon: 'error',
-                                    title: '想收藏嗎？',
-                                    text: '那麻煩先登入喔',
-                                });
+                               .then((response) => { 
+                                   this.isFavorited = true;
+                                   swal.fire({
+                                            title: '收藏成功',
+                                            icon: 'success',
+                                            timer: 2000,
+                                            showConfirmButton: false
+                                        });
+                               }).catch((error) => {
+                                 switch(error.response.status){
+                                 case 401:
+                                      swal.fire({
+                                        icon: 'error',
+                                        title: '想收藏嗎？',
+                                        text: '那麻煩先登入喔',
+                                    });
+                                    break;
+                                case 404:
+                                     swal.fire({
+                                        icon: 'warning',
+                                        title: '商品已售出或下架',
+                                        text: '系統將在您按下確認後自動重整',
+                                        confirmButtonText: '確認',
+                                        allowOutsideClick: false,      
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                    swal.fire({
+                                                    title: '系統重新整理中,請稍候',
+                                                    timer: 2000,
+                                                    timerProgressBar: true,
+                                                    didOpen: () => {
+                                                    swal.showLoading()
+                                                    },
+                                                    willClose: () => {
+                                                    window.location.reload();
+                                                    }
+                                                })
+                                            }
+                                        });
+                                   break;
+                                   default:
+                                        swal.fire({
+                                            title: '系統異常',
+                                            text:"於2秒後進行重整",
+                                            icon: 'warning',
+                                            timer: 2000,
+                                            showConfirmButton: false
+                                        });
+                                        setTimeout(() => {
+                                            location.reload();
+                                         }, 2000);
+                                   break;    
+                                }
+                            })
                         }
                     })
-        
-                                 Swal.fire('收藏成功!', '', 'success')
-        
-
-                          }
-                        })
-
-
-                }
-            },
-
+               }
+         },
             unFavorite(product) {
-                 Swal.fire({
+                swal.fire({
                     title: '確定要取消收藏嗎?',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    confirmButtonText: '確定!'
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消',
                 }).then((result) => {
                     if (result.isConfirmed) {
                      axios.post('http://localhost/campus2/public/unfavorite/'+product)
-                          .then(response => this.isFavorited = false)
-                          .catch(response => console.log(response.data));    
-    
-                  Swal.fire('成功移除!', '', 'success')
-                  }
-                })
+                          .then((response) => {
+                              this.isFavorited = false;
+                             swal.fire({
+                                    title: '成功移除',
+                                    icon: 'success',
+                                    timer: 2000,
+                                    showConfirmButton: false
+                                 });
+                        }).catch((error) => {
+                             swal.fire({
+                                  icon: 'warning',
+                                  title: '商品已售出或下架',
+                                  text: '系統將在您按下確認後自動重整',
+                                  confirmButtonText: '確認',
+                                  allowOutsideClick: false,      
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    swal.fire({
+                                    title: '系統重新整理中,請稍候',
+                                    timer: 2000,
+                                    timerProgressBar: true,
+                                    didOpen: () => {
+                                      swal.showLoading()
+                                    },
+                                    willClose: () => {
+                                      window.location.reload();
+                                    }
+                                 })
+                                }
+                            });
+                       });    
+                    }
+               })
             }
         }
     }

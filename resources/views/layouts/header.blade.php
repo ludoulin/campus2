@@ -1,14 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-static-top fixed-top">
-  <div class="container">
+  <div class="container-fluid">
     <!-- Branding Image -->
-    <a class="navbar-brand " href="{{ url('/') }}">
+    <a class="navbar-brand" href="{{ url('/') }}">
       校園二手書交易平台
     </a>
     {{-- <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="搜尋商品、賣家" aria-label="Search" style="width: 400px">
       <button class="btn btn-success my-2 my-sm-0" type="submit">搜尋</button>
     </form> --}}
+    <form action="{{ route('search') }}" class="login-form">
+        <div class="form-row">    
     <auto-search></auto-search>
+    <div class="col-auto"><button class="btn btn-success my-1 my-sm-0" type="submit">搜尋</button></div>
+        </div>
+    </form>
+  
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -24,6 +30,7 @@
         <!-- Authentication Links -->
         @guest
           <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}">我要賣書</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('users.cart')}}"><i class="fas fa-cart-plus pr-2"></i>購物車</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">登入</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">註冊</a></li>
         @else
@@ -37,6 +44,7 @@
               <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">個人中心</a>
               <a class="dropdown-item" href="{{ route('users.edit', Auth::id()) }}">編輯資料</a>
               <a class="dropdown-item" href="{{ route('users.favorite', Auth::id()) }}">收藏商品</a>
+              <a class="dropdown-item" href="{{ route('users.cart', Auth::id()) }}">我的購物車</a>
               <div class="dropdown-divider"></div>
               @endif
               <a class="dropdown-item" id="logout" href="#">
@@ -48,11 +56,17 @@
             </div>
           </li>
           <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}" ><i class="fas fa-book mr-2"></i>我要賣書</a></li>
-          <li class="nav-item"><a class="nav-link" href=""><i class="fas fa-cart-plus"></i></a></li>
+         
           <li class="nav-item"><a class="nav-link" href="{{ route('users.home') }}"><i class="fab fa-facebook-messenger"></i></a></li>
           <li class="dropdown message">
           <notification-app :counts="{{ auth()->user()->notification_count }}" :userid="{{ auth()->id()}}" :unreads="{{ auth()->user()->unreadNotifications}}" :reads="{{ auth()->user()->Notifications}} "></notification-app>
-              {{-- <button class="btn btn-secondary dropdown-toggle badge-{{ Auth::user()->notification_count > 0 ? 'hint' : 'secondary' }}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell"></i> {{ Auth::user()->notification_count }}</button> 
+            </li> 
+        @endguest
+      </ul>
+    </div>
+  </div>
+</nav>
+ {{-- <button class="btn btn-secondary dropdown-toggle badge-{{ Auth::user()->notification_count > 0 ? 'hint' : 'secondary' }}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell"></i> {{ Auth::user()->notification_count }}</button> 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
               @php
                   $notifications = Auth::user()->notifications()->take(4)->get();
@@ -69,13 +83,6 @@
                <a class="empty-block">沒有消息通知！</a>
                 @endif 
               </div> --}}
-            </li> 
-        @endguest
-      </ul>
-    </div>
-  </div>
-</nav>
-
 
 
 

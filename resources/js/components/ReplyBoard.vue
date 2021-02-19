@@ -95,8 +95,14 @@ props:['reply_comment','open','replies','reply_user','product_author'],
  methods:{
      send(e) {
                 e.preventDefault();
-                
                 if (this.reply_message == '') {
+                    swal.fire({
+                    title: '留言驗證錯誤',
+                    icon: 'error',
+                    confirmButtonText: '知道了嗎！？',
+                    allowOutsideClick: false,
+                    text: '請勿無填寫內容或是少於兩字下按下送出喔',
+                 });
                     return;
                 }
 
@@ -127,7 +133,13 @@ props:['reply_comment','open','replies','reply_user','product_author'],
         },
     edit_ReplyMessage(reply){
           if(this.edit_message.trim().length == 0){
-                  alert('內容都一定要填喔...');
+                   swal.fire({
+                    title: '留言驗證錯誤',
+                    icon: 'error',
+                    confirmButtonText: '知道了嗎！？',
+                    allowOutsideClick: false,
+                    text: '請勿無填寫內容或是少於兩字下按下送出喔',
+                 });
                   return
               }
 

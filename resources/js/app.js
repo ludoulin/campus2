@@ -26,16 +26,19 @@ const swal = (window.swal = require("sweetalert2"));
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('chat-component', require('./components/ChatComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('chat-component', require('./components/ChatComponent.vue').default);
 Vue.component('chat-app', require('./components/ChatApp.vue').default);
 Vue.component('notification-app', require('./components/Notification.vue').default);
 Vue.component('comment-board', require('./components/CommentBoard.vue').default);
-Vue.component('reply-board', require('./components/ReplyBoard.vue').default);
+// Vue.component('reply-board', require('./components/ReplyBoard.vue').default);
 Vue.component('favorite-circle', require('./components/FavoriteCircle.vue').default);
 Vue.component('favorite-button', require('./components/FavoriteButton.vue').default);
 Vue.component('my-favorite', require('./components/MyFavorite.vue').default);
 Vue.component('auto-search', require('./components/AutoSearch.vue').default);
+Vue.component('product-item', require('./components/ProductItem.vue').default);
+// Vue.component('test-item', require('./components/TestItem.vue').default);
+Vue.component('cart-item', require('./components/CartItem.vue').default);
 
 
 import VueChatScroll from 'vue-chat-scroll'
