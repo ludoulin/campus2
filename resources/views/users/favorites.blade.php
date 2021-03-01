@@ -7,6 +7,7 @@
 @section('content')
 <div class="container mt-3">
 <h2 class="mb-3"><i class="fas fa-heart pr-2"></i>我的收藏 ({{$myfavorites->count()}})</h2>
+{{$myfavorites}}
 		<div class="row">
             @forelse ($myfavorites as $myfavorite)    
 			<div class="col-md-6 col-lg-4 g-mb-30">

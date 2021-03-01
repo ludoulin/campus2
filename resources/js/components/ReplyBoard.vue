@@ -96,13 +96,9 @@ props:['reply_comment','open','replies','reply_user','product_author'],
      send(e) {
                 e.preventDefault();
                 if (this.reply_message == '') {
-                    swal.fire({
-                    title: '留言驗證錯誤',
-                    icon: 'error',
-                    confirmButtonText: '知道了嗎！？',
-                    allowOutsideClick: false,
-                    text: '請勿無填寫內容或是少於兩字下按下送出喔',
-                 });
+
+                    MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
+                
                     return;
                 }
 
@@ -133,13 +129,9 @@ props:['reply_comment','open','replies','reply_user','product_author'],
         },
     edit_ReplyMessage(reply){
           if(this.edit_message.trim().length == 0){
-                   swal.fire({
-                    title: '留言驗證錯誤',
-                    icon: 'error',
-                    confirmButtonText: '知道了嗎！？',
-                    allowOutsideClick: false,
-                    text: '請勿無填寫內容或是少於兩字下按下送出喔',
-                 });
+
+                    MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
+
                   return
               }
 
@@ -149,8 +141,11 @@ props:['reply_comment','open','replies','reply_user','product_author'],
                 }).then((response) => {
                         this.the_switch = false;
                         reply.reply_content = response.data;
+                    }).catch((error)=> {
+                        if(error.response.status === 404){
+                            MessageObject.ErrorMessage("編輯失敗","留言可能遭刪除,系統將在您按下確認後進行自動重整");
+                        }
                     });
-
         },
     edit_ReplyCancel(reply){
            axios.post(`http://localhost/campus2/public/comments/replies/get/${reply.id}`, {

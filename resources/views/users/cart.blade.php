@@ -43,7 +43,6 @@
     @endforeach
   @endif
 @else
-<?php $mycarts = Auth::user()->cartitems ?>
 @foreach($mycarts as $id => $cart)
 <?php $total += $cart->price ?>
 <tr>
@@ -61,6 +60,7 @@
     </td>
     <td class="actions" data-th="">
         <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $cart->id }}"><i class="fa fa-trash-o"></i></button>
+        <button class="btn btn-success btn-sm">立即購買</button>
     </td>
 </tr>
 @endforeach
@@ -74,6 +74,8 @@
     </tr>
     </tfoot>
 </table>
+
+
 
 @endsection
 

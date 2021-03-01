@@ -20,7 +20,6 @@ class ContactsController extends Controller
             ->where('to', auth()->id())
             ->where('read', false)
             ->groupBy('from')
-            ->with('user')
             ->get();
 
         // add an unread key to each contact with the count of unread messages

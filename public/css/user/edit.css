@@ -1,0 +1,131 @@
+.user-card {
+  background: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+}
+
+.user-card .user-card-body {
+  padding: 20px;
+}
+
+.user-card .user-card-body .user-edit-profile.nav-pills .nav-link.active,
+.user-card .user-card-body .user-edit-profile.nav-pills .show > .nav-link {
+  color: #ffffff;
+  background-color: #1e7fe4;
+}
+
+.user-card .user-card-body .user-edit-profile li a {
+  transition: background-color 0.5s;
+}
+
+.user-card .user-card-body .user-edit-profile li a:hover {
+  color: #0056b3;
+}
+
+.user-card .user-card-body .user-edit-profile .nav-link {
+  padding: 20px 15px;
+  border: 0;
+  color: #777D74;
+  text-align: center;
+  font-size: 16px;
+  border-left: 1px soild rgba(30, 127, 228, 0.1);
+}
+
+.user-card .user-card-body .nav-link:focus,
+.user-card .user-card-body .nav-link:hover {
+  text-decoration: none;
+}
+
+.user-card .user-card-body ul.user-edit-profil li:first-child a {
+  border-radius: 5px 0 0 5px;
+  border-left: none;
+}
+
+.user-card .user-card-body .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  top: 4px;
+}
+
+.user-card .user-card-body .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.user-card .user-card-body .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.user-card .user-card-body .slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  top: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.user-card .user-card-body input:checked + .slider {
+  background-color: #1e7fe4;
+}
+
+.user-card .user-card-body input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.user-card .user-card-header {
+  padding: 20px;
+  margin-bottom: 0;
+  align-items: center !important;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.user-card .user-card-header .card-header-title .card-title {
+  margin-bottom: 0;
+}
+
+.user-card .user-edit-list-data .tab-content > .active {
+  display: block;
+}
+
+.user-card .user-edit-list-data .tab-content > .tab-pane {
+  display: none;
+}
+
+.user-card button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.user-card .btn-primary {
+  background: #1e7fe4;
+  border-color: #1e7fe4;
+}
+
+.user-card .bg-danger,
+.user-card .bg-danger:hover,
+.user-card .bg-danger:focus {
+  background: #fff5f4 !important;
+  color: #ff9b8a !important;
+}
+
+.fade:not(.show) {
+  opacity: 1;
+}
+

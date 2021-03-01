@@ -1,0 +1,160 @@
+
+.user-card{
+  background: #ffffff;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  border: none;
+  -webkit-box-shadow: 0px 4px 20px 0px rgb(44 101 144 / 10%);
+  box-shadow: 0px 4px 20px 0px rgb(44 101 144 / 10%);
+  .user-card-body{
+      padding: 20px;
+      .user-edit-profile.nav-pills .nav-link.active, .user-edit-profile.nav-pills .show>.nav-link {
+        color:#ffffff;
+        background-color: rgb(30, 127, 228);
+      }
+      .user-edit-profile {
+
+         li{
+
+            a{
+                -webkit-transition: background-color 0.5s;
+                transition: background-color 0.5s ;
+            }
+              a:hover{
+                color:#0056b3;
+    
+             }
+
+         }
+
+
+          .nav-link{
+            padding: 20px 15px;
+            border: 0;
+            color:#777D74;
+            text-align: center;
+            font-size: 16px;
+            border-left:1px soild rgba(30, 127, 228,0.1);
+           
+        }
+
+          
+    }
+
+        .nav-link:focus, .nav-link:hover{
+            text-decoration: none;
+        }
+
+        ul.user-edit-profil li:first-child a{
+            border-radius: 5px 0 0 5px;
+            border-left:none;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            top:4px
+          }
+          
+          .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+          }
+          
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 34px;
+          }
+          
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            top: 2px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+          }
+          
+          input:checked + .slider {
+            background-color: rgb(30, 127, 228);
+          }
+          
+          input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+          }
+
+
+    }
+
+    .user-card-header{
+        padding: 20px;
+        margin-bottom: 0;
+        -ms-flex-align: center !important;
+        align-items: center !important;
+        border-bottom: 1px solid #f1f1f1;
+
+        .card-header-title{
+
+            .card-title{
+                margin-bottom: 0;
+            }
+
+        }
+    }
+
+    .user-edit-list-data{
+
+        .tab-content>.active{
+            display: block;
+         }
+         
+         .tab-content>.tab-pane{
+             display: none;
+         }
+         
+    }
+
+   button:focus{
+
+     outline: none !important;
+     box-shadow: none !important;
+
+   } 
+
+   .btn-primary{
+       background: rgb(30, 127, 228);
+       border-color: rgb(30, 127, 228);
+   } 
+
+   .bg-danger, .bg-danger:hover , .bg-danger:focus{
+       background: #fff5f4 !important;
+       color: #ff9b8a !important;
+   }
+
+  
+ 
+}
+
+.fade:not(.show){
+    opacity: 1;
+}
+

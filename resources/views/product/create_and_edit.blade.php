@@ -6,6 +6,8 @@
 @endsection
 @section('content')
 
+
+
   <div class="container">
     <div class="col-md-10 offset-md-1">
       <div class="card ">
@@ -34,13 +36,18 @@
 
               <div class="form-row">
 
-              <div class="form-group col-md-6">
-                <label for="name" class="text-muted">書名:</label>
+              <div class="form-group col-md-5">
+                <label for="name" class="text-muted">書名 :</label>
                 <input id="name" class="form-control" type="text" name="name" value="{{ old('name', $product->name ) }}" placeholder="請填寫書名" required />
               </div>
 
-              <div class="form-group col-md-5">
-                <label for="price" class="text-muted">價格:</label>
+              <div class="form-group col-md-4">
+                <label for="author" class="text-muted">作者 :</label>
+                <input id="author" class="form-control" type="text" name="author"  placeholder="請填寫作者" />
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="price" class="text-muted">價格 :</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
@@ -49,13 +56,12 @@
                 </div>
               </div>
               </div>
-            
-              
+
              
               <div class="form-row mb-2">
 
                  <div class="form-group col-md-6">
-                    <label for="college" class="text-muted">學院:</label>
+                    <label for="college" class="text-muted">學院 :</label>
                     <div class="input-group">
                     <select class="form-control" name="college[]">
                       <option value="">--請選擇學院--</option>
@@ -67,7 +73,7 @@
                  </div> 
                
                  <div class="form-group col-md-6">
-                    <label for="department" class="text-muted">系所: *選完科系請按下新增Tag*</label>
+                    <label for="department" class="text-muted">系所 :（可複選）每選完一次科系後請按下新增Tag</label>
                     <div class="input-group">
                     <select name="department[]"  class="form-control">
                       <option value="0">--請選擇科系--</option>
@@ -111,6 +117,8 @@
                   </select>
                   @endif
                 </div>
+
+                        
 
               <div class="form-group">
                 <label for="content" class="text-muted">書況:</label>
@@ -181,6 +189,7 @@
                 @else 
                 <button type="submit" class="btn btn-primary edit"><i class="far fa-save mr-2" aria-hidden="true"></i>編輯完成</button>
                 @endif 
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">回上一頁</a>
               </div>
             </form>
         </div>
@@ -193,31 +202,26 @@
 
 @section('script')
 <script>
+   function Loadslick(element,title){
+    
+    $(element).select2({
+    placeholder: title,
+    tags:true,
+    allowClear: true
+    }).next().hide();
+
+   }
+
   $(document).ready(function() {
 
-    $('#id_select2_demo1').select2({
-    placeholder: "請確認系所Tag",
-    tags:true,
-    allowClear: true
-    }).next().hide();
+    Loadslick('#id_select2_demo1',"請確認系所Tag");
 
-    $('#add_select2').select2({
-    placeholder: "請確認新增系所Tag",
-    tags:true,
-    allowClear: true
-    }).next().hide();
+    Loadslick('#add_select2',"請確認新增系所Tag");
 
-    $('#remove_select2').select2({
-    placeholder: "請確認移除系所Tag",
-    tags:true,
-    allowClear: true
-    }).next().hide();
+    Loadslick('#remove_select2',"請確認移除系所Tag");
 
-    $('#image_select2').select2({
-    placeholder: "請確認移除的照片",
-    tags:true,
-    allowClear: true
-    }).next().hide();
+    Loadslick('#image_select2',"請確認移除的照片");
+
 
     const max_input = 6;
 
@@ -256,7 +260,6 @@
         if(y==max_input){
         $(".btn-success").attr('disabled', true);
         }
-        console.log(y);
       }
       return false
     });
@@ -268,7 +271,6 @@
         }
         $(this).parents(".input-group").remove();
         y--;
-        console.log(y);
       }else{
        
         $(this).parents(".increment").append('<div class="hint">提醒:至少要有一張照片</div>');
@@ -280,15 +282,11 @@
 
        const tag_text = $(this).parents(".mdc-chip").find(".mdc-chip__text").text();
 
-       console.log(tag_text);
-
        const tag_ndx = t_selected_array.indexOf(tag_text);
 
        if(document.getElementById("remove_select2")){
 
        const tag_id = $(this).attr("id");
-
-       console.log(tag_id);
 
        if(add_selected_array.indexOf(tag_text)=== -1&&t_selected_array.length>1){
 
@@ -377,8 +375,6 @@
                 
                 }
        t_selected_array.push(d_name);
-
-       console.log(t_selected_array);
        
        $('#id_select2_demo1').append('<option value="'+ d_id +'" selected>' + d_name + '</option>').trigger('change.select2');
 
@@ -394,7 +390,6 @@
 
             add_selected_array.push(d_name);
 
-            console.log(add_selected_array);
 
             $('#add_select2').append('<option value="'+ d_id +'" selected>' + d_name + '</option>').trigger('change.select2');
 
@@ -469,7 +464,6 @@ function preview2(el) {
 
     remove_image_array.push(image_id);
 
-    console.log(remove_image_array);
 
     $('#image_select2').append('<option value="'+ image_id +'" selected>' + image_id + '</option>').trigger('change.select2');
 
@@ -480,8 +474,6 @@ function preview2(el) {
         }
 
     y--;
-
-    console.log(y);
 
     }else{
 
@@ -494,3 +486,4 @@ function preview2(el) {
   });
 </script>
 @endsection
+

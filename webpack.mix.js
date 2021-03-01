@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+   .js('resources/js/AlertMessage.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css')
    .sass('resources/sass/login/login.scss', 'public/css/login')
    .sass('resources/sass/register/register.scss', 'public/css/register')
@@ -26,6 +27,8 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/user/favorite.scss', 'public/css/user')
    .sass('resources/sass/search/index.scss', 'public/css/search')
    .sass('resources/sass/user/cart.scss', 'public/css/user')
+   .sass('resources/sass/errors/404.scss', 'public/css/errors')
+   .sass('resources/sass/user/edit.scss', 'public/css/user')
    .version();
 
 

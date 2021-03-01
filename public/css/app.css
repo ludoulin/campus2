@@ -9443,8 +9443,10 @@ body {
   flex-direction: column;
   height: 100vh;
   margin: 0;
+  font-weight: 400;
   font-family: "proxima-nova", "Source Sans Pro", Helvetica, "Microsoft YaHei", Arial, sans-serif;
-  font-size: 14px;
+  font-size: 18px;
+  font-style: normal;
 }
 
 /* header */

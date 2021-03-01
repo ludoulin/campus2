@@ -4,10 +4,7 @@
     <a class="navbar-brand" href="{{ url('/') }}">
       校園二手書交易平台
     </a>
-    {{-- <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="搜尋商品、賣家" aria-label="Search" style="width: 400px">
-      <button class="btn btn-success my-2 my-sm-0" type="submit">搜尋</button>
-    </form> --}}
+    
     <form action="{{ route('search') }}" class="login-form">
         <div class="form-row">    
     <auto-search></auto-search>
@@ -30,7 +27,7 @@
         <!-- Authentication Links -->
         @guest
           <li class="nav-item"><a class="nav-link" href="{{ route('products.create') }}">我要賣書</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('users.cart')}}"><i class="fas fa-cart-plus pr-2"></i>購物車</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('cart')}}"><i class="fas fa-cart-plus pr-2"></i>購物車</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">登入</a></li>
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">註冊</a></li>
         @else
@@ -43,8 +40,8 @@
               @if(!Auth::user()->is_admin)
               <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">個人中心</a>
               <a class="dropdown-item" href="{{ route('users.edit', Auth::id()) }}">編輯資料</a>
-              <a class="dropdown-item" href="{{ route('users.favorite', Auth::id()) }}">收藏商品</a>
-              <a class="dropdown-item" href="{{ route('users.cart', Auth::id()) }}">我的購物車</a>
+              <a class="dropdown-item" href="{{ route('users.favorite')}}">收藏商品</a>
+              <a class="dropdown-item" href="{{ route('cart')}}">我的購物車</a>
               <div class="dropdown-divider"></div>
               @endif
               <a class="dropdown-item" id="logout" href="#">

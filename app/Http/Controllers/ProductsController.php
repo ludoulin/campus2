@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\PaymentType;
 use App\Handlers\ImageUploadHandler;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Models\College;
 use App\Models\Department;
+use App\Models\PaymentOption;
 use App\Models\ProductTag;
 use Auth;
 use Storage;
@@ -25,8 +27,9 @@ class ProductsController extends Controller
     {
 
      $colleges = College::all();
+     $payment_types = PaymentType::all();
          
-     return view('product.create_and_edit',compact('product','colleges'));
+     return view('product.create_and_edit',compact('product','colleges','payment_types'));
     }
 
     public function getDepartment($id){
@@ -43,8 +46,8 @@ class ProductsController extends Controller
             $name = $request->name;
             $price = $request->price;
             $content = $request->content;
-            $price = $request->price;
             $departments = $request->departments;
+            $pay_options = $request->payment;
 
             $product = Product::create([
                 'name' => $name,
@@ -64,6 +67,19 @@ class ProductsController extends Controller
 
             }
         }
+
+        if($pay_options){
+            foreach($pay_options as $option){
+                if(!empty($option)){
+                    $payment_option = new PaymentOption();
+                    $payment_option->product_id = $product->id;
+                    $payment_option->payment_type_id = $option;
+                    $payment_option->save();
+                }
+            }
+        }
+
+
             if($request->hasfile('images'))
             {
                 foreach($request->file('images') as $image)
@@ -90,7 +106,9 @@ class ProductsController extends Controller
     public function edit(Product $product)
     {
         $this->authorize('update', $product);
+
         $colleges = College::all();
+            
         return view('product.create_and_edit', compact('product','colleges'));
     }
 
@@ -111,14 +129,9 @@ class ProductsController extends Controller
         //     dd('pass');
         // }
 
-
         $data = $request->all();
 
-        $product->name = $data['name'];
-        $product->price = $data['price'];
-        $product->content = $data['content'];
-
-
+    
         if($request->add_departments){
             foreach($request->add_departments as $add_department){
                 if(!empty($add_department)){
@@ -135,7 +148,8 @@ class ProductsController extends Controller
         if($request->remove_departments){
             foreach($request->remove_departments as $remove_department){
                 if(!empty($remove_department)){
-                    $remove_tag= ProductTag::where('product_id',$product->id)->where('department_id',$remove_department)->delete();
+
+                    ProductTag::where('product_id',$product->id)->where('department_id',$remove_department)->delete();
                 }
 
             }
@@ -212,7 +226,8 @@ class ProductsController extends Controller
         $product = Product::find($id);
 
         if(!$product) {
-            abort(404);
+
+            return abort(404);
         }
 
         if(!Auth::check()){
@@ -265,20 +280,28 @@ class ProductsController extends Controller
 
     public function removeCart(Request $request)
     {
+        $id = $request->id;
+
+        $product = Product::find($id);
+
+        if(!$product) {
+            
+            return abort(404);
+        }
+        
         if(!Auth::check()){
+
         if($request->id) {
+
             $cart = session()->get('cart');
+
             if(isset($cart[$request->id])) {
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
-            // session()->flash('success', 'Product removed successfully');
         }
-        }else{
 
-            $id = $request->id;
-        
-            $product = Product::find($id);
+        }else{
 
             Auth::user()->cartitems()->detach($product->id);
 
@@ -296,3 +319,8 @@ class ProductsController extends Controller
                     //  $product_image->path = config('app.url') . '/product_image/' .$imagePath;
                     //  $product_image->product_id = $product->id;
                     //  $product_image->save();
+
+
+                     // $product->name = $data['name'];
+                     // $product->price = $data['price'];
+                     // $product->content = $data['content'];

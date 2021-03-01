@@ -44,13 +44,7 @@ class Product extends Model
         return visits($this);
     }
 
-    // public function favorited()
-    // {
-    // return (bool) Favorite::where('user_id', Auth::id())
-    //                     ->where('product_id', $this->id)
-    //                     ->first();
-    // }
-
+    
     public function favorited(){
 
         return $this->belongsToMany(User::class, 'favorites', 'product_id' , 'user_id')->withPivot('user_id')->wherePivot('user_id', Auth::id());

@@ -225,6 +225,7 @@
                       <span class="product-card__title">
                         賣家:{{$product->user->name}}
                      </span>
+                     {{-- <img src="{{asset($product->images[0]->path)}}"> --}}
                   </a>
                   <div class="product-card__actions">
                      <cart-item

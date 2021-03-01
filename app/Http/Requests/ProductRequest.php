@@ -34,8 +34,8 @@ class ProductRequest extends FormRequest
                      'content'        => 'required|min:3',
                      'images' => 'required',
                      'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
-                     'price' => 'required',
-                     'departments' => 'required'
+                     'price' => 'required|integer|regex:/^[1-9][0-9]+/|not_in:0',
+                     'departments' => 'required',
                 ];
             }
             // UPDATE
@@ -50,9 +50,9 @@ class ProductRequest extends FormRequest
 
                     'new_images' => 'nullable',
                     'new_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:3048',
+                    
 
-
-                    'price' => 'required',
+                    'price' => 'required|integer|regex:/^[1-9][0-9]+/|not_in:0',
                     'departments' => 'nullable',
                     'add_departments' => 'nullable',
                     'remove_departments' => 'nullable',
@@ -75,7 +75,10 @@ class ProductRequest extends FormRequest
             'name.min' => '書名至少兩個字',
             'content.min' => '書況內容至少三個字',
             'price.required' => '價格不能為空。',
-            'departments.required'=> '請記得按下新增Tag將所選科系產生Tag'
+            'price.not_in' => '價格不能為0。',
+            'price.regex' => '價格不能是負數或以0為開頭。',
+            'departments.required'=> '請記得按下新增Tag將所選科系產生Tag',
+            'payment.required' => '請記得勾選可接受的付費方式'
         ];
     }
 }
