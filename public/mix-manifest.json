@@ -1,6 +1,7 @@
 {
-    "/js/app.js": "/js/app.js?id=cfed9fea11b9eef2bfbf",
-    "/css/app.css": "/css/app.css?id=33ce442147329e7e03cb",
+    "/js/AlertMessage.js": "/js/AlertMessage.js?id=57ea2353f979ed2bfade",
+    "/js/app.js": "/js/app.js?id=919f166561bc4c904d84",
+    "/css/app.css": "/css/app.css?id=83a484bfff1c8a297e13",
     "/css/login/login.css": "/css/login/login.css?id=091836993d23205ac7f4",
     "/css/register/register.css": "/css/register/register.css?id=a96042cca6203ef17574",
     "/css/backend/control_panel.css": "/css/backend/control_panel.css?id=0eff83ae02997a9e839b",
@@ -8,10 +9,12 @@
     "/css/backend/user/edit.css": "/css/backend/user/edit.css?id=75dc33e8aa9a5f8be60b",
     "/css/page/test.css": "/css/page/test.css?id=689e92a3ebfedb8d35ae",
     "/css/product/show.css": "/css/product/show.css?id=b1fb8f70f4cd37ffc686",
-    "/css/product/create.css": "/css/product/create.css?id=7d40440856d4859dd9bb",
+    "/css/product/create.css": "/css/product/create.css?id=caa0efba0d9509024092",
     "/css/department/index.css": "/css/department/index.css?id=0bc11103de158ad7d187",
     "/css/page/root.css": "/css/page/root.css?id=b3918e1ca81f64ce318e",
     "/css/user/favorite.css": "/css/user/favorite.css?id=ce238ebc832e90013e2c",
     "/css/search/index.css": "/css/search/index.css?id=2762399a0ee36722be34",
-    "/css/user/cart.css": "/css/user/cart.css?id=7b74eb8e26d4239a202f"
+    "/css/user/cart.css": "/css/user/cart.css?id=7b74eb8e26d4239a202f",
+    "/css/errors/404.css": "/css/errors/404.css?id=6cdce52472b7e45a89c0",
+    "/css/user/edit.css": "/css/user/edit.css?id=d7c88829ccad144738e8"
 }

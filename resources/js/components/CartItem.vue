@@ -46,29 +46,18 @@ export default {
                                .then((response) => {
                                    switch(response.data){
                                        case "加入購物車成功":
-                                         swal.fire({
-                                            title: '成功加入購物車',
-                                            icon: 'success',
-                                            timer: 2000,
-                                            showConfirmButton: false
-                                        });
+
+                                        MessageObject.SuccessMessage("成功加入購物車");
+
                                          break;
                                        case "商品已存在於購物車":
-                                           swal.fire({
-                                                title: '商品已存在於購物車',
-                                                icon: 'warning',
-                                                timer: 2000,
-                                                showConfirmButton: false
-                                            });
+            
+                                        MessageObject.WarningMessage("商品已存在於購物車");
+
                                          break;
                                        default:
                                          this.isCarted = true;
-                                         swal.fire({
-                                            title: '成功加入購物車',
-                                            icon: 'success',
-                                            timer: 2000,
-                                            showConfirmButton: false
-                                        });
+                                         MessageObject.SuccessMessage("成功加入購物車");
                                          break;
                                         }
                                    })
@@ -76,7 +65,7 @@ export default {
                                 if(error.response.status === 404){
                                     Swal.fire({
                                     icon: 'error',
-                                    title: '發生錯誤？',
+                                    title: '加入失敗',
                                     text: '商品可能已賣出或下架',
                                     });
                                 }
@@ -98,18 +87,14 @@ export default {
                      axios.delete('http://localhost/campus2/public/remove-from-cart/',{params: {id: product}})
                           .then((response) => {
                               this.isCarted = false;
-                               swal.fire({
-                                    title: '成功移除',
-                                    icon: 'success',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                });
+                               MessageObject.SuccessMessage("成功移除");
+
                               })
                           .catch((error) => {
                                 if(error.response.status === 404){
                                     swal.fire({
                                     icon: 'error',
-                                    title: '發生錯誤？',
+                                    title: '移除失敗',
                                     text: '商品可能已賣出或下架',
                                     });
                                 }

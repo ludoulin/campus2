@@ -13,10 +13,12 @@
 */
 
 Route::get('/', 'PagesController@root')->name('root');
-// Route::get('/search', 'PagesController@search');
+
 Route::get('/test', 'PagesController@test');
 
 Route::get('/search', 'SearchController@index')->name('search');
+
+Route::get('/cart', 'CartController@getCart')->name('cart');
 
 
 // 用戶身份驗證相關路由
@@ -61,11 +63,13 @@ Route::delete('/admin/products/{product}', 'Backend\ProductsController@destroy')
 
 
 Route::get('/chathome', 'UsersController@index')->name('users.home');
-Route::get('/users/{user}/favorites', 'UsersController@myfavorites')->name('users.favorite');
-Route::get('/users/cart', 'UsersController@cart')->name('users.cart');
+Route::get('/favorites', 'UsersController@getFavorites')->name('users.favorite');
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
+
+Route::post('/payment_option/edit', 'PaymentOptionController@edit');
+
 // Route::get('/users/chathome', 'UsersController@index')->name('users.home');
 
 Route::get('/chats', 'ChatController@index');
@@ -111,6 +115,9 @@ Route::get('/notifications/index', 'NotificationsController@index')->name('notif
 Route::get('/notifications/reset', 'NotificationsController@reset');
 Route::post('/notifications/read', 'NotificationsController@read');
 Route::get('/notifications/sync', 'NotificationsController@sync');
+
+
+
 
 
 

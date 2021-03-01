@@ -46,13 +46,14 @@
               <p class="mb-3 mt-2" style="font-size:16px">書況：{!! $product->content !!}</p>
               <hr>
               <div class="mb-3 mt-2" style="font-size:16px">
-                  <p>可付款方式：</p>
+                <p>可付款方式：</p>
                   <div class="row">
-                  <div class="col-4">校園面交</div>
-                  <div class="col-4">LINE PAY</div>
-                  <div class="col-4">街口支付</div>
+                    @foreach($product->user->payment_types as $type)
+                      <div class="col-4">{{$type->name}}</div>
+                      @endforeach  
                   </div>
               </div>
+    
               <hr>
               <div class="mt-2">
                   <p style="font-size:16px">適用課程:</p>

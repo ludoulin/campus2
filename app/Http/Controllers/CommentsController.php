@@ -3,26 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use App\Models\Reply;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Notifications\ProductReplied;
 use App\Http\Requests\CommentRequest;
 use Auth;
 
 class CommentsController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function store(Request $request, Comment $comment)
     {
-        // $comment->content = $request->content;
-        // $comment->user_id = Auth::id();
-        // $comment->product_id = $request->product_id;
-        // $comment->save();
-
+        $product = Product::findOrFail($request->product_id);
+        
+        if(!$product){
+            return abort(404);
+        }
+       
         $comment = new Comment();
         $comment->content = $request->content;
         $comment->user_id = Auth::id();
@@ -34,12 +34,18 @@ class CommentsController extends Controller
 
         
         return response()->json($comments);
-        // return redirect()->back()->with('success', '感謝留言！');
+
     }
 
     public function update(Request $request){
 
         $comment = Comment::findOrFail($request->id);
+
+        if(!$comment){
+
+            return abort(404);
+
+        }
 
         $this->authorize('update', $comment);
 
@@ -57,19 +63,21 @@ class CommentsController extends Controller
     
         $comment = Comment::findOrFail($request->id);
 
-        // dd($comment);
+        if(!$comment){
+
+            return abort(404);
+
+        }
 
         $this->authorize('destroy', $comment);
         
         Comment::where('id',$request->id)->delete();
         
-        // $comment->delete();
 
         $comments = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
 
         return response()->json($comments);
 
-        // return redirect()->back()->with('success', '刪除成功！');
     }
 
 

@@ -55,12 +55,8 @@ export default {
                           axios.post('http://localhost/campus2/public/favorite/'+product)
                                .then((response) => { 
                                    this.isFavorited = true;
-                                   swal.fire({
-                                            title: '收藏成功',
-                                            icon: 'success',
-                                            timer: 2000,
-                                            showConfirmButton: false
-                                        });
+                                MessageObject.SuccessMessage("成功加入購物車");
+
                                }).catch((error) => {
                                  switch(error.response.status){
                                  case 401:
@@ -102,7 +98,7 @@ export default {
                                             showConfirmButton: false
                                         });
                                         setTimeout(() => {
-                                            location.reload();
+                                            window.location.reload();
                                          }, 2000);
                                    break;    
                                 }
@@ -124,12 +120,8 @@ export default {
                      axios.post('http://localhost/campus2/public/unfavorite/'+product)
                           .then((response) => {
                               this.isFavorited = false;
-                             swal.fire({
-                                    title: '成功移除',
-                                    icon: 'success',
-                                    timer: 2000,
-                                    showConfirmButton: false
-                                 });
+                             MessageObject.SuccessMessage("成功移除");
+
                         }).catch((error) => {
                              swal.fire({
                                   icon: 'warning',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reply;
 use App\Models\Comment;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -11,6 +12,19 @@ class ReplysController extends Controller
 {
     public function store(Request $request, Reply $reply){
 
+
+        $product = Product::findOrFail($request->product_id);
+        
+        if($product){
+
+        $comment = Comment::findOrFail($request->comment_id);
+
+        if(!$comment){
+
+         return abort(404);
+
+        }else{
+        
         $reply = new Reply();
         $reply->reply_content = $request->reply_content;
         $reply->user_id = Auth::id();
@@ -18,10 +32,17 @@ class ReplysController extends Controller
         $reply->comment_id = $request->comment_id;
         $reply->save();
 
+        $replies = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
+
+        }
+
+    }else{
+
+        return response()->json("商品已遭刪除");
+    }  
 
         // $replies = Reply::where('comment_id',$request->comment_id)->with('user')->get();
 
-        $replies = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
 
         return response()->json($replies);
     }
@@ -29,6 +50,12 @@ class ReplysController extends Controller
     public function update(Request $request){
 
         $reply = Reply::findOrFail($request->id);
+
+        if(!$reply){
+
+            return abort(404);
+
+        }
 
         $this->authorize('update', $reply);
 
@@ -45,6 +72,11 @@ class ReplysController extends Controller
        
         $reply = Reply::findOrFail($request->id);
 
+        if(!$reply){
+
+            return abort(404);
+
+        }
 
         $this->authorize('destroy', $reply);
         
@@ -59,6 +91,7 @@ class ReplysController extends Controller
 
     public function get_reply(Request $request)
     {
+        
         $reply = Reply::where('id', $request->reply_id)->value('reply_content');
 
         return response()->json($reply);

@@ -1,10 +1,40 @@
 @extends('layouts.basic')
 
+@section('basic')
+<link href="{{ asset('css/user/edit.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 
-<div class="container">
-  <div class="col-md-8 offset-md-2">
+<?php $profile_action = route('users.update', $user->id) ?>
 
+<user-profile :user="{{ $user }}" :payment_types="{{$payment_types}}" :options="{{$user->payment_types}}"></user-profile>
+{{-- <div class="container">
+  <div class="row">
+  <div class="col-lg-12 col-md-12">
+   <div class="user-card">
+     <div class="user-card-body p-0">
+        <div class="user-edit-list">
+          <ul class="user-edit-profile d-flex nav nav-pills">
+            <li class="col-md-3 p-0">
+              <a class="nav-link" data-toggle="pill" href="javascript::void(0)">使用者基本資料</a>
+            </li> 
+            <li class="col-md-3 p-0">
+               <a class="nav-link" data-toggle="pill" href="javascript::void(0)">修改密碼</a>
+            </li> 
+            <li class="col-md-3 p-0">
+                <a class="nav-link" data-toggle="pill" href="javascript::void(0)">合併帳號</a>
+             </li>   
+            <li class="col-md-3 p-0">
+               <a class="nav-link" data-toggle="pill" href="javascript::void(0)">設定可接受的付費方式</a>
+            </li>   
+          </ul>  
+        </div>
+     </div>
+   </div>
+  </div>
+
+  <div class="col-lg-12 col-md-12">
     <div class="card">
       <div class="card-header">
         <h4>
@@ -13,7 +43,7 @@
       </div>
 
       <div class="card-body">
-
+        
         <form action="{{ route('users.update', $user->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
           <input type="hidden" name="_method" value="PATCH">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -47,6 +77,10 @@
       </div>
     </div>
   </div>
-</div>
+  
+  </div>
+</div> --}}
 
 @endsection
+
+

@@ -3,7 +3,6 @@
  <button class="btn btn-secondary dropdown-toggle notif" @click="markNotificationAsRead" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell mr-1"></i><a class="count">{{ notification_count }}</a></button>  
 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"> 
   <notification-item v-for="unread in unreadNotifications" :unread="unread" :key="unread.id"></notification-item>
-  <!-- <read-notification v-for="read in Notifications" :read="read" :key="read.id"></read-notification> -->
  <div class="dropdown-item full-replay"><a href="http://localhost/campus2/public/notifications/index">查看所有回覆</a></div>
 </div>
 </div>
@@ -22,17 +21,16 @@
       }
   },
   methods: {
-     markNotificationAsRead(){
+     markNotificationAsRead(e){
+
+          e.preventDefault();
+
          if(this.notification_count!==0){
             
             axios.get('http://localhost/campus2/public/notifications/reset')
                  .then((response) => {
                         this.notification_count = response.data;
                     })
-
-            console.log(this.unreadNotifications);
-
-            console.log(this.Notifications);
 
          }else{
 
@@ -79,13 +77,11 @@
                      read_at:null
                   };
             }
-      //  this.unreadNotifications.push(newunreadNotifications);
        this.unreadNotifications.splice(0,0,newunreadNotifications);
        this.notification_count++
 
       this.Notifications.splice(0,0,newunreadNotifications);
-      // this.unreadNotifications.splice(0,0,newunreadNotifications);
-      //  this.unreadNotification_counts++;
+   
 
      });
 

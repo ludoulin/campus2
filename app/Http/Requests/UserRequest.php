@@ -57,7 +57,7 @@ class UserRequest extends FormRequest
             'introduction' => 'max:80',
             'avatar' => 'mimes:jpeg,bmp,png,gif|dimensions:min_width=208,min_height=208',
             'password' => 'nullable|min:8',
-            'confirm_password' => 'same:password'
+            'confirm_password' => 'same:password',
         ];
 
     }

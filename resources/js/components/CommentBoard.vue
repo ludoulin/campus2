@@ -78,28 +78,22 @@
     components:{ReplyBoard},
     data(){
       return{
-        comments:this._comments,
-        moment:moment,
-        message: "",
-        edit_message:"",
-        auth_check: this.auth,
         user_id:this.auth!==0?this.auth.id:0,
         author:this.product_data.seller_id,
         product_id:this.product_data.id,
+        comments:this._comments,
+        auth_check: this.auth,
         the_switch:false,
         the_reply:false,
+        edit_message:"",
+        message: "",
+        moment:moment,
       }
     },
     methods:{
         sendMessage() {
                 if (this.message == '') {
-                  swal.fire({
-                    title: '留言驗證錯誤',
-                    icon: 'error',
-                    confirmButtonText: '知道了嗎！？',
-                    allowOutsideClick: false,
-                    text: '請勿無填寫內容或是少於兩字下按下送出喔',
-                 });
+                 MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
                     return;
                 }
                 
@@ -110,10 +104,10 @@
                         this.message = '';
                         this.comments = response.data;
                     }).catch((error) => {
-                             if(error.response.status === 500){
+                             if(error.response.status === 404){
                                 swal.fire({
                                   icon: 'error',
-                                  title: '抱歉！此商品已售出或是下架',
+                                  title: '抱歉！此商品已遭下架',
                                   text: '系統將在您按下確認後跳至首頁',
                                   confirmButtonText: '確認',
                                   allowOutsideClick: false,      
@@ -143,12 +137,7 @@
             },
         editMessage(comment){
               if(this.edit_message.trim().length == 0){
-                   swal.fire({
-                    title: '回覆驗證錯誤',
-                    icon: 'error',
-                    text: '請勿無填寫內容或是少於兩字下按下送出!!',
-                    confirmButtonText: '知道了嗎！？',
-                 });
+                  MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
                   return
               }
 
@@ -162,8 +151,8 @@
                              if(error.response.status === 404){
                                 swal.fire({
                                   icon: 'error',
-                                  title: '留言已遭刪除,所以無法進行編輯',
-                                  text: '系統在您按下確認後將自動重整',
+                                  title: '編輯失敗',
+                                  text: '留言可能已遭刪除,系統在您按下確認後將自動重整',
                                   confirmButtonText: '確認',
                                   allowOutsideClick: false,      
                                 }).then((result) => {
@@ -206,11 +195,12 @@
                         this.comments = response.data;
                     })
                    .catch((error) => {
-                             if(error.response.status === 500){
+                             if(error.response.status === 404){
                                 swal.fire({
                                   icon: 'error',
-                                  title: '留言已遭刪除',
-                                  text: '系統將在您按下確認後進行自動重整',
+                                  title: '回覆失敗',
+                                  text: '留言可能遭刪除',
+                                  footer:'<strong>系統將在您按下確認後進行自動重整</strong>',
                                   confirmButtonText: '確認',
                                   allowOutsideClick: false,      
                                 }).then((result) => {
@@ -247,6 +237,12 @@
                             product_id: ids.product_id,
                           }).then((response) => {
                         this.comments = response.data;
+                 }).catch((error)=> {
+                    if(error.response.status === 404){
+
+                      MessageObject.ErrorMessage("刪除失敗","留言可能遭刪除,系統將在您按下確認後進行自動重整");
+                    }
+
                  });
               }
           });
@@ -275,8 +271,8 @@
                              if(error.response.status === 404){
                                 swal.fire({
                                   icon: 'error',
-                                  title: '留言已遭刪除',
-                                  text: '系統將在您按下確認後進行自動重整',
+                                  title: '刪除失敗',
+                                  text: '留言已遭刪除,系統將在您按下確認後進行自動重整',
                                   confirmButtonText: '確認',
                                   allowOutsideClick: false,      
                                 }).then((result) => {

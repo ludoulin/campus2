@@ -117,6 +117,11 @@ class User extends Authenticatable implements MustVerifyEmailContract
     {
     return $this->belongsToMany(Product::class, 'cart_items', 'user_id', 'product_id')->withTimeStamps();
     }
+
+    public function payment_types(){
+
+        return $this->belongsToMany(PaymentType::class, 'payment_options', 'user_id' , 'payment_type_id')->withTimeStamps();
+    }
     
     public function isAuthorOf($model)
     {
