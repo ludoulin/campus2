@@ -17,7 +17,6 @@
                                             </label>
                                         </div>
                                 </div>
-                                 <div class="text-danger" v-if="error&&error.option"><h4>{{error.option[0]}}</h4></div>
                                 <button type="submit" class="btn btn-lg btn-primary mr-2">儲存</button>
                                 <button type="reset" class="btn btn-lg bg-danger" @click.prevent="reseted">取消</button>
                          </form>
@@ -37,11 +36,6 @@ export default {
             options:{
                 type: Array,
             },
-
-            errors:{
-                type: Object,
-                default:{}
-            }
         },
     data(){
       return{
@@ -67,7 +61,7 @@ export default {
                  MessageObject.checkMessage('警告','請一定要勾選可接受的付款方式',this.reseted);
                  return
             }
-            return 123;
+            return;
           }
         },
     methods:{

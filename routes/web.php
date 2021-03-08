@@ -58,6 +58,7 @@ Route::patch('/admin/users/{user}/publish', 'BackEnd\UsersController@publish')->
 Route::get('/admin/products', 'BackEnd\ProductsController@index')->name('admin.products.index');
 Route::get('/admin/products/{product}/edit', 'BackEnd\ProductsController@edit')->name('admin.products.edit');
 Route::patch('/admin/products/{product}', 'BackEnd\ProductsController@update')->name('admin.products.update');
+Route::patch('/admin/products/{product}/publish', 'BackEnd\ProductsController@publish')->name('admin.products.publish');
 Route::delete('/admin/products/{product}', 'Backend\ProductsController@destroy')->name('admin.products.destroy'); 
 
 
@@ -66,6 +67,8 @@ Route::get('/chathome', 'UsersController@index')->name('users.home');
 Route::get('/favorites', 'UsersController@getFavorites')->name('users.favorite');
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
+Route::get('/users/{user}/products', 'UsersController@products')->name('users.products');
+Route::post('users/change_password', 'UsersController@edit_password');
 Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 
 Route::post('/payment_option/edit', 'PaymentOptionController@edit');
@@ -93,7 +96,7 @@ Route::patch('/products/{product}', 'ProductsController@update')->name('products
 Route::delete('/products/{product}', 'ProductsController@destroy')->name('products.destroy');
 Route::delete('/products/product_images/{product_image}', 'ProductsController@imageremove')->name('image.destory');
 Route::middleware('auth')->post('/favorite/{product}', 'ProductsController@favoriteProduct');
-Route::post('/unfavorite/{product}', 'ProductsController@unFavoriteProduct'); 
+Route::post('/unfavorite/{product}', 'ProductsController@unFavoriteProduct')->name('products.unfavorite');; 
 Route::delete('/remove-from-cart', 'ProductsController@removeCart');
 
 // Route::resource('comments', 'CommentsController', ['only' => ['store', 'update', 'edit', 'destroy']]);
