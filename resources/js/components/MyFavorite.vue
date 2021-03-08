@@ -1,10 +1,10 @@
 <template>
     <div>
-        <a href="" class="btn btn-outline-danger" @click.prevent="unFavorite(product)"><i class="fas fa-heart pr-2"></i>移除收藏</a>
+        <!-- <a href="" class="btn btn-outline-danger" @click.prevent="unFavorite(product)"><i class="fas fa-heart pr-2"></i>移除收藏</a> -->
+         <a href="javascript:void(0)" class="badge badge-danger" @click.prevent="unFavorite(product)"><i class="fas fa-times"></i></a> 
     </div>
 </template>
 <script>
-let Swal = require("sweetalert2");
 export default {
         props: ['product'],
 
@@ -12,7 +12,7 @@ export default {
             
             unFavorite(product) {
 
-                Swal.fire({
+                swal.fire({
                     title: '確定要取消收藏嗎?',
                     icon: 'warning',
                     showCancelButton: true,
@@ -21,7 +21,7 @@ export default {
                 }).then((result) => {
                     if (result.isConfirmed) {
                      axios.post('http://localhost/campus2/public/unfavorite/'+product)
-                          .then( Swal.fire('成功移除!', '', 'success')
+                          .then( swal.fire('成功移除!', '', 'success')
                                      .then((result) => {
                                          if (result.isConfirmed) {
                                                 location.reload();    

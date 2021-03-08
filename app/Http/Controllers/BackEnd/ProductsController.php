@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackEnd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\ForbidRequest;
 use App\Http\Requests\ProductRequest;
 use App\Handlers\ImageUploadHandler;
 use App\Models\Product;
@@ -53,5 +54,15 @@ class ProductsController extends Controller
 		$product->delete();
 
 		return back()->with('success', '成功刪除');
-	}
+    }
+    
+    public function publish(ForbidRequest $request , Product $product)
+    {
+       
+        $product->is_stock = !!$request->publish;
+
+        $product->save();
+
+        return redirect()->back();
+    }
 }

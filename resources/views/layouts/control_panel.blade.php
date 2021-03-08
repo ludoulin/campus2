@@ -6,9 +6,8 @@
 @endsection
 
 @section('view')
-<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 
-<div class="wrapper hover_collapse">
+<div class="wrapper hover_collapse" id="app">
 	<div class="top_navbar">
 		<div class="logo">後端管理</div>
 		<div class="menu">
@@ -26,10 +25,8 @@
 	</div>
 
 	<div class="main_container">
-		<div class="container">
-			<div class="content">
+		<div class="container-fluid mt-3">
 				@yield('content')
-            </div>
 		</div>
 	</div>
 </div>
@@ -73,6 +70,7 @@ hamburger.addEventListener("click", () => {
 
 
 </script>
+<script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 
 @yield('script2')
 

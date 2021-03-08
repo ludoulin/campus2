@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentOption;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\OptionRequest;
 use Auth;
@@ -16,8 +17,16 @@ class PaymentOptionController extends Controller
 
     public function edit(OptionRequest $request){
 
-        
-        $this->authorize('update', Auth::user());
+        $user = User::findOrFail($request->id);
+
+
+        if(!$user){
+
+            return abort(404);
+
+        }
+
+        $this->authorize('update', $user);
         
 
         if($request->input('option')){

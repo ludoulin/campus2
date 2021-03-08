@@ -89,6 +89,10 @@
   transform: translateX(26px);
 }
 
+.user-card .user-card-body .d-block {
+  display: block !important;
+}
+
 .user-card .user-card-header {
   padding: 20px;
   margin-bottom: 0;
@@ -127,5 +131,45 @@
 
 .fade:not(.show) {
   opacity: 1;
+}
+
+.profile-img-edit {
+  position: relative;
+  display: inline-block;
+  height: 150px;
+  width: 150px;
+}
+
+.profile-img-edit .profile-picture {
+  max-width: 100%;
+  display: block;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+
+.profile-img-edit .personal-picture {
+  position: absolute;
+  top: auto;
+  right: 8px;
+  bottom: 10px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: #1e7fe4;
+  color: #fff;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  line-height: 28px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.profile-img-edit .personal-picture .upload-button {
+  font-size: 1.5rem;
+  margin-top: 6px;
+}
+
+.profile-img-edit .personal-picture .file-upload {
+  display: none;
 }
 

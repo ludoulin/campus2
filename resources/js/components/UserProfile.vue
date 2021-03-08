@@ -29,7 +29,8 @@
                    <div class="user-edit-list-data">
                        <div class="tab-content">
                            <div class="tab-pane fade" id="personal-information" role="tabpanel" :class='{active:block==1}' v-if='block==1'>
-                               <div class="card">
+                               <personal-information :personal="personal_data" @submit="submit_information"></personal-information>
+                               <!-- <div class="card">
                                     <div class="card-header">
                                         <h4><i class="glyphicon glyphicon-edit"></i> 編輯個人資料</h4>
                                     </div>
@@ -60,10 +61,10 @@
                                             </div>
                                         </form>
                                     </div>
-                                </div>
+                                </div> -->
                            </div>
                            <div class="tab-pane fade" id="change-password" role="tabpanel" :class='{active:block==2}' v-if='block==2'>
-                                2
+                                <change-password :errors="errors.password" @submit="submit_password"></change-password>
                            </div>
                            <div class="tab-pane fade " id="merge-account" role="tabpanel" :class='{active:block==3}' v-if='block==3'>
                                  {{errors.option}}
@@ -80,9 +81,10 @@
 </template>
 <script>
 import PaymentOption from './PaymentOption'
-
+import ChangePassword from './ChangePassword'
+import PersonalInformation from './PersonalInformation'
  export default {
-     components:{PaymentOption},
+     components:{PaymentOption,ChangePassword,PersonalInformation},
      props: {
             user: {
                 type: Object,
@@ -103,35 +105,65 @@ import PaymentOption from './PaymentOption'
          block:1,
          types:  [],
          errors: {
-                 profile:{},
-                 password:{},
-                 merge:{},
-                 option:{}
+                    profile:{},
+                    password:{},
+                    merge:{},
+                    option:{}
+                 },
+        personal_data: {},         
 
-                },
             }
     },
     mounted() {
 
             this.types = this.options;
+            this.personal_data = this.user;
 
     },
     methods:{
+        submit_information(obj){
+
+        },
         submit_option(obj){
             
             axios.post("http://localhost/campus2/public/payment_option/edit",{id: this.user.id , option:obj.option , unchecked:obj.unchecked })
                     .then((response) => {
-                         console.log(response.data);
                          MessageObject.SuccessMessage("儲存成功");
                          this.types = response.data;
                     }).catch((error)=>{
                         if(error.response.status === 422){
                             this.errors.option = error.response.data.errors || {};
                             MessageObject.VaildSubmitMessage('儲存失敗','請一定要勾選一種付款方式');
+                            console.log(this.errors.option);
                         }
 
                  });
-            }
+            },
+       submit_password(obj){
+
+           axios.post("http://localhost/campus2/public/users/change_password",{id: this.user.id , password:obj.password , new_password:obj.new_password, verify_password:obj.verify_password})
+                    .then((response) => {
+                         MessageObject.SuccessMessage("變更成功");
+                    }).catch((error)=>{
+                        if(error.response.status === 422){
+
+                            if(error.response.data.message){
+                                 
+                                 MessageObject.VaildSubmitMessage('儲存失敗',error.response.data.message);
+
+                            }else{
+                                 
+                                  this.errors.password = error.response.data.errors || {};
+
+                                  MessageObject.VaildSubmitMessage('儲存失敗', this.errors.password);
+
+                                  console.log(this.errors.password);
+
+                            }
+                        }
+
+                 });
+       }
     }   
 }
 </script>

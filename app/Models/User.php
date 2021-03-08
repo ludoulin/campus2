@@ -94,7 +94,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
     }
     public function products(){
 
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class,'seller_id');
         
     }
 

@@ -28,7 +28,7 @@
             <form action="{{ route('products.update', $product->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                 @method('PATCH')
           @else
-            <form action="{{ route('products.store') }}" id="edit_product" name="edit_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+            <form action="{{ route('products.store') }}" id="create_product" name="create_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                 <input type="hidden" name="_method" value="POST">
           @endif
              @csrf
