@@ -61,6 +61,8 @@ Route::patch('/admin/products/{product}', 'BackEnd\ProductsController@update')->
 Route::patch('/admin/products/{product}/publish', 'BackEnd\ProductsController@publish')->name('admin.products.publish');
 Route::delete('/admin/products/{product}', 'Backend\ProductsController@destroy')->name('admin.products.destroy'); 
 
+Route::get('/admin/orders', 'BackEnd\OrdersController@index')->name('admin.orders.index');
+
 
 
 Route::get('/chathome', 'UsersController@index')->name('users.home');
@@ -125,6 +127,7 @@ Route::get('/notifications/sync', 'NotificationsController@sync');
 Route::post('/direct_payment', 'CheckOutController@payment')->name('checkout.payment');
 Route::get('/campus_payment','CheckOutController@getCheckOutSession')->name('checkout.session');
 Route::post('/checkout','CheckOutController@getCheckOut')->name('checkout.index');
+
 
 Route::post('/orders/create', 'OrderController@create')->name('order.create');
 Route::post('/orders/change_status', 'OrderController@ChangeStatus')->name('order.status');

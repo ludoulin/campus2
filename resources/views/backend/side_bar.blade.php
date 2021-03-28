@@ -13,9 +13,9 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('admin.orders.index') }}">
                 <span class="icon"><i class="fas fa-comments-dollar"></i></span>
-                <span class="text">交易動態管理</span>
+                <span class="text">訂單動態管理</span>
             </a>
         </li>
         <li>

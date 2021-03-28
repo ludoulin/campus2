@@ -95,7 +95,8 @@
                 </div>  
            </div>
        </div>
- @endforeach    
+ @endforeach  
+
  <div class="modal fade" id="btn-OrderDelete-modal" tabindex="-1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
            <form class="modal-content" id="DeleteOrder" name="DeleteOrder" method="POST">
@@ -117,6 +118,7 @@
         </form>
         </div>
       </div>
+      
 @endsection
 
 @section('script')  
