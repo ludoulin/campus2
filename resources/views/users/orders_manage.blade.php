@@ -234,8 +234,15 @@ function OrderDetail(el){
 
 $('#btn-OrderDetail-modal').modal('show');
 
+$.each($(el).data().detail, function(key, value){
+     
+    $('.detail-body .item-detail').empty();
 
+     $('.detail-body .item-detail').append('<tr><th scope="row">' + `${key+1}` + '</th><td>' + value.product.name + '</td><td>'+ value.price +'</td><td>'+ value.created_at +'</td></tr>');
 
+    });
+
+return
 }            
 </script>    
 @endsection
