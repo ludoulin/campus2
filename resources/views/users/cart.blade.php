@@ -1,3 +1,10 @@
+@php
+use App\Models\User;  
+
+$prd = array();
+
+@endphp
+
 @extends('layouts.basic')
 
 @section('basic')
@@ -5,76 +12,191 @@
 @endsection
 
 @section('content')
-
-<table id="cart" class="table table-hover table-condensed">
-    <thead>
-    <tr>
-        <th style="width:50%">二手書</th>
-        <th style="width:10%">價格</th>
-        <th style="width:8%">賣家</th>
-        <th style="width:22%" class="text-center">總計</th>
-        <th style="width:10%"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php $total = 0 ?>
-    @guest
-    @if(session('cart'))
-    @foreach(session('cart') as $id => $details)
-        <?php $total += $details['price'] ?>
-        <tr>
-            <td data-th="Product">
+@guest
+    @if(!$datas->isEmpty())
+        @foreach($datas as $name => $items)
+        <?php $total = 0 ?>
+        <div class="check-content container-fluid">
                 <div class="row">
-                    <div class="col-sm-3 hidden-xs"><img src="{{ asset($details['image']) }}" width="100" height="100" class="img-responsive"/></div>
-                    <div class="col-sm-9">
-                        <h4 class="nomargin">{{ $details['name'] }}</h4>
-                    </div>
-                </div>
-            </td>
-            <td data-th="Price">${{ $details['price'] }}</td>
-            <td data-th="Seller_name">
-                {{ $details['seller_name'] }}
-            </td>
-            <td class="actions" data-th="">
-                <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $id }}"><i class="fa fa-trash-o"></i></button>
-                <button class="btn btn-success btn-sm">立即購買</button>
-            </td>
-        </tr>
-    @endforeach
-  @endif
+                   <div class="col-sm-12"> 
+                      <div class="wish-card">
+                         <div class="wish-card-header d-flex justify-content-between card-border-bottom mb-0">
+                            <div class="wish-card-header-title">
+                             <?php $seller = User::findOrFail($name) ?>
+                                <h4 class="card-title">賣家:{{$seller->name}}</h4>
+                            </div>
+                         </div>
+                            <div class="card-body wish-card-body">
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                         <ul class="list-inline p-0 m-0">
+                                            @foreach ($items as $item)
+                                            <?php $total += $item['price'] ?>  
+                                            <?php array_push($prd ,$item["product_id"]) ?>
+                                            <li class="checkout-product">
+                                                <div class="row align-items-center">
+                                                    <div class="col-sm-3 col-lg-2">
+                                                        <div class="row align-items-center"> 
+                                                            <div class="col-sm-3">
+                                                                <a class="btn badge badge-danger remove-from-cart" href="javascript:void(0)" data-id="{{ $item["product_id"] }}"><i class="fas fa-times"></i></a> 
+                                                            </div>
+                                                            <div class="col-sm-9 mt-2">
+                                                                <span class="checkout-product-img">
+                                                                    <a href="{{route('products.show', $item["product_id"])}}">
+                                                                        <img src="{{asset($item["image"])}}" alt class="img-fluid rounded">
+                                                                    </a>   
+                                                                </span>
+                                                            </div>     
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-3 col-lg-4 mt-3">
+                                                        <div class="checkout-product-details">
+                                                            <h3>書名: {{ $item["name"] }}</h3>
+                                                            <div class="price mt-3">
+                                                                <h5>單價: ${{ $item["price"] }}元</h5>
+                                                            </div> 
+                                                            @if($item["is_stock"])
+                                                             <p class="text-success">有現貨</p>
+                                                            @else
+                                                             <p class="text-danger">已下架</p>
+                                                            @endif
+                                                        </div>  
+                                                    </div>
+                                                    <div class="col-sm-6 col-lg-6">
+                                                        <div class="single-price">
+                                                            <span class="price-title">小計: <span>{{ $item["price"] }}</span>元</span>
+                                                        </div>    
+                                                    </div>   
+                                                </div>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                        <div class="col-sm-5 cart">
+                                            <div class="cart-summary">
+                                                <div class="pricing-summary">
+                                                    <ul class="list-unstyled">
+                                                        <li class="summary-title">商品小計<span class="pricing"><span class="b-text-prime">{{$total}}</span>元</span></li>
+                                                        <li><h3 class="summary-title summary-product-total">訂單總計<span class="total-pricing"><span>$ {{$total}}</span>元</span></h3></li>   
+                                                    </ul>
+                                                </div>
+                                                <div class="checkout-submit">
+                                                    <?php $t_ids = collect($prd) ?>
+                                                 <form action="{{ route('checkout.index') }}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                                                    {{-- <input id="p_type" name="p_type" type="hidden" value="{{$seller->payment_types}}"> --}}
+                                                    <input id="p_ids" name="p_ids" type="hidden" value="{{$t_ids}}">
+                                                    @csrf      
+                                                    <button class="btn primary btn-lg btn-block">立即付費</button>
+                                                    <a class="btn btn-outline-primary btn-lg btn-block" href="javascript:void(0)">繼續購物</a>
+                                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>  
+                        </div>  
+                   </div>
+               </div>
+        @endforeach
+    @else
+    <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">購物車目前沒有任何二手書商品喔！！</h4>
+    </div>
+    @endif
 @else
-@foreach($mycarts as $id => $cart)
-<?php $total += $cart->price ?>
-<tr>
-    <td data-th="Product">
+@if(!$my->isEmpty())
+@foreach($my as $name => $items)
+<?php $total = 0 ?>
+<div class="check-content container-fluid">
         <div class="row">
-            <div class="col-sm-3 hidden-xs"><img src="{{ asset($cart->images[0]->path) }}" width="100" height="100" class="img-responsive"/></div>
-            <div class="col-sm-9">
-                <h4 class="nomargin">{{ $cart->name }}</h4>
-            </div>
-        </div>
-    </td>
-    <td data-th="Price">${{ $cart->price }}</td>
-    <td data-th="Seller_name">
-        {{ $cart->user->name }}
-    </td>
-    <td class="actions" data-th="">
-        <button class="btn btn-danger btn-sm remove-from-cart" data-id="{{ $cart->id }}"><i class="fa fa-trash-o"></i></button>
-        <button class="btn btn-success btn-sm">立即購買</button>
-    </td>
-</tr>
-@endforeach
-@endguest
-    </tbody>
-    <tfoot>
-    <tr>
-        <td><a href="{{ url('/') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i>繼續購買</a></td>
-        <td colspan="2" class="hidden-xs"></td>
-        <td class="hidden-xs text-center"><strong>總計: ${{ $total }}</strong></td>
-    </tr>
-    </tfoot>
-</table>
+           <div class="col-sm-12"> 
+              <div class="wish-card">
+                 <div class="wish-card-header d-flex justify-content-between card-border-bottom mb-0">
+                    <div class="wish-card-header-title">
+                            <?php $seller = User::findOrFail($name) ?>
+                        <h4 class="card-title">賣家:{{$seller->name}}</h4>
+                    </div>
+                 </div>
+                    <div class="card-body wish-card-body">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                 <ul class="list-inline p-0 m-0">  
+                                    @foreach ($items as $item)
+                                    <?php $total += $item->price ?>
+                                    <?php array_push($prd ,$item->id) ?>
+                                    <li class="checkout-product">
+                                        <div class="row align-items-center">
+                                            <div class="col-sm-3 col-lg-2">
+                                                <div class="row align-items-center"> 
+                                                    <div class="col-sm-3">
+                                                        <a class="btn badge badge-danger remove-from-cart" href="javascript:void(0)" data-id="{{ $item->id }}"><i class="fas fa-times"></i></a> 
+                                                    </div>
+                                                    <div class="col-sm-9 mt-2">
+                                                        <span class="checkout-product-img">
+                                                            <a href="{{route('products.show', $item->id)}}">
+                                                                <img src="{{asset($item->images[0]->path)}}" alt class="img-fluid rounded">
+                                                            </a>   
+                                                        </span>
+                                                    </div>     
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 col-lg-4 mt-3">
+                                                <div class="checkout-product-details">
+                                                <h3>書名: {{ $item->name }}</h3>
 
+                                                    <div class="price mt-3">
+                                                        <h5>單價: ${{ $item->price }}元</h5>
+                                                    </div> 
+                                                    @if($item->is_stock)
+                                                        <p class="text-success">有現貨</p>
+                                                    @else
+                                                        <p class="text-success">已下架</p>
+                                                    @endif
+                                                </div>  
+                                            </div>
+                                            <div class="col-sm-6 col-lg-6">
+                                                <div class="single-price">
+                                                    <span class="price-title">小計: <span>{{ $item->price }}</span>元</span>
+                                                </div>    
+                                            </div>   
+                                        </div>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                                <div class="col-sm-5 cart">
+                                    <div class="cart-summary">
+                                        <div class="pricing-summary">
+                                            <ul class="list-unstyled">
+                                                <li class="summary-title">商品小計<span class="pricing"><span class="b-text-prime">{{$total}}</span>元</span></li>
+                                                <li><h3 class="summary-title summary-product-total">訂單總計<span class="total-pricing"><span>$ {{$total}}</span>元</span></h3></li>   
+                                            </ul>
+                                        </div>
+                                        <div class="checkout-submit">
+                                          <?php $t_ids = collect($prd) ?>
+                                         <form action="{{ route('checkout.index') }}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                                            <input id="p_ids" name="p_ids" type="hidden" value="{{$t_ids}}">
+                                            @csrf      
+                                         <button class="btn primary btn-lg btn-block">立即付費</button>
+                                            <a class="btn btn-outline-primary btn-lg btn-block" href="javascript:void(0)">繼續購物</a>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>  
+                </div>  
+           </div>
+       </div>
+ @endforeach
+ @else
+    <div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">購物車目前沒有任何二手書商品喔！！</h4>
+    </div>
+ @endif
+@endguest
 
 
 @endsection
@@ -115,3 +237,6 @@
         });
     </script>
 @endsection
+
+
+

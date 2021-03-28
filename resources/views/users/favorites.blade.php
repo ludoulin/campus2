@@ -49,16 +49,21 @@
                         <div class="col-sm-6 col-lg-6">
                            <div class="row">
                              <div class="col-sm-6">
-                               <span class="product-seller">賣家:{{ $myfavorite->user->name }}</span>
+                               <h2><span class="product-seller badge badge-primary">賣家:{{ $myfavorite->user->name }}</span></h2>
                              </div>
                              <div p1-0 class="col-sm-6">
-                                <div class="flex align-items-center list-product-action">
-                                    <a href="{{route('products.show', $myfavorite->id)}}" class="btn bg-primary">
+                                <div class="d-flex list-product-action justify-content-center">
+                                    <a href="{{route('products.show', $myfavorite->id)}}" class="btn bg-primary mr-2">
                                         商品資訊
                                       </a> 
-                                    <a href="javascript:void(0)" class="btn btn-success">
+                                    {{-- <a href="javascript:void(0)" class="btn btn-success">
                                         立即購買
-                                  </a> 
+                                  </a>  --}}
+                                  <form action="{{route('checkout.payment')}}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                                    <input id="p_d" name="p_d" type="hidden" value="{{$myfavorite->id}}" autocomplete="off">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">立即購買</button>
+                                    </form>
                                 </div> 
                              </div> 
                            </div> 
@@ -66,7 +71,9 @@
                       </div>
                     </li>
                     @empty
-                    <p>您沒有收藏商品</p>
+                    <div class="alert alert-primary" role="alert">
+                        <h4 class="alert-heading">您目前沒有收藏任何二手書喔！！</h4>
+                    </div>
                     @endforelse 
                  </ul> 
                </div>  
@@ -75,35 +82,3 @@
   </div>
 </div>
 @endsection
-
-
-{{-- <div class="container mt-3">
-    <h2 class="mb-3"><i class="fas fa-heart pr-2"></i>我的收藏 ({{$myfavorites->count()}})</h2>
-        <div class="row">
-                @forelse ($myfavorites as $myfavorite)    
-          <div class="col-md-6 col-lg-4 g-mb-30">
-            <article class="u-shadow-v18 g-bg-white text-center rounded g-px-20 g-py-40 g-mb-5">
-            <img class="img mb-4" src="{{asset($myfavorite->images[0]->path)}}" alt="Image Description">
-            <h3 class="h5 g-color-black g-font-weight-600 g-mb-10">{{ $myfavorite->name }}</h3>
-                    <span class="d-block g-color-primary g-font-size-16 g-mb-5">${{ $myfavorite->price }}</span>
-                    <hr>
-                    <div class="feature">
-                      <div class="row">
-                        <div class="col-lg-4 col-md-4">   
-                         <a href="{{route('products.show', $myfavorite->id)}}" class="btn btn-outline-primary"><i class="fas fa-info-circle pr-2"></i>商品資訊</a>
-                        </div>
-                        <div class="col-lg-3 col-md-3">  
-                         <a href="" class="btn btn-outline-success"><i class="far fa-handshake pr-2"></i>購買</a>
-                        </div>
-                        <div class="col-lg-5 col-md-5">  
-                        <my-favorite :product={{ $myfavorite->id }}></my-favorite>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                @empty
-                <p>您沒有收藏商品</p>
-                @endforelse
-            </div>
-    </div>             --}}

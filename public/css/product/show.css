@@ -122,14 +122,14 @@
   border-radius: 50px;
   width: 48%;
   float: left;
-  border: 2px solid #D9534F;
-  color: #D9534F;
+  border: 2px solid salmon;
+  color: salmon;
   background-color: #FFF;
 }
 
 .product .right .save:hover {
   color: #fff;
-  background-color: #D9534F;
+  background-color: salmon;
 }
 
 .product .right .saved {
@@ -137,9 +137,9 @@
   border-radius: 50px;
   width: 48%;
   float: left;
-  border: 2px solid #D9534F;
+  border: 2px solid salmon;
   color: #fff;
-  background-color: #D9534F;
+  background-color: salmon;
 }
 
 .product .right .saved i {
@@ -148,12 +148,12 @@
 
 .product .right .cart {
   transition: all 0.3s ease;
-  border: 2px solid #191970;
+  border: 2px solid #1e7fe4;
   border-radius: 50px;
   width: 48%;
   float: right;
   color: #fff;
-  background-color: #191970;
+  background-color: #1e7fe4;
 }
 
 .product .right .buy {
@@ -165,7 +165,7 @@
   width: 100%;
   float: left;
   color: #fff;
-  background: #708090;
+  background: mediumseagreen;
 }
 
 .product .user {

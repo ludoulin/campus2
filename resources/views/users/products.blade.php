@@ -50,10 +50,10 @@
                                                 <td>{{$product->updated_at}}</td>
                                                 <td>
                                                     <div class="flex align-items-center list-product-action">
-                                                       <a class="btn bg-primary" data-toggle="tooltip" data-placement="top" title data-original-title="編輯" href="{{ route('products.edit', $product->id) }}">
+                                                       <a class="btn bg-primary" href="{{ route('products.edit', $product->id) }}">
                                                             <i class="fas fa-edit"></i>
                                                        </a>
-                                                       <a class="btn bg-salmon" data-toggle="tooltip" data-placement="top" title data-original-title="刪除" href="＃">
+                                                       <a class="btn bg-salmon" data-toggle="tooltip" data-placement="top" title="刪除" href="＃">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </a>    
                                                     </div>
@@ -67,14 +67,11 @@
                 </div>
             </div>
         </div>
-        {{-- {{$user->products}}    --}}
-</div>    
-
+</div>       
 @endsection
 @section('script')
 <script>
 $(function(){
- 
     $("#user_products_table").DataTable({
         "sDom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"+"<'clear'>",
         "bSort": true,
@@ -95,7 +92,6 @@ $(function(){
                         }
                     }
                 })
-
             })
     </script>    
 @endsection

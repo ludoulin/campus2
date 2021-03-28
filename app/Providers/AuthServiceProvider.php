@@ -8,10 +8,12 @@ use App\Models\Product;
 use App\Models\Comment;
 use App\Models\Reply;
 use App\Models\user;
+use App\Models\order;
 use App\Policies\CommentPolicy;
 use App\Policies\UserPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\ReplyPolicy;
+use App\Policies\OrderPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Comment::class => CommentPolicy::class,
         User::class => UserPolicy::class,
         Reply::class => ReplyPolicy::class,
+        Order::class => OrderPolicy::class,
 
     ];
 

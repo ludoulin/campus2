@@ -69,7 +69,15 @@
                 :product={{ $product->id }}
                 :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}></favorite-button>
               <div><button type="button" class="btn cart"><i class="fas fa-shopping-cart pr-2"></i>加入購物車</button></div>
-              <div class="mt-2"><button type="button" class="btn buy">立即購買</button></div>
+              <div class="mt-2">
+                
+                <form action="{{route('checkout.payment')}}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                <input id="p_d" name="p_d" type="hidden" value="{{$product->id}}" autocomplete="off">
+                @csrf
+                <button type="submit" class="btn buy">立即購買</button>
+                </form>
+
+              </div>
               @endif
               @can('update', $product)
               <hr class="hr-text" data-content="賣家操作">

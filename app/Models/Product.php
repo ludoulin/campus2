@@ -44,6 +44,9 @@ class Product extends Model
         return visits($this);
     }
 
+    public function orderitem(){
+        return $this->hasOne(OrderItem::class);
+    }
     
     public function favorited(){
 
@@ -72,7 +75,18 @@ class Product extends Model
         parent::boot();
 
         static::deleting(function($product) {
-             $product->images()->delete();
+             
+            foreach($product->images as $image){
+
+                if(file_exists(public_path($image->path))){
+                    unlink(public_path($image->path));
+                        $image->delete();
+                }else{
+                     dd('image does not exists.');
+                }
+
+             }
+
              $product->tags()->delete();
         });
     }

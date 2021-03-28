@@ -12,7 +12,9 @@ window.Vue = require('vue');
 let moment = require('moment');
 
 
+
 const swal = (window.swal = require("sweetalert2"));
+
 
 
 
@@ -41,6 +43,7 @@ Vue.component('cart-item', require('./components/CartItem.vue').default);
 
 
 import VueChatScroll from 'vue-chat-scroll'
+
 
 Vue.use(VueChatScroll);
 

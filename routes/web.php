@@ -68,6 +68,8 @@ Route::get('/favorites', 'UsersController@getFavorites')->name('users.favorite')
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 Route::get('/users/{user}/products', 'UsersController@products')->name('users.products');
+Route::get('/users/{user}/orders', 'UsersController@orders')->name('users.orders');
+Route::get('/users/{user}/orders_status', 'UsersController@orders_status')->name('users.orders_status');
 Route::post('users/change_password', 'UsersController@edit_password');
 Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 
@@ -118,6 +120,20 @@ Route::get('/notifications/index', 'NotificationsController@index')->name('notif
 Route::get('/notifications/reset', 'NotificationsController@reset');
 Route::post('/notifications/read', 'NotificationsController@read');
 Route::get('/notifications/sync', 'NotificationsController@sync');
+
+
+Route::post('/direct_payment', 'CheckOutController@payment')->name('checkout.payment');
+Route::get('/campus_payment','CheckOutController@getCheckOutSession')->name('checkout.session');
+Route::post('/checkout','CheckOutController@getCheckOut')->name('checkout.index');
+
+Route::post('/orders/create', 'OrderController@create')->name('order.create');
+Route::post('/orders/change_status', 'OrderController@ChangeStatus')->name('order.status');
+Route::delete('/orders/{order}', 'OrderController@destroy')->name('order.destroy');
+
+
+
+
+
 
 
 

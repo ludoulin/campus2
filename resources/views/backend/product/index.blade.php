@@ -29,34 +29,39 @@
                                                 <th style="width: 7%">賣家</th>
                                                 <th style="width: 10%">書名</th>
                                                 <th style="width: 7%">價錢</th>
+                                                <th style="width: 7%">狀態</th>
                                                 <th style="width: 10%">建立時間</th>
                                                 <th style="width: 10%">更新時間</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                                 @foreach ($products as $product)
+                                                        @if(!$product->is_stock)
+                                                        <tr class="text-center tbody-color" role="row"> 
+                                                        @else  
                                                         <tr class="text-center" role="row">
+                                                        @endif  
                                                         <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $product->id }}</td>
                                                         <td>
-                                                            @if(!$product->istock)
+                                                            @if(!$product->is_stock)
                                                             <a class="btn bg-primary"
                                                                 href="javascript:void(0)"   
                                                                 data-toggle="modal" 
                                                                 data-target="#btn-delete-modal-{{ $product->id }}">
-                                                             <i class="fa fa-unlock-alt"></i>
+                                                               恢復上架
                                                             </a>
                                                             @else 
                                                             <div class="flex align-items-center list-product-action">
-                                                            <a class="btn btn-outline-success" 
-                                                               href="{{ route('admin.products.edit', $product->id) }}">
-                                                                <i class="fa fa-pencil"></i>
+                                                            <a class="btn bg-primary" 
+                                                               href="{{ route('products.show', $product->id) }}">
+                                                               <i class="far fa-eye"></i>
                                                             </a>
-                                                            <a class="btn btn-outline-danger"  
+                                                            <a class="btn bg-salmon"  
                                                                 href="javascript:void(0)"
                                                                 data-toggle="modal" 
                                                                 data-target="#btn-delete-modal-{{ $product->id }}">
-                                                                <i class="fas fa-trash-alt"></i>
+                                                                下架
                                                             </a>
                                                             </div>
                                                             @endif 
@@ -69,7 +74,7 @@
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title font-weight-bold">
                                                                             @if (!$product->is_stock)
-                                                                            <i class="fas fa-unlock-alt"></i><span> 重新上架</span>
+                                                                            <i class="fas fa-unlock-alt"></i><span> 恢復上架</span>
                                                                             @else  
                                                                             <i class="fas fa-trash-alt"></i><span> 下架商品</span>
                                                                             @endif
@@ -80,14 +85,14 @@
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             @if (!$product->is_stock)
-                                                                            <span>確定取消下架<span class="font-weight-bold"></span>這個商品嗎？</span>
+                                                                            <span>確定恢復上架<span class="font-weight-bold"></span>這個商品嗎？</span>
                                                                             @else  
                                                                             <span>確定下架<span class="font-weight-bold"></span>此商品嗎？</span>
                                                                             @endif
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
-                                                                            <form action="{{ route('admin.users.publish',$product->id) }}" method="POST">
+                                                                            <form action="{{ route('admin.products.publish',$product->id) }}" method="POST">
                                                                                     @method('PATCH')
                                                                                     @csrf
                                                                                     <input type="hidden" name="publish" value={{ $product->is_stock ? '0' : '1'}}>
@@ -101,6 +106,12 @@
                                                     <td>{{ $product->user->name }}</td>
                                                     <td>{{ $product->name }}</td>
                                                     <td>${{ $product->price}}</td>
+                                                    <td>@if ($product->is_stock)
+                                                        <h4><span class="badge rounded-pill badge-success">上架中</span></h4>
+                                                     @else 
+                                                        <h4><span class="badge rounded-pill badge-danger">已下架</span></h4>
+                                                     @endif
+                                                    </td>
                                                     <td>{{ $product->created_at && $product->created_at->ne(new Carbon('0000-00-00')) ? $product->created_at->format('Y-m-d H:i') : null }}</td>
                                                     <td>{{ $product->updated_at && $product->updated_at->ne(new Carbon('0000-00-00')) ? $product->updated_at->format('Y-m-d H:i') : null }}</td>  
                                                 </tr>

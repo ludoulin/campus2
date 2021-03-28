@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Crypt;
 
 class LoginController extends Controller
 {
@@ -44,16 +45,28 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
+       
         if(!session()->has('url.intended'))
         {
-        session(['url.intended' => url()->previous()]);
+            session(['url.intended' => url()->previous()]);
         }
-        return view('auth.login');
+        
+        return view('auth.login',compact('encrypted'));
+
+         // $encrypted = null;
+
+        // if(Session::get('key')){
+
+        //  $encrypted = Crypt::encrypt(Session::get('key'));
+
+        //  }
 
     }   
 
     protected function sendLoginResponse(Request $request)
     {   
+        
+
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
@@ -84,11 +97,16 @@ class LoginController extends Controller
                     $cart_item->save();
 
                     }
-                    
                 }
             }
 
+            if(Session::has('key')){
+
+                return redirect()->route('checkout.session');
+            }
+
         }
+
 
         return $this->authenticated($request, $this->guard()->user())
         ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
