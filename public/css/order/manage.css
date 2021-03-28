@@ -1,0 +1,66 @@
+.order-manage-card {
+  background: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+}
+
+.order-manage-card .order-manage-header {
+  padding: 20px;
+  margin-bottom: 0;
+  align-items: center !important;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.order-manage-card .order-manage-header .order-manage-header-title .card-title {
+  margin-bottom: 0;
+}
+
+.order-manage-card .order-manage-body {
+  padding: 20px;
+}
+
+.order-manage-card .order-manage-body .custom-select {
+  line-height: 1.2;
+}
+
+.order-manage-card .order-manage-body .table th,
+.order-manage-card .order-manage-body .table td {
+  text-align: center;
+  padding: 1.5rem;
+  vertical-align: middle;
+}
+
+.order-manage-card .order-manage-body .table thead {
+  background-color: #1e7fe4;
+  color: #fff;
+  text-align: center;
+}
+
+.order-manage-card button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.order-manage-card .btn-primary {
+  background: #1e7fe4;
+  border-color: #1e7fe4;
+}
+
+.order-manage-card .bg-primary {
+  color: #fff;
+  background: #1e7fe4;
+}
+
+.order-manage-card .bg-salmon,
+.order-manage-card .badge-salmon {
+  color: #fff;
+  background: #FA8072;
+}
+
+.table.dataTable thead th,
+.table.dataTable thead td {
+  border-bottom: 1px solid #dddddd;
+}
+

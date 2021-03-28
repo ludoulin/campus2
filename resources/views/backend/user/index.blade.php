@@ -153,7 +153,7 @@
                                                     <td>{{ $user->id}}</td>
                                                     <td>
                                                         @if ($user->is_admin)
-                                                           最高管理員
+                                                        <h3><span class="badge bg-primary">最高管理員</span></h3>
                                                         @elseif($user->is_banned)
                                                            <a class="btn bg-primary"
                                                               href="javascript:void(0)"   
@@ -215,11 +215,11 @@
                                                   <td>{{ $user->email }}</td>
                                                   <td>
                                                      @if ($user->isAdmin())
-                                                        管理員權限
+                                                     <h3><span class="badge rounded-pill bg-primary text-white">管理員權限</span></h3>
                                                      @elseif($user->is_banned)
-                                                        停用權限   
+                                                     <h3><span class="badge rounded-pill bg-salmon text-white">停用</span></h3>
                                                      @else 
-                                                        一般使用者
+                                                     <h3><span class="badge rounded-pill bg-success text-white">一般使用者</span></h3>
                                                      @endif
                                                     </td>
                                                   <td>{{ $user->created_at && $user->created_at->ne(new Carbon('0000-00-00')) ? 

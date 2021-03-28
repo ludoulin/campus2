@@ -1,13 +1,9 @@
 .product{
     min-height: 100%;
     .left{
-        // border-radius: 10px;
         background-color:#e9ecef;
         height: 650px;
-        // box-shadow: 0 2px 0 0 rgba(0,0,0,.1);
-        // border-right: 1px solid rgba(0,0,0,.1);
         .big-image{
-            // border: 1px solid #C0C0C0;
             margin-top: 10px;
             height: 75%;
             .tag-left{
@@ -58,10 +54,8 @@
     }
     .right{
         min-height: 100%;
-        // border-radius: 10px;
         border-left: 1px solid rgba(0,0,0,.1);
         background-color: #fff;
-        // height: 700px;
         box-shadow: 0 2px 0 0 rgba(0,0,0,.1);
         .product-name{
             margin-top: 10px;
@@ -114,22 +108,23 @@
             border-radius: 50px;
             width: 48%;
             float: left;
-            border: 2px solid #D9534F;
-            color: #D9534F;
+            border: 2px solid rgb(250, 128, 114);
+            color: rgb(250, 128, 114);
             background-color: #FFF;
             &:hover{
                 color:#fff;
-                background-color: #D9534F;
+                background-color: rgb(250, 128, 114);
             }
+            //#D9534F
         }
         .saved{
             transition: all .3s ease;
             border-radius: 50px;
             width: 48%;
             float: left;
-            border: 2px solid #D9534F;
+            border: 2px solid rgb(250, 128, 114);
             color: #fff;
-            background-color:#D9534F;
+            background-color:rgb(250, 128, 114);
                 i{
                     color:#fff;
                 }
@@ -137,16 +132,13 @@
     }
         .cart{
             transition: all .3s ease;
-            border: 2px solid #191970;
+            border: 2px solid rgb(30, 127, 228);
             border-radius: 50px;
             width: 48%;
             float: right;
             color:#fff;
-            background-color: #191970;
-            // &:hover{
-            //     color:#fff;
-            //     background-color: #191970;
-            // }     
+            background-color: rgb(30, 127, 228);
+
         }
 
 
@@ -159,7 +151,7 @@
             width: 100%;
             float: left;
             color: #fff;
-            background: #708090;
+            background: rgb(60, 179, 113);
         }        
     }
     .user{

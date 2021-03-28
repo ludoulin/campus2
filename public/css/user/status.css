@@ -1,0 +1,167 @@
+.status-card {
+  background: #fff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+}
+
+.status-card .status-card-header {
+  padding: 20px;
+  margin-bottom: 0;
+  align-items: center !important;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.status-card .status-card-body {
+  padding: 20px;
+}
+
+.status-card .status-card-body .checkout-product {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 25px;
+}
+
+.status-card .status-card-body .checkout-product .bage {
+  padding: 0.3em 0.6em;
+  line-height: 1.3;
+  text-transform: capitalize;
+}
+
+.status-card .status-card-body .checkout-product .badge-danger {
+  color: #fff;
+  background: #ff9b8a;
+}
+
+.status-card .status-card-body .checkout-product .checkout-product-img {
+  vertical-align: middle;
+  max-height: 100px;
+  max-width: 80px;
+  display: inline-block;
+}
+
+.status-card .status-card-body .order {
+  border-left: 4px solid #f1f1f1;
+}
+
+.status-card .status-card-body .order .order-summary .status-summary .summary-title {
+  color: #333333;
+  font-weight: 600;
+}
+
+.status-card .status-card-body .order .order-summary .status-summary .summary-title .pricing {
+  float: right;
+  font-size: 16px;
+}
+
+.status-card .status-card-body .order .order-summary .status-summary .summary-title .pricing .b-text-prime {
+  font-weight: bold;
+  color: #333333;
+  font-size: 22px;
+}
+
+.status-card .status-card-body .order .order-summary .summary-product-total,
+.status-card .status-card-body .order .order-summary .payment-status,
+.status-card .status-card-body .order .order-summary .order-status {
+  margin: 16px 0px 0px 0px;
+}
+
+.status-card .status-card-body .order .order-summary .summary-product-total .total-pricing,
+.status-card .status-card-body .order .order-summary .payment-status .total-pricing,
+.status-card .status-card-body .order .order-summary .order-status .total-pricing {
+  color: #bf0000;
+  font-weight: bold;
+  float: right;
+  font-size: 26px;
+}
+
+.status-card .status-card-body .order .order-summary .summary-product-total .p-status,
+.status-card .status-card-body .order .order-summary .payment-status .p-status,
+.status-card .status-card-body .order .order-summary .order-status .p-status {
+  font-weight: bold;
+  float: right;
+  font-size: 26px;
+}
+
+.status-card .status-card-body .order .order-summary .summary-product-total .o-status,
+.status-card .status-card-body .order .order-summary .payment-status .o-status,
+.status-card .status-card-body .order .order-summary .order-status .o-status {
+  font-weight: bold;
+  float: right;
+  font-size: 26px;
+}
+
+.status-card .badge-price-title {
+  color: #fff;
+  background-color: navy;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.primary {
+  color: #fff;
+  background-color: navy;
+}
+
+.bg-salmon {
+  color: #fff;
+  background: #ff9b8a;
+}
+
+.bg-red {
+  color: #fff;
+  background: #8e1330;
+}
+
+.btn-outline-primary {
+  border-color: navy;
+  color: navy;
+}
+
+.btn-outline-primary:hover {
+  border-color: lightsteelblue;
+  background-color: lightsteelblue;
+  color: #fff;
+}
+
+.order-number {
+  color: #d91d49;
+}
+
+.delete-body .order-number {
+  color: #d91d49;
+}
+
+@media (max-width: 1980px) and (max-width: 575px) {
+  li.checkout-product {
+    text-align: center;
+  }
+}
+
+@media (max-width: 575px) {
+  .status-card-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-card-header h4 {
+    font-size: 1rem;
+  }
+
+  .status-card-header .status-header-toolbar h5 {
+    font-size: 0.4rem;
+  }
+
+  .list-unstyled h4 {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .badge {
+    font-size: 1rem;
+  }
+}
+

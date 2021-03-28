@@ -30,6 +30,8 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/errors/404.scss', 'public/css/errors')
    .sass('resources/sass/user/edit.scss', 'public/css/user')
    .sass('resources/sass/user/products.scss', 'public/css/user')
+   .sass('resources/sass/order/status.scss', 'public/css/user')
+   .sass('resources/sass/order/manage.scss', 'public/css/order')
    .sass('resources/sass/backend/product/index.scss', 'public/css/backend/product')
    .version();
 

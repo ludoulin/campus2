@@ -17,5 +17,8 @@ class PaymentType extends Model
         return $this->belongsToMany(User::class,'payment_options','payment_type_id','user_id');
     }
 
-    
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

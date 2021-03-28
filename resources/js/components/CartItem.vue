@@ -1,9 +1,9 @@
 <template>
     <div>
-        <a class="product-card__btn select-btn mr-3" v-if="isCarted" @click.prevent="unCart(product)" href="#">
+        <a class="product-card__btn select-btn mr-3" v-if="isCarted" @click.prevent="unCart(product)" href="javascript:void(0)">
                已加入購物車
         </a>
-          <a class="product-card__btn mr-3" v-else @click.prevent="cart(product)" href="#">
+          <a class="product-card__btn mr-3" v-else @click.prevent="cart(product)" href="javascript:void(0)">
             <i class="fas fa-plus pr-2">加入購物車</i>
         </a>
     </div>

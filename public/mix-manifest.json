@@ -1,6 +1,6 @@
 {
     "/js/AlertMessage.js": "/js/AlertMessage.js?id=57ea2353f979ed2bfade",
-    "/js/app.js": "/js/app.js?id=7c88b7b48a401fa1ac3f",
+    "/js/app.js": "/js/app.js?id=f9006bd9b5ebe55ca123",
     "/css/app.css": "/css/app.css?id=83a484bfff1c8a297e13",
     "/css/login/login.css": "/css/login/login.css?id=091836993d23205ac7f4",
     "/css/register/register.css": "/css/register/register.css?id=a96042cca6203ef17574",
@@ -8,15 +8,17 @@
     "/css/backend/user/index.css": "/css/backend/user/index.css?id=8a0e0d98f76d7a6ae48b",
     "/css/backend/user/edit.css": "/css/backend/user/edit.css?id=75dc33e8aa9a5f8be60b",
     "/css/page/test.css": "/css/page/test.css?id=689e92a3ebfedb8d35ae",
-    "/css/product/show.css": "/css/product/show.css?id=b1fb8f70f4cd37ffc686",
+    "/css/product/show.css": "/css/product/show.css?id=c76161344b6cb314f1ff",
     "/css/product/create.css": "/css/product/create.css?id=caa0efba0d9509024092",
     "/css/department/index.css": "/css/department/index.css?id=0bc11103de158ad7d187",
     "/css/page/root.css": "/css/page/root.css?id=b3918e1ca81f64ce318e",
     "/css/user/favorite.css": "/css/user/favorite.css?id=890656ca2940aea27959",
     "/css/search/index.css": "/css/search/index.css?id=2762399a0ee36722be34",
-    "/css/user/cart.css": "/css/user/cart.css?id=7b74eb8e26d4239a202f",
+    "/css/user/cart.css": "/css/user/cart.css?id=0f8a82ef4ee32c4e8401",
     "/css/errors/404.css": "/css/errors/404.css?id=6cdce52472b7e45a89c0",
     "/css/user/edit.css": "/css/user/edit.css?id=950ccdadaa348a6e1b86",
     "/css/user/products.css": "/css/user/products.css?id=69ca21ecdb2a0e785b34",
+    "/css/user/status.css": "/css/user/status.css?id=f0af5db3520a400acfba",
+    "/css/order/manage.css": "/css/order/manage.css?id=2eeed35011e65aec12e5",
     "/css/backend/product/index.css": "/css/backend/product/index.css?id=9092023a1d62d4290b73"
 }

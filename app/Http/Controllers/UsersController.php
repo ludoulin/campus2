@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\PaymentType;
 use App\Http\Requests\UserRequest;
 use App\Handlers\ImageUploadHandler;
+use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -61,27 +62,34 @@ class UsersController extends Controller
         return view('users.favorites', compact('myfavorites','user'));
     }
 
-    public function cart()
-    {
-        if(Auth::check()){
-
-        $mycarts= Auth::user()->cartitems;
-
-        return view('users.cart',compact('mycarts'));
-
-        }else{
-
-            return view('users.cart');
-
-        }
-
-    }
+    
 
      public function products(User $user){
 
         $this->authorize('update', $user);
 
         return view('users.products',compact('user'));
+     }
+
+
+     public function orders(User $user){
+
+        $this->authorize('update', $user);
+
+        $id = $user->id;
+
+        $manages = Order::with(['items'=> function($query){$query->with("product");}])->where('seller_id', $id)->get();
+
+        $types = collect(Order::Statuses);
+
+        return view('users.orders_manage',compact('user','manages','types'));
+     }
+
+     public function orders_status(User $user){
+
+        $this->authorize('update', $user);
+
+        return view('users.orders_status',compact('user'));
      }
 
 

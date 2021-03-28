@@ -7,8 +7,6 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\PaymentType;
-use App\Handlers\ImageUploadHandler;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Models\College;
 use App\Models\Department;
 use App\Models\PaymentOption;
@@ -98,6 +96,11 @@ class ProductsController extends Controller
 
     public function show(Product $product)
     {
+        if(!$product->is_stock&&$product->seller_id!=Auth::id()){
+
+            return abort(404);
+        }
+
         $product->visits()->increment();
 
         return view('product.show', compact('product'));
@@ -156,10 +159,6 @@ class ProductsController extends Controller
 
         }
         
-            // $this->validate(
-            //     $request, 
-            //  ['new_images' => 'required'],
-            //  ['new_images.required' => 'this is my custom error message for required']);
 
         if(($request->hasfile('new_images')))
             {
@@ -198,11 +197,14 @@ class ProductsController extends Controller
 
     public function destroy(Product $product)
 	{
-		$this->authorize('destroy', $product);
+        $this->authorize('destroy', $product);
+        
 		$product->delete();
 
 		return redirect()->route('root')->with('success', '成功刪除');
     }
+
+    
     
     public function favoriteProduct(Product $product)
     {
@@ -239,10 +241,10 @@ class ProductsController extends Controller
                     $id => [
                         "name" => $product->name,
                         "product_id" => $product->id,
-                        "seller_name" => $product->user->name,
+                        "seller_id" => $product->user->id,
                         "price" => $product->price,
                         "image" => $product->images[0]->path,
-
+                        "is_stock" => $product->is_stock
                     ]
             ];
             session()->put('cart', $cart);
@@ -259,10 +261,13 @@ class ProductsController extends Controller
         // if item not exist in cart then add to cart with quantity = 1
         $cart[$id] = [
            "name" => $product->name,
-           "seller_name" => $product->user->name,
+           "product_id" => $product->id,
+           "seller_id" => $product->user->id,
            "price" => $product->price,
            "image" => $product->images[0]->path,
+           "is_stock" => $product->is_stock
         ];
+
         session()->put('cart', $cart);
 
         return "加入購物車成功";
@@ -308,6 +313,8 @@ class ProductsController extends Controller
             // return back();
         }
     }
+
+   
 }
 
                     // $filename=$image->getClientOriginalName();
