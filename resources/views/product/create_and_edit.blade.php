@@ -28,7 +28,7 @@
             <form action="{{ route('products.update', $product->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                 @method('PATCH')
           @else
-            <form action="{{ route('products.store') }}" id="create_product" name="create_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+            <form action="{{ route('products.store') }}" id="create_product" name="create_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return BookForm()">
                 <input type="hidden" name="_method" value="POST">
           @endif
              @csrf
@@ -36,35 +36,46 @@
 
               <div class="form-row">
 
-              <div class="form-group col-md-5">
-                <label for="name" class="text-muted">書名 :</label>
-                <input id="name" class="form-control" type="text" name="name" value="{{ old('name', $product->name ) }}" placeholder="請填寫書名" required />
-              </div>
+              <div class="form-group col-md-6">
+                  <label for="ISBN" class="text-muted">* ISBN : (10/13碼)</label>
+                  <div class="input-group">
+                  <input id="ISBN" class="form-control necessary" type="text" name="isbn"  placeholder="請輸入ISBN" value="{{ old('isbn', $product->isbn ) }}"/>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" onclick="SearchIsbn()" type="button" id="isbn-button">查詢</button>
+                  </div>
+                </div>
+              </div>  
 
-              <div class="form-group col-md-4">
-                <label for="author" class="text-muted">作者 :</label>
-                <input id="author" class="form-control" type="text" name="author"  placeholder="請填寫作者" />
+              <div class="form-group col-md-12">
+                <label for="name" class="text-muted">* 書名 :</label>
+                <input id="name" class="form-control necessary" type="text" name="name" value="{{ old('name', $product->name ) }}" placeholder="請填寫書名"/>
               </div>
 
               <div class="form-group col-md-3">
-                <label for="price" class="text-muted">價格 :</label>
+                <label for="author" class="text-muted">* 作者 :</label>
+                <input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" />
+              </div>
+
+              <div class="form-group col-md-3">
+                <label for="price" class="text-muted">* 價格 :</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                <input id="price" class="form-control" type="text" name="price" value="{{ old('price', $product->price ) }}" placeholder="請填寫價格" />
+                <input id="price" class="form-control necessary" type="text" name="price" value="{{ old('price', $product->price ) }}" placeholder="請填寫價格" />
                 </div>
               </div>
+
               </div>
 
              
               <div class="form-row mb-2">
 
                  <div class="form-group col-md-6">
-                    <label for="college" class="text-muted">學院 :</label>
+                    <label for="college" class="text-muted">* 學院 :</label>
                     <div class="input-group">
-                    <select class="form-control" name="college[]">
-                      <option value="">--請選擇學院--</option>
+                    <select class="form-control necessarySelect" name="college[]">
+                      <option value="0">--請選擇學院--</option>
                       @foreach ($colleges as $value)
                       <option value="{{ $value->id }}">{{ $value->name }}</option>
                       @endforeach
@@ -73,9 +84,9 @@
                  </div> 
                
                  <div class="form-group col-md-6">
-                    <label for="department" class="text-muted">系所 :（可複選）每選完一次科系後請按下新增Tag</label>
+                    <label for="department" class="text-muted">* 系所 :（可複選）每選完一次科系後請按下新增Tag</label>
                     <div class="input-group">
-                    <select name="department[]"  class="form-control">
+                    <select name="department[]"  class="form-control necessarySelect">
                       <option value="0">--請選擇科系--</option>
                     </select>
                     <div class="input-group-append">
@@ -121,19 +132,19 @@
                         
 
               <div class="form-group">
-                <label for="content" class="text-muted">書況:</label>
-                <textarea id="content" name="content" class="form-control" rows="6" placeholder="請填入書況說明,至少3個字。" required>{{ old('content', $product->content ) }}</textarea>
+                <label for="content" class="text-muted">* 書況:</label>
+                <textarea id="content" name="content" class="form-control necessaryTextArea" rows="6" placeholder="請填入書況說明,至少3個字。">{{ old('content', $product->content ) }}</textarea>
               </div>
 
                 <div class="form-row many">
                 <div class="form-group control-group increment" >
-                    <label for="images" class="text-muted">商品圖片上傳:</label>
+                    <label for="images" class="text-muted">* 商品圖片上傳:</label>
                     <div class="form-row inner-row">
                     @if(!$product->id)  
                     <div class="input-group col-md-4 mb-2 count">
                         <div class="preview">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <input class="file-upload form-control" type="file" name="images[]" />
+                            <input class="file-upload form-control necessaryFile" type="file" name="images[]" />
                         </div>
                      </div>
                      @else
@@ -183,13 +194,13 @@
 
 
               <div class="well well-sm">
-                  <button class="btn btn-success" type="button"> <i class="fas fa-plus mr-2"></i>新增圖片</button>
+                <button class="btn btn-success" type="button"> <i class="fas fa-plus mr-2"></i>新增圖片</button>
                 @if(!$product->id)  
                 <button type="submit" class="btn btn-primary"><i class="fas fa-file-import mr-2" aria-hidden="true"></i>刊登商品</button>
                 @else 
                 <button type="submit" class="btn btn-primary edit"><i class="far fa-save mr-2" aria-hidden="true"></i>編輯完成</button>
                 @endif 
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">回上一頁</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary float-right">回上一頁</a>
               </div>
             </form>
         </div>
@@ -250,6 +261,9 @@
            }
 
         const html = $(".clone").find('.input-group').clone(true).appendTo('.inner-row');
+
+        html.find("input").addClass('necessaryFile');
+
   
          if(document.getElementById("image_select2")){
             html.find("input").attr("name", "new_images[]")
@@ -363,9 +377,19 @@
           
     $(".btn-outline-secondary").click(function(){ 
 
+      let c_id = $('select[name="college[]"]').val();
+
       let d_id = $('select[name="department[]"]').val();
 
       let d_name = $('select[name="department[]"] option:selected').text();
+
+      if(d_id == 0 || c_id == 0){
+
+        MessageObject.VaildSubmitMessage("發生錯誤","請選擇指定學院系所後再按下新增Tag");
+
+        return false
+
+      }
   
       if(t_selected_array.indexOf(d_name) === -1){
 
@@ -373,7 +397,14 @@
                     
             $(".tags").find(".hint").remove();
                 
-                }
+        }
+        
+        if($(".tags").find(".error")){
+
+          $(".tags").find(".error").remove();
+
+        }
+
        t_selected_array.push(d_name);
        
        $('#id_select2_demo1').append('<option value="'+ d_id +'" selected>' + d_name + '</option>').trigger('change.select2');
@@ -484,6 +515,195 @@ function preview2(el) {
   }); 
 
   });
+
+  function SearchIsbn(){
+
+    let number = document.getElementById("ISBN").value;
+
+    if(number === ""){
+
+      MessageObject.VaildSubmitMessage("查詢發生錯誤","不可以沒輸入ISBN碼按下查詢");
+
+      $("#ISBN").addClass("is-invalid");
+
+      return false
+
+    }
+
+    $.ajax({
+           url: `https://www.googleapis.com/books/v1/volumes?q=isbn:${number}&key=AIzaSyCHZb02CUvtHrRXIk5qB7p_c2tz4G-sMic`,
+           type: "GET",
+           crossDomain: true,
+           dataType: "jsonp",
+          
+           success: function(data){
+            
+                console.log(data);
+
+              $("#ISBN").removeClass("is-invalid");  
+
+              if(data.hasOwnProperty('items')){
+
+                    document.getElementById("name").value = data.items[0].volumeInfo.hasOwnProperty('subtitle') ? data.items[0].volumeInfo.title + data.items[0].volumeInfo.subtitle : data.items[0].volumeInfo.title;
+
+
+                  if(data.items[0].volumeInfo.hasOwnProperty('authors')){
+
+                    if(data.items[0].volumeInfo.authors.length==1){
+
+                        document.getElementById("author").value = data.items[0].volumeInfo.authors[0]
+
+                       }
+
+                     else if(data.items[0].volumeInfo.author.length > 1){
+
+                        document.getElementById("author").value = data.items[0].volumeInfo.authors.join();
+
+                       }
+                     else{
+
+                        MessageObject.OtherMessage("warning","沒有作者資料","請自行輸入");
+
+                      }
+                }
+
+             } else{
+              
+              $("#ISBN").addClass("is-invalid");
+
+              MessageObject.VaildSubmitMessage("找不到此書資料","ISBN錯誤或是此書並無存在於Google資料庫");
+
+              return false
+
+            }
+
+      
+              return true
+
+           },
+           error: function (error) {
+
+            MessageObject.VaildSubmitMessage("找不到此書資料","ISBN錯誤或是此書並無存在於Google資料庫");
+
+            return false
+          }
+
+         });
+
+    return     
+  }
+  
+  function BookForm(){
+
+     return ValidateForm() && IsbnValidate() && PriceValidate() && ContentValidate()
+  }
+  function IsbnValidate(){
+
+    let regx = /^([0-9]{10}|[0-9]{13})$/;
+
+    let isbn = document.getElementById("ISBN").value;
+
+      if(!regx.test(isbn)){
+
+        MessageObject.VaildSubmitMessage("驗證錯誤","ISBN碼只能為10或13碼的數字");
+
+        return false
+
+      }
+
+      if(isbn.length==10){
+
+        let sum = 0;
+
+        const isbn10 = isbn.split('');
+
+        for(let i = 0,j=isbn.length;i<isbn.length,j>0;i++,j--){
+
+            sum = sum + isbn10[i]*j;
+
+        }
+        
+        if(!(sum % 11 === 0)){
+
+          MessageObject.VaildSubmitMessage("驗證錯誤","ISBN碼不存在");
+
+          return false
+
+        }
+
+      }
+
+      else if(isbn.length==13){
+
+        let sum = 0;
+
+        const isbn13 = isbn.split('');
+
+        console.log(isbn13);
+
+        for(let i = 0; i < isbn.length-1; i++){        
+            if(i % 2 == 0){ 
+
+              sum = sum+isbn13[i]*1
+        
+             } 
+            else{
+              
+              sum = sum+isbn13[i]*3
+
+            } 
+          }
+
+
+          sum = sum+ Number(isbn13[12]);
+
+          console.log(sum);
+
+          if(!(sum % 10 === 0)){
+
+            MessageObject.VaildSubmitMessage("驗證錯誤","ISBN碼不存在");
+
+            return false
+
+          }
+
+      }
+       
+      return true
+
+  }
+
+  function PriceValidate(){
+      
+      let regx = /^\+?[1-9][0-9]*$/;
+
+      if(!regx.test(document.getElementById("price").value)){
+
+        $("#price").addClass("is-invalid");
+
+        MessageObject.VaildSubmitMessage("驗證錯誤","價格只能為正整數");
+
+          return false
+      }
+      
+      return true
+  }
+
+  function ContentValidate(){
+      
+      let content = document.getElementById("content").value
+
+      if(content.length < 3 ){
+
+        $("#content").addClass("is-invalid");
+
+        MessageObject.VaildSubmitMessage("驗證錯誤","內容至少要3個字");
+
+          return false
+      }
+      
+      return true
+  }
 </script>
 @endsection
 

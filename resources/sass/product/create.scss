@@ -34,6 +34,18 @@
         }    
    
 }
+
+.error{
+  border:1px dashed red;
+
+}
+
+.badge-error{
+ border: 1px solid #dc3545;
+ color: #dc3545;
+ background-color: transparent;
+
+}
 .edit_preview{
   position: relative;
   width: 250px;

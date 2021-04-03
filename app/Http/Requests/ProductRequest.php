@@ -30,7 +30,9 @@ class ProductRequest extends FormRequest
             {
                 return [
                      // UPDATE ROLES
+                     'isbn'       => 'required',
                      'name'       => 'required|min:2',
+                     'author'       => 'required',
                      'content'        => 'required|min:3',
                      'images' => 'required',
                      'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -44,7 +46,9 @@ class ProductRequest extends FormRequest
             {
                 return [
                     // UPDATE ROLES
+                    'isbn'       => 'required',
                     'name'       => 'required|min:2',
+                    'author'       => 'required',
                     'content'        => 'required|min:3',
                     'images' => 'nullable',
 
@@ -70,15 +74,17 @@ class ProductRequest extends FormRequest
     {
         return [
             'images.mimes' =>'大頭貼必須是jpeg, bmp, png, gif格式的圖片',
-            'images.required' =>'商品照片不能不貼',
-            // 'new_images.filled' =>'新增照片欄位不能為空送出,若沒有要新增照片請移除新增照片之欄位',
+            'images.required' =>'請記得上傳商品照片',
+            'name.required'   => '請記得填書名',
             'name.min' => '書名至少兩個字',
+            'content.required'   => '請記得填書況',
             'content.min' => '書況內容至少三個字',
-            'price.required' => '價格不能為空。',
+            'price.required' => '請記得填寫價錢。',
             'price.not_in' => '價格不能為0。',
             'price.regex' => '價格不能是負數或以0為開頭。',
             'departments.required'=> '請記得按下新增Tag將所選科系產生Tag',
-            'payment.required' => '請記得勾選可接受的付費方式'
+            'isbn.required'       => '請記得填isbn碼',
+            'author.required'       => '請記得填作者',
         ];
     }
 }
