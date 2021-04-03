@@ -70,6 +70,8 @@
   <script src="https://kit.fontawesome.com/2db53fc9a8.js" crossorigin="anonymous"></script>
 
   <script src="{{ asset('js/AlertMessage.js') }}"></script>
+
+  <script src="{{ asset('js/Validation.js') }}"></script>
   
 
 </body>

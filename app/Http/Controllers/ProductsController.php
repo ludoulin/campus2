@@ -41,14 +41,18 @@ class ProductsController extends Controller
     public function store(ProductRequest $request, Product $product)
     {
             $user = Auth::user();
+            $isbn = $request->isbn;
             $name = $request->name;
+            $authors = $request->author;
             $price = $request->price;
             $content = $request->content;
             $departments = $request->departments;
             $pay_options = $request->payment;
 
             $product = Product::create([
+                'isbn' => $isbn,
                 'name' => $name,
+                'author'=> $authors,
                 'price' => $price,
                 'content' =>$content,
                 'seller_id' => $user->id,

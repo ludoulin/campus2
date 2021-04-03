@@ -41,7 +41,7 @@
                {{-- <span style="font-size:14px;float:right;"><p class="text-muted"> |{{ $product->comment_count }}則留言</p></span>   --}}
                <span style="font-size:14px;float:right;"><p class="text-muted">瀏覽次數：{{ $product->visits()->count() }}</p></span>
               </div>
-              <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">ISBN：XXXXXXX</p>
+            <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">ISBN：{{$product->isbn}}</p>
               <p class="mb-3 mt-2" style="font-size:18px;color:#ff5353">二手價：<b style="font-size:22px">NT${{ $product->price }}</b></p>
               <p class="mb-3 mt-2" style="font-size:16px">書況：{!! $product->content !!}</p>
               <hr>

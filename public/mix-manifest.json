@@ -1,5 +1,6 @@
 {
     "/js/AlertMessage.js": "/js/AlertMessage.js?id=57ea2353f979ed2bfade",
+    "/js/Validation.js": "/js/Validation.js?id=d342c196e0440634ddfb",
     "/js/app.js": "/js/app.js?id=f9006bd9b5ebe55ca123",
     "/css/app.css": "/css/app.css?id=83a484bfff1c8a297e13",
     "/css/login/login.css": "/css/login/login.css?id=091836993d23205ac7f4",
@@ -9,7 +10,7 @@
     "/css/backend/user/edit.css": "/css/backend/user/edit.css?id=75dc33e8aa9a5f8be60b",
     "/css/page/test.css": "/css/page/test.css?id=689e92a3ebfedb8d35ae",
     "/css/product/show.css": "/css/product/show.css?id=c76161344b6cb314f1ff",
-    "/css/product/create.css": "/css/product/create.css?id=caa0efba0d9509024092",
+    "/css/product/create.css": "/css/product/create.css?id=9a4b76c726a4177e6f25",
     "/css/department/index.css": "/css/department/index.css?id=0bc11103de158ad7d187",
     "/css/page/root.css": "/css/page/root.css?id=b3918e1ca81f64ce318e",
     "/css/user/favorite.css": "/css/user/favorite.css?id=890656ca2940aea27959",
