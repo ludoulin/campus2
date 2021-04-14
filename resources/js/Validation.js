@@ -89,21 +89,34 @@ function ValidateFile(section = document){
         
 function ValidateTextArea(section = document){
         
-    let textarea = section.getElementById("content");
+    const textareas = section.getElementsByClassName("necessaryTextArea");
         
     let count = 0;
 
-        if(textarea.value === ""){
-
-            $("#content").addClass("is-invalid");
-
+    for(let i = 0; i < textareas.length; i++){
+        if(textareas[i].value.trim() == ""|| textareas[i].value === "error"){
+            textareas[i].classList.add("is-invalid");
             count++
-
         } else {
-
-            $("#content").removeClass("is-invalid");
-
+            textareas[i].classList.remove("is-invalid");
         }
-            
-        return count;
+     }
+
+    // $.each(textareas , function(index,textarea){
+
+    //     if(textarea.value === ""){
+
+    //         $(this).addClass("is-invalid");
+
+    //         count++
+
+    //     } else {
+
+    //         $(this).removeClass("is-invalid");
+
+    //     }
+
+    // });
+
+    return count;
  }

@@ -1,7 +1,7 @@
 @php
 use App\Models\User;  
 
-$prd = array();
+// $prd = array();
 
 @endphp
 
@@ -16,6 +16,7 @@ $prd = array();
     @if(!$datas->isEmpty())
         @foreach($datas as $name => $items)
         <?php $total = 0 ?>
+        <?php $prd = array()?>
         <div class="check-content container-fluid">
                 <div class="row">
                    <div class="col-sm-12"> 
@@ -84,7 +85,7 @@ $prd = array();
                                                     <?php $t_ids = collect($prd) ?>
                                                  <form action="{{ route('checkout.index') }}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                                                     {{-- <input id="p_type" name="p_type" type="hidden" value="{{$seller->payment_types}}"> --}}
-                                                    <input id="p_ids" name="p_ids" type="hidden" value="{{$t_ids}}">
+                                                    <input name="p_ids" type="hidden" value="{{$t_ids}}">
                                                     @csrf      
                                                     <button class="btn primary btn-lg btn-block">立即付費</button>
                                                     <a class="btn btn-outline-primary btn-lg btn-block" href="javascript:void(0)">繼續購物</a>
@@ -108,6 +109,7 @@ $prd = array();
 @if(!$my->isEmpty())
 @foreach($my as $name => $items)
 <?php $total = 0 ?>
+<?php $prd = array()?>
 <div class="check-content container-fluid">
         <div class="row">
            <div class="col-sm-12"> 
@@ -176,7 +178,7 @@ $prd = array();
                                         <div class="checkout-submit">
                                           <?php $t_ids = collect($prd) ?>
                                          <form action="{{ route('checkout.index') }}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
-                                            <input id="p_ids" name="p_ids" type="hidden" value="{{$t_ids}}">
+                                            <input name="p_ids" type="hidden" value="{{$t_ids}}">
                                             @csrf      
                                          <button class="btn primary btn-lg btn-block">立即付費</button>
                                             <a class="btn btn-outline-primary btn-lg btn-block" href="javascript:void(0)">繼續購物</a>

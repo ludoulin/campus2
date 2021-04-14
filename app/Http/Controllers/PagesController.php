@@ -24,7 +24,6 @@ class PagesController extends Controller
 
     public function test(){
 
-        dd(123);
 
         return view('pages.test');
     }

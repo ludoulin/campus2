@@ -126,12 +126,20 @@ Route::get('/notifications/sync', 'NotificationsController@sync');
 
 Route::post('/direct_payment', 'CheckOutController@payment')->name('checkout.payment');
 Route::get('/campus_payment','CheckOutController@getCheckOutSession')->name('checkout.session');
+Route::get('/campus-payment/confirm','CheckOutController@confirm')->name('checkout.confirm');
 Route::post('/checkout','CheckOutController@getCheckOut')->name('checkout.index');
 
 
+
 Route::post('/orders/create', 'OrderController@create')->name('order.create');
+Route::post('/orders/linepay', 'OrderController@linepay')->name('order.linepay');
 Route::post('/orders/change_status', 'OrderController@ChangeStatus')->name('order.status');
 Route::delete('/orders/{order}', 'OrderController@destroy')->name('order.destroy');
+
+
+Route::post('/linepay/payment', 'LinePayController@payment')->name('linepay.payment');
+Route::post('/linepay/confirm', 'LinePayController@confirm')->name('linepay.confirm');
+Route::post('/linepay/refund', 'LinePayController@refund')->name('linepay.refund');
 
 
 

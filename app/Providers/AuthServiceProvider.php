@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\Product;
 use App\Models\Comment;
+use App\Models\LinePayTradeRecord;
 use App\Models\Reply;
 use App\Models\user;
 use App\Models\order;
@@ -14,6 +15,7 @@ use App\Policies\UserPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\ReplyPolicy;
 use App\Policies\OrderPolicy;
+use App\Policies\RecordPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Reply::class => ReplyPolicy::class,
         Order::class => OrderPolicy::class,
+        LinePayTradeRecord::class => RecordPolicy::class,
 
     ];
 

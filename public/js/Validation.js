@@ -167,15 +167,25 @@ function ValidateFile() {
 
 function ValidateTextArea() {
   var section = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
-  var textarea = section.getElementById("content");
+  var textareas = section.getElementsByClassName("necessaryTextArea");
   var count = 0;
 
-  if (textarea.value === "") {
-    $("#content").addClass("is-invalid");
-    count++;
-  } else {
-    $("#content").removeClass("is-invalid");
-  }
+  for (var i = 0; i < textareas.length; i++) {
+    if (textareas[i].value.trim() == "" || textareas[i].value === "error") {
+      textareas[i].classList.add("is-invalid");
+      count++;
+    } else {
+      textareas[i].classList.remove("is-invalid");
+    }
+  } // $.each(textareas , function(index,textarea){
+  //     if(textarea.value === ""){
+  //         $(this).addClass("is-invalid");
+  //         count++
+  //     } else {
+  //         $(this).removeClass("is-invalid");
+  //     }
+  // });
+
 
   return count;
 }

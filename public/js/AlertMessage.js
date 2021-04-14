@@ -121,6 +121,17 @@ window.MessageObject = {
       showConfirmButton: false
     });
   },
+  Waiting: function Waiting(title) {
+    swal.fire({
+      icon: 'info',
+      title: title,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      onOpen: function onOpen() {
+        swal.showLoading();
+      }
+    });
+  },
   WarningMessage: function WarningMessage(title) {
     swal.fire({
       title: title,

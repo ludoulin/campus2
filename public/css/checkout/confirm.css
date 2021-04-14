@@ -1,0 +1,30 @@
+.line-pay-block {
+  width: 100%;
+  height: 100%;
+}
+
+.line-pay-block .line-pay-logo {
+  margin-top: 30%;
+  max-width: 100%;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 50% 50%;
+}
+
+.line-pay-block .line-pay-order {
+  margin-top: 3%;
+  text-align: center;
+  font-size: 22px;
+}
+
+.line-pay-block .order-confirm {
+  margin-top: 3%;
+}
+
+.line-pay-block .order-confirm button {
+  border-radius: 50px;
+  width: 150px;
+  height: 50px;
+}
+

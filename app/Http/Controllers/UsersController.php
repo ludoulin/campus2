@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\PaymentType;
 use App\Http\Requests\UserRequest;
 use App\Handlers\ImageUploadHandler;
+use App\Models\LinePayTradeRecord;
 use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
 use Auth;
@@ -85,7 +86,7 @@ class UsersController extends Controller
         return view('users.orders_manage',compact('user','manages','types'));
      }
 
-     public function orders_status(User $user){
+     public function orders_status(User $user, Request $request){
 
         $this->authorize('update', $user);
 

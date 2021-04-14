@@ -32,7 +32,19 @@ window.MessageObject = {
         showConfirmButton: false
         });
     },
+    Waiting:function(title){
 
+        swal.fire({
+            icon:'info',
+            title: title,
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            onOpen: function(){
+                swal.showLoading();
+            }
+          });
+      
+    },  
   WarningMessage:function(title){
 
     swal.fire({
