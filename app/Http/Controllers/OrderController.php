@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\CartItem;
+use App\Models\LinePayTradeRecord;
 use Auth;
 
 
@@ -18,7 +20,7 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
-     public function create(OrderRequest $request)
+     public function create(Request $request)
     {
        
         $p_ids = json_decode($request->p_id, true);
@@ -64,7 +66,13 @@ class OrderController extends Controller
                         return abort(403);
                     } 
                 }
+
         }
+
+        $seller_id = $users[count($users)-1];
+
+
+        // $payment_status = $request->payment === 2 || $request->payment === 3 ? 1 : 0;
 
         $order = Order::create([
             'order_number'      =>  'ORD-'.strtoupper(uniqid()),
@@ -79,7 +87,7 @@ class OrderController extends Controller
             'phone_number'      =>   $request->phone_number,
             'face_time'         =>   $request->face_time,
             'notes'             =>   $request->notes,
-            'seller_id'         =>   $users[count($users)-1],
+            'seller_id'         =>   $seller_id,
         ]);
 
 
@@ -109,7 +117,29 @@ class OrderController extends Controller
             return redirect()->route('cart')->with('danger',"下單失敗");
         }
 
-        return redirect()->route('users.orders_status',auth()->user()->id)->with('success', '下單成功！');;
+        if($request->payment==2){
+
+             
+            $seller = User::findOrFail($order["seller_id"]);
+
+            $package = array(
+                'productName' => "你買了" . $seller->name . "...等" . $order["item_count"] . "項商品",
+                'productImageUrl' => $seller->avatar,
+                'amount' => $order["price_total"],
+                'currency' => "TWD",
+                "orderId" => "$order->id",
+                "confirmUrl"=> route("checkout.confirm"),
+            );
+
+
+            return $this->linepay($package , $order);
+
+        }else{
+
+
+        return redirect()->route('users.orders_status',auth()->user()->id)->with('success', '下單成功！');
+
+        }
 
     }
     
@@ -151,7 +181,63 @@ class OrderController extends Controller
 
         $order->delete();
 
-		return back()->with('success', '成功取消訂單');
+		return redirect()->route('users.orders_status',auth()->user()->id)->with('success', '訂單成功取消');
+
+    }
+
+    public function linepay($package , $order){
+
+        /* API URL */
+        $url = 'https://sandbox-api-pay.line.me/v2/payments/request';
+        
+        /* Init cURL resource */
+        $ch = curl_init($url);
+
+        $ChannelId = "1655822187";
+
+        $ChannelSecret = "50f88278318b440749f6e851c3cf8c44";
+
+        $headers = array(
+            "X-LINE-ChannelId:$ChannelId",
+            "X-LINE-ChannelSecret:$ChannelSecret",
+            "Content-Type:application/json; charset=UTF-8"
+        );
+        
+        /* Array Parameter Data */
+        $data = $package;
+
+        curl_setopt($ch, CURLOPT_POST, true);
+
+          /* set return type json */
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        
+         /* set the content type json */
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        /* pass encoded JSON string to the POST fields */
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        
+        /* execute request */
+        $result = json_decode(curl_exec($ch), true);
+        
+        /* close cURL resource */
+        curl_close($ch);
+
+        if($result["returnCode"]==="0000"){
+
+        $LinePayRecord = new LinePayTradeRecord([
+            'user_id'   => Auth::id(),
+            'order_id'    =>  $order->id,
+            'order_number'  =>  $order->order_number,
+            'transaction_id' => $result["info"]["transactionId"],
+            'web_payment_url' => $result["info"]["paymentUrl"]["web"],
+        ]);
+
+        $order->line_pay_record()->save($LinePayRecord);
+
+        }
+
+        return response()->json($result);
 
     }
 }

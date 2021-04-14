@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\Product;
+use App\Models\LinePayTradeRecord;
 use App\Models\User;
 use Auth;
 
@@ -210,5 +211,39 @@ class CheckOutController extends Controller
             return redirect()->route('cart');
 
         }
+    }
+
+    public function confirm(Request $request){
+
+        if($request->input('transactionId')){
+    
+            $LineRecord = LinePayTradeRecord::where('transaction_id',$request->input('transactionId'))->first();
+
+            if(!$LineRecord){
+
+                return abort(404);
+            }
+
+            $this->authorize('operate', $LineRecord);
+
+            if(!$LineRecord->is_payment_reply){
+
+                $LineRecord->is_payment_reply = true;
+
+                $LineRecord->save();
+            }
+
+            $order_id = Crypt::encrypt($LineRecord->order->id);
+
+            $order_number = $LineRecord->order->order_number;
+
+        }else{
+
+            return abort(403);
+
+        }
+
+        return view('checkout.confirm', compact('order_id','order_number'));
+
     }
 }

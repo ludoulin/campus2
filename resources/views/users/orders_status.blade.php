@@ -8,7 +8,7 @@
 
 @section('content')
 
-
+@if(!$user->orders->isEmpty())
 @foreach($user->orders as $order)
 <?php $total = 0 ?>
 <div class="check-content container-fluid">
@@ -19,10 +19,15 @@
                     <div class="status-card-header-title">
                         <h4 class="card-title">訂單編號:{{$order->order_number}}</h4>
                     </div>
-                    @if($order->status==="待賣家確認")
+                    @if($order->status==="待賣家確認" && $order->payment_type_id===1)
                     <div class="status-header-toolbar d-flex flex-column justify-content-center">
-                            <h5 class="mt-2">＊請注意只有在訂單狀態為『待賣家確認』才能取消訂單</h5>
+                            <h5 class="mt-2">＊請注意若使用面交時付款，只有在訂單狀態為『待賣家確認』才能取消訂單</h5>
                             <a href="javascript:void(0)" onclick="Order(this)" data-order="{{$order}}" class="btn bg-red text-white"><i class="far fa-trash-alt pr-2"></i>取消訂單</a>
+                    </div>
+                    @elseif(($order->status==="待賣家確認" || $order->status==="賣家已確認" && $order->payment_type_id===2)&& $order->line_pay_record->is_confirm)
+                    <div class="status-header-toolbar d-flex flex-column justify-content-center">
+                         <h5 class="mt-2">＊請注意若使用LinePay付費，一旦和『賣家交書』後就不能退款和取消訂單</h5>
+                         <a href="javascript:void(0)" onclick="Refund(this)" data-order="{{Crypt::encrypt($order->id)}}" class="btn btn-danger text-white"><i class="far fa-trash-alt pr-2"></i>退款並取消訂單</a>
                     </div>
                     @endif
                  </div>
@@ -83,10 +88,12 @@
                                                 <li><h4 class="summary-title order-status">預計面交日期:<span class="o-status"><span class="badge badge-dark">{{$order->face_time}}</span></span></h4></li>       
                                             </ul>
                                         </div>
-                                        {{-- <div class="checkout-submit d-flex align-items-end">
-                                                <p class="mt-2">＊請注意只有在訂單狀態為『待賣家確認』才能取消訂單</p>
-                                                <a href="javascript:void(0)" onclick="Order(this)" data-order="{{$order}}" class="btn bg-red text-white"><i class="far fa-trash-alt pr-2"></i>取消訂單</a>
-                                        </div> --}}
+                                        <hr/>
+                                        <div class="checkout-submit">
+                                            @if(!$order->line_pay_record->is_payment_reply && !$order->line_pay_record->is_confirm)
+                                            <a href="javascript:void(0)" onclick="Payment(this)" data-order="{{Crypt::encrypt($order->id)}}" class="btn btn-success text-white float-right"><i class="fas fa-check-circle pr-2"></i>LinePay付款</a>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div> 
@@ -118,6 +125,13 @@
         </form>
         </div>
       </div>
+@else 
+
+<div class="alert alert-primary" role="alert">
+        <h4 class="alert-heading">目前沒有任何訂單喔！！</h4>
+    </div>
+
+@endif
       
 @endsection
 
@@ -125,6 +139,36 @@
 
 
 <script>
+
+$(function(){
+
+
+ let redirect_url = new URL(window.location);
+
+ if(redirect_url.searchParams.has("transactionId")){
+
+    swal.fire({
+        title: '提醒',
+        icon: 'info',
+        html:'<p>請再次確認你剛才付款的訂單<br><div>並按下<a href="javascript:void(0)" class="btn btn-success text-white ml-2 mr-2"><i class="fas fa-check-circle pr-2"></i>付款狀態確認</a>的按鈕</div><br>確認付款完全成功</p>',
+        confirmButtonColor: '#38c172',
+        confirmButtonText: '知道了',
+        showConfirmButton: true
+        });
+ }else{
+
+    swal.fire({
+        title: '提醒',
+        icon: 'info',
+        text:"請確認各訂單狀態,以免漏掉各訂單的最新動態",
+        confirmButtonColor: '#38c172',
+        confirmButtonText: '知道了',
+        showConfirmButton: true
+        });
+
+ }
+
+});
 
 function Order(el){
 
@@ -142,7 +186,107 @@ function Order(el){
 
     return
 
-}            
-   
+}
+
+function Payment(el){
+
+    
+    MessageObject.Waiting("確認中,請稍後");
+
+    $.ajax({
+        type: "POST",
+        url: '{{route('linepay.payment')}}',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            package:$(el).data().order,
+        }, 
+        success: function(response){
+
+           console.log(response);
+           
+           swal.close();
+
+           if(response.returnCode==="0000"){
+
+            swal.fire({
+                        icon:'success',
+                        title: '確認成功',
+                        text:'準備前往付款頁面',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                                         swal.showLoading();
+                                        },
+                        willClose: () => {
+                                         window.location = response.info.paymentUrl.web
+                                         }
+                    });
+            
+            }
+
+            return true
+
+            },
+            error: function (error) {
+
+            MessageObject.VaildSubmitMessage("發生錯誤","付款失敗");
+
+            return false
+
+            }       
+      });
+
+}
+
+function Refund(el){
+
+    
+MessageObject.Waiting("退款中,請稍後");
+
+$.ajax({
+    type: "POST",
+    url: '{{route('linepay.refund')}}',
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+        package:$(el).data().order,
+    }, 
+    success: function(response){
+
+       console.log(response);
+       
+       swal.close();
+
+       if(response.returnCode==="0000"){
+
+        swal.fire({
+                icon: 'success',
+                title: '退款已成功！',
+                confirmButtonText: '確認',
+                allowOutsideClick: false,      
+            }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
+        });
+        
+        }
+
+        return true
+
+        },
+        error: function (error) {
+
+        MessageObject.VaildSubmitMessage("發生錯誤","退款失敗");
+
+        return false
+
+        }       
+  });
+
+}
 </script>    
 @endsection

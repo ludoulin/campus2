@@ -19,7 +19,7 @@ class Order extends Model
 
     protected $fillable = [
         'order_number', 'user_id', 'status', 'price_total', 'item_count', 'payment_status', 'payment_type_id',
-        'first_name', 'last_name', 'phone_number', 'notes','face_time'];
+        'first_name', 'last_name', 'phone_number', 'notes','face_time','seller_id'];
 
     public function user()
     {
@@ -36,6 +36,10 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function line_pay_record(){
+        return $this->hasOne(LinePayTradeRecord::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -43,6 +47,7 @@ class Order extends Model
         static::deleting(function($order) {
 
              $order->items()->delete();
+             $order->line_pay_record()->delete();
              
         });
     }

@@ -72,7 +72,6 @@
   <script src="{{ asset('js/AlertMessage.js') }}"></script>
 
   <script src="{{ asset('js/Validation.js') }}"></script>
-  
 
 </body>
 

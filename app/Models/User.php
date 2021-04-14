@@ -104,6 +104,12 @@ class User extends Authenticatable implements MustVerifyEmailContract
         
     }
 
+    public function records(){
+
+        return $this->hasMany(LinePayTradeRecord::class);
+        
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -144,6 +150,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
         return $this->id == $model->user_id || $this->id == $model->seller_id;
     }
 
+    public function isRecordOf($model)
+    {
+    return $this->id == $model->user_id;
+    }
    
 
     // public function receivesBroadcastNotificationOn(){

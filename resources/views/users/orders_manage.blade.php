@@ -201,12 +201,11 @@ function ChangeStatus(el){
 
     let value = $(el).data().order.status;
 
-    let input = document.querySelector('#ord_hash').value
+    // let input = document.querySelector('#ord_hash').value
 
-    if(input===""){
-        
-        document.querySelector('#ord_hash').value = $(el).data().order.id;
-    }
+   
+    document.querySelector('#ord_hash').value = $(el).data().order.id;
+    
 
     if(value=="待賣家確認"){
 
