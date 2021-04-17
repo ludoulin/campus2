@@ -20,9 +20,11 @@ class CreateLinePayTradeRecordsTable extends Migration
             $table->string('order_number')->unique();
             $table->bigInteger('transaction_id')->unsigned();
             $table->bigInteger('confirm_transaction_id')->unsigned()->nullable();
+            $table->bigInteger('refund_transaction_id')->unsigned()->nullable();
             $table->string('web_payment_url');
             $table->boolean('is_payment_reply')->default(0);
             $table->boolean('is_confirm')->default(0);
+            $table->boolean('is_refund')->default(0);
             $table->timestamps();
         });
     }

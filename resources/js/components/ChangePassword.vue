@@ -7,6 +7,14 @@
                             </div>
                     </div>
                     <div class="user-card-body">
+
+                       <div class="alert alert-danger" v-if="this.errors!==false">
+                            <div class="mt-2"><b>有錯誤發生：</b></div>
+                                <ul class="mt-2 mb-2">
+                                    <li v-for="(item,key) in errors" :key="key"><i class="glyphicon glyphicon-remove"></i> {{ key }}:{{ item.toString() }}</li>
+                                </ul>
+                            </div>
+
                             <form method="POST" @submit.prevent="VaildForm">
                                 <div class="form-group">
                                     <label for="current_pass">目前密碼 :</label>
@@ -38,12 +46,7 @@
 </template>
 <script>
 export default {
-    props: {
-            errors:{
-                type: Object,
-                default:{}
-            }
-        },
+    props: ['errors'],
     data(){
       return{
          password: "",

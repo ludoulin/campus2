@@ -7,6 +7,12 @@
                             </div>
                     </div>
                     <div class="user-card-body">
+                        <div class="alert alert-danger" v-if="this.errors!==false">
+                            <div class="mt-2"><b>有錯誤發生：</b></div>
+                                <ul class="mt-2 mb-2">
+                                    <li v-for="(item,key) in errors" :key="key"><i class="glyphicon glyphicon-remove"></i> {{ key }}:{{ item.toString() }}</li>
+                                </ul>
+                            </div>
                             <form method="POST" @submit.prevent="SelectPayment">
                                 <div class="form-group row align-items-center" v-for="payment_type in payment_types" :key="payment_type.id">
                                     <label class="col-8 col-md-3" :for="`payment_type${payment_type.id}`">{{ payment_type.name }} :</label>
@@ -35,6 +41,10 @@ export default {
 
             options:{
                 type: Array,
+            },
+
+            errors:{
+                required:false,
             },
         },
     data(){
@@ -78,11 +88,11 @@ export default {
 
                 MessageObject.VaildSubmitMessage('驗證錯誤','請一定要勾選可接受的付款方式');
 
-                return
+                return false
 
             }else{
 
-              this.$emit('submit', { option:this.option , unchecked });
+            return  this.$emit('submit', { option:this.option , unchecked });
  
             }
             

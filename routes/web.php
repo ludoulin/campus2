@@ -137,6 +137,7 @@ Route::post('/orders/change_status', 'OrderController@ChangeStatus')->name('orde
 Route::delete('/orders/{order}', 'OrderController@destroy')->name('order.destroy');
 
 
+Route::post('/linepay/edit', 'LinePayController@edit')->name('linepay.edit');
 Route::post('/linepay/payment', 'LinePayController@payment')->name('linepay.payment');
 Route::post('/linepay/confirm', 'LinePayController@confirm')->name('linepay.confirm');
 Route::post('/linepay/refund', 'LinePayController@refund')->name('linepay.refund');
