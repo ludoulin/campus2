@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ConfirmRequest;
+use App\Http\Requests\LinePayRequest;
+use App\Models\LinePay;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -15,6 +17,40 @@ class LinePayController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function edit(LinepayRequest $request){
+
+        $user = User::findOrFail($request->id);
+
+        if(!$user){
+
+            return abort(404);
+        }
+
+        $this->authorize('update', $user);
+
+        if(!$user->linepay){
+
+            $account = new LinePay([
+                'channel_id'    =>  Crypt::encrypt($request->channelId),
+                'channel_secret'  =>  Crypt::encrypt($request->channelSecret),
+            ]);
+
+            $user->linepay()->save($account);
+        
+        }else{
+
+            $user->linepay->channel_id = Crypt::encrypt($request->channelId);
+
+            $user->linepay->channel_secret = Crypt::encrypt($request->channelSecret);
+
+            $user->linepay->save();
+
+        }
+
+        return response()->json(200);
+
     }
 
     public function payment(Request $request){

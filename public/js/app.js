@@ -2136,13 +2136,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    errors: {
-      type: Object,
-      "default": {}
-    }
-  },
+  props: ['errors'],
   data: function data() {
     return {
       password: "",
@@ -3503,6 +3506,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     payment_types: {
@@ -3511,6 +3520,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     options: {
       type: Array
+    },
+    errors: {
+      required: false
     }
   },
   data: function data() {
@@ -3547,9 +3559,9 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.option.length === 0) {
         MessageObject.VaildSubmitMessage('驗證錯誤', '請一定要勾選可接受的付款方式');
-        return;
+        return false;
       } else {
-        this.$emit('submit', {
+        return this.$emit('submit', {
           option: this.option,
           unchecked: unchecked
         });
@@ -3699,6 +3711,102 @@ __webpack_require__.r(__webpack_exports__);
         introduction: this.personal.introduction
       });
       return;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalPay.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalPay.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['errors'],
+  data: function data() {
+    return {
+      channelId: "",
+      channelSecret: ""
+    };
+  },
+  methods: {
+    LinePayForm: function LinePayForm() {
+      //    if(ValidateForm() && this.RegexIdCheck() && this.RegexSecretCheck()){
+      return this.ConfirmLinePay(); //    }
+    },
+    RegexIdCheck: function RegexIdCheck() {
+      var regx = /^([0-9]{10})$/;
+
+      if (!regx.test(this.channelId)) {
+        MessageObject.VaildSubmitMessage("驗證錯誤", "ChannelId只能為10個數字");
+        return false;
+      }
+
+      return true;
+    },
+    RegexSecretCheck: function RegexSecretCheck() {
+      var regx = /^(?=.*[a-z])(?=.*\d)[a-z\d]{32}$/;
+
+      if (!regx.test(this.channelSecret)) {
+        MessageObject.VaildSubmitMessage("驗證錯誤", "channelSecret只能為32個英文及數字");
+        return false;
+      }
+
+      return true;
+    },
+    ConfirmLinePay: function ConfirmLinePay() {
+      this.$emit('submit', {
+        channelId: this.channelId,
+        channelSecret: this.channelSecret
+      });
+      this.reset();
+    },
+    reset: function reset() {
+      if (this.channelId.trim().length == 0 || this.channelId.trim().length == 0) {
+        MessageObject.VaildSubmitMessage("驗證錯誤", "已經全部清除了");
+      } else {
+        this.channelId = "";
+        this.channelSecret = "";
+      }
     }
   }
 });
@@ -4037,6 +4145,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PaymentOption__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaymentOption */ "./resources/js/components/PaymentOption.vue");
 /* harmony import */ var _ChangePassword__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangePassword */ "./resources/js/components/ChangePassword.vue");
 /* harmony import */ var _PersonalInformation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PersonalInformation */ "./resources/js/components/PersonalInformation.vue");
+/* harmony import */ var _PersonalPay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PersonalPay */ "./resources/js/components/PersonalPay.vue");
 //
 //
 //
@@ -4086,38 +4195,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -4125,7 +4203,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     PaymentOption: _PaymentOption__WEBPACK_IMPORTED_MODULE_0__["default"],
     ChangePassword: _ChangePassword__WEBPACK_IMPORTED_MODULE_1__["default"],
-    PersonalInformation: _PersonalInformation__WEBPACK_IMPORTED_MODULE_2__["default"]
+    PersonalInformation: _PersonalInformation__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PersonalPay: _PersonalPay__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   props: {
     user: {
@@ -4142,13 +4221,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      block: 1,
+      block: 3,
       types: [],
       errors: {
         profile: {},
-        password: {},
-        merge: {},
-        option: {}
+        password: false,
+        linepay: false,
+        option: false
       },
       personal_data: {}
     };
@@ -4171,14 +4250,40 @@ __webpack_require__.r(__webpack_exports__);
         _this.types = response.data;
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this.errors.option = error.response.data.errors || {};
-          MessageObject.VaildSubmitMessage('儲存失敗', '請一定要勾選一種付款方式');
-          console.log(_this.errors.option);
+          if (error.response.data.message === "你還沒有設定LinePay帳號") {
+            MessageObject.VaildSubmitMessage('儲存失敗', "你還沒有設定LinePay帳號");
+          } else {
+            _this.errors.option = error.response.data.errors || {};
+            MessageObject.VaildSubmitMessage('儲存失敗', '請一定要勾選一種付款方式');
+            console.log(_this.errors.option);
+          }
+        }
+      });
+    },
+    submit_linepay: function submit_linepay(obj) {
+      var _this2 = this;
+
+      axios.post("http://localhost/campus2/public/linepay/edit", {
+        id: this.user.id,
+        channelId: obj.channelId,
+        channelSecret: obj.channelSecret
+      }).then(function (response) {
+        MessageObject.SuccessMessage("儲存成功");
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this2.errors.linepay = error.response.data.errors || {};
+          MessageObject.VaildSubmitMessage('儲存失敗', '請檢查錯誤訊息');
+        } else if (error.response.status === 404) {
+          MessageObject.VaildSubmitMessage('儲存失敗', '找不到這個使用者');
+        } else if (error.response.status === 403) {
+          MessageObject.VaildSubmitMessage('儲存失敗', '你沒有這個權限');
+        } else {
+          MessageObject.VaildSubmitMessage('儲存失敗', '內部錯誤');
         }
       });
     },
     submit_password: function submit_password(obj) {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post("http://localhost/campus2/public/users/change_password", {
         id: this.user.id,
@@ -4189,12 +4294,12 @@ __webpack_require__.r(__webpack_exports__);
         MessageObject.SuccessMessage("變更成功");
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          if (error.response.data.message) {
+          if (error.response.data.message === "您的目前密碼輸入錯誤") {
             MessageObject.VaildSubmitMessage('儲存失敗', error.response.data.message);
           } else {
-            _this2.errors.password = error.response.data.errors || {};
-            MessageObject.VaildSubmitMessage('儲存失敗', _this2.errors.password);
-            console.log(_this2.errors.password);
+            _this3.errors.password = error.response.data.errors || {};
+            MessageObject.VaildSubmitMessage('儲存失敗', '請檢查錯誤訊息');
+            console.log(_this3.errors.password);
           }
         }
       });
@@ -71355,6 +71460,24 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "user-card-body" }, [
+        this.errors !== false
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { staticClass: "mt-2 mb-2" },
+                _vm._l(_vm.errors, function(item, key) {
+                  return _c("li", { key: key }, [
+                    _c("i", { staticClass: "glyphicon glyphicon-remove" }),
+                    _vm._v(" " + _vm._s(key) + ":" + _vm._s(item.toString()))
+                  ])
+                }),
+                0
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "form",
           {
@@ -71570,6 +71693,14 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-2" }, [
+      _c("b", [_vm._v("有錯誤發生：")])
+    ])
   }
 ]
 render._withStripped = true
@@ -72591,6 +72722,24 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "user-card-body" }, [
+        this.errors !== false
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { staticClass: "mt-2 mb-2" },
+                _vm._l(_vm.errors, function(item, key) {
+                  return _c("li", { key: key }, [
+                    _c("i", { staticClass: "glyphicon glyphicon-remove" }),
+                    _vm._v(" " + _vm._s(key) + ":" + _vm._s(item.toString()))
+                  ])
+                }),
+                0
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "form",
           {
@@ -72716,6 +72865,14 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-2" }, [
+      _c("b", [_vm._v("有錯誤發生：")])
+    ])
   }
 ]
 render._withStripped = true
@@ -73083,6 +73240,181 @@ var staticRenderFns = [
         ])
       ]
     )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalPay.vue?vue&type=template&id=83a1fda6&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalPay.vue?vue&type=template&id=83a1fda6& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "user-card" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "user-card-body" }, [
+        this.errors !== false
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { staticClass: "mt-2 mb-2" },
+                _vm._l(_vm.errors, function(item, key) {
+                  return _c("li", { key: key }, [
+                    _c("i", { staticClass: "glyphicon glyphicon-remove" }),
+                    _vm._v(" " + _vm._s(key) + ":" + _vm._s(item.toString()))
+                  ])
+                }),
+                0
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { method: "POST" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.LinePayForm($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "row align-items-center" }, [
+              _c("div", { staticClass: "form-group col-sm-6" }, [
+                _c("label", { attrs: { for: "channelId" } }, [
+                  _vm._v("LINE Pay-ChannelId:")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.channelId,
+                      expression: "channelId"
+                    }
+                  ],
+                  staticClass: "form-control necessary",
+                  attrs: {
+                    type: "text",
+                    id: "channelId",
+                    placeholder: "限10位碼"
+                  },
+                  domProps: { value: _vm.channelId },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.channelId = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-sm-6" }, [
+                _c("label", { attrs: { for: "channelSecret" } }, [
+                  _vm._v("LINE Pay-ChannelSecret:")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.channelSecret,
+                      expression: "channelSecret"
+                    }
+                  ],
+                  staticClass: "form-control necessary",
+                  attrs: {
+                    type: "text",
+                    id: "channelSecret",
+                    placeholder: "限32位碼"
+                  },
+                  domProps: { value: _vm.channelSecret },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.channelSecret = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg btn-primary mr-2",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("儲存")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-lg bg-danger",
+                attrs: { type: "reset" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.reset($event)
+                  }
+                }
+              },
+              [_vm._v("取消")]
+            )
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "user-card-header d-flex justify-content-between" },
+      [
+        _c("div", { staticClass: "card-header-title" }, [
+          _c("h4", { staticClass: "card-title" }, [_vm._v("使用者金流")])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-2" }, [
+      _c("b", [_vm._v("有錯誤發生：")])
+    ])
   }
 ]
 render._withStripped = true
@@ -73734,7 +74066,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("合併帳號")]
+                        [_vm._v("金流設定")]
                       )
                     ]),
                     _vm._v(" "),
@@ -73812,12 +74144,12 @@ var render = function() {
                       attrs: { id: "merge-account", role: "tabpanel" }
                     },
                     [
-                      _vm._v(
-                        "\n                               " +
-                          _vm._s(_vm.errors.option) +
-                          "\n                         "
-                      )
-                    ]
+                      _c("personal-pay", {
+                        attrs: { errors: _vm.errors.linepay },
+                        on: { submit: _vm.submit_linepay }
+                      })
+                    ],
+                    1
                   )
                 : _vm._e(),
               _vm._v(" "),
@@ -87405,6 +87737,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalInformation_vue_vue_type_template_id_0f40b29e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalInformation_vue_vue_type_template_id_0f40b29e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalPay.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/PersonalPay.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PersonalPay_vue_vue_type_template_id_83a1fda6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PersonalPay.vue?vue&type=template&id=83a1fda6& */ "./resources/js/components/PersonalPay.vue?vue&type=template&id=83a1fda6&");
+/* harmony import */ var _PersonalPay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersonalPay.vue?vue&type=script&lang=js& */ "./resources/js/components/PersonalPay.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PersonalPay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PersonalPay_vue_vue_type_template_id_83a1fda6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PersonalPay_vue_vue_type_template_id_83a1fda6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PersonalPay.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalPay.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/PersonalPay.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalPay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PersonalPay.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalPay.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalPay_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalPay.vue?vue&type=template&id=83a1fda6&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/PersonalPay.vue?vue&type=template&id=83a1fda6& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalPay_vue_vue_type_template_id_83a1fda6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PersonalPay.vue?vue&type=template&id=83a1fda6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalPay.vue?vue&type=template&id=83a1fda6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalPay_vue_vue_type_template_id_83a1fda6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalPay_vue_vue_type_template_id_83a1fda6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

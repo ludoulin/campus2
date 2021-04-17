@@ -31,6 +31,11 @@ class PaymentOptionController extends Controller
 
         if($request->input('option')){
 
+            if(in_array(2, $request->input('option'))&&!$user->linepay){
+
+                return abort(422,"你還沒有設定LinePay帳號");
+
+            }
 
             foreach($request->input('option') as $option){
                  

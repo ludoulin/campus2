@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\LinePay;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -77,6 +78,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
 
     public function socialuser(){
         return $this->hasOne(SocialUserEloquent::class);
+    }
+
+    public function linepay(){
+        return $this->hasOne(LinePay::class);
     }
 
     public function isAdmin()
