@@ -79,18 +79,22 @@ class UsersController extends Controller
 
         $id = $user->id;
 
-        $manages = Order::with(['items'=> function($query){$query->with("product");}])->where('seller_id', $id)->get();
+        $manages = Order::withTrashed()->with(['items'=> function($query){$query->with(["product" => function($query){$query->with('images');}]);}])->where('seller_id', $id)->get();
 
-        $types = collect(Order::Statuses);
+        $types = collect(Order::Status);
 
         return view('users.orders_manage',compact('user','manages','types'));
      }
 
-     public function orders_status(User $user, Request $request){
+     public function orders_status(User $user){
 
         $this->authorize('update', $user);
 
-        return view('users.orders_status',compact('user'));
+        // $orders = $user->orders()->with(['items'=> function($query){$query->with("product");}])->withTrashed()->get();
+
+        $orders = $user->orders()->withTrashed()->get();
+
+        return view('users.orders_status',compact('user','orders'));
      }
 
 

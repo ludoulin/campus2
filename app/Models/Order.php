@@ -3,17 +3,34 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'orders';
 
-    const Statuses = [
+
+    protected $dates = ['deleted_at'];
+
+
+    const Status = [
         0 => '待賣家確認',
         1 => '賣家已確認',
-        2 => '訂單已完成',
-        3 => '拒絕',
+        2 => '交貨完成',
+        3 => '取消訂單',
+        4 => '申請取消訂單中',
+        5 => '拒絕取消訂單',
+    ];
+
+
+    const PaymentStatus = [
+        0 => '尚未付款',
+        1 => '已付款',
+        2 => '已退款',
+        3 => '退款中',
+        4 => '退款失敗'
     ];
 
 
@@ -40,15 +57,15 @@ class Order extends Model
         return $this->hasOne(LinePayTradeRecord::class);
     }
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::deleting(function($order) {
+    //     static::deleting(function($order) {
 
-             $order->items()->delete();
-             $order->line_pay_record()->delete();
+    //          $order->items()->delete();
+    //          $order->line_pay_record()->delete();
              
-        });
-    }
+    //     });
+    // }
 }
