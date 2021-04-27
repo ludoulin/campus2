@@ -1,3 +1,7 @@
+@php
+    use App\Models\Order;
+@endphp
+
 @extends('layouts.basic')
 
 @section('basic')
@@ -23,7 +27,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 15%">訂單編號</th>
-                                                <th style="width: 8%">訂單項目查看</th>
+                                                <th style="width: 12%">訂單項目查看</th>
                                                 <th style="width: 6%">訂單人</th>
                                                 <th style="width: 6%">訂單總額</th>
                                                 <th style="width: 6%">訂單項目數</th>
@@ -40,36 +44,56 @@
                                                 <td>{{ $order->order_number }}</td>
                                                 <td>
                                                     <div class="flex align-items-center list-product-action">
-                                                        <a class="btn bg-primary" data-toggle="tooltip" data-placement="top" title="查看訂單項目" data-detail="{{$order->items}}" onclick="OrderDetail(this)" href="javascript:void(0)">
+                                                    <a class="btn bg-primary" data-toggle="tooltip" data-placement="top" title="查看訂單項目" data-number="{{$order->order_number}}" data-detail="{{$order->items}}" onclick="OrderDetail(this)" href="javascript:void(0)">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
-                                                    <a class="btn bg-salmon" data-toggle="tooltip" data-placement="top" data-order="{{$order}}" title="變更訂單狀態" onclick="ChangeStatus(this)" href="javascript:void(0)">
+                                                    @if($order->cancel_reason && $order->status === 4)
+                                                        <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="查看買家取消理由" data-reason="{{$order->cancel_reason}}" onclick="ReasonDetail(this)" href="javascript:void(0)">
+                                                            <i class="far fa-bookmark"></i>
+                                                        </a>
+                                                    @endif
+                                                    @if($order->status < 3 || $order->status === 5)    
+                                                    <a class="btn bg-salmon" data-toggle="tooltip" data-placement="top" data-order="{{$order->id}}" data-status="{{$order->status}}" data-type="{{$types}}" title="變更訂單狀態" onclick="ChangeStatus(this)" href="javascript:void(0)">
                                                             <i class="fas fa-cog" data-toggle="modal"></i>
                                                         </a>    
+                                                    @elseif($order->status === 4)
+                                                        <a class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" data-order="{{$order->id}}" title="是否同意取消訂單" onclick="CancelStatus(this)" href="javascript:void(0)">
+                                                            <i class="fas fa-reply"></i>
+                                                        </a>  
+                                                    @endif
                                                     </div>
                                                 </td>
                                                 <td>{{ $order->first_name }}{{ $order->last_name }}</td>
                                                 <td><h3><span class="badge badge-salmon">${{$order->price_total}}</span></h3></td>
                                                 <td>{{ $order->item_count }}</td>
                                                 <td><h3><span class="badge  
-                                                                @if($order->status==="待賣家確認")
+                                                                @if($order->status===0)
                                                                 badge-secondary
-                                                                @elseif($order->status==="賣家已確認")
+                                                                @elseif($order->status===1)
                                                                 badge-primary
-                                                                @elseif($order->status==="訂單已完成")
+                                                                @elseif($order->status===2)
                                                                 badge-success
-                                                                @elseif($order->status==="拒絕")
+                                                                @elseif($order->status===3||$order->status===5)
                                                                 badge-danger 
+                                                                @elseif($order->status===4)
+                                                                badge-info text-white 
                                                                 @endif ">
-                                                            {{ strtoupper($order->status) }}
+                                                            {{ Order::Status[$order->status] }}
                                                         </span></h3>
                                                 </td>
                                                 <td> 
-                                                    @if($order->payment_status)
-                                                    <h3><span class="badge badge-success">已付款</span></h3>
-                                                    @else 
-                                                    <h3><span class="badge badge-secondary">尚未付款</span></h3>
-                                                    @endif
+                                                    <h3>
+                                                        <span class="badge 
+                                                            @if($order->payment_status==0)
+                                                            badge-secondary
+                                                            @elseif($order->payment_status==1)
+                                                            badge-primary
+                                                            @elseif($order->payment_status==2)
+                                                            badge-danger 
+                                                            @endif">
+                                                            {{Order::PaymentStatus[$order->payment_status]}}
+                                                        </span>
+                                                    </h3>           
                                                 </td>
                                                 <td>學校</td>
                                                 <td>{{$order->face_time}}</td>
@@ -84,82 +108,6 @@
             </div>
         </div>
 </div>
-
-<div class="modal fade" id="btn-ChangeStatus-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-        <form class="modal-content" action="{{route('order.status')}}" method="POST">
-              <input type="hidden" id="ord_hash" name="ord_hash" value="">
-              @csrf
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">變更訂單狀態</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                  <div class="form-group"> 
-                    <label class="d-block"><div class="alert alert-primary" role="alert">選擇訂單狀態</div></label>
-                       <div class="d-flex">
-                        @foreach($types as $id => $type)
-                            <div class="custom-control custom-radio flex-fill">
-                                <input type="radio" id="status{{ $id }}" name="status" class="custom-control-input" value="{{$type}}" required>
-                                <label class="custom-control-label" for="status{{$id}}">
-                                    <h3><span class="badge
-                                            @if($id==0)
-                                            badge-secondary
-                                            @elseif($id==1)
-                                            badge-primary
-                                            @elseif($id==2)
-                                            badge-success
-                                            @elseif($id==3)
-                                            badge-danger
-                                            @endif ">
-                                            {{$type}}
-                                        </span>
-                                    </h3>
-                                </label>
-                            </div>
-                        @endforeach
-                       </div> 
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
-              <button type="submit" class="btn btn-primary">確定</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="modal fade" id="btn-OrderDetail-modal" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">訂單詳細</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body detail-body">
-                    <table class="table table-striped">
-                            <thead>
-                              <tr>
-                                <th scope="col">項目</th>
-                                <th scope="col">二手書名稱</th>
-                                <th scope="col">價錢</th>
-                                <th scope="col">下單日期</th>
-                              </tr>
-                            </thead>
-                            <tbody class="item-detail">
-                            </tbody>
-                          </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">離開</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
 @endsection
 
@@ -188,60 +136,253 @@ $(function(){
                         }
                     }
                 })
-            })
+
+ })
 function ChangeStatus(el){
 
-    $('#btn-ChangeStatus-modal').modal('show');
-    
-    if($('input[name=status]:checked').length!=0){
-
-        document.querySelector('input[name="status"]:checked').checked = false;
-    }
-
-
-    let value = $(el).data().order.status;
-
-    // let input = document.querySelector('#ord_hash').value
-
+    let value = $(el).data().status;
    
-    document.querySelector('#ord_hash').value = $(el).data().order.id;
-    
+    swal.fire({
+                icon:  'info',
+                width:  '70rem',
+                title: `更改訂單狀態`,
+                html: ` <form id="ChangeOrderForm" name="ChangeOrder" action="{{route('order.status')}}" method="POST">
+                            @csrf
+                            <input type="hidden" id="ord_change_hash" name="ord_hash" value="">
+                                <div class="d-flex change-status" style="font-size:30px;"> 
+                                     
+                                </div>     
+                                 
+                        </form>`,
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                focusConfirm: false,
+                allowOutsideClick: false,  
+                didOpen:() => {
 
-    if(value=="待賣家確認"){
+                    $.each($(el).data().type, function(key, value){
 
-        document.querySelector('#status0').checked = true;
+                        let style = SetStyle(key);
 
-    }else if(value=="賣家已確認"){
+                        if(key<4){
+                         $('.change-status').append(`<div class="custom-control custom-radio flex-fill"><input type="radio" class="custom-control-input necessaryRadio" id="status-${key}" name="status" value="${key}" required><label class="custom-control-label" for="status-${key}"><span class="badge ${style}">${value}<span></label></div>`);
+                        }
+                    });
 
-        document.querySelector('#status1').checked = true;
+                    document.querySelector(`#status-${value}`).checked = true;
 
-    }else if(value=="訂單已完成"){
+                    document.querySelector('#ord_change_hash').value = $(el).data().order;
 
-        document.querySelector('#status2').checked = true;
+                },  
+                preConfirm: () => {
+                    const order = swal.getPopup().querySelector('#ord_change_hash').value
 
-    }else if(value=="拒絕"){
+                    if(!radioValidation()){
 
-        document.querySelector('#status3').checked = true;
+                       return swal.showValidationMessage(`請一定要勾選`)
 
-    }
+                    }
+
+                    if (!order||order!=$(el).data().order) {
+
+                        return swal.showValidationMessage(`不要惡意操作`)
+                    }
+
+                    return { order:order }
+                }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById("ChangeOrderForm").submit();
+                    }
+                })
+
+    return
+
+}
+function ReasonDetail(el){
+
+    swal.fire($(el).data().reason);
+
+    return
+}
+function CancelStatus(el){
+
+    swal.fire({
+                icon:  'warning',
+                title: '是否同意取消訂單',
+                html: ` <p class="text-danger"><b>提醒:若是取消此筆訂單,此筆訂單將會失效</b></p>
+                        <form id="CancelForm" method="POST" action="{{route("order.cancel_status")}}">
+                        @csrf
+                        <input type="hidden" id="hash" class="swal2-input" name="ord_hash" value="${$(el).data().order}">
+                        </form>`,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: '同意',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                focusConfirm: false,
+                allowOutsideClick: false,  
+                preConfirm: () => {
+                    const order = swal.getPopup().querySelector('#hash').value
+                    if (!order||order!=$(el).data().order) {
+                        swal.showValidationMessage(`不要惡意操作`)
+                    }
+                    return { order:order }
+                }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById("CancelForm").submit();
+                    }
+                })
 
     return
 
 }            
 
 function OrderDetail(el){
+    swal.fire({
+        icon:'info',
+        width:'80rem',
+        title: '訂單詳細',
+        html:`<p style="font-size:26px">訂單編號 : ${$(el).data().number}</p>
+                <div class="table-responsive">
+                    <table class="table table-striped" style="width:100%">
+                            <thead class="thead-dark" style="text-align: center;">
+                              <tr>
+                                <th scope="col">項目</th>
+                                <th scope="col">二手書圖片</th>
+                                <th scope="col">二手書名稱</th>
+                                <th scope="col">價錢</th>
+                                <th scope="col">下單日期</th>
+                              </tr>
+                            </thead>
+                            <tbody class="item-detail" style="font-size:26px">
+                            </tbody>
+                     </div>       
+                    </table>`,
+        confirmButtonText: '確認',
 
-$('#btn-OrderDetail-modal').modal('show');
+        didOpen:() => {
 
-$.each($(el).data().detail, function(key, value){
-     
-    $('.detail-body .item-detail').empty();
+            $.each($(el).data().detail, function(key, value){
+ 
+            $('.item-detail').append('<tr role="row"><td>' + `${key+1}` + '</td><td>'+ `<img class="item-img" src="http://localhost/campus2/public/${value.product.images[0].path}" style="width:100px; height:120px">` + '</td><td>'+ value.product.name + '</td><td>'+ value.price +'</td><td>'+ value.created_at +'</td></tr>');
+ 
+            });
 
-     $('.detail-body .item-detail').append('<tr><th scope="row">' + `${key+1}` + '</th><td>' + value.product.name + '</td><td>'+ value.price +'</td><td>'+ value.created_at +'</td></tr>');
+        },
+        didClose:() => {
 
-    });
+            $('.item-detail').empty();
 
-return
-}            
+        }
+    })    
+
+    return
+}     
+
+function SetStyle(index){
+
+    let style = "";
+
+    switch (index) {
+    case 0:
+         style = "badge-secondary";
+        break;
+    case 1:
+         style = "badge-primary";
+        break;
+    case 2:
+        style = "badge-success";
+        break;
+    case 3:
+        style = "badge-danger";
+        break;    
+    default:
+        style = "";
+    }
+
+    return style;
+
+     // $(`#status-${index} span`).addClass("badge-success");
+      // $(`#status-${index} span`).addClass("badge-danger");
+
+}
+
+function radioValidation(){
+
+const radio = document.getElementsByClassName("necessaryRadio");
+
+let Valid = false;
+
+for(var i = 0; i < radio.length; i++){
+    if(radio[i].checked == true){
+        Valid = true;    
+    }
+}
+
+return Valid
+
+}
+
 </script>    
+
 @endsection
+
+
+{{-- 舊的改變訂單狀態 --}}
+
+{{-- function ChangeStatus(el){
+
+     $('#btn-ChangeStatus-modal').modal('show');
+    
+    if($('input[name=status]:checked').length!=0){
+
+        document.querySelector('input[name="status"]:checked').checked = false;
+     }
+
+
+     let value = $(el).data().status;
+   
+     document.querySelector('#ord_hash').value = $(el).data().order;
+    
+
+     if(value==0){
+
+         document.querySelector('#status0').checked = true;
+
+     }else if(value==1){
+
+        document.querySelector('#status1').checked = true;
+
+     }else if(value==2){
+
+         document.querySelector('#status2').checked = true;
+
+     }else if(value==3){
+
+        document.querySelector('#status3').checked = true;
+
+     }
+
+} --}}
+
+
+
+{{-- $('input[name="cancel_status"]').on("change",function(){
+
+    let value = $(this).val();
+
+
+    if(value==="5"){
+
+       $('#btn-CancelStatus-modal .modal-body').append('<div class="form-group reason"><label class="text-danger" for="cancelReason">請填寫拒絕理由</label><textarea class="form-control" id="cancelReason" name="reason" rows="3" required></textarea>');
+       
+    }else{
+
+       $(".reason").remove();
+    }
+
+    return
+
+})  --}}

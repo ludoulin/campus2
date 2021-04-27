@@ -1,3 +1,7 @@
+@php
+    use App\Models\Order;
+@endphp
+
 @extends('layouts.basic')
 
 @section('basic')
@@ -8,9 +12,8 @@
 
 @section('content')
 
-@if(!$user->orders->isEmpty())
-@foreach($user->orders as $order)
-<?php $total = 0 ?>
+@if(!$orders->isEmpty())
+@foreach($orders as $order)
 <div class="check-content container-fluid">
         <div class="row">
            <div class="col-sm-12"> 
@@ -19,24 +22,23 @@
                     <div class="status-card-header-title">
                         <h4 class="card-title">訂單編號:{{$order->order_number}}</h4>
                     </div>
-                    @if($order->status==="待賣家確認" && $order->payment_type_id===1)
                     <div class="status-header-toolbar d-flex flex-column justify-content-center">
-                            <h5 class="mt-2">＊請注意若使用面交時付款，只有在訂單狀態為『待賣家確認』才能取消訂單</h5>
-                            <a href="javascript:void(0)" onclick="Order(this)" data-order="{{$order}}" class="btn bg-red text-white"><i class="far fa-trash-alt pr-2"></i>取消訂單</a>
+                            <h5>
+                                <div class="alert alert-warning" role="alert">
+                                    @if($order->payment_type_id===1)
+                                    請注意若使用面交時付款，只有在訂單狀態為『 待賣家確認 』才能自動取消訂單
+                                    @elseif($order->payment_type_id===2)
+                                    請注意使用LinePay付費，在『 已付費 』的狀態若想取消訂單需要向賣家申請
+                                    @endif
+                                </div>
+                            </h5>
                     </div>
-                    @elseif(($order->status==="待賣家確認" || $order->status==="賣家已確認" && $order->payment_type_id===2)&& $order->line_pay_record->is_confirm)
-                    <div class="status-header-toolbar d-flex flex-column justify-content-center">
-                         <h5 class="mt-2">＊請注意若使用LinePay付費，一旦和『賣家交書』後就不能退款和取消訂單</h5>
-                         <a href="javascript:void(0)" onclick="Refund(this)" data-order="{{Crypt::encrypt($order->id)}}" class="btn btn-danger text-white"><i class="far fa-trash-alt pr-2"></i>退款並取消訂單</a>
-                    </div>
-                    @endif
                  </div>
                     <div class="card-body status-card-body">
                         <div class="row">
                             <div class="col-sm-7">
                                  <ul class="list-inline p-0 m-0">  
                                     @foreach ($order->items as $item)
-                                    <?php $total += $item->price ?>
                                     <li class="checkout-product">
                                         <div class="row align-items-center">
                                             <div class="col-sm-3 col-lg-2">
@@ -72,27 +74,103 @@
                                     <div class="order-summary">
                                         <div class="status-summary">
                                             <ul class="list-unstyled">
-                                                <li><h4 class="summary-title summary-product-total">訂單總計:<span class="total-pricing"><span class="badge bg-salmon">$ {{$total}}元</span></span></h4></li>
+                                                <li><h4 class="summary-title summary-product-total">訂單總計:<span class="total-pricing"><span class="badge bg-salmon">$ {{$order->price_total}}元</span></span></h4></li>
                                                 <li><h4 class="summary-title order-status">付費方式:<span class="p-status"><span class="badge badge-primary">{{$order->payment_type->name}}</span></span></h4></li>
-                                                <li><h4 class="summary-title payment-status">目前付款狀態:
+                                                <li><h4 class="summary-title payment-status">
+                                                        目前付款狀態:
                                                         <span class="p-status">
-                                                            @if($order->payment_status)
-                                                            <span class="badge badge-success">已付款</span>
-                                                            @else 
-                                                            <span class="badge badge-secondary">尚未付款</span>
-                                                            @endif
+                                                            <span class="badge 
+                                                                        @if($order->payment_status==0)
+                                                                        badge-secondary
+                                                                        @elseif($order->payment_status==1)
+                                                                        badge-primary
+                                                                        @elseif($order->payment_status==2)
+                                                                        badge-danger
+                                                                        @endif">
+                                                            {{Order::PaymentStatus[$order->payment_status]}}
+                                                            </span>                                                                      
                                                         </span>
                                                     </h4>
                                                 </li> 
-                                                <li><h4 class="summary-title order-status">目前訂單狀態:<span class="o-status"><span class="badge badge-success">{{ strtoupper($order->status) }}</span></span></h4></li>
+                                                <li>
+                                                    <h4 class="summary-title order-status">目前訂單狀態:
+                                                        <span class="o-status">
+                                                            <span class="badge 
+                                                                        @if($order->status===0)
+                                                                        badge-secondary
+                                                                        @elseif($order->status===1)
+                                                                        badge-primary
+                                                                        @elseif($order->status===2)
+                                                                        badge-success
+                                                                        @elseif($order->status===3||$order->status===5)
+                                                                        badge-danger
+                                                                        @elseif($order->status===4)
+                                                                        badge-info text-white
+                                                                        @endif">
+                                                                {{ Order::Status[$order->status] }}
+                                                            </span>
+                                                        </span>
+                                                    </h4>
+                                                </li>
                                                 <li><h4 class="summary-title order-status">預計面交日期:<span class="o-status"><span class="badge badge-dark">{{$order->face_time}}</span></span></h4></li>       
                                             </ul>
                                         </div>
                                         <hr/>
                                         <div class="checkout-submit">
-                                            @if(!$order->line_pay_record->is_payment_reply && !$order->line_pay_record->is_confirm)
-                                            <a href="javascript:void(0)" onclick="Payment(this)" data-order="{{Crypt::encrypt($order->id)}}" class="btn btn-success text-white float-right"><i class="fas fa-check-circle pr-2"></i>LinePay付款</a>
+
+                                            @if($order->payment_type_id === 1)
+
+                                                @if($order->status === 0)
+                                                    <a href="javascript:void(0)" onclick="Order(this)" data-order="{{$order}}" class="btn btn-lg bg-red text-white float-right">
+                                                         <i class="far fa-trash-alt pr-2"></i>
+                                                                取消訂單
+                                                    </a>
+                                                @elseif($order->status === 1)
+                                                    <a href="javascript:void(0)" onclick="Apply(this)" data-order="{{$order->id}}" class="btn btn-lg btn-outline-danger float-right">
+                                                            <i class="fas fa-trash-restore pr-2"></i>
+                                                              申請取消訂單
+                                                    </a>
+                                                @elseif($order->status === 3)
+                                                    <a href="javascript:void(0)" onclick="RefuseDetail(this)" data-reason="{{$order->refuse_reason}}" class="btn btn-lg btn-outline-danger float-right">
+                                                            <i class="fas fa-eye pr-2"></i>
+                                                              查看賣家取消理由
+                                                    </a>    
+
+                                                @else     
+                                                <div class="alert alert-primary text-center" role="alert">目前的狀態沒有任何操作可以使用</div>
+                                                 
+                                                @endif
+
+                                            @elseif($order->payment_type_id === 2)
+
+                                                @if(!$order->line_pay_record->is_comfirm)
+                                                  <!--付款-->
+                                                    <a href="javascript:void(0)" onclick="Payment(this)" data-order="{{Crypt::encrypt($order->id)}}" class="btn btn-lg btn-success text-white float-right">
+                                                        <i class="fas fa-check-circle pr-2"></i>
+                                                            LinePay付款
+                                                    </a>
+                                                @elseif(!$order->line_pay_record->is_refund && $order->line_pay_record->is_confirm && $order->status === 3 )
+                                                  <!--退款-->
+                                                    <a href="javascript:void(0)" onclick="Refund(this)" data-order="{{Crypt::encrypt($order->id)}}" class="btn btn-lg btn-danger text-white float-right">
+                                                        <i class="far fa-trash-alt pr-2"></i>
+                                                            退款
+                                                    </a>
+                                                @endif
+                                                  <!--取消訂單-->
+                                                @if($order->status === 0 && !$order->line_pay_record->is_confirm)
+                                                    <a href="javascript:void(0)" onclick="Order(this)" data-order="{{$order}}" class="btn btn-lg bg-red text-white float-right">
+                                                        <i class="far fa-trash-alt pr-2"></i>
+                                                                     取消訂單
+                                                    </a>
+                                                @elseif($order->line_pay_record->is_confirm && !$order->status > 2)
+                                                    <a href="javascript:void(0)" onclick="Apply(this)" data-order="{{$order}}" class="btn btn-lg btn-outline-danger float-right">
+                                                            <i class="fas fa-trash-restore pr-2"></i>
+                                                                    申請取消訂單
+                                                    </a>
+                                                @endif
+
                                             @endif
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -104,27 +182,8 @@
        </div>
  @endforeach  
 
- <div class="modal fade" id="btn-OrderDelete-modal" tabindex="-1" role="dialog"  aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-           <form class="modal-content" id="DeleteOrder" name="DeleteOrder" method="POST">
-             @method('DELETE')
-             @csrf  
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-trash-alt order-number pr-3">取消訂單</i></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body delete-body">
-                <span>確定要取消<span class="font-weight-bold order-number"></span>這筆訂單嗎？</span>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn bg-red">確定</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">離開</button>
-            </div>
-        </form>
-        </div>
-      </div>
+ {{-- @include('orders.DeleteOrderModel') --}}
+
 @else 
 
 <div class="alert alert-primary" role="alert">
@@ -142,21 +201,6 @@
 
 $(function(){
 
-
- let redirect_url = new URL(window.location);
-
- if(redirect_url.searchParams.has("transactionId")){
-
-    swal.fire({
-        title: '提醒',
-        icon: 'info',
-        html:'<p>請再次確認你剛才付款的訂單<br><div>並按下<a href="javascript:void(0)" class="btn btn-success text-white ml-2 mr-2"><i class="fas fa-check-circle pr-2"></i>付款狀態確認</a>的按鈕</div><br>確認付款完全成功</p>',
-        confirmButtonColor: '#38c172',
-        confirmButtonText: '知道了',
-        showConfirmButton: true
-        });
- }else{
-
     swal.fire({
         title: '提醒',
         icon: 'info',
@@ -166,25 +210,91 @@ $(function(){
         showConfirmButton: true
         });
 
- }
-
 });
 
 function Order(el){
 
-    $('#btn-OrderDelete-modal').modal('show');
-    
-    let form = document.getElementById("DeleteOrder");
+    swal.fire({
+                icon:  'warning',
+                width:  '50rem',
+                title: `確定要取消${$(el).data().order.order_number}這筆訂單嗎?`,
+                html: ` <p class="text-danger"><b>提醒:若是取消此筆訂單,此筆訂單將會失效</b></p>
+                        <form id="DeleteOrder" name="DeleteOrder" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        </form>`,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                focusConfirm: false,
+                allowOutsideClick: false,  
+                didOpen:() => {
 
-    let url = '{{route("order.destroy",":id")}}';
+                    let url = '{{route("order.destroy",":id")}}';
 
-    $(".delete-body .order-number").text($(el).data().order.order_number);
+                    url = url.replace(':id',$(el).data().order.id);
 
-    url = url.replace(':id',$(el).data().order.id);
+                    document.getElementById("DeleteOrder").action = url;
 
-    form.action = url;
+                }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById("DeleteOrder").submit();
+                    }
+                })
 
     return
+
+
+}
+
+function RefuseDetail(el){
+
+swal.fire($(el).data().reason);
+
+return
+}
+
+function Apply(el){
+    swal.fire({
+                title: '申請取消訂單',
+                html: `<form id="swalForm" method="POST" action="{{route('order.apply')}}">
+                        @csrf
+                        <input type="hidden" id="ord" class="swal2-input" name="ord_hash" value="${$(el).data().order}">
+                        <textarea id="textarea" class="swal2-textarea" name="order_cancel" placeholder="請填寫取消理由"></textarea>
+                        </form>`,
+                confirmButtonText: '確認',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                focusConfirm: false,
+                allowOutsideClick: false,  
+                preConfirm: () => {
+                    const order = swal.getPopup().querySelector('#ord').value
+                    const textarea = swal.getPopup().querySelector('#textarea').value
+                    
+                    if (!order||!textarea order!=$(el).data().order) {
+
+                        return swal.showValidationMessage(`請一定要填寫欄位`)
+
+                    }
+                    if (!order!=$(el).data().order) {
+
+                       return swal.showValidationMessage(`請不要惡意操作`)
+
+                    }else if(textarea.trim()>100){
+
+                        return swal.showValidationMessage(`取消理由不能超過一百字`)
+
+                    }
+
+                    return { textarea:textarea, order:order }
+                }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    document.getElementById("swalForm").submit();
+                    }
+                })
 
 }
 
@@ -290,3 +400,16 @@ $.ajax({
 }
 </script>    
 @endsection
+
+
+{{-- $('#btn-OrderDelete-modal').modal('show');
+    
+    let form = document.getElementById("DeleteOrder");
+
+    let url = '{{route("order.destroy",":id")}}';
+
+    $(".delete-body .order-number").text($(el).data().order.order_number);
+
+    url = url.replace(':id',$(el).data().order.id);
+
+    form.action = url; --}}

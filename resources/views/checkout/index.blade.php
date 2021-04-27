@@ -27,11 +27,11 @@
                                 <div class="form-row">
                                     <div class="col form-group">
                                         <label>姓:</label>
-                                        <input type="text" class="form-control necessary" name="first_name" autocomplete="off" required>
+                                        <input type="text" class="form-control necessary" name="first_name" autocomplete="off" value="lin" required>
                                     </div>
                                     <div class="col form-group">
                                         <label>名字:</label>
-                                        <input type="text" class="form-control necessary" name="last_name" autocomplete="off" required>
+                                        <input type="text" class="form-control necessary" name="last_name" autocomplete="off" value="dou" required>
                                     </div>
                                 </div>
                                 
@@ -49,7 +49,7 @@
     
                                 </div>
     
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label class="d-block" >付款方式:</label>
                                     @foreach($p_type as $type)
                                         <div class="custom-control custom-radio custom-control-inline">
@@ -57,7 +57,7 @@
                                         <label class="custom-control-label" for="payment{{$type["id"]}}">{{$type["name"]}}</label>
                                         </div>
                                     @endforeach      
-                                </div>
+                                </div> --}}
     
                                 <div class="form-group">
                                     <label>信箱:</label>
@@ -94,8 +94,22 @@
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4">
-                                <button type="submit" class="subscribe btn btn-primary btn-lg btn-block">面交時付款</button>
-                                <button type="button" class="subscribe btn btn-success btn-lg btn-block linepay">LINE Pay支付</button>
+                                <input type="hidden" id="payment" name="payment" value="">
+                                    @foreach($p_type as $type)
+                                    <button type="button" 
+                                            data-type="{{$type["id"]}}" 
+                                            onclick="Pay(this)"
+                                            class="subscribe btn btn-lg btn-block
+                                                @if($type->id===1)
+                                                 btn-primary
+                                                @elseif($type->id===2)
+                                                 btn-success
+                                                @elseif($type->id===3)
+                                                 btn-danger
+                                                 @endif">
+                                                {{$type->name}}
+                                    </button>
+                                @endforeach   
                             </div>
                         </div>
                     </div>
@@ -110,8 +124,6 @@
   $(function(){
 
         $("#PayForm").submit(function(event) {
-
-            // form.action = url;
 
             let form = $(this);
 
@@ -132,26 +144,26 @@
                     },
                     data: form.serialize(), // serializes the form's elements.
                     success: function(response){
-
-                       console.log(response);
-                       swal.close();
-
-                       if(response.returnCode==="0000"){
-                        swal.fire({
-                                    icon:'success',
-                                    title: '下單成功',
-                                    text:'準備前往付款頁面',
-                                    timer: 3000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                                     swal.showLoading();
-                                                    },
-                                    willClose: () => {
-                                                        window.location = response.info.paymentUrl.web
-                                                    }
-                                               });
-                                            }
-                                return true
+                                text=response.message==="面交付費下單成功"? "訂單" : "付款";
+                                    swal.close();
+                                        swal.fire({
+                                            icon:'success',
+                                            title: '下單成功',
+                                            text:`準備前往${text}頁面`,
+                                            timer: 2000,
+                                            timerProgressBar: true,
+                                            didOpen: () => {
+                                                            swal.showLoading();
+                                                            },
+                                            willClose: () => {
+                                                                if(response.returnCode==="0000"){
+                                                                    window.location = response.info.paymentUrl.web
+                                                                }else{
+                                                                    window.location = '{{route("users.orders_status", Auth::id())}}'
+                                                                }
+                                                            }
+                                                    });
+                                        return true
 
                                 },
                         error: function (error) {
@@ -166,12 +178,10 @@
             
     });    
 
-  $(".linepay").click(function (e) {
-
-        e.preventDefault();
-
+  function Pay(el) {
+        document.getElementById("payment").value = $(el).data().type
         swal.fire({
-                    title: '確定要使用LINE PAY 付款嗎?',
+                    title: `確定要使用${$(el).text()}嗎?`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#0c46ff',
@@ -181,7 +191,7 @@
                         $("#PayForm").submit();
                   }
         });
-  })
+  }
 
 </script>
 @endsection    

@@ -134,6 +134,9 @@ Route::post('/checkout','CheckOutController@getCheckOut')->name('checkout.index'
 Route::post('/orders/create', 'OrderController@create')->name('order.create');
 Route::post('/orders/linepay', 'OrderController@linepay')->name('order.linepay');
 Route::post('/orders/change_status', 'OrderController@ChangeStatus')->name('order.status');
+Route::post('/orders/apply', 'OrderController@apply')->name('order.apply');
+Route::post('/orders/cancel_status', 'OrderController@CancelStatus')->name('order.cancel_status');
+
 Route::delete('/orders/{order}', 'OrderController@destroy')->name('order.destroy');
 
 

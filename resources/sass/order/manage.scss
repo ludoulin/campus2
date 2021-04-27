@@ -79,3 +79,20 @@
 
     border-bottom: 1px solid #dddddd;
 }
+
+
+.item-detail{
+
+    td{
+        vertical-align: middle;
+    }
+}
+
+.change-status{
+    .custom-control-label::before, 
+    .custom-control-label::after {
+        top: .5rem;
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}

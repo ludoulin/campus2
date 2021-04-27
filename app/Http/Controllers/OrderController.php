@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
+use App\Http\Requests\CancelReasonRequest;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Order;
@@ -77,7 +78,7 @@ class OrderController extends Controller
         $order = Order::create([
             'order_number'      =>  'ORD-'.strtoupper(uniqid()),
             'user_id'           =>   auth()->user()->id,
-            'status'            =>   '待賣家確認',
+            'status'            =>   0,
             'price_total'       =>   $total,
             'item_count'        =>   count($p_ids),
             'payment_status'    =>   0,
@@ -137,9 +138,36 @@ class OrderController extends Controller
         }else{
 
 
-        return redirect()->route('users.orders_status',auth()->user()->id)->with('success', '下單成功！');
+        return response()->json(['message' => '面交付費下單成功'], 200);
 
         }
+
+    }
+
+    public function CancelStatus(Request $request){
+
+        $order = Order::find($request->ord_hash);
+
+        if(!$order){
+            
+            return abort(403);
+        }
+
+        $this->authorize('operate', $order);
+
+        foreach($order->items as $item){
+
+                Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
+            }
+      
+        $order->status = 3;
+
+        $order->save();
+    
+        $order->delete();
+       
+
+        return back()->with('success','變更成功');
 
     }
     
@@ -149,9 +177,9 @@ class OrderController extends Controller
 
         $this->authorize('operate', $order);
 
-        $check = Order::Statuses;
+        $check = Order::Status;
 
-        if(!$order||!in_array($request->status, $check)){
+        if(!$order||!array_key_exists($request->status, $check)){
             
             return abort(403);
         }
@@ -159,15 +187,44 @@ class OrderController extends Controller
 
         Order::where('id', $order->id)->update(['status'=> $request->status ]);
 
-        if($request->status==="訂單已完成"){
+        if($request->status===2){
 
             Order::where('id', $order->id)->update(['payment_status'=> 1 ]);
 
         }
 
+        if($request->status===3){
+
+            foreach($order->items as $item){
+
+                Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
+            }
+        }
+
 
         return back()->with('success','變更成功');
 
+    }
+
+    public function apply(Request $request){
+
+        $order = Order::find($request->ord_hash);
+
+        if(!$order){
+
+            return abort(403);
+
+        }
+
+        $this->authorize('operate', $order);
+
+        $order->status = 4;
+
+        $order->cancel_reason = $request->order_cancel;
+
+        $order->save();
+
+        return redirect()->route('users.orders_status',auth()->user()->id)->with('info', '申請訂單取消中');
     }
 
     public function destroy(Order $order){
@@ -179,11 +236,17 @@ class OrderController extends Controller
             Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
         }
 
+        $order->status = 3;
+
+        $order->save();
+
         $order->delete();
 
 		return redirect()->route('users.orders_status',auth()->user()->id)->with('success', '訂單成功取消');
 
     }
+
+
 
     public function linepay($package , $order){
 

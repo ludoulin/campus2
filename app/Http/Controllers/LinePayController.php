@@ -224,12 +224,6 @@ class LinePayController extends Controller
                 "Content-Type:application/json; charset=UTF-8"
             );
     
-            /* Array Parameter Data */
-    
-            // $data = array(
-            //     'amount' => $order->price_total,
-            // );;
-    
             curl_setopt($ch, CURLOPT_POST, true);
     
             /* set return type json */
@@ -255,7 +249,11 @@ class LinePayController extends Controller
 
                 }
     
-             $order->delete();
+                $order->payment_status = 2;
+
+                $order->line_pay_record->is_refund = true;
+
+                $order->save();
     
             }
     
