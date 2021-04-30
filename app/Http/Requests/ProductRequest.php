@@ -30,9 +30,10 @@ class ProductRequest extends FormRequest
             {
                 return [
                      // UPDATE ROLES
-                     'isbn'       => 'required',
-                     'name'       => 'required|min:2',
-                     'author'       => 'required',
+                     'product_type' => 'required',
+                     'isbn'       => 'required_if:product_type,0|string|regex:/^([0-9]{10}|[0-9]{13})$/',
+                     'name'       => 'required|string|min:2',
+                     'author'       => 'required_if:product_type,0|string|min:2',
                      'content'        => 'required|min:3',
                      'images' => 'required',
                      'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:3048',
@@ -46,9 +47,10 @@ class ProductRequest extends FormRequest
             {
                 return [
                     // UPDATE ROLES
-                    'isbn'       => 'required',
-                    'name'       => 'required|min:2',
-                    'author'       => 'required',
+                    'product_type' => 'required',
+                    'isbn'       => 'required_if:product_type,0|string|regex:/^([0-9]{10}|[0-9]{13})$/',
+                    'name'       => 'required|string|min:2',
+                    'author'       => 'required_if:product_type,0|string|min:2',
                     'content'        => 'required|min:3',
                     'images' => 'nullable',
 
@@ -73,6 +75,7 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
+            'product_type.required'   => '請記得勾選類型',
             'images.mimes' =>'大頭貼必須是jpeg, bmp, png, gif格式的圖片',
             'images.required' =>'請記得上傳商品照片',
             'name.required'   => '請記得填書名',

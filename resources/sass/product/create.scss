@@ -85,3 +85,13 @@ label{
 
   font-size: 18px;
 }
+
+.change-status{
+  font-size: 30px;
+  .custom-control-label::before, 
+  .custom-control-label::after {
+      top: .5rem;
+      width: 1.5rem;
+      height: 1.5rem;
+  }
+}

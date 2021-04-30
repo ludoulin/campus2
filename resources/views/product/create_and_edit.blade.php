@@ -34,9 +34,23 @@
              @csrf
               @include('shared.error')
 
+
+
               <div class="form-row">
 
-              <div class="form-group col-md-6">
+                <div class="form-group product-type-block col-md-12">
+                <label for="product_type" class="text-muted">* 拍賣類型</label>
+                  <div class="row type-block">
+                  @foreach($product_types as $id => $product_type)
+                  <div class="custom-control custom-radio custom-control-inline ml-3">
+                      <input type="radio" class="custom-control-input necessaryRadio" id="product-type{{$id}}" name="product_type" value="{{$id}}">
+                      <label class="custom-control-label text-muted" for="product-type{{$id}}">{{$product_type}}</label>
+                  </div>
+                  @endforeach 
+                </div>
+                </div>    
+
+              <div class="form-group col-md-6 isbn-block">
                   <label for="ISBN" class="text-muted">* ISBN : (10/13碼)</label>
                   <div class="input-group">
                   <input id="ISBN" class="form-control necessary" type="text" name="isbn"  placeholder="請輸入ISBN" value="{{ old('isbn', $product->isbn ) }}"/>
@@ -46,12 +60,12 @@
                 </div>
               </div>  
 
-              <div class="form-group col-md-12">
+              <div class="form-group col-md-12 name-block">
                 <label for="name" class="text-muted">* 書名 :</label>
                 <input id="name" class="form-control necessary" type="text" name="name" value="{{ old('name', $product->name ) }}" placeholder="請填寫書名"/>
               </div>
 
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-3 author-block">
                 <label for="author" class="text-muted">* 作者 :</label>
                 <input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" />
               </div>
@@ -247,10 +261,53 @@
     let remove_image_array = $('#image_select2 option:selected').toArray().map(item=>item.text);
     
 
-    console.log(t_selected_array);
+    // console.log(t_selected_array);
 
-    console.log(document.getElementsByClassName("keep_image").length);
+    // console.log(document.getElementsByClassName("keep_image").length);
 
+    document.querySelector('#product-type0').checked = true;
+
+    $('input[name="product_type"]').on("change",function(){
+
+        let value = $(this).val();
+
+        if(value==="0"){
+
+          if(document.getElementsByClassName("isbn-block").length===0){
+
+              $('.product-type-block').after('<div class="form-group col-md-6 isbn-block"><label for="ISBN" class="text-muted">* ISBN : (10/13碼)</label><div class="input-group"><input id="ISBN" class="form-control necessary" type="text" name="isbn"  placeholder="請輸入ISBN" value="{{ old('isbn', $product->isbn ) }}"/><div class="input-group-append"><button class="btn btn-primary" onclick="SearchIsbn()" type="button" id="isbn-button">查詢</button></div></div></div>');
+              
+              }
+
+          if(document.getElementsByClassName("author-block").length===0){
+
+              $('.name-block').after('<div class="form-group col-md-3 author-block"><label for="author" class="text-muted">* 作者 :</label><input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" /></div>')
+ 
+          }
+
+          return
+        
+        }else if(value==="1"){
+
+          $(".isbn-block").remove();
+
+          if(document.getElementsByClassName("author-block").length===0){
+
+            $('.name-block').after('<div class="form-group col-md-3 author-block"><label for="author" class="text-muted">* 作者 :</label><input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" /></div>')
+             
+          }
+
+          return
+          // $('#btn-CancelStatus-modal .modal-body').append('<div class="form-group reason"><label class="text-danger" for="cancelReason">請填寫拒絕理由</label><textarea class="form-control" id="cancelReason" name="reason" rows="3" required></textarea>');
+          
+        }else if(value==="2"){
+
+          $(".isbn-block, .author-block").remove();
+        }
+
+        return
+
+        })  
   
   
     $(".btn-success").click(function(){ 

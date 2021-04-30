@@ -52,7 +52,7 @@
                                                             <i class="far fa-bookmark"></i>
                                                         </a>
                                                     @endif
-                                                    @if($order->status < 3 || $order->status === 5)    
+                                                    @if($order->status < 3)    
                                                     <a class="btn bg-salmon" data-toggle="tooltip" data-placement="top" data-order="{{$order->id}}" data-status="{{$order->status}}" data-type="{{$types}}" title="變更訂單狀態" onclick="ChangeStatus(this)" href="javascript:void(0)">
                                                             <i class="fas fa-cog" data-toggle="modal"></i>
                                                         </a>    
@@ -73,10 +73,12 @@
                                                                 badge-primary
                                                                 @elseif($order->status===2)
                                                                 badge-success
-                                                                @elseif($order->status===3||$order->status===5)
+                                                                @elseif($order->status===3||$order->status===6)
                                                                 badge-danger 
                                                                 @elseif($order->status===4)
                                                                 badge-info text-white 
+                                                                @elseif($order->status===5)
+                                                                badge-secondary text-white
                                                                 @endif ">
                                                             {{ Order::Status[$order->status] }}
                                                         </span></h3>

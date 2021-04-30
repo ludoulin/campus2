@@ -102,10 +102,12 @@
                                                                         badge-primary
                                                                         @elseif($order->status===2)
                                                                         badge-success
-                                                                        @elseif($order->status===3||$order->status===5)
+                                                                        @elseif($order->status===3||$order->status===6)
                                                                         badge-danger
                                                                         @elseif($order->status===4)
                                                                         badge-info text-white
+                                                                        @elseif($order->status===5)
+                                                                        badge-secondary text-white
                                                                         @endif">
                                                                 {{ Order::Status[$order->status] }}
                                                             </span>
@@ -129,13 +131,9 @@
                                                     <a href="javascript:void(0)" onclick="Apply(this)" data-order="{{$order->id}}" class="btn btn-lg btn-outline-danger float-right">
                                                             <i class="fas fa-trash-restore pr-2"></i>
                                                               申請取消訂單
-                                                    </a>
-                                                @elseif($order->status === 3)
-                                                    <a href="javascript:void(0)" onclick="RefuseDetail(this)" data-reason="{{$order->refuse_reason}}" class="btn btn-lg btn-outline-danger float-right">
-                                                            <i class="fas fa-eye pr-2"></i>
-                                                              查看賣家取消理由
-                                                    </a>    
-
+                                                    </a> 
+                                                @elseif($order->status === 5)
+                                                    <div class="alert alert-secondary text-center" role="alert">因賣家長時間沒確認定狀態,系統已自動取消此筆訂單</div>  
                                                 @else     
                                                 <div class="alert alert-primary text-center" role="alert">目前的狀態沒有任何操作可以使用</div>
                                                  
@@ -167,6 +165,10 @@
                                                             <i class="fas fa-trash-restore pr-2"></i>
                                                                     申請取消訂單
                                                     </a>
+                                                @elseif($order->status === 5)
+                                                    <div class="alert alert-secondary text-center" role="alert">因賣家長時間沒確認定狀態系統已自動取消此筆訂單</div>  
+                                                @else     
+                                                <div class="alert alert-primary text-center" role="alert">目前的狀態沒有任何操作可以使用</div>    
                                                 @endif
 
                                             @endif
@@ -273,12 +275,12 @@ function Apply(el){
                     const order = swal.getPopup().querySelector('#ord').value
                     const textarea = swal.getPopup().querySelector('#textarea').value
                     
-                    if (!order||!textarea order!=$(el).data().order) {
+                    if (!order||!textarea) {
 
                         return swal.showValidationMessage(`請一定要填寫欄位`)
 
                     }
-                    if (!order!=$(el).data().order) {
+                    if (order!=$(el).data().order) {
 
                        return swal.showValidationMessage(`請不要惡意操作`)
 

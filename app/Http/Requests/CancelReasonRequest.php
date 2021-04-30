@@ -26,7 +26,15 @@ class CancelReasonRequest extends FormRequest
         return [
             'ord_hash' => 'required',
             'order_cancel' => 'required|max:100',
-            'reason' => 'required|max:100',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'ord_hash.required' =>'請不要惡意操作',
+            'order_cancel.required' => '取消理由請一定要填寫',
+            'order_cancel.max' => '取消理由最多100字',
         ];
     }
 }

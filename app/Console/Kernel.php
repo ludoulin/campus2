@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
        
-        Commands\MakeService::class
+        Commands\MakeService::class,
+        Commands\DeletedOrders::class
     ];
 
     /**
@@ -31,8 +32,11 @@ class Kernel extends ConsoleKernel
 
         // 每隔一小時執行一次
         // $schedule->command('campus:calculate-active-user')->hourly();
+
         // 每天24:00執行一次
         $schedule->command('larabbs:sync-user-actived-at')->dailyAt('00:00');
+
+        $schedule->command('orders:cancel')->everyMinute();
 
     }
 

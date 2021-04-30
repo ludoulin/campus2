@@ -97,6 +97,7 @@ window.ValidateForm = function () {
   var section = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
   var count = 0;
   count += ValidateInput(section);
+  count += ValidateRadio(section);
   count += ValidateSelector(section);
   count += ValidateFile(section);
   count += ValidateTextArea(section);
@@ -123,6 +124,26 @@ function ValidateInput() {
     }
   }
 
+  return count;
+}
+
+function ValidateRadio() {
+  var section = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
+  var radios = section.getElementsByClassName("necessaryRadio");
+  var Valid = false;
+
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked == true) {
+      Valid = true;
+      $(".type-block").removeClass("error");
+    }
+  }
+
+  if (!Valid) {
+    $(".type-block").addClass("error");
+  }
+
+  count = Valid === true ? 0 : 1;
   return count;
 }
 
@@ -177,15 +198,7 @@ function ValidateTextArea() {
     } else {
       textareas[i].classList.remove("is-invalid");
     }
-  } // $.each(textareas , function(index,textarea){
-  //     if(textarea.value === ""){
-  //         $(this).addClass("is-invalid");
-  //         count++
-  //     } else {
-  //         $(this).removeClass("is-invalid");
-  //     }
-  // });
-
+  }
 
   return count;
 }

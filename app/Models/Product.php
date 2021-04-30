@@ -11,7 +11,26 @@ use Auth;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'content', 'price', 'image', 'seller_id'];
+    protected $table = 'products';
+
+    const PRODUCT_TYPES = [
+        0 => '二手書',
+        1 => '講義',
+        2 => '筆記',
+    ];
+
+    protected $fillable = [
+        'name', 
+        'type',
+        'content', 
+        'price', 
+        'image', 
+        'seller_id', 
+        'isbn', 
+        'author', 
+        'is_stock', 
+        'comment_count'
+    ];
 
     public function user()
     {

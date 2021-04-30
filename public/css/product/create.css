@@ -84,3 +84,14 @@ label {
   font-size: 18px;
 }
 
+.change-status {
+  font-size: 30px;
+}
+
+.change-status .custom-control-label::before,
+.change-status .custom-control-label::after {
+  top: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
