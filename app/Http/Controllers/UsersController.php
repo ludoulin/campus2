@@ -10,6 +10,7 @@ use App\Handlers\ImageUploadHandler;
 use App\Models\LinePayTradeRecord;
 use App\Models\Order;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Auth;
 
 class UsersController extends Controller
@@ -89,8 +90,6 @@ class UsersController extends Controller
      public function orders_status(User $user){
 
         $this->authorize('update', $user);
-
-        // $orders = $user->orders()->with(['items'=> function($query){$query->with("product");}])->withTrashed()->get();
 
         $orders = $user->orders()->withTrashed()->get();
 

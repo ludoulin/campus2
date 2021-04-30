@@ -1,6 +1,7 @@
 window.ValidateForm = function(section = document){
     let count = 0;
     count += ValidateInput(section);
+    count += ValidateRadio(section);
     count += ValidateSelector(section);
     count += ValidateFile(section);
     count += ValidateTextArea(section);
@@ -30,6 +31,30 @@ function ValidateInput(section = document){
          }
          return count;
     }
+
+function ValidateRadio(section = document){
+
+    const radios = section.getElementsByClassName("necessaryRadio");
+
+    let Valid = false;
+
+    for(var i = 0; i < radios.length; i++){
+        if(radios[i].checked == true){
+            Valid = true; 
+            $(".type-block").removeClass("error");   
+        }
+    }
+
+    if(!Valid){
+        $(".type-block").addClass("error");
+    }
+
+    count = (Valid === true ) ? 0 : 1
+
+    return count;
+
+
+}
 
 function ValidateSelector(section = document){
         
@@ -102,21 +127,6 @@ function ValidateTextArea(section = document){
         }
      }
 
-    // $.each(textareas , function(index,textarea){
-
-    //     if(textarea.value === ""){
-
-    //         $(this).addClass("is-invalid");
-
-    //         count++
-
-    //     } else {
-
-    //         $(this).removeClass("is-invalid");
-
-    //     }
-
-    // });
 
     return count;
  }

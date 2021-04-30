@@ -25,9 +25,10 @@ class ProductsController extends Controller
     {
 
      $colleges = College::all();
-     $payment_types = PaymentType::all();
+
+     $product_types = collect(Product::PRODUCT_TYPES);
          
-     return view('product.create_and_edit',compact('product','colleges','payment_types'));
+     return view('product.create_and_edit',compact('product','colleges','product_types'));
     }
 
     public function getDepartment($id){
@@ -41,15 +42,16 @@ class ProductsController extends Controller
     public function store(ProductRequest $request, Product $product)
     {
             $user = Auth::user();
+            $type = $request->product_type;
             $isbn = $request->isbn;
             $name = $request->name;
             $authors = $request->author;
             $price = $request->price;
             $content = $request->content;
             $departments = $request->departments;
-            $pay_options = $request->payment;
 
             $product = Product::create([
+                'type' => $type,
                 'isbn' => $isbn,
                 'name' => $name,
                 'author'=> $authors,
@@ -69,18 +71,6 @@ class ProductsController extends Controller
 
             }
         }
-
-        if($pay_options){
-            foreach($pay_options as $option){
-                if(!empty($option)){
-                    $payment_option = new PaymentOption();
-                    $payment_option->product_id = $product->id;
-                    $payment_option->payment_type_id = $option;
-                    $payment_option->save();
-                }
-            }
-        }
-
 
             if($request->hasfile('images'))
             {

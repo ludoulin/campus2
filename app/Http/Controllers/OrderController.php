@@ -159,8 +159,8 @@ class OrderController extends Controller
 
                 Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
             }
-      
-        $order->status = 3;
+    
+        $order->status = 6;
 
         $order->save();
     
@@ -199,6 +199,12 @@ class OrderController extends Controller
 
                 Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
             }
+
+            $order->status = 6;
+            
+            $order->save();
+    
+            $order->delete();
         }
 
 
