@@ -15,6 +15,10 @@
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
   @yield('sass')
 
   <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
@@ -32,8 +36,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;400&display=swap" rel="stylesheet">
-
-  
   
   <script>
    window.Laravel = {!! json_encode(['csrfToken' => csrf_token(),])!!};
@@ -63,11 +65,13 @@
 
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
 
+  <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 
   @yield('script')
 
 
-  <script src="https://kit.fontawesome.com/2db53fc9a8.js" crossorigin="anonymous"></script>
+  {{-- <script src="https://kit.fontawesome.com/2db53fc9a8.js" crossorigin="anonymous"></script> --}}
 
   <script src="{{ asset('js/AlertMessage.js') }}"></script>
 

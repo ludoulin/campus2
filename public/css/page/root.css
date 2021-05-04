@@ -163,21 +163,6 @@ a {
   box-shadow: none;
 }
 
-.slick-prev::before,
-.slick-next::before {
-  font-family: FontAwesome;
-}
-
-.slick-prev::before {
-  /* fa-arrow-circle-left */
-  content: "\F0A8";
-}
-
-.slick-next::before {
-  /* fa-arrow-circle-right */
-  content: "\F0A9";
-}
-
 .slick-prev,
 .slick-next {
   width: 50px;
