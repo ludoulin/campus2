@@ -3,6 +3,7 @@ window.ValidateForm = function(section = document){
     count += ValidateInput(section);
     count += ValidateRadio(section);
     count += ValidateSelector(section);
+    count += ValidateMulitSelector(section);
     count += ValidateFile(section);
     count += ValidateTextArea(section);
 
@@ -55,10 +56,31 @@ function ValidateRadio(section = document){
 
 
 }
-
 function ValidateSelector(section = document){
         
-        const selectors = section.getElementsByClassName("necessarySelect");
+    const selectors = section.getElementsByClassName("necessarySelect");
+
+    let count = 0;
+
+    for(let i = 0; i < selectors.length; i++){
+            if(
+                selectors[i].options[selectors[i].selectedIndex].value == 0 ||
+                selectors[i].options[selectors[i].selectedIndex].disabled
+            ) {
+                selectors[i].classList.add("is-invalid");
+                count++
+            } else {
+                console.log(selectors[i].options[selectors[i].selectedIndex]);
+                selectors[i].classList.remove("is-invalid");
+            }
+         }
+
+        return count;
+ }
+
+function ValidateMulitSelector(section = document){
+        
+        const selectors = section.getElementsByClassName("necessaryMulitSelect");
     
         let count = 0;
     
@@ -85,8 +107,8 @@ function ValidateSelector(section = document){
 
              }
 
-            return count;
-     }
+    return count;
+}
  
 function ValidateFile(section = document){
 

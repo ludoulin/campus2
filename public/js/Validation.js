@@ -99,6 +99,7 @@ window.ValidateForm = function () {
   count += ValidateInput(section);
   count += ValidateRadio(section);
   count += ValidateSelector(section);
+  count += ValidateMulitSelector(section);
   count += ValidateFile(section);
   count += ValidateTextArea(section);
 
@@ -150,6 +151,24 @@ function ValidateRadio() {
 function ValidateSelector() {
   var section = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
   var selectors = section.getElementsByClassName("necessarySelect");
+  var count = 0;
+
+  for (var i = 0; i < selectors.length; i++) {
+    if (selectors[i].options[selectors[i].selectedIndex].value == 0 || selectors[i].options[selectors[i].selectedIndex].disabled) {
+      selectors[i].classList.add("is-invalid");
+      count++;
+    } else {
+      console.log(selectors[i].options[selectors[i].selectedIndex]);
+      selectors[i].classList.remove("is-invalid");
+    }
+  }
+
+  return count;
+}
+
+function ValidateMulitSelector() {
+  var section = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
+  var selectors = section.getElementsByClassName("necessaryMulitSelect");
   var count = 0;
 
   for (var i = 0; i < selectors.length; i++) {

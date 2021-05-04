@@ -27,8 +27,10 @@ class ProductsController extends Controller
      $colleges = College::all();
 
      $product_types = collect(Product::PRODUCT_TYPES);
+
+     $course_types = collect(Product::COURSE_TYPES);
          
-     return view('product.create_and_edit',compact('product','colleges','product_types'));
+     return view('product.create_and_edit',compact('product','colleges','product_types','course_types'));
     }
 
     public function getDepartment($id){
@@ -43,6 +45,7 @@ class ProductsController extends Controller
     {
             $user = Auth::user();
             $type = $request->product_type;
+            $course_type = $request->course_type;
             $isbn = $request->isbn;
             $name = $request->name;
             $authors = $request->author;
@@ -52,6 +55,7 @@ class ProductsController extends Controller
 
             $product = Product::create([
                 'type' => $type,
+                'course_type' => $course_type,
                 'isbn' => $isbn,
                 'name' => $name,
                 'author'=> $authors,
@@ -107,8 +111,10 @@ class ProductsController extends Controller
         $colleges = College::all();
 
         $product_types = collect(Product::PRODUCT_TYPES);
+
+        $course_types = collect(Product::COURSE_TYPES);
             
-        return view('product.create_and_edit', compact('product','colleges','product_types'));
+        return view('product.create_and_edit', compact('product','colleges','product_types','course_types'));
     }
 
     public function update(ProductRequest $request, Product $product)

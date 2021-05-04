@@ -59,7 +59,7 @@
             </div>
         </ul>
         <div class="alert alert-secondary text-center" role="alert" v-else>
-            *沒有任何留言*
+            沒有任何留言({{comments.length}})
         </div>
         <div class="reply-box" v-if="auth_check!==0">
             <div class="form-group">

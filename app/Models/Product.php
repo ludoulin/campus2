@@ -19,9 +19,18 @@ class Product extends Model
         2 => '筆記',
     ];
 
+    const COURSE_TYPES = [
+        1 => '專業科目',
+        2 => '共同科目',
+        3 => '通識課程',
+        4 => '語言相關',
+        5 => '其他'
+    ];
+
     protected $fillable = [
         'name', 
         'type',
+        'course_type',
         'content', 
         'price', 
         'image', 
