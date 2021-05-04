@@ -124,7 +124,7 @@
                                 <h4 class="card-title">使用者管理</h4>
                             </div>
                             <div class="admin-users-header-toolbar d-flex align-items-center">
-                                <a href="" class="btn btn-primary text-white">新增使用者</a>
+                                <a href="" class="btn btn-primary text-white"><i class="fas fa-plus pr-2"></i>新增使用者</a>
                             </div>
                         </div>
                         <div class="card-body admin-users-body">
@@ -163,8 +163,8 @@
                                                           </a> 
                                                          @else
                                                          <div class="flex align-items-center list-user-action">
-                                                         <a class="btn bg-primary" href="{{ route('admin.users.edit', $user->id) }}">
-                                                            <i class="fa fa-pencil"></i>    
+                                                         <a class="btn bg-primary" data-toggle="tooltip" data-placement="top" title="編輯" href="{{ route('admin.users.edit', $user->id) }}">
+                                                            <i class="fas fa-user-edit"></i>
                                                          </a>
                                                          <a class="btn bg-salmon"
                                                             href="javascript:void(0)"  
@@ -242,6 +242,8 @@
 @section('script2')
 <script>
 $(function(){
+
+    $('[data-toggle="tooltip"]').tooltip();
  
     $("#admin_users_table").DataTable({
         responsive:true,
