@@ -105,8 +105,10 @@ class ProductsController extends Controller
         $this->authorize('update', $product);
 
         $colleges = College::all();
+
+        $product_types = collect(Product::PRODUCT_TYPES);
             
-        return view('product.create_and_edit', compact('product','colleges'));
+        return view('product.create_and_edit', compact('product','colleges','product_types'));
     }
 
     public function update(ProductRequest $request, Product $product)

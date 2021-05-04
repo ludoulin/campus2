@@ -160,14 +160,11 @@ props:['reply_comment','open','replies','reply_user','product_author'],
  }   
 </script>
 <style lang="scss" scoped>
-.input_style{
-    width: 50%;
-    border-radius: 30px !important;
-}
-
-.reply-cancel, .reply-delete, .reply-edit{
-cursor: pointer;
-}
-
-
+    .input_style{
+        width: 50%;
+        border-radius: 30px !important;
+    }
+    .reply-cancel, .reply-delete, .reply-edit{
+        cursor: pointer;
+    }
 </style>

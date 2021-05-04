@@ -1,11 +1,11 @@
 <template>
-<div>
- <button class="btn btn-secondary dropdown-toggle notif" @click="markNotificationAsRead" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell mr-1"></i><a class="count">{{ notification_count }}</a></button>  
-<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"> 
-  <notification-item v-for="unread in unreadNotifications" :unread="unread" :key="unread.id"></notification-item>
- <div class="dropdown-item full-replay"><a href="http://localhost/campus2/public/notifications/index">查看所有回覆</a></div>
-</div>
-</div>
+   <div>
+      <button class="btn btn-secondary dropdown-toggle notif" @click="markNotificationAsRead" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell mr-1"></i><a class="count">{{ notification_count }}</a></button>  
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"> 
+         <notification-item v-for="unread in unreadNotifications" :unread="unread" :key="unread.id"></notification-item>
+         <div class="dropdown-item full-replay"><a href="http://localhost/campus2/public/notifications/index">查看所有回覆</a></div>
+      </div>
+   </div>
 </template>
 <script>
 //  import ReadNotification from './ReadNotification'
@@ -88,4 +88,13 @@
   }
  }
 </script>
+
+
+<style lang="scss" scoped>
+.dropdown-menu {
+  max-height:500px; 
+  overflow: scroll;
+
+}
+</style>
 

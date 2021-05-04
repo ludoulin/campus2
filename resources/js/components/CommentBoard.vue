@@ -1,74 +1,73 @@
 <template>
     <div>
-        <ul class="list-unstyled">
-          <div v-for="comment in comments" :key="comment.id"> 
-          <li class="media" :name="`reply${comment.id}`" :id="`reply${comment.id}`">
-            <div class="media-left">
-              <a :href="`http://localhost/campus2/public/users/${comment.user_id}`">
-                <img class="media-object img-thumbnail mr-3" alt="comment->user->name }}" :src="comment.user.avatar" style="width:48px;height:48px;" />
-              </a>
+        <ul class="list-unstyled" v-if="comments.length !== 0">
+            <div v-for="comment in comments" :key="comment.id"> 
+                <li class="media" :name="`reply${comment.id}`" :id="`reply${comment.id}`">
+                    <div class="media-left">
+                        <a :href="`http://localhost/campus2/public/users/${comment.user_id}`">
+                            <img class="media-object img-thumbnail mr-3" alt="comment->user->name }}" :src="comment.user.avatar" style="width:48px;height:48px;" />
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-heading mt-0 mb-1 text-secondary">
+                            <a :href="`http://localhost/campus2/public/users/${comment.user_id}`" :title="comment.user.name">
+                                {{ comment.user.name }}
+                            </a>
+                            <span class="text-secondary"> • </span>
+                            <span class="meta text-secondary" :title="comment.created_at">{{ moment(comment.created_at).fromNow()}}</span>
+                            <div class="float-right" v-if="auth_check!==0">
+                                <span class="meta" v-if="author==user_id&&the_reply!==comment.id">
+                                    <button @click="open_reply(comment)" class="btn btn-primary btn-xs pull-left">
+                                        <i class="fas fa-reply mr-2"></i>回覆
+                                    </button>
+                                </span>    
+                                <span class="meta" v-if="comment.user_id==user_id&&the_switch!==comment.id">
+                                    <button @click="open(comment)" class="btn btn-success btn-xs pull-left">
+                                        <i class="far fa-edit mr-2"></i>編輯
+                                    </button>
+                                </span>
+                                <span class="meta" v-if="comment.user_id== user_id&&the_switch!==comment.id||author==user_id&&the_reply!==comment.id">
+                                    <button @click="deleteComment(comment)" class="btn btn-danger btn-xs pull-left">
+                                        <i class="far fa-trash-alt mr-2"></i>刪除
+                                    </button>
+                                </span>
+                            </div>
+                          </div>
+                          <div class="media-heading mt-0 mb-1 text-secondary" v-if="the_switch==comment.id">
+                              <div class="row">
+                                  <input
+                                      v-model="edit_message"
+                                      type="text"
+                                      name="message"
+                                      placeholder="Enter your message..."
+                                      class="form-control input_style">
+                                  <button class="btn btn-primary btn-xs pull-left ml-3" @click="editMessage(comment)">儲存</button>     
+                                  <button class="btn btn-secondary btn-xs pull-left ml-3" @click="edit_cancel(comment)">取消</button>     
+                              </div>
+                          </div>
+                          <div class="reply-content text-secondary" v-if="the_switch!==comment.id">
+                            {{comment.content}}
+                          </div>
+                    </div>
+                </li>
+                <hr>
+                  <!-- <div class="reply mb-3">
+                  <div class="user-reply" role="textbox" contenteditable style="outline: none; background:gray">
+                  </div>
+                  </div> -->
+                <reply-board :reply_comment="comment"  :reply_user="auth_check" :product_author="author" @send="sendReply" @reply_delete="deleteReply" @reply_cancel="cancelReply" :open="the_reply" :replies="comment.replies"></reply-board>
             </div>
-      
-            <div class="media-body">
-              <div class="media-heading mt-0 mb-1 text-secondary">
-                <a :href="`http://localhost/campus2/public/users/${comment.user_id}`" :title="comment.user.name">
-                  {{ comment.user.name }}
-                </a>
-                <span class="text-secondary"> • </span>
-                <span class="meta text-secondary" :title="comment.created_at">{{ moment(comment.created_at).fromNow()}}</span>
-                
-                <div class="float-right" v-if="auth_check!==0">
-                <span class="meta" v-if="author==user_id&&the_reply!==comment.id">
-                      <button @click="open_reply(comment)" class="btn btn-primary btn-xs pull-left">
-                      <i class="fas fa-reply mr-2"></i>回覆
-                      </button>
-                </span>    
-                <span class="meta" v-if="comment.user_id==user_id&&the_switch!==comment.id">
-                      <button @click="open(comment)" class="btn btn-success btn-xs pull-left">
-                        <i class="far fa-edit mr-2"></i>編輯
-                      </button>
-                </span>
-                <span class="meta" v-if="comment.user_id== user_id&&the_switch!==comment.id||author==user_id&&the_reply!==comment.id">
-                      <button @click="deleteComment(comment)" class="btn btn-danger btn-xs pull-left">
-                        <i class="far fa-trash-alt mr-2"></i>刪除
-                      </button>
-                </span>
-                </div>
-              </div>
-               <div class="media-heading mt-0 mb-1 text-secondary" v-if="the_switch==comment.id">
-                 <div class="row">
-              <input
-                    v-model="edit_message"
-                    type="text"
-                    name="message"
-                    placeholder="Enter your message..."
-                    class="form-control input_style">
-                 <button class="btn btn-primary btn-xs pull-left ml-3" @click="editMessage(comment)">儲存</button>     
-                 <button class="btn btn-secondary btn-xs pull-left ml-3" @click="edit_cancel(comment)">取消</button>     
-                 </div>
-               </div>
-              <div class="reply-content text-secondary" v-if="the_switch!==comment.id" >
-                {{comment.content}}
-            </div>
-           </div>
-          </li>
-          <hr>
-          <!-- <div class="reply mb-3">
-          <div class="user-reply" role="textbox" contenteditable style="outline: none; background:gray">
-          </div>
-          </div> -->
-          <reply-board :reply_comment="comment"  :reply_user="auth_check" :product_author="author" @send="sendReply" @reply_delete="deleteReply" @reply_cancel="cancelReply" :open="the_reply" :replies="comment.replies"></reply-board>
-          
-          
+        </ul>
+        <div class="alert alert-secondary text-center" role="alert" v-else>
+            *沒有任何留言*
         </div>
-      </ul>
-    <div class="reply-box" v-if="auth_check!==0">
-        <div class="form-group">
-      <textarea class="form-control" v-model="message" rows="3" placeholder="請在此輸入您的提問，賣家將會回覆您的提問~"></textarea>
+        <div class="reply-box" v-if="auth_check!==0">
+            <div class="form-group">
+                <textarea class="form-control" v-model="message" rows="3" placeholder="請在此輸入您的提問，賣家將會回覆您的提問~"></textarea>
+            </div>
+            <button @click="sendMessage" class="btn btn-primary btn-sm"><i class="fa fa-share mr-1"></i>確認送出</button>
+        </div>
     </div>
-    <button @click="sendMessage" class="btn btn-primary btn-sm"><i class="fa fa-share mr-1"></i>確認送出</button>
-   </div>
-</div>
 </template>
 <script>
  let moment = require('moment');
