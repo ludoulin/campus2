@@ -19,7 +19,7 @@
                   </h2>
                   <hr>
                   @if($product->id)
-                  <form action="{{ route('products.update', $product->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+                  <form action="{{ route('products.update', $product->id) }}" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return BookForm()">
                         @method('PATCH')
                   @else
                   <form action="{{ route('products.store') }}" id="create_product" name="create_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return BookForm()">
@@ -29,7 +29,7 @@
                   @include('shared.error')
                       <div class="form-row">
                           <div class="form-group product-type-block col-md-12">
-                              <label for="product_type" class="text-muted">* 拍賣類型:</label>
+                              <label for="product_type" class="text-muted">* 拍賣類型：</label>
                               <div class="row type-block">
                                 @foreach($product_types as $id => $product_type)
                                   <div class="custom-control custom-radio custom-control-inline ml-3">
@@ -41,7 +41,7 @@
                           </div>
 
                           <div class="form-group col-md-6 isbn-block">
-                              <label for="ISBN" class="text-muted">* ISBN: (10/13碼)</label>
+                              <label for="ISBN" class="text-muted">* ISBN： (10/13碼)</label>
                               <div class="input-group">
                                   <input id="ISBN" class="form-control necessary" type="text" name="isbn"  placeholder="請輸入ISBN" value="{{ old('isbn', $product->isbn ) }}"/>
                                   <div class="input-group-append">
@@ -51,17 +51,17 @@
                           </div>
 
                           <div class="form-group col-md-12 name-block">
-                              <label for="name" class="text-muted">* 書名:</label>
+                              <label for="name" class="text-muted">* 書名：</label>
                               <input id="name" class="form-control necessary" type="text" name="name" value="{{ old('name', $product->name ) }}" placeholder="請填寫書名"/>
                           </div>
 
                           <div class="form-group col-md-3 author-block">
-                              <label for="author" class="text-muted">* 作者:</label>
+                              <label for="author" class="text-muted">* 作者：</label>
                               <input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" />
                           </div>
 
                           <div class="form-group col-md-3">
-                              <label for="price" class="text-muted">* 價格 :</label>
+                              <label for="price" class="text-muted">* 價格：</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                       <span class="input-group-text">$</span>
@@ -73,9 +73,9 @@
 
                       <div class="form-row mb-2">
                           <div class="form-group col-md-6">
-                              <label for="college" class="text-muted">* 學院 :</label>
+                              <label for="college" class="text-muted">* 學院：</label>
                               <div class="input-group">
-                                  <select class="form-control necessarySelect" name="college[]">
+                              <select class="form-control {{ !$product->id ? necessaryMulitSelect : ''}} " name="college[]">
                                       <option value="0">--請選擇學院--</option>
                                       @foreach ($colleges as $value)
                                       <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -85,9 +85,9 @@
                           </div>
 
                           <div class="form-group col-md-6">
-                              <label for="department" class="text-muted">* 系所 :（可複選）每選完一次科系後請按下新增Tag</label>
+                              <label for="department" class="text-muted">* 系所：（可複選）每選完一次科系後請按下新增Tag</label>
                               <div class="input-group">
-                                  <select name="department[]"  class="form-control necessarySelect">
+                                  <select name="department[]"  class="form-control {{ !$product->id ? necessaryMulitSelect : ''}} ">
                                       <option value="0">--請選擇科系--</option>
                                   </select>
                                   <div class="input-group-append">
@@ -124,14 +124,28 @@
                             @endif
                       </div>
 
+                      <div class="form-row mb-2">
+                        <div class="form-group col-md-6">
+                            <label for="college" class="text-muted">* 課程分類：</label>
+                            <div class="input-group">
+                                <select class="form-control necessarySelect" name="course_type">
+                                    <option value="0">--請選擇課程分類--</option>
+                                    @foreach ($course_types as $id => $course_type)
+                                    <option value="{{ $id }}" {{$product->course_type === $id ?'selected':'' }}>{{ $course_type }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                      </div>   
+
                       <div class="form-group">
-                          <label for="content" class="text-muted">* 書況:</label>
+                          <label for="content" class="text-muted">* 書況：</label>
                           <textarea id="content" name="content" class="form-control necessaryTextArea" rows="6" placeholder="請填入書況說明,至少3個字。">{{ old('content', $product->content ) }}</textarea>
                       </div>
 
                       <div class="form-row many">
                           <div class="form-group control-group increment" >
-                              <label for="images" class="text-muted">* 商品圖片上傳:</label>
+                              <label for="images" class="text-muted">* 商品圖片上傳：</label>
                               <div class="form-row inner-row">
                               @if(!$product->id)  
                                   <div class="input-group col-md-4 mb-2 count">
@@ -161,13 +175,13 @@
                         @include('product.tagModal')
                 
                         <div class="well well-sm">
-                            <button class="btn btn-success" type="button"> <i class="fas fa-plus mr-2"></i>新增圖片</button>
+                            <button class="btn btn-success" type="button"> <i class="fas fa-plus pr-2"></i>新增圖片</button>
                             @if(!$product->id)  
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-import mr-2" aria-hidden="true"></i>刊登商品</button>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-file-import pr-2" aria-hidden="true"></i>刊登商品</button>
                             @else 
-                            <button type="submit" class="btn btn-primary edit"><i class="far fa-save mr-2" aria-hidden="true"></i>編輯完成</button>
+                            <button type="submit" class="btn btn-primary edit"><i class="far fa-save pr-2" aria-hidden="true"></i>編輯完成</button>
                             @endif 
-                            <a href="{{ url()->previous() }}" class="btn btn-secondary float-right">回上一頁</a>
+                            <a href="{{ url()->previous() }}" class="btn btn-secondary float-right"><i class="fas fa-door-open pr-2"></i>回上一頁</a>
                         </div>
                   </form>
               </div>

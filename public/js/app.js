@@ -72097,7 +72097,13 @@ var render = function() {
             staticClass: "alert alert-secondary text-center",
             attrs: { role: "alert" }
           },
-          [_vm._v("\n        *沒有任何留言*\n    ")]
+          [
+            _vm._v(
+              "\n        沒有任何留言(" +
+                _vm._s(_vm.comments.length) +
+                ")\n    "
+            )
+          ]
         ),
     _vm._v(" "),
     _vm.auth_check !== 0
