@@ -38,23 +38,22 @@ body {
      
   .message{
 
-    .dropdown-toggle::after { 
-      content: none; 
-    }
-      .badge-secondary {
-        background-color: #262626;
-      }
-    
-      .badge-hint {
-        background-color: #d15b47 !important;
-      }
-      .full-reply{
-     text-align: center;
-      }   
+        .dropdown-toggle::after { 
+          content: none; 
+        }
+        .badge-secondary {
+            background-color: #262626;
+        }
+        
+        .badge-hint {
+            background-color: #d15b47 !important;
+        }
+        .full-reply{
+        text-align: center;
+        }   
     
     } 
-    
-  }
+}
   
   /* Sticky footer styles */
 html {
