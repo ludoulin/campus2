@@ -13,25 +13,32 @@
 <div class="container my-3 product">
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-6 left">
-            <div class="big-image ">
-                <div class="tag-left">&#10094;</div>
-                    @foreach($product->images as $key => $picture)
-                    @if($key == 0)
-                      <img src="{{ url($picture->path) }}" class="image">
-                    @else 
-                      <img src="{{ url($picture->path) }}" class="image" style="display:none">
-                    @endif
-                    @endforeach
-                <div class="tag-right">&#10095;</div>
-            </div>
-            <div class="small-image">
+            @foreach($product->images as $key => $picture)
+                <div class="big-image">
+                <img src="{{ url($picture->path) }}" id="picture_{{$key}}" alt="圖片{{$key}}" onclick="showModal(this)">
+                </div>
+            @endforeach
+            <div id ="ImgModal" class="modal">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <img class="modal-content" id="modal-image">
+                    <div id="modal-caption"></div>
+            </div>     
+            <div class="prev" onclick="plusDiv(-1)">&#10094;</div>
+            <div class="next" onclick="plusDiv(1)">&#10095;</div>
+
+            <div class="caption-container">
+                <p id="caption" style="margin-top:10px"></p>
+            </div>    
+            
+            <div class="row image-row">
                   @foreach($product->images as $key => $picture) 
-                    <div class="xsimage">
-                        <img src="{{ url($picture->path) }}" class="images w3-opacity w3-hover-opacity-off" onclick="currentDiv({{$key+1}})">
+                    <div class="small-image">
+                        <img src="{{ url($picture->path) }}" class="demo cursor" alt="圖片{{$key+1}}" onclick="currentDiv({{$key+1}})">
                     </div>
                   @endforeach
             </div>
         </div>
+
         <div class="col-xl-6 col-lg-6 col-md-6 mt-md-0 mt-3 right">
             <div class="product-name">
                 <h4 style="text-align:center"><b>{{ $product->name }}</b></h4>
@@ -150,33 +157,61 @@
                 </comment-board>
               </div>
           </div> 
-      </div>  
+      </div> 
 </div>   
 
 @endsection
 
 @section('script')
 <script>
-currentDiv(1);
+
+$(function(){
+    init();
+})
+
+function init(){
+
+    showDivs(slideIndex = 1);
+} 
+
+function showModal(el){
+    console.log($(el));
+    document.getElementById("ImgModal").style.display = "block";
+    document.getElementById("modal-image").src = $(el)["0"].currentSrc;
+    document.getElementById("modal-caption").innerHTML = $(el)["0"].alt
+}
+
+function closeModal(){
+
+document.getElementById("ImgModal").style.display = "none";
+
+}
+
+
+function plusDiv(n){
+    showDivs(slideIndex += n)
+}
 
 function currentDiv(n) {
   showDivs(slideIndex = n);
 }
 
 function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("image");
-  var dots = document.getElementsByClassName("images");
-  if (n > x.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = x.length}
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
+  let i;
+  let slides = document.getElementsByClassName("big-image");
+  let dots = document.getElementsByClassName("demo");
+  let numberText = document.getElementById("caption");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
   }
   for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+    dots[i].className = dots[i].className.replace(" active", "");
   }
-  x[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += " w3-opacity-off";
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+  numberText.innerHTML = dots[slideIndex-1].alt;
 }
 
 function DeleteConfirm(title){
