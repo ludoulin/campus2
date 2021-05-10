@@ -6,19 +6,93 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductImage;
-use App\Models\PaymentType;
 use App\Models\College;
 use App\Models\Department;
-use App\Models\PaymentOption;
 use App\Models\ProductTag;
+use Carbon\Carbon;
 use Auth;
+
 use Storage;
 
 class ProductsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['addToCart','show','removeCart']]);
+        $this->middleware('auth', ['except' => ['addToCart','show','removeCart','index','search']]);
+    }
+
+    public function index()
+    {
+
+        return view('product.index');
+    }
+
+    public function search(Request $request){
+      
+        $builder = Product::with(['images','user','favorited','carted']);
+
+        if ($search = $request->input('keywords', '')) {
+            $like = '%'.$search.'%';
+    
+            
+            $builder->where(function($query) use ($like) {
+                $query->where('name', 'like', $like)
+                    ->orWhereHas('user', function ($query) use ($like) {
+                        $query->where('name', 'like', $like);
+                    });
+                
+            });
+
+        }
+
+
+        if ($product_type = $request->input('product_type','')) {
+    
+            $builder->where('type', '=' , $product_type);
+
+        }
+
+        if ($course_type = $request->input('course_type', '')) {
+    
+            $builder->where('course_type', '=' , $course_type);
+
+        }
+
+        if ($order = $request->input('order', '')) {
+            if (preg_match('/^(.+)_(asc|desc|month|week|day|hour|)$/', $order, $m)) {
+                if (in_array($m[1], ['price', 'created_at'])) {
+
+
+                    if($m[2]==='week'){
+                        $week = Carbon::now()->subWeek(); 
+                        $builder->where($m[1],'>=',$week);
+                        // $builder->whereBetween($m[1], [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+
+                    }elseif($m[2]==='day'){
+                        $day = Carbon::now()->subDay(1);
+                        $builder->where($m[1],'>=',$day);
+
+                    }elseif($m[2]==='hour'){
+                            $hour = Carbon::now()->subHours(1);
+                            $builder->where($m[1],'>=',$hour);
+    
+                    }elseif($m[2]==='month'){
+                        $month = Carbon::now()->subMonth();
+                        $builder->where($m[1],'>=',$month);
+
+                     }else{
+                        $builder->orderBy($m[1], $m[2]);
+                    }
+
+                }
+            }
+        }
+     
+        $products = $builder->where('is_stock',true)->paginate(4);
+
+
+        return response()->json($products);
+
     }
     
     public function create(Product $product)

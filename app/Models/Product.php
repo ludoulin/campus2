@@ -14,9 +14,9 @@ class Product extends Model
     protected $table = 'products';
 
     const PRODUCT_TYPES = [
-        0 => '二手書',
-        1 => '講義',
-        2 => '筆記',
+        1 => '參考書',
+        2 => '講義',
+        3 => '筆記',
     ];
 
     const COURSE_TYPES = [
@@ -51,9 +51,14 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
-    public function tags()
-    {
-        return $this->hasMany(ProductTag::class);
+    // public function tags()
+    // {
+    //     return $this->hasMany(ProductTag::class);
+    // }
+
+    public function tags(){
+
+        return $this->belongsToMany(Department::class, 'product_tags', 'product_id' , 'department_id')->withTimeStamps();
     }
 
     public function comments()

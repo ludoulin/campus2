@@ -155,8 +155,6 @@ img{
                 opacity: .5;
                 &:before {
                   content: '';
-                  // use the linear-gradient for the fading effect
-                  // use a solid background color for a solid bar
                   background: linear-gradient(to right, transparent, #818078, transparent);
                   position: absolute;
                   left: 0;
@@ -172,7 +170,6 @@ img{
               
                   padding: 0 .5em;
                   line-height: 1.5em;
-                  // this is really the only tricky part, you need to specify the background color of the container element...
                   color: #818078;
                   background-color: #fcfcfa;
                 }
@@ -186,6 +183,8 @@ img{
             border: 2px solid rgb(250, 128, 114);
             color: rgb(250, 128, 114);
             background-color: #FFF;
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             &:hover{
                 color:#fff;
                 background-color: rgb(250, 128, 114);
@@ -200,11 +199,12 @@ img{
             border: 2px solid rgb(250, 128, 114);
             color: #fff;
             background-color:rgb(250, 128, 114);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                 i{
                     color:#fff;
                 }
-    
-    }
+        }
         .cart{
             transition: all .3s ease;
             border: 2px solid rgb(30, 127, 228);
@@ -213,7 +213,14 @@ img{
             float: right;
             color:#fff;
             background-color: rgb(30, 127, 228);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
+        }
+
+        .cart.selected{
+            background-color:#171a99;
+            border: 2px solid #171a99;
         }
 
 
@@ -227,10 +234,12 @@ img{
             float: left;
             color: #fff;
             background: rgb(60, 179, 113);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         }        
     }
     .user{
-        min-height: 100px;
+        min-height: 120px;
         background-color: #fff;
            .user-data{
             width: 100%;
@@ -258,9 +267,14 @@ img{
          .user-contact{
             width: 180px;
             height: 50px;
-            margin-top: 15px;
-            margin-left: 10px;
+            margin-top: 30px;
+            margin-right: 20px;
             float: right;
+            a{
+                margin-right: 20px;
+                height: 40px;
+                border-radius: 8%;
+            }
          }
         }
         .product-comment{
@@ -277,13 +291,10 @@ img{
         
     }
     
-    //   @media screen and (max-width: 200px) {
-    //      .user-contact{
-    //          width: 100px;
-    //          float: left;
-    //         margin-top: 10px;
-    //      }
-    //   }
+}
+
+.department-badge{
+    background-color: #5b6de1;
 }
 
 @-webkit-keyframes zoom {
@@ -294,6 +305,21 @@ img{
 @keyframes zoom {
     from {transform:scale(0)} 
     to {transform:scale(1)}
+}
+
+@media screen and (max-width: 720px){
+    .user-contact.min-user-contact {
+        display: flex;
+        flex-direction:row;
+        justify-content:center;
+        margin-bottom: 10px;
+        margin-right: 20px;
+        a{
+            margin-right: 20px;
+            height: 40px;
+        }
+        
+    }
 }
 
 @media screen and (max-width: 720px) {

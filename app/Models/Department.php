@@ -22,4 +22,9 @@ class Department extends Model
     public function tag(){
         return $this->hasOne(ProductTag::class);
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class,'product_tags','department_id','product_id');
+    }
 }

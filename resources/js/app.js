@@ -40,6 +40,9 @@ Vue.component('auto-search', require('./components/AutoSearch.vue').default);
 Vue.component('product-item', require('./components/ProductItem.vue').default);
 Vue.component('user-profile', require('./components/UserProfile.vue').default);
 Vue.component('cart-item', require('./components/CartItem.vue').default);
+Vue.component('cart-button', require('./components/CartButton.vue').default);
+Vue.component('all-product', require('./components/AllProduct.vue').default);
+Vue.component('pagination-component', require('./components/PaginationComponent.vue').default);
 
 
 import VueChatScroll from 'vue-chat-scroll'

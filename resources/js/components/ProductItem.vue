@@ -41,10 +41,6 @@
                  </span>
               </a>
               <div class="product-card__actions">
-                <!-- <a class="product-card__btn mr-3" href="#">
-                  <i class="fas fa-plus mr-2"></i>
-                    加入購物車
-                </a> -->
                 <cart-item
                   :product="product.id"
                   :carted="product.carted.length ? true : false "

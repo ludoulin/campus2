@@ -62,7 +62,7 @@
                         <p>可付款方式：</p>
                             <div class="row">
                             @foreach($product->user->payment_types as $type)
-                                <div class="col-3">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-6">
                                     <h3>
                                         <span class="badge
                                                 @if($type->id===1)
@@ -83,24 +83,49 @@
                     <div class="mt-2">
                         <p style="font-size:16px">適用系所:</p>
                             <div class="row">
-                                @foreach ($product->tags as $tag)
-                                   <div class="col-3">
-                                        <h3>
-                                          <span class="badge badge-pill badge-info text-white">
-                                            {{$tag->department->name}}
-                                        </span>
-                                        <h3>   
+                                @foreach ($product->tags as $index => $tag)
+                                   @if($index<=2)
+                                   <div class="col-xl-3 col-lg-3 col-md-4 col-6 mt-3">
+                                        <div class="mdc-chip mr-1" role="row" style="color:#6129d6;background-color:#dfd4f7">
+                                            <div class="mdc-chip__ripple"></div>
+                                            <span role="gridcell">
+                                                <span role="button" tabindex="0" class="mdc-chip__primary-action">
+                                                     <span class="mdc-chip__text">
+                                                         {{$tag->name}}
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>     
                                   </div>
-                                @endforeach
-                            </div>   
+                                  @else
+                                  <div class="col-xl-3 col-lg-3 col-md-4 col-6 mt-3"> 
+                                      <div class="mdc-chip mr-1" role="row" style="color:#6129d6;background-color:#dfd4f7" data-departments="{{$product->tags}}" onclick="SeeMore(this)" >
+                                          <div class="mdc-chip__ripple"></div>
+                                              <span role="gridcell">
+                                                    <span role="button" tabindex="0" class="mdc-chip__primary-action">
+                                                         <span class="mdc-chip__text">
+                                                                查看全部({{count($product->tags)}})
+                                                        </span>
+                                                    </span>
+                                            </span>
+                                      </div>    
+                                  </div>
+                                  @break
+                                  @endif
+                            @endforeach
+                        </div>
                     </div>
                     @if($product->user->id!==Auth::id())     
                     <hr class="hr-text" data-content="決定一下吧！">
                     <favorite-button :login="{{ Auth::check() ? 1 : 0 }}" :product={{ $product->id }} :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}></favorite-button>
                     <div>
-                        <button type="button" class="btn cart">
+                        {{-- <button type="button" class="btn cart">
                             <i class="fas fa-shopping-cart pr-2"></i>加入購物車
-                        </button>
+                        </button> --}}
+                        <cart-button
+                            :product={{ $product->id }}
+                            :carted={{ !$product->carted->isEmpty() ? 'true' : 'false' }}>
+                        </cart-button>
                     </div>
                     <div class="mt-2">
                         <form action="{{route('checkout.payment')}}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
@@ -112,14 +137,14 @@
                     @endif
                     @can('update', $product)
                     <hr class="hr-text" data-content="賣家操作">
-                        <div class="operate">
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-dark" role="button">
+                        <div class="operate d-flex justify-content-center">
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-lg btn-outline-dark" role="button">
                                 <i class="far fa-edit"></i> 編輯
                             </a>
                             <form action="{{ route('products.destroy', $product->id) }}" method="post" style="display: inline-block;" onsubmit="return DeleteConfirm('您確定要刪除嗎？');">
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-outline-danger ml-3">
+                                <button type="submit" class="btn btn-lg btn-outline-danger ml-3">
                                     <i class="far fa-trash-alt"></i> 刪除
                                 </button>
                             </form>
@@ -128,20 +153,22 @@
                 </div>
             </div>
           </div>
-          <div class="col-lg-12 col-lg-12 col-md-12 mt-3 user">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-3 user">
               <div class="user-data">
                   <div class="user-avatar">
-                      <img src="{{ $product->user->avatar }}"/>
+                        <a href="javascript:void(0);">
+                            <img src="{{ $product->user->avatar }}"/>
+                        </a>
                   </div>
                   <div class="user-name">
                       <p>賣家:{{ $product->user->name }}</p>
                       <p class="text-muted">{{$product->user->last_actived_at->diffForHumans()}}上線</p>
                   </div>
-                  <div class="user-contact">
+                  <div class="d-flex justify-content-center user-contact min-user-contact">
                       <a href="{{route('users.show', $product->user->id) }}" class="btn btn-outline-dark" role="button">
-                          <i class="fas fa-house-user pr-2"></i>賣家資訊
+                          <i class="fas fa-house-user pr-1"></i>賣家資訊
                       </a>
-                      <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-success mt-1" role="button">
+                      <a href="{{ route('products.edit', $product->id) }}" class="btn btn-outline-success" role="button">
                           <i class="fas fa-sms pr-1"></i> 立即聯絡
                       </a>  
                   </div>
@@ -157,20 +184,18 @@
                 </comment-board>
               </div>
           </div> 
-      </div> 
+      </div>
 </div>   
 
 @endsection
 
 @section('script')
 <script>
-
 $(function(){
     init();
 })
 
 function init(){
-
     showDivs(slideIndex = 1);
 } 
 
@@ -214,6 +239,38 @@ function showDivs(n) {
   numberText.innerHTML = dots[slideIndex-1].alt;
 }
 
+function SeeMore(el){
+
+    swal.fire({
+        icon:'info',
+        width:'80rem',
+        title: '適用系所',
+        html:`<div class="container">
+                <div class="department-row row">
+            
+                </div>
+            </div>`,
+        confirmButtonText: '確認',
+
+        didOpen:() => {
+
+            $.each($(el).data().departments, function(key, value){
+ 
+            $('.department-row').append(`<div class="col-2"><h2><span class="badge badge-pill badge-info text-white">${value.name}</span></h2></div>`);
+ 
+            });
+
+        },
+        didClose:() => {
+
+            $('.department-row').empty();
+
+        }
+    })    
+
+    return
+}     
+
 function DeleteConfirm(title){
 
   let check = false;
@@ -235,3 +292,10 @@ function DeleteConfirm(title){
 </script>
 
 @endsection
+
+
+
+
+
+
+                            
