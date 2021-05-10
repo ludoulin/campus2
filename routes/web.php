@@ -91,7 +91,9 @@ Route::get('/department/{department}', 'DepartmentController@show')->name('depar
 Route::get('/department/get/{id}', 'ProductsController@getDepartment');
 Route::get('/department/products/search','DepartmentController@search');
 
+Route::get('/products', 'ProductsController@index')->name('products.index');
 Route::get('/products/create', 'ProductsController@create')->name('products.create');
+Route::get('/products/search', 'ProductsController@search')->name('products.search');
 Route::post('/products/create', 'ProductsController@store')->name('products.store');
 Route::get('/products/add-to-cart', 'ProductsController@addToCart')->name('products.add');
 Route::get('/products/{product}', 'ProductsController@show')->name('products.show');

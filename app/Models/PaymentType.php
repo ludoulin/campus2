@@ -12,7 +12,7 @@ class PaymentType extends Model
         'name',
     ];
 
-    public function products()
+    public function users()
     {
         return $this->belongsToMany(User::class,'payment_options','payment_type_id','user_id');
     }

@@ -75,7 +75,7 @@
                           <div class="form-group col-md-6">
                               <label for="college" class="text-muted">* 學院：</label>
                               <div class="input-group">
-                              <select class="form-control {{ !$product->id ? necessaryMulitSelect : ''}} " name="college[]">
+                              <select class="form-control @if(!$product->id) necessaryMulitSelect @endif" name="college[]">
                                       <option value="0">--請選擇學院--</option>
                                       @foreach ($colleges as $value)
                                       <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -87,7 +87,7 @@
                           <div class="form-group col-md-6">
                               <label for="department" class="text-muted">* 系所：（可複選）每選完一次科系後請按下新增Tag</label>
                               <div class="input-group">
-                                  <select name="department[]"  class="form-control {{ !$product->id ? necessaryMulitSelect : ''}} ">
+                                  <select name="department[]"  class="form-control @if(!$product->id) necessaryMulitSelect @endif">
                                       <option value="0">--請選擇科系--</option>
                                   </select>
                                   <div class="input-group-append">
@@ -104,17 +104,17 @@
                                     <div class="mdc-chip__ripple"></div>
                                     <span role="gridcell">
                                         <span role="button" tabindex="0" class="mdc-chip__primary-action">
-                                            <span class="mdc-chip__text">{{$tag->department->name}}</span>
+                                            <span class="mdc-chip__text">{{$tag->name}}</span>
                                         </span>
                                     </span>
                                     <span role="gridcell">
-                                        <i id="{{$tag->department->id}}"class="material-icons mdc-chip__icon mdc-chip__icon--trailing r_tag" tabindex="-1" role="button">cancel</i>
+                                        <i id="{{$tag->id}}" class="material-icons mdc-chip__icon mdc-chip__icon--trailing r_tag" tabindex="-1" role="button">cancel</i>
                                    </span>
                               </div>
                             @endforeach
                               <select class="form-control hide" id="id_select2_demo1" name="departments[]" style="width:800px" multiple="multiple">
                                   @foreach ($product->tags as $tag)
-                                    <option value="{{ $tag->department->id }}" selected>{{ $tag->department->name }}</option>
+                                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
                                   @endforeach
                               </select>  
                               <select class="form-control hide" id="add_select2" name="add_departments[]" style="width:800px" multiple="multiple"></select>
