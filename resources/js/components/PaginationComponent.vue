@@ -31,7 +31,21 @@
 <style lang="scss" scoped>
     .pagination {
         margin-top: 40px;
+        .page-link:focus{
+            outline:none;
+            box-shadow: none;
+        }
+        // .page-item.active .page-link {
+        //     z-index: 1;
+        //     color: #fff;
+        //     background-color: #007bff;
+        //     border-color: #007bff;
+        // }
+        // .page-link{
+        //     color: #007bff;
+        // }
     }
+
 </style>
 
 <script>

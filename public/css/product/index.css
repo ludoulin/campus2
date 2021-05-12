@@ -112,7 +112,8 @@
 }
 
 .product-card .product-card-body .product-action {
-  font-size: 20px;
+  border-radius: 12px;
+  font-size: 26px;
   line-height: 20px;
 }
 

@@ -11,7 +11,6 @@ use App\Models\Department;
 use App\Models\ProductTag;
 use Carbon\Carbon;
 use Auth;
-
 use Storage;
 
 class ProductsController extends Controller
@@ -33,18 +32,13 @@ class ProductsController extends Controller
 
         if ($search = $request->input('keywords', '')) {
             $like = '%'.$search.'%';
-    
-            
             $builder->where(function($query) use ($like) {
                 $query->where('name', 'like', $like)
                     ->orWhereHas('user', function ($query) use ($like) {
                         $query->where('name', 'like', $like);
                     });
-                
-            });
-
+                });
         }
-
 
         if ($product_type = $request->input('product_type','')) {
     
@@ -62,11 +56,9 @@ class ProductsController extends Controller
             if (preg_match('/^(.+)_(asc|desc|month|week|day|hour|)$/', $order, $m)) {
                 if (in_array($m[1], ['price', 'created_at'])) {
 
-
                     if($m[2]==='week'){
                         $week = Carbon::now()->subWeek(); 
                         $builder->where($m[1],'>=',$week);
-                        // $builder->whereBetween($m[1], [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
 
                     }elseif($m[2]==='day'){
                         $day = Carbon::now()->subDay(1);
@@ -88,11 +80,9 @@ class ProductsController extends Controller
             }
         }
      
-        $products = $builder->where('is_stock',true)->paginate(4);
-
+        $products = $builder->where('is_stock',true)->paginate(8);
 
         return response()->json($products);
-
     }
     
     public function create(Product $product)
@@ -201,7 +191,6 @@ class ProductsController extends Controller
         //     dd('pass');
         // }
         
-
         // if ($request->file('new_images')){
         //     dd('test');
         // } else{
@@ -209,7 +198,6 @@ class ProductsController extends Controller
         // }
 
         $data = $request->all();
-
     
         if($request->add_departments){
             foreach($request->add_departments as $add_department){
@@ -389,8 +377,6 @@ class ProductsController extends Controller
             // return back();
         }
     }
-
-   
 }
 
                     // $filename=$image->getClientOriginalName();
