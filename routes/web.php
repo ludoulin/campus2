@@ -20,6 +20,8 @@ Route::get('/search', 'SearchController@index')->name('search');
 
 Route::get('/cart', 'CartController@getCart')->name('cart');
 
+Route::get('/activities/{activity}', 'PagesController@activities')->name('activity.show');
+
 
 // 用戶身份驗證相關路由
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -62,6 +64,16 @@ Route::patch('/admin/products/{product}/publish', 'BackEnd\ProductsController@pu
 Route::delete('/admin/products/{product}', 'Backend\ProductsController@destroy')->name('admin.products.destroy'); 
 
 Route::get('/admin/orders', 'BackEnd\OrdersController@index')->name('admin.orders.index');
+
+
+// Activity 活動專區
+Route::get('/admin/activity', 'BackEnd\ActivityController@index')->name('admin.activity.index');
+Route::get('/admin/activity/create', 'BackEnd\ActivityController@create')->name('admin.activity.create');
+Route::post('/admin/activity/create', 'BackEnd\ActivityController@store')->name('admin.activity.store');
+Route::get('/admin/activity/{activity}/edit', 'BackEnd\ActivityController@edit')->name('admin.activity.edit');
+Route::patch('/admin/activity/{activity}', 'BackEnd\ActivityController@update')->name('admin.activity.update');
+Route::patch('/admin/activity/{activity}/publish', 'BackEnd\ActivityController@publish')->name('admin.activity.publish');
+Route::delete('/admin/activity/{activity}', 'BackEnd\ActivityController@destroy')->name('admin.activity.destroy');
 
 
 

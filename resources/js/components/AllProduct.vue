@@ -92,12 +92,18 @@
                                                         </p>    
                                                     </div>
                                                     <div class="product-action">
-                                                        <a href="javascript:void(0);">
-                                                            <i class="fas fa-cart-plus text-primary"></i>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="ml-2">
-                                                            <i class="fas fa-heart text-danger"></i>
-                                                        </a>      
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                                                <a href="javascript:void(0);" class="h-t">
+                                                                    <i class="far fa-heart heart"><span>收藏</span></i>
+                                                                </a>      
+                                                            </div>
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
+                                                                <a href="javascript:void(0);" class="c-t">
+                                                                    <i class="fas fa-cart-plus cart"><span>加入購物車</span></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>           
                                                 </div>       
                                             </div>    
@@ -123,6 +129,60 @@
         </div>
     </div>
 </template>
+<style lang="scss" scoped>
+    .product-action {
+       a {  
+         border: 1px solid grey; 
+         border-radius: 12px;  
+         font-size: 20px;
+            .heart{
+                padding: 5px;
+                color:gray;
+                span {
+                    display: inline-block;
+                    margin-left: 0.3rem;
+                }
+            }
+            .cart{
+                padding: 5px;
+                color:gray;
+                span {
+                    display: inline-block;
+                    margin-left: 0.3rem;
+                }
+            }
+       }
+
+       a.h-t:hover{
+           border: 1px solid indianred;
+           .heart{
+            color:indianred;
+            }
+        }
+        a.c-t:hover{
+           border: 1px solid #4279ff;
+           .cart{
+            color: #4279ff;
+            }
+        }
+       @media(max-width: 720px) {
+                a{
+                    font-size: 16px;
+                }
+            }
+        @media(max-width: 580px) {
+            a{
+                font-size: 12px;
+            .cart{
+                    span {
+                        display: inline-block;
+                        margin-left: 1px;
+                    }
+                }
+            }
+        }
+    }
+</style>
 <script>
 import PaginationComponent from './PaginationComponent';
 export default {

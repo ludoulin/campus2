@@ -2,8 +2,6 @@
 @section('title', '首頁')
 
 @section('basic')
-{{-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/> --}}
 <link href="{{ asset('css/page/root.css') }}" rel="stylesheet">
 @endsection
 
@@ -12,20 +10,18 @@
 <div class="row">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleControls" data-slide-to="1"></li>
-            <li data-target="#carouselExampleControls" data-slide-to="2"></li>
+            @foreach ($activities as $index => $activity)
+            <li data-target="#carouselExampleControls" data-slide-to="{{$index}}" class="@if($index===0) active @endif"></li>
+            @endforeach
           </ol>
         <div class="carousel-inner">
-          <div class="carousel-item active">
-          <img class="d-block w-100" src="{{asset('activities/ps.jpeg')}}" alt="First slide">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="{{asset('activities/spirit.jpeg')}}" alt="Second slide">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="{{asset('activities/ps.jpeg')}}" alt="Third slide">
-          </div>
+            @foreach ($activities as $index => $activity)
+              <div class="carousel-item @if($index===0) active @endif">
+                <a href="{{route("activity.show",$activity->id)}}">
+                  <img class="d-block w-100" src="{{asset($activity->avatar)}}" alt="{{$activity->name}}">
+                </a>
+              </div>
+            @endforeach
         </div>
         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>

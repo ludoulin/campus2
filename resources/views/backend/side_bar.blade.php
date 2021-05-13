@@ -19,6 +19,12 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('admin.activity.index') }}">
+                <span class="icon"><i class="fas fa-ad"></i></span>
+                <span class="text">活動管理</span>
+            </a>
+        </li>
+        <li>
             <a href="#">
                 <span class="icon"><i class="fas fa-question-circle"></i></span>
                 <span class="text">問題回報管理</span>

@@ -32,7 +32,8 @@ img {
   padding: 16px;
   margin-top: -50px;
   color: white;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #cccacf;
+  opacity: 0.6;
   font-weight: bold;
   font-size: 20px;
   border-radius: 0 3px 3px 0;
@@ -49,7 +50,7 @@ img {
 
 .product .left .prev:hover,
 .product .left .next:hover {
-  background-color: #c3d0ff;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .product .left .modal {
@@ -150,6 +151,10 @@ img {
 
 .product .right .product-name {
   margin-top: 10px;
+}
+
+.product .right .product-name .title {
+  text-overflow: ellipsis;
 }
 
 .product .right .product-name .inner-detail {

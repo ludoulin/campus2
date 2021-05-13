@@ -41,7 +41,7 @@
 
         <div class="col-xl-6 col-lg-6 col-md-6 mt-md-0 mt-3 right">
             <div class="product-name">
-                <h4 style="text-align:center"><b>{{ $product->name }}</b></h4>
+                <h4 class="title" style="text-align:center"><b>{{ $product->name }}</b></h4>
                 <hr class="hr-text" data-content="詳細資訊"> 
                 <div class="inner-detail">
                     <div class="mb-3">     
@@ -119,9 +119,6 @@
                     <hr class="hr-text" data-content="決定一下吧！">
                     <favorite-button :login="{{ Auth::check() ? 1 : 0 }}" :product={{ $product->id }} :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}></favorite-button>
                     <div>
-                        {{-- <button type="button" class="btn cart">
-                            <i class="fas fa-shopping-cart pr-2"></i>加入購物車
-                        </button> --}}
                         <cart-button
                             :product={{ $product->id }}
                             :carted={{ !$product->carted->isEmpty() ? 'true' : 'false' }}>
@@ -256,7 +253,7 @@ function SeeMore(el){
 
             $.each($(el).data().departments, function(key, value){
  
-            $('.department-row').append(`<div class="col-2"><h2><span class="badge badge-pill badge-info text-white">${value.name}</span></h2></div>`);
+            $('.department-row').append(`<div class="col-lg-3 col-md-4 col-sm-12 col-12"><h2><span class="badge badge-pill badge-info text-white">${value.name}</span></h2></div>`);
  
             });
 

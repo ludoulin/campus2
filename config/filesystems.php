@@ -53,6 +53,12 @@ return [
             'url' => 'product_image',
         ],
 
+        'activities' => [
+            'driver' => 'local',
+            'root' => 'activities',
+            'url' => 'activities',
+        ],
+
         'images' => [
             'driver' => 'local',
             'root' => 'images',
