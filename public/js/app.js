@@ -2276,18 +2276,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['product', 'carted'],
+  props: ['product', 'carted', 'status'],
   data: function data() {
     return {
-      isCarted: ''
+      isCarted: '',
+      Status: ''
     };
   },
   mounted: function mounted() {
     this.isCarted = this.isCart ? true : false;
+    this.Status = this.isStatus;
   },
   computed: {
     isCart: function isCart() {
       return this.carted;
+    },
+    isStatus: function isStatus() {
+      return this.status;
     }
   },
   methods: {
@@ -2301,32 +2306,30 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "\u52A0\u5165\u8CFC\u7269\u8ECA"
       }).then(function (result) {
         if (result.isConfirmed) {
-          axios.get('http://localhost/campus2/public/products/add-to-cart/', {
+          axios.get('http://localhost/campus2/public/add-to-cart/', {
             params: {
               id: product
             }
           }).then(function (response) {
             switch (response.data) {
               case "加入購物車成功":
-                MessageObject.SuccessMessage("成功加入購物車");
+                MessageObject.SuccessMessage(response.data);
                 break;
 
               case "商品已存在於購物車":
-                MessageObject.WarningMessage("商品已存在於購物車");
+                MessageObject.WarningMessage(response.data);
                 break;
 
               default:
                 _this.isCarted = true;
-                MessageObject.SuccessMessage("成功加入購物車");
+                MessageObject.SuccessMessage(response.data);
                 break;
             }
           })["catch"](function (error) {
-            if (error.response.status === 404) {
-              Swal.fire({
-                icon: 'error',
-                title: '加入失敗',
-                text: '商品可能已賣出或下架'
-              });
+            if (error.response.status === 403 || error.response.status === 404) {
+              MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+            } else {
+              MessageObject.SystemError();
             }
           });
         }
@@ -2349,14 +2352,12 @@ __webpack_require__.r(__webpack_exports__);
             }
           }).then(function (response) {
             _this2.isCarted = false;
-            MessageObject.SuccessMessage("成功移除");
+            MessageObject.SuccessMessage(response.data);
           })["catch"](function (error) {
-            if (error.response.status === 404) {
-              swal.fire({
-                icon: 'error',
-                title: '移除失敗',
-                text: '商品可能已賣出或下架'
-              });
+            if (error.response.status === 403 || error.response.status === 404) {
+              MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+            } else {
+              MessageObject.SystemError();
             }
           });
         }
@@ -2412,32 +2413,32 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "\u52A0\u5165\u8CFC\u7269\u8ECA"
       }).then(function (result) {
         if (result.isConfirmed) {
-          axios.get('http://localhost/campus2/public/products/add-to-cart/', {
+          axios.get('http://localhost/campus2/public/add-to-cart/', {
             params: {
               id: product
             }
           }).then(function (response) {
             switch (response.data) {
               case "加入購物車成功":
-                MessageObject.SuccessMessage("成功加入購物車");
+                MessageObject.SuccessMessage(response.data);
                 break;
 
               case "商品已存在於購物車":
-                MessageObject.WarningMessage("商品已存在於購物車");
+                MessageObject.WarningMessage(response.data);
                 break;
 
               default:
                 _this.isCarted = true;
-                MessageObject.SuccessMessage("成功加入購物車");
+                MessageObject.SuccessMessage(response.data);
                 break;
             }
           })["catch"](function (error) {
-            if (error.response.status === 404) {
-              Swal.fire({
-                icon: 'error',
-                title: '加入失敗',
-                text: '商品可能已賣出或下架'
-              });
+            console.log(error.response);
+
+            if (error.response.status === 403 || error.response.status === 404) {
+              MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+            } else {
+              MessageObject.SystemError();
             }
           });
         }
@@ -2460,14 +2461,12 @@ __webpack_require__.r(__webpack_exports__);
             }
           }).then(function (response) {
             _this2.isCarted = false;
-            MessageObject.SuccessMessage("成功移除");
+            MessageObject.SuccessMessage(response.data);
           })["catch"](function (error) {
-            if (error.response.status === 404) {
-              swal.fire({
-                icon: 'error',
-                title: '移除失敗',
-                text: '商品可能已賣出或下架'
-              });
+            if (error.response.status === 403 || error.response.status === 404) {
+              MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+            } else {
+              MessageObject.SystemError();
             }
           });
         }
@@ -2815,6 +2814,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 
@@ -2853,35 +2862,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         _this.message = '';
         _this.comments = response.data;
       })["catch"](function (error) {
-        if (error.response.status === 404) {
-          swal.fire({
-            icon: 'error',
-            title: '抱歉！此商品已遭下架',
-            text: '系統將在您按下確認後跳至首頁',
-            confirmButtonText: '確認',
-            allowOutsideClick: false
-          }).then(function (result) {
-            if (result.isConfirmed) {
-              swal.fire({
-                title: '系統重新整理中,請稍候',
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: function didOpen() {
-                  swal.showLoading();
-                },
-                willClose: function willClose() {
-                  window.location.href = '../';
-                }
-              });
-            }
-          });
+        if (error.response.status === 404 || error.response.status === 403) {
+          MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁');
         }
       });
-      ;
     },
     open: function open(comment) {
-      this.the_switch = comment.id; // Remove my-component from the DOM
-
+      this.the_switch = comment.id;
       this.edit_message = comment.content;
     },
     editMessage: function editMessage(comment) {
@@ -2894,33 +2881,24 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 
       axios.post("http://localhost/campus2/public/comments/update/".concat(comment.id), {
         id: comment.id,
+        product_id: this.product_id,
         content: this.edit_message
       }).then(function (response) {
         _this2.the_switch = false;
         comment.content = response.data;
       })["catch"](function (error) {
         if (error.response.status === 404) {
-          swal.fire({
-            icon: 'error',
-            title: '編輯失敗',
-            text: '留言可能已遭刪除,系統在您按下確認後將自動重整',
-            confirmButtonText: '確認',
-            allowOutsideClick: false
-          }).then(function (result) {
-            if (result.isConfirmed) {
-              swal.fire({
-                title: '系統重新整理中,請稍候',
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: function didOpen() {
-                  swal.showLoading();
-                },
-                willClose: function willClose() {
-                  window.location.reload();
-                }
-              });
-            }
-          });
+          switch (response.data) {
+            case "商品已不存在於平台":
+              MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
+              break;
+
+            case "找不到此留言":
+              MessageObject.ErrorMessage('儲存失敗', '留言可能已被刪除,系統將在您按下確認後進行重新整理');
+              break;
+          }
+        } else if (error.response.status === 403) {
+          MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
         }
       });
     },
@@ -2949,28 +2927,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         _this4.comments = response.data;
       })["catch"](function (error) {
         if (error.response.status === 404) {
-          swal.fire({
-            icon: 'error',
-            title: '回覆失敗',
-            text: '留言可能遭刪除',
-            footer: '<strong>系統將在您按下確認後進行自動重整</strong>',
-            confirmButtonText: '確認',
-            allowOutsideClick: false
-          }).then(function (result) {
-            if (result.isConfirmed) {
-              swal.fire({
-                title: '系統重新整理中,請稍候',
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: function didOpen() {
-                  swal.showLoading();
-                },
-                willClose: function willClose() {
-                  window.location.reload(); //代改
-                }
-              });
-            }
-          });
+          switch (response.data) {
+            case "商品已不存在於平台":
+              MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
+              break;
+
+            case "找不到此留言":
+              MessageObject.ErrorMessage('回覆失敗', '留言可能已被刪除,系統將在您按下確認後進行重新整理');
+              break;
+          }
+        } else if (error.response.status === 403) {
+          MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
         }
       });
     },
@@ -2988,12 +2955,27 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         if (result.isConfirmed) {
           axios.post("http://localhost/campus2/public/comments/replies/".concat(ids.id), {
             id: ids.id,
-            product_id: ids.product_id
+            product_id: ids.product_id,
+            comment_id: ids.comment_id
           }).then(function (response) {
             _this5.comments = response.data;
           })["catch"](function (error) {
             if (error.response.status === 404) {
-              MessageObject.ErrorMessage("刪除失敗", "留言可能遭刪除,系統將在您按下確認後進行自動重整");
+              switch (response.data) {
+                case "商品已不存在於平台":
+                  MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
+                  break;
+
+                case "找不到此留言":
+                  MessageObject.ErrorMessage('刪除失敗', '留言可能已被刪除,系統將在您按下確認後進行重新整理');
+                  break;
+
+                case "找不到此回覆":
+                  MessageObject.ErrorMessage('刪除失敗', '回覆可能已被刪除,系統將在您按下確認後進行重新整理');
+                  break;
+              }
+            } else if (error.response.status === 403) {
+              MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
             }
           });
         }
@@ -3021,27 +3003,17 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
             _this6.comments = response.data;
           })["catch"](function (error) {
             if (error.response.status === 404) {
-              swal.fire({
-                icon: 'error',
-                title: '刪除失敗',
-                text: '留言已遭刪除,系統將在您按下確認後進行自動重整',
-                confirmButtonText: '確認',
-                allowOutsideClick: false
-              }).then(function (result) {
-                if (result.isConfirmed) {
-                  swal.fire({
-                    title: '系統重新整理中,請稍候',
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: function didOpen() {
-                      swal.showLoading();
-                    },
-                    willClose: function willClose() {
-                      window.location.reload();
-                    }
-                  });
-                }
-              });
+              switch (response.data) {
+                case "商品已不存在於平台":
+                  MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
+                  break;
+
+                case "找不到此留言":
+                  MessageObject.ErrorMessage('刪除失敗', '留言可能已被刪除,系統將在您按下確認後重新整理頁面');
+                  break;
+              }
+            } else if (error.response.status === 403) {
+              MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
             }
           });
         }
@@ -3227,39 +3199,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['product', 'favorited', 'login'],
+  props: ['product', 'favorited', 'login', 'status'],
   data: function data() {
     return {
       isFavorited: '',
+      Status: '',
       auth: this.login
     };
   },
   mounted: function mounted() {
     this.isFavorited = this.isFavorite ? true : false;
+    this.Status = this.isStatus;
   },
   computed: {
     isFavorite: function isFavorite() {
       return this.favorited;
+    },
+    isStatus: function isStatus() {
+      return this.status;
     }
   },
   methods: {
     favorite: function favorite(product) {
       var _this = this;
 
+      console.log(product);
+
       if (this.auth === 0) {
-        swal.fire({
-          icon: 'info',
-          title: '想收藏嗎？',
-          text: '那麻煩先登入喔!',
-          showCancelButton: true,
-          cancelButtonText: '取消',
-          confirmButtonText: "\u5148\u767B\u5165"
-        }).then(function (result) {
-          if (result.isConfirmed) {
-            window.location.href = 'http://localhost/campus2/public/login';
-          }
-        });
+        MessageObject.AuthMessage("想收藏嗎？", "http://localhost/campus2/public/login");
       } else {
         swal.fire({
           icon: 'info',
@@ -3269,55 +3239,18 @@ __webpack_require__.r(__webpack_exports__);
           cancelButtonText: '取消'
         }).then(function (result) {
           if (result.isConfirmed) {
-            axios.post('http://localhost/campus2/public/favorite/' + product).then(function (response) {
+            axios.get('http://localhost/campus2/public/favorite/', {
+              params: {
+                id: product
+              }
+            }).then(function (response) {
               _this.isFavorited = true;
-              MessageObject.SuccessMessage("成功加入購物車");
+              MessageObject.SuccessMessage(response.data);
             })["catch"](function (error) {
-              switch (error.response.status) {
-                case 401:
-                  swal.fire({
-                    icon: 'error',
-                    title: '想收藏嗎？',
-                    text: '那麻煩先登入喔'
-                  });
-                  break;
-
-                case 404:
-                  swal.fire({
-                    icon: 'warning',
-                    title: '商品已售出或下架',
-                    text: '系統將在您按下確認後自動重整',
-                    confirmButtonText: '確認',
-                    allowOutsideClick: false
-                  }).then(function (result) {
-                    if (result.isConfirmed) {
-                      swal.fire({
-                        title: '系統重新整理中,請稍候',
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: function didOpen() {
-                          swal.showLoading();
-                        },
-                        willClose: function willClose() {
-                          window.location.reload();
-                        }
-                      });
-                    }
-                  });
-                  break;
-
-                default:
-                  swal.fire({
-                    title: '系統異常',
-                    text: "於2秒後進行重整",
-                    icon: 'warning',
-                    timer: 2000,
-                    showConfirmButton: false
-                  });
-                  setTimeout(function () {
-                    window.location.reload();
-                  }, 2000);
-                  break;
+              if (error.response.status === 403 || error.response.status === 404) {
+                MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+              } else {
+                MessageObject.SystemError();
               }
             });
           }
@@ -3336,31 +3269,19 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: '取消'
       }).then(function (result) {
         if (result.isConfirmed) {
-          axios.post('http://localhost/campus2/public/unfavorite/' + product).then(function (response) {
+          axios["delete"]('http://localhost/campus2/public/unfavorite/', {
+            params: {
+              id: product
+            }
+          }).then(function (response) {
             _this2.isFavorited = false;
             MessageObject.SuccessMessage("成功移除");
           })["catch"](function (error) {
-            swal.fire({
-              icon: 'warning',
-              title: '商品已售出或下架',
-              text: '系統將在您按下確認後自動重整',
-              confirmButtonText: '確認',
-              allowOutsideClick: false
-            }).then(function (result) {
-              if (result.isConfirmed) {
-                swal.fire({
-                  title: '系統重新整理中,請稍候',
-                  timer: 2000,
-                  timerProgressBar: true,
-                  didOpen: function didOpen() {
-                    swal.showLoading();
-                  },
-                  willClose: function willClose() {
-                    window.location.reload();
-                  }
-                });
-              }
-            });
+            if (error.response.status === 403 || error.response.status === 404) {
+              MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+            } else {
+              MessageObject.SystemError();
+            }
           });
         }
       });
@@ -3411,18 +3332,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.auth === 0) {
-        swal.fire({
-          icon: 'info',
-          title: '想收藏嗎？',
-          text: '那麻煩先登入喔!',
-          showCancelButton: true,
-          cancelButtonText: '取消',
-          confirmButtonText: "\u5148\u767B\u5165"
-        }).then(function (result) {
-          if (result.isConfirmed) {
-            window.location.href = 'http://localhost/campus2/public/login';
-          }
-        });
+        MessageObject.AuthMessage("想收藏嗎？", "http://localhost/campus2/public/login");
       } else {
         swal.fire({
           icon: 'info',
@@ -3431,57 +3341,28 @@ __webpack_require__.r(__webpack_exports__);
           confirmButtonText: "\u6536\u85CF",
           cancelButtonText: '取消'
         }).then(function (result) {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
-            axios.post('http://localhost/campus2/public/favorite/' + product).then(function (response) {
+            axios.get('http://localhost/campus2/public/favorite/', {
+              params: {
+                id: product
+              }
+            }).then(function (response) {
               _this.isFavorited = true;
 
               if (window.location.href === 'http://localhost/campus2/public/') {
-                swal.fire('收藏成功!', '', 'success').then(function (result) {
+                swal.fire(response.data, '', 'success').then(function (result) {
                   if (result.isConfirmed) {
                     location.reload();
                   }
                 });
               } else {
-                MessageObject.SuccessMessage("收藏成功");
+                MessageObject.SuccessMessage(response.data);
               }
             })["catch"](function (error) {
-              switch (error.response.status) {
-                case 401:
-                  swal.fire({
-                    icon: 'error',
-                    title: '想收藏嗎？',
-                    text: '那麻煩先登入喔'
-                  });
-                  break;
-
-                case 404:
-                  swal.fire({
-                    icon: 'warning',
-                    title: '收藏失敗',
-                    text: '商品可能售出或下架,系統將在您按下確認後自動重整',
-                    confirmButtonText: '確認',
-                    allowOutsideClick: false
-                  }).then(function (result) {
-                    if (result.isConfirmed) {
-                      swal.fire({
-                        title: '系統重新整理中,請稍候',
-                        timer: 2000,
-                        timerProgressBar: true,
-                        didOpen: function didOpen() {
-                          swal.showLoading();
-                        },
-                        willClose: function willClose() {
-                          window.location.reload();
-                        }
-                      });
-                    }
-                  });
-                  break;
-
-                default:
-                  MessageObject.SystemError();
-                  break;
+              if (error.response.status === 403 || error.response.status === 404) {
+                MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+              } else {
+                MessageObject.SystemError();
               }
             });
           }
@@ -3500,11 +3381,15 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: '取消'
       }).then(function (result) {
         if (result.isConfirmed) {
-          axios.post('http://localhost/campus2/public/unfavorite/' + product).then(function (response) {
+          axios["delete"]('http://localhost/campus2/public/unfavorite/', {
+            params: {
+              id: product
+            }
+          }).then(function (response) {
             _this2.isFavorited = false;
 
             if (window.location.href === 'http://localhost/campus2/public/') {
-              swal.fire('成功移除!', '', 'success').then(function (result) {
+              swal.fire(response.data, '', 'success').then(function (result) {
                 if (result.isConfirmed) {
                   location.reload();
                 }
@@ -3513,28 +3398,11 @@ __webpack_require__.r(__webpack_exports__);
               MessageObject.SuccessMessage("成功移除");
             }
           })["catch"](function (error) {
-            swal.fire({
-              icon: 'warning',
-              title: '移除失敗',
-              text: '商品可能售出或下架,系統將在您按下確認後自動重整',
-              confirmButtonText: '確認',
-              allowOutsideClick: false
-            }).then(function (result) {
-              if (result.isConfirmed) {
-                swal.fire({
-                  title: '系統重新整理中,請稍候',
-                  timer: 2000,
-                  timerProgressBar: true,
-                  didOpen: function didOpen() {
-                    swal.showLoading();
-                  },
-                  willClose: function willClose() {
-                    window.location.reload();
-                  }
-                });
-              }
-            });
-            console.log(error);
+            if (error.response.status === 403 || error.response.status === 404) {
+              MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+            } else {
+              MessageObject.SystemError();
+            }
           });
         }
       });
@@ -3656,7 +3524,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['product'],
   methods: {
@@ -3669,12 +3536,22 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: '確定!'
       }).then(function (result) {
         if (result.isConfirmed) {
-          axios.post('http://localhost/campus2/public/unfavorite/' + product).then(swal.fire('成功移除!', '', 'success').then(function (result) {
-            if (result.isConfirmed) {
-              location.reload();
+          axios["delete"]('http://localhost/campus2/public/unfavorite/', {
+            params: {
+              id: product
             }
-          }))["catch"](function (response) {
-            return console.log(response.data);
+          }).then(function (response) {
+            swal.fire(response.data, '', 'success').then(function (result) {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            });
+          })["catch"](function (error) {
+            if (error.response.status === 403 || error.response.status === 404) {
+              MessageObject.ErrorMessage('收藏失敗', "".concat(error.response.data, ",\u7CFB\u7D71\u5C07\u5728\u60A8\u6309\u4E0B\u78BA\u8A8D\u5F8C\u9032\u884C\u91CD\u65B0\u6574\u7406"));
+            } else {
+              MessageObject.SystemError();
+            }
           });
         }
       });
@@ -4532,6 +4409,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4573,7 +4458,8 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
     reply_delete: function reply_delete(reply) {
       this.$emit('reply_delete', {
         id: reply.id,
-        product_id: reply.product_id
+        product_id: reply.product_id,
+        comment_id: this.reply_comment.id
       });
     },
     edit: function edit(reply) {
@@ -4590,13 +4476,29 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 
       axios.post("http://localhost/campus2/public/comments/replies/update/".concat(reply.id), {
         id: reply.id,
+        product_id: reply.product_id,
+        comment_id: this.reply_comment.id,
         content: this.edit_message
       }).then(function (response) {
         _this.the_switch = false;
         reply.reply_content = response.data;
       })["catch"](function (error) {
         if (error.response.status === 404) {
-          MessageObject.ErrorMessage("編輯失敗", "留言可能遭刪除,系統將在您按下確認後進行自動重整");
+          switch (response.data) {
+            case "商品已不存在於平台":
+              MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
+              break;
+
+            case "找不到此留言":
+              MessageObject.ErrorMessage('儲存失敗', '留言可能已被刪除,系統將在您按下確認後進行重新整理');
+              break;
+
+            case "找不到此回覆":
+              MessageObject.ErrorMessage('儲存失敗', '回覆可能已被刪除,系統將在您按下確認後進行重新整理');
+              break;
+          }
+        } else if (error.response.status === 403) {
+          MessageObject.ErrorMessage(error.response.data, '系統將在您按下確認後跳至首頁', '../');
         }
       });
     },
@@ -8814,7 +8716,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".input_style[data-v-21e76c32] {\n  width: 50%;\n  border-radius: 30px !important;\n}\n.reply[data-v-21e76c32] {\n  height: 40%;\n  width: 80%;\n  background: rosybrown;\n  border-radius: 15px;\n  padding: 8px;\n}\n.reply .user-reply[data-v-21e76c32] {\n  height: inherit;\n  text-align: initial;\n}\n.reply-cancel[data-v-21e76c32] {\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".input_style[data-v-21e76c32] {\n  width: 50%;\n  border-radius: 30px !important;\n}\n.reply[data-v-21e76c32] {\n  height: 40%;\n  width: 80%;\n  background: rosybrown;\n  border-radius: 15px;\n  padding: 8px;\n}\n.reply .user-reply[data-v-21e76c32] {\n  height: inherit;\n  text-align: initial;\n}\n.reply-cancel[data-v-21e76c32] {\n  cursor: pointer;\n}\n.dot[data-v-21e76c32] {\n  background: none;\n}\n.dot[data-v-21e76c32]:hover {\n  background: #f1f3f4;\n}", ""]);
 
 // exports
 
@@ -8985,7 +8887,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".input_style[data-v-12932672] {\n  width: 50%;\n  border-radius: 30px !important;\n}\n.reply-cancel[data-v-12932672], .reply-delete[data-v-12932672], .reply-edit[data-v-12932672] {\n  cursor: pointer;\n}", ""]);
+exports.push([module.i, ".input_style[data-v-12932672] {\n  width: 50%;\n  border-radius: 30px !important;\n}\n.reply-cancel[data-v-12932672], .reply-delete[data-v-12932672], .reply-edit[data-v-12932672] {\n  cursor: pointer;\n}\n.dot[data-v-12932672] {\n  background: none;\n}\n.dot[data-v-12932672]:hover {\n  background: #f1f3f4;\n}", ""]);
 
 // exports
 
@@ -72605,7 +72507,7 @@ var render = function() {
           "button",
           {
             staticClass: "btn cart",
-            attrs: { type: "button" },
+            attrs: { type: "button", disabled: _vm.Status === 0 },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -73097,85 +72999,98 @@ var render = function() {
                           _vm._v(" "),
                           _vm.auth_check !== 0
                             ? _c("div", { staticClass: "float-right" }, [
-                                _vm.author == _vm.user_id &&
-                                _vm.the_reply !== comment.id
-                                  ? _c("span", { staticClass: "meta" }, [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-primary btn-xs pull-left",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.open_reply(comment)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fas fa-reply mr-2"
-                                          }),
-                                          _vm._v(
-                                            "回覆\n                                "
+                                _c("div", { staticClass: "dropdown" }, [
+                                  _vm._m(0, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "dropdown-menu dropdown-menu-right",
+                                      attrs: {
+                                        "aria-labelledby": "dropdownMenuButton"
+                                      }
+                                    },
+                                    [
+                                      _vm.author == _vm.user_id &&
+                                      _vm.the_reply !== comment.id
+                                        ? _c(
+                                            "a",
+                                            {
+                                              staticClass: "dropdown-item",
+                                              attrs: {
+                                                href: "javascript:void(0)"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.open_reply(comment)
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fas fa-reply pr-2"
+                                              }),
+                                              _vm._v("回覆")
+                                            ]
                                           )
-                                        ]
-                                      )
-                                    ])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                comment.user_id == _vm.user_id &&
-                                _vm.the_switch !== comment.id
-                                  ? _c("span", { staticClass: "meta" }, [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-success btn-xs pull-left",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.open(comment)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "far fa-edit mr-2"
-                                          }),
-                                          _vm._v(
-                                            "編輯\n                                "
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      comment.user_id == _vm.user_id &&
+                                      _vm.the_switch !== comment.id
+                                        ? _c(
+                                            "a",
+                                            {
+                                              staticClass: "dropdown-item",
+                                              attrs: {
+                                                href: "javascript:void(0)"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.open(comment)
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fas fa-edit pr-2"
+                                              }),
+                                              _vm._v("編輯")
+                                            ]
                                           )
-                                        ]
-                                      )
-                                    ])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                (comment.user_id == _vm.user_id &&
-                                  _vm.the_switch !== comment.id) ||
-                                (_vm.author == _vm.user_id &&
-                                  _vm.the_reply !== comment.id)
-                                  ? _c("span", { staticClass: "meta" }, [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-danger btn-xs pull-left",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.deleteComment(comment)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "far fa-trash-alt mr-2"
-                                          }),
-                                          _vm._v(
-                                            "刪除\n                                "
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      (comment.user_id == _vm.user_id &&
+                                        _vm.the_switch !== comment.id) ||
+                                      (_vm.author == _vm.user_id &&
+                                        _vm.the_reply !== comment.id)
+                                        ? _c(
+                                            "a",
+                                            {
+                                              staticClass: "dropdown-item",
+                                              attrs: {
+                                                href: "javascript:void(0)"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.deleteComment(
+                                                    comment
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "fas fa-trash-alt pr-2"
+                                              }),
+                                              _vm._v("刪除")
+                                            ]
                                           )
-                                        ]
-                                      )
-                                    ])
-                                  : _vm._e()
+                                        : _vm._e()
+                                    ]
+                                  )
+                                ])
                               ])
                             : _vm._e()
                         ]
@@ -73343,7 +73258,27 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-lg dot",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -73551,7 +73486,7 @@ var render = function() {
   return _c("div", [
     _vm.isFavorited
       ? _c(
-          "a",
+          "button",
           {
             staticClass: "btn saved",
             on: {
@@ -73561,12 +73496,16 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-heart pr-2" }), _vm._v("取消收藏")]
+          [
+            _c("i", { staticClass: "fas fa-heart pr-2" }),
+            _vm._v("取消收藏\n   ")
+          ]
         )
       : _c(
-          "a",
+          "button",
           {
             staticClass: "btn save",
+            attrs: { disabled: _vm.Status === 0 },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -73574,7 +73513,10 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-heart pr-2" }), _vm._v("加入收藏")]
+          [
+            _c("i", { staticClass: "fas fa-heart pr-2" }),
+            _vm._v("加入收藏\n  ")
+          ]
         )
   ])
 }
@@ -73606,7 +73548,7 @@ var render = function() {
           "a",
           {
             staticClass: "select-icon-btn",
-            attrs: { href: "javascript::void(0)" },
+            attrs: { href: "javascript:void(0)" },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -73620,7 +73562,7 @@ var render = function() {
           "a",
           {
             staticClass: "product-card__icon-btn",
-            attrs: { href: "javascript::void(0)" },
+            attrs: { href: "javascript:void(0)" },
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -75183,9 +75125,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                                " +
+                        "\n                            " +
                           _vm._s(reply.user.name) +
-                          "\n                            "
+                          "\n                        "
                       )
                     ]
                   ),
@@ -75204,68 +75146,82 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "float-right" }, [
-                    (_vm.reply_comment.user_id == _vm.reply_user.id &&
-                      reply.user_id !== _vm.reply_user.id) ||
-                    (_vm.reply_user.id == _vm.product_author &&
-                      reply.user_id !== _vm.product_author)
-                      ? _c("span", { staticClass: "meta" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary btn-xs pull-left",
-                              on: {
-                                click: function($event) {
-                                  return _vm.reply_open(reply)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-reply mr-2" }),
-                              _vm._v("回覆\n                            ")
-                            ]
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    reply.user_id == _vm.reply_user.id &&
-                    _vm.the_switch !== reply.id
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "meta reply-edit mr-3",
-                            on: {
-                              click: function($event) {
-                                return _vm.edit(reply)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            編輯\n                        "
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    reply.user_id == _vm.reply_user.id &&
-                    _vm.the_switch !== reply.id
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "meta reply-delete",
-                            on: {
-                              click: function($event) {
-                                return _vm.reply_delete(reply)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            刪除\n                        "
-                            )
-                          ]
-                        )
-                      : _vm._e()
+                    _c("div", { staticClass: "dropdown" }, [
+                      _vm._m(0, true),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "dropdown-menu dropdown-menu-right",
+                          attrs: { "aria-labelledby": "dropdownMenuButton" }
+                        },
+                        [
+                          (_vm.reply_comment.user_id == _vm.reply_user.id &&
+                            reply.user_id !== _vm.reply_user.id) ||
+                          (_vm.reply_user.id == _vm.product_author &&
+                            reply.user_id !== _vm.product_author)
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  attrs: { href: "javascript:void(0)" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.reply_open(reply)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-reply pr-2" }),
+                                  _vm._v("回覆")
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          reply.user_id == _vm.reply_user.id &&
+                          _vm.the_switch !== reply.id
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  attrs: { href: "javascript:void(0)" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.edit(reply)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-edit pr-2" }),
+                                  _vm._v("編輯")
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          reply.user_id == _vm.reply_user.id &&
+                          _vm.the_switch !== reply.id
+                            ? _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  attrs: { href: "javascript:void(0)" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.reply_delete(reply)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fas fa-trash-alt pr-2"
+                                  }),
+                                  _vm._v("刪除")
+                                ]
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ])
                   ])
                 ]
               ),
@@ -75337,9 +75293,9 @@ var render = function() {
               _vm.the_switch !== reply.id
                 ? _c("div", { staticClass: "reply-content text-secondary" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n                        " +
                         _vm._s(reply.reply_content) +
-                        "\n                     "
+                        "\n                    "
                     )
                   ])
                 : _vm._e()
@@ -75429,7 +75385,27 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-lg dot",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+    )
+  }
+]
 render._withStripped = true
 
 

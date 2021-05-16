@@ -30,12 +30,14 @@ $(document).ready(function() {
     let remove_image_array = $('#image_select2 option:selected').toArray().map(item=>item.text);
     
     if(!RadioValidate()){
-      document.querySelector('#product-type0').checked = true;
+      document.getElementById('product-type1').checked = true;
     }
 
     $('input[name="product_type"]').on("change",function(){
 
         let value = $(this).val();
+
+        console.log(value);
 
         SetInputOption(value);
 
@@ -463,21 +465,21 @@ return Valid
 function SetInputOption(value){
 
   switch (value) {
-    case "0":
+    case "1":
           if(document.getElementsByClassName("isbn-block").length===0){
             $('.product-type-block').after('<div class="form-group col-md-6 isbn-block"><label for="ISBN" class="text-muted">* ISBN : (10/13碼)</label><div class="input-group"><input id="ISBN" class="form-control necessary" type="text" name="isbn"  placeholder="請輸入ISBN" value="{{ old('isbn', $product->isbn ) }}"/><div class="input-group-append"><button class="btn btn-primary" onclick="SearchIsbn()" type="button" id="isbn-button">查詢</button></div></div></div>');
           }
           if(document.getElementsByClassName("author-block").length===0){
-            $('.name-block').after('<div class="form-group col-md-3 author-block"><label for="author" class="text-muted">* 作者 :</label><input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" /></div>')
-          }
-        break;
-    case "1":
-          $(".isbn-block").remove();
-          if(document.getElementsByClassName("author-block").length===0){
-          $('.name-block').after('<div class="form-group col-md-3 author-block"><label for="author" class="text-muted">* 作者 :</label><input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" /></div>')
+            $('.name-block').after('<div class="form-group col-md-3 author-block"><label for="author" class="text-muted">* 作者 :</label><input id="author" class="form-control necessary" type="text" name="author" value="{{ old('author', $product->author ) }}" placeholder="請填寫作者" /></div>')
           }
         break;
     case "2":
+          $(".isbn-block").remove();
+          if(document.getElementsByClassName("author-block").length===0){
+          $('.name-block').after('<div class="form-group col-md-3 author-block"><label for="author" class="text-muted">* 作者 :</label><input id="author" class="form-control necessary" type="text" name="author" value="{{ old('author', $product->author ) }}" placeholder="請填寫作者" /></div>')
+          }
+        break;
+    case "3":
           $(".isbn-block, .author-block").remove();
         break;
   }

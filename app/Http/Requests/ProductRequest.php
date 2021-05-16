@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
                      // UPDATE ROLES
                      'product_type' => 'required',
                      'course_type' => 'required',
-                     'isbn'       => 'required_if:product_type,0|string|regex:/^([0-9]{10}|[0-9]{13})$/',
+                     'isbn'       => 'required_if:product_type,0|string',
                      'name'       => 'required|string|min:2',
                      'author'       => 'required_if:product_type,0|string|min:2',
                      'content'        => 'required|min:3',

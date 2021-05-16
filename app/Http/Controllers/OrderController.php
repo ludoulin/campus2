@@ -37,15 +37,23 @@ class OrderController extends Controller
 
         foreach($p_ids as $key => $p_id){
 
-            $product = Product::findOrFail($p_id);
+            $product = Product::find($p_id);
 
             if(!$product){
 
-                return abort(403);
+                return response('抱歉您要買的商品已不存在於平台', 404);
 
-            }elseif(!$product->is_stock){
+            }elseif($product->status===0){
 
-                return redirect()->route('cart')->with('danger',"很抱歉您要買的商品已遭下架");
+                return response('抱歉您要買的商品已下架', 404);
+
+            }elseif($product->status===2){
+
+                return response('抱歉您要買的商品已被別人搶先一步下單', 403);
+
+            }elseif($product->status===3){
+
+                return response('抱歉您要買的商品已售出', 404);
             }
 
             $users[$key] = $product->user->id;
@@ -64,7 +72,7 @@ class OrderController extends Controller
                 
                 if($users[$id+1] !== $users[$id]){
 
-                        return abort(403);
+                        response('抱歉請不要惡意操作', 403);
                     } 
                 }
 
@@ -97,7 +105,7 @@ class OrderController extends Controller
 
             foreach($p_ids as $p_id){
 
-            $product = Product::findOrFail($p_id);
+            $product = Product::find($p_id);
    
             $orderItem = new OrderItem([
                 'product_id'    =>  $product->id,
@@ -108,14 +116,14 @@ class OrderController extends Controller
 
             }  
 
-            Product::whereIn('id', $p_ids)->update(['is_stock'=> 0 ]);
+            Product::whereIn('id', $p_ids)->update(['status'=> 2 ]);
 
             CartItem::where('user_id', Auth::id())->whereIn('product_id', $p_ids)->delete();
 
 
         }else{
 
-            return redirect()->route('cart')->with('danger',"下單失敗");
+            return response('下單過程中發生錯誤', 403);
         }
 
         if($request->payment==2){
@@ -157,7 +165,7 @@ class OrderController extends Controller
 
         foreach($order->items as $item){
 
-                Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
+                Product::where('id', $item->product_id)->update(['status'=> 1 ]);
             }
     
         $order->status = 6;
@@ -184,12 +192,16 @@ class OrderController extends Controller
             return abort(403);
         }
 
-
         Order::where('id', $order->id)->update(['status'=> $request->status ]);
 
         if($request->status===2){
 
             Order::where('id', $order->id)->update(['payment_status'=> 1 ]);
+
+            foreach($order->items as $item){
+
+                Product::where('id', $item->product_id)->update(['status'=> 3 ]);
+            }
 
         }
 
@@ -197,7 +209,7 @@ class OrderController extends Controller
 
             foreach($order->items as $item){
 
-                Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
+                Product::where('id', $item->product_id)->update(['status'=> 1 ]);
             }
 
             $order->status = 6;
@@ -237,9 +249,14 @@ class OrderController extends Controller
 
         $this->authorize('operate', $order);
 
+        if($order->status!==0){
+
+            return back();
+        }
+
         foreach($order->items as $item){
 
-            Product::where('id', $item->product_id)->update(['is_stock'=> 1 ]);
+            Product::where('id', $item->product_id)->update(['status'=> 1 ]);
         }
 
         $order->status = 3;

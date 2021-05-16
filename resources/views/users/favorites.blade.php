@@ -56,9 +56,6 @@
                                     <a href="{{route('products.show', $myfavorite->id)}}" class="btn bg-primary mr-2">
                                         商品資訊
                                       </a> 
-                                    {{-- <a href="javascript:void(0)" class="btn btn-success">
-                                        立即購買
-                                  </a>  --}}
                                   <form action="{{route('checkout.payment')}}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                                     <input id="p_d" name="p_d" type="hidden" value="{{$myfavorite->id}}" autocomplete="off">
                                     @csrf

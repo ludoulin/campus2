@@ -143,6 +143,7 @@ window.MessageObject = {
   ErrorMessage: function ErrorMessage(title, text) {
     var _this = this;
 
+    var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
     swal.fire({
       icon: 'error',
       title: title,
@@ -151,11 +152,11 @@ window.MessageObject = {
       allowOutsideClick: false
     }).then(function (result) {
       if (result.isConfirmed) {
-        _this.SystemReload();
+        _this.SystemReload(url);
       }
     });
   },
-  SystemReload: function SystemReload() {
+  SystemReload: function SystemReload(redirect) {
     swal.fire({
       title: '系統重新整理中,請稍候',
       timer: 2000,
@@ -164,7 +165,11 @@ window.MessageObject = {
         swal.showLoading();
       },
       willClose: function willClose() {
-        window.location.reload();
+        if (!redirect) {
+          window.location.reload();
+        } else {
+          window.location.href = redirect;
+        }
       }
     });
   },
@@ -200,6 +205,20 @@ window.MessageObject = {
     }).then(function (result) {
       if (result.isConfirmed) {
         something();
+      }
+    });
+  },
+  AuthMessage: function AuthMessage(title, url) {
+    swal.fire({
+      icon: 'info',
+      title: title,
+      text: '那麻煩先登入喔!',
+      showCancelButton: true,
+      cancelButtonText: '取消',
+      confirmButtonText: "\u5148\u767B\u5165"
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        window.location.href = url;
       }
     });
   }

@@ -161,6 +161,11 @@ img {
   padding: 10px;
 }
 
+.product .right .product-name .inner-detail p,
+.product .right .product-name .inner-detail span {
+  font-size: 18px;
+}
+
 .product .right .product-name .inner-detail .operate {
   display: flex;
   justify-content: center;

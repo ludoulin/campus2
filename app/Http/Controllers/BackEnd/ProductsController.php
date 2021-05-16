@@ -18,7 +18,7 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $products = Product::with('user')->paginate(10);
+        $products = Product::with('user')->get();
         return view('backend.product.index',compact('products'));
 
     }
@@ -58,11 +58,10 @@ class ProductsController extends Controller
     
     public function publish(ForbidRequest $request , Product $product)
     {
-       
-        $product->is_stock = !!$request->publish;
+        $product->status = $request->publish;
 
         $product->save();
 
-        return redirect()->back();
+        return back();
     }
 }

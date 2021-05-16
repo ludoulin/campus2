@@ -13,6 +13,13 @@ class Product extends Model
 {
     protected $table = 'products';
 
+    const PRODUCT_STATUS = [
+        0 => '下架',
+        1 => '上架中',
+        2 => '進入交易程序',
+        3 => '已售出'
+    ];
+
     const PRODUCT_TYPES = [
         1 => '參考書',
         2 => '講義',
@@ -38,7 +45,8 @@ class Product extends Model
         'isbn', 
         'author', 
         'is_stock', 
-        'comment_count'
+        'comment_count',
+        'status'
     ];
 
     public function user()
@@ -120,7 +128,6 @@ class Product extends Model
 
              }
 
-             $product->tags()->delete();
         });
     }
 

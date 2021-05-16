@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <a href="" class="btn btn-outline-danger" @click.prevent="unFavorite(product)"><i class="fas fa-heart pr-2"></i>移除收藏</a> -->
          <a href="javascript:void(0)" class="badge badge-danger" @click.prevent="unFavorite(product)"><i class="fas fa-times"></i></a> 
     </div>
 </template>
@@ -9,9 +8,7 @@ export default {
         props: ['product'],
 
         methods: {
-            
             unFavorite(product) {
-
                 swal.fire({
                     title: '確定要取消收藏嗎?',
                     icon: 'warning',
@@ -20,15 +17,26 @@ export default {
                     confirmButtonText: '確定!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                     axios.post('http://localhost/campus2/public/unfavorite/'+product)
-                          .then( swal.fire('成功移除!', '', 'success')
-                                     .then((result) => {
-                                         if (result.isConfirmed) {
-                                                location.reload();    
-                                          } 
-                                     })
-                          )
-                          .catch(response => console.log(response.data));    
+                     axios.delete('http://localhost/campus2/public/unfavorite/',{
+                            params: {
+                                    id: product
+                                 }
+                            })
+                          .then((response) => { 
+                              swal.fire(response.data, '', 'success')
+                                  .then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.reload();    
+                                        } 
+                                })
+                          })
+                          .catch((error) => {
+                            if(error.response.status === 403 || error.response.status === 404){
+                                 MessageObject.ErrorMessage('收藏失敗',`${error.response.data},系統將在您按下確認後進行重新整理`);
+                            }else{
+                                MessageObject.SystemError();
+                            }
+                       });    
                     }
                 })
             }

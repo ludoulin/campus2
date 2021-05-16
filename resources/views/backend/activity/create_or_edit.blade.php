@@ -174,6 +174,7 @@ function initTinymce() {
         },
         menubar: 'favs file edit view insert format tools table help',
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+        language: 'zh_TW',
         automatic_uploads: true,
         file_picker_types: 'image',
         file_picker_callback: function (cb, value, meta) {

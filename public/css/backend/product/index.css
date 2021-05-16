@@ -38,8 +38,12 @@
   text-align: center;
 }
 
-.admin-products-card .admin-products-body .tbody-color {
+.admin-products-card .admin-products-body .tbody-danger {
   background-color: #FFC0CB;
+}
+
+.admin-products-card .admin-products-body .tbody-success {
+  background-color: #8befcc;
 }
 
 .admin-products-card .bg-primary {

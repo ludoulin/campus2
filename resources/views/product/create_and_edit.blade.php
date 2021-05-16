@@ -57,7 +57,7 @@
 
                           <div class="form-group col-md-3 author-block">
                               <label for="author" class="text-muted">* 作者：</label>
-                              <input id="author" class="form-control necessary" type="text" name="author"  placeholder="請填寫作者" />
+                              <input id="author" class="form-control necessary" type="text" name="author" value="{{ old('author', $product->author ) }}" placeholder="請填寫作者" />
                           </div>
 
                           <div class="form-group col-md-3">

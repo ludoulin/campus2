@@ -12,49 +12,66 @@ class ReplysController extends Controller
 {
     public function store(Request $request, Reply $reply){
 
-
-        $product = Product::findOrFail($request->product_id);
+        $product = Product::find($request->product_id);
         
         if($product){
 
-        $comment = Comment::findOrFail($request->comment_id);
+            if($product->status===0){
 
-        if(!$comment){
+                return response('商品已下架', 403);
+            }
 
-         return abort(404);
+            $comment = Comment::find($request->comment_id);
+
+            if(!$comment){
+
+                return response("找不到此留言", 404);
+
+            }else{
+        
+                $reply = new Reply();
+                $reply->reply_content = $request->reply_content;
+                $reply->user_id = Auth::id();
+                $reply->product_id = $request->product_id;
+                $reply->comment_id = $request->comment_id;
+                $reply->save();
+
+                $replies = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
+            }
 
         }else{
-        
-        $reply = new Reply();
-        $reply->reply_content = $request->reply_content;
-        $reply->user_id = Auth::id();
-        $reply->product_id = $request->product_id;
-        $reply->comment_id = $request->comment_id;
-        $reply->save();
 
-        $replies = Comment::where('product_id',$request->product_id)->with(['user','replies'=> function($query){$query->with("user");}])->get();
-
-        }
-
-    }else{
-
-        return response()->json("商品已遭刪除");
-    }  
-
-        // $replies = Reply::where('comment_id',$request->comment_id)->with('user')->get();
-
+            return response("商品已不存在於平台", 404);
+        }  
 
         return response()->json($replies);
     }
 
     public function update(Request $request){
 
-        $reply = Reply::findOrFail($request->id);
+        $product = Product::find($request->product_id);
 
-        if(!$reply){
+        $comment = Comment::find($request->comment_id);
 
-            return abort(404);
+        $reply = Reply::find($request->id);
 
+        if(!$product){
+
+            return response("商品已不存在於平台", 404);
+
+        }else{
+
+            if($product->status===0){
+                return response('商品已下架', 403);
+            }
+
+            if(!$comment){
+                return response("找不到此留言", 404);
+            }else{
+                if(!$reply){
+                    return response("找不到此回覆", 404);
+                }
+            }
         }
 
         $this->authorize('update', $reply);
@@ -63,19 +80,35 @@ class ReplysController extends Controller
 
         $update_comment = Reply::where('id',$request->id)->value('reply_content');
 
-
         return response()->json($update_comment);
 
     }
     
     public function destroy(Request $request){
        
-        $reply = Reply::findOrFail($request->id);
+        $product = Product::find($request->product_id);
 
-        if(!$reply){
+        $comment = Comment::find($request->comment_id);
 
-            return abort(404);
+        $reply = Reply::find($request->id);
 
+        if(!$product){
+
+            return response("商品已不存在於平台", 404);
+
+        }else{
+
+            if($product->status===0){
+                return response('商品已下架', 403);
+            }
+
+            if(!$comment){
+                return response("找不到此留言", 404);
+            }else{
+                if(!$reply){
+                    return response("找不到此回覆", 404);
+                }
+            }
         }
 
         $this->authorize('destroy', $reply);
@@ -89,9 +122,8 @@ class ReplysController extends Controller
 
     }
 
-    public function get_reply(Request $request)
-    {
-        
+    public function get_reply(Request $request){
+
         $reply = Reply::where('id', $request->reply_id)->value('reply_content');
 
         return response()->json($reply);
