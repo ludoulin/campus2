@@ -1,7 +1,7 @@
 {
-    "/js/AlertMessage.js": "/js/AlertMessage.js?id=663aecd2ffdfa0cb9adf",
+    "/js/AlertMessage.js": "/js/AlertMessage.js?id=a7dae50330e6552eafe4",
     "/js/Validation.js": "/js/Validation.js?id=88a98d623285cd6a19b4",
-    "/js/app.js": "/js/app.js?id=1c55b4f056be6ac3ce52",
+    "/js/app.js": "/js/app.js?id=d1a6a0a2c12c1dfaa468",
     "/css/app.css": "/css/app.css?id=02786427bddc517c5fd5",
     "/css/login/login.css": "/css/login/login.css?id=215aeb2077a7333f3b07",
     "/css/register/register.css": "/css/register/register.css?id=a96042cca6203ef17574",
@@ -10,7 +10,7 @@
     "/css/backend/user/edit.css": "/css/backend/user/edit.css?id=75dc33e8aa9a5f8be60b",
     "/css/page/test.css": "/css/page/test.css?id=93c212c06e4451b232c8",
     "/css/product/index.css": "/css/product/index.css?id=68e90a5d2f7214d6e016",
-    "/css/product/show.css": "/css/product/show.css?id=76fb32892d03425281a8",
+    "/css/product/show.css": "/css/product/show.css?id=d166ea1aacafd4ccf786",
     "/css/product/create.css": "/css/product/create.css?id=4d8b2f1b1e030e1aa62a",
     "/css/department/index.css": "/css/department/index.css?id=0bc11103de158ad7d187",
     "/css/page/root.css": "/css/page/root.css?id=e37a171bf71cb937ffc3",
@@ -22,7 +22,7 @@
     "/css/user/products.css": "/css/user/products.css?id=69ca21ecdb2a0e785b34",
     "/css/user/status.css": "/css/user/status.css?id=f0af5db3520a400acfba",
     "/css/order/manage.css": "/css/order/manage.css?id=6c830654b081bd588aed",
-    "/css/backend/product/index.css": "/css/backend/product/index.css?id=9092023a1d62d4290b73",
+    "/css/backend/product/index.css": "/css/backend/product/index.css?id=ae58b84146506b87e011",
     "/css/checkout/confirm.css": "/css/checkout/confirm.css?id=73d86f427fee8cda1cde",
     "/css/backend/activity/index.css": "/css/backend/activity/index.css?id=4188bcb2e1547f384a2b"
 }

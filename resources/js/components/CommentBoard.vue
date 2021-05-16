@@ -16,7 +16,17 @@
                             <span class="text-secondary"> • </span>
                             <span class="meta text-secondary" :title="comment.created_at">{{ moment(comment.created_at).fromNow()}}</span>
                             <div class="float-right" v-if="auth_check!==0">
-                                <span class="meta" v-if="author==user_id&&the_reply!==comment.id">
+                                 <div class="dropdown">
+                                    <button class="btn btn-lg dot" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                       <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" @click="open_reply(comment)" href="javascript:void(0)" v-if="author == user_id && the_reply!==comment.id"><i class="fas fa-reply pr-2"></i>回覆</a>
+                                        <a class="dropdown-item" @click="open(comment)" href="javascript:void(0)" v-if="comment.user_id == user_id && the_switch!==comment.id"><i class="fas fa-edit pr-2"></i>編輯</a>
+                                        <a class="dropdown-item" @click="deleteComment(comment)" href="javascript:void(0)" v-if="comment.user_id == user_id && the_switch!==comment.id || author == user_id && the_reply!==comment.id"><i class="fas fa-trash-alt pr-2"></i>刪除</a>
+                                    </div>
+                                </div>
+                                <!-- <span class="meta" v-if="author==user_id&&the_reply!==comment.id">
                                     <button @click="open_reply(comment)" class="btn btn-primary btn-xs pull-left">
                                         <i class="fas fa-reply mr-2"></i>回覆
                                     </button>
@@ -30,7 +40,7 @@
                                     <button @click="deleteComment(comment)" class="btn btn-danger btn-xs pull-left">
                                         <i class="far fa-trash-alt mr-2"></i>刪除
                                     </button>
-                                </span>
+                                </span> -->
                             </div>
                           </div>
                           <div class="media-heading mt-0 mb-1 text-secondary" v-if="the_switch==comment.id">
@@ -72,7 +82,7 @@
 <script>
  let moment = require('moment');
  import ReplyBoard from './ReplyBoard'
-  export default {
+ export default {
     props:['_comments','product_data','auth'],
     components:{ReplyBoard},
     data(){
@@ -89,140 +99,84 @@
         moment:moment,
       }
     },
-    methods:{
-        sendMessage() {
-                if (this.message == '') {
-                 MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
-                    return;
-                }
-                
-                axios.post("http://localhost/campus2/public/comments/create", {
-                    product_id: this.product_id,
-                    content: this.message
-                }).then((response) => {
-                        this.message = '';
-                        this.comments = response.data;
-                    }).catch((error) => {
-                             if(error.response.status === 404){
-                                swal.fire({
-                                  icon: 'error',
-                                  title: '抱歉！此商品已遭下架',
-                                  text: '系統將在您按下確認後跳至首頁',
-                                  confirmButtonText: '確認',
-                                  allowOutsideClick: false,      
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                    swal.fire({
-                                    title: '系統重新整理中,請稍候',
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                      swal.showLoading()
-                                    },
-                                    willClose: () => {
-                                      window.location.href = '../'
-                                    }
-                              })
-                          }
-                    });
-                }   
-           });;
-
-            },
-            open(comment){
-                    this.the_switch = comment.id;
-                    // Remove my-component from the DOM
-                    this.edit_message = comment.content;
-            },
-        editMessage(comment){
-              if(this.edit_message.trim().length == 0){
-                  MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
-                  return
-              }
-
-              axios.post(`http://localhost/campus2/public/comments/update/${comment.id}`, {
-                    id: comment.id,
-                    content: this.edit_message,
-                }).then((response) => {
-                        this.the_switch = false;
-                        comment.content = response.data;
-                    }).catch((error) => {
-                             if(error.response.status === 404){
-                                swal.fire({
-                                  icon: 'error',
-                                  title: '編輯失敗',
-                                  text: '留言可能已遭刪除,系統在您按下確認後將自動重整',
-                                  confirmButtonText: '確認',
-                                  allowOutsideClick: false,      
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                    swal.fire({
-                                    title: '系統重新整理中,請稍候',
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                      swal.showLoading()
-                                    },
-                                    willClose: () => {
-                                      window.location.reload();
-                                    }
-                              })
-                          }
-                       });
+  methods:{
+    sendMessage() {
+      if (this.message == '') {
+          MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
+          return
+      }
+      axios.post("http://localhost/campus2/public/comments/create", { product_id: this.product_id,content: this.message })
+           .then((response) => {
+                  this.message = '';
+                  this.comments = response.data;})
+           .catch((error) => {
+                  if(error.response.status === 404 || error.response.status === 403){
+                      MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁');   
+              }   
+        });
+    },
+    open(comment){
+          this.the_switch = comment.id;
+          this.edit_message = comment.content;
+    },
+    editMessage(comment){
+      if(this.edit_message.trim().length == 0){
+          MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
+          return
+      }
+      axios.post(`http://localhost/campus2/public/comments/update/${comment.id}`, { id: comment.id, product_id: this.product_id, content: this.edit_message })
+           .then((response) => {
+                  this.the_switch = false;
+                  comment.content = response.data;})
+           .catch((error) => {
+                if(error.response.status === 404){
+                    switch(response.data){
+                        case "商品已不存在於平台":
+                          MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
+                        break;
+                        case "找不到此留言":
+                          MessageObject.ErrorMessage('儲存失敗','留言可能已被刪除,系統將在您按下確認後進行重新整理');
+                        break;
                     }
-                }); 
-            },
-        edit_cancel(comment){
-               axios.post("http://localhost/campus2/public/comments/comment/get", {
-                     id: comment.id,
-                }).then((response) => {
-                        this.the_switch = false;
-                        comment.content = response.data;
-                    });
-          },
-        open_reply(comment){
-            this.the_reply = comment.id;
-        },  
-        sendReply(data){
-           
-                axios.post("http://localhost/campus2/public/comments/replies/create", {
-                    comment_id: data.id,
-                    product_id: this.product_id,
-                    reply_content: data.text,
-                }).then((response) => {
-                        this.the_reply = false;
-                        this.comments = response.data;
-                    })
-                   .catch((error) => {
-                             if(error.response.status === 404){
-                                swal.fire({
-                                  icon: 'error',
-                                  title: '回覆失敗',
-                                  text: '留言可能遭刪除',
-                                  footer:'<strong>系統將在您按下確認後進行自動重整</strong>',
-                                  confirmButtonText: '確認',
-                                  allowOutsideClick: false,      
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                    swal.fire({
-                                    title: '系統重新整理中,請稍候',
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                      swal.showLoading()
-                                    },
-                                    willClose: () => {
-                                      window.location.reload(); //代改
-                                    }
-                              })
-                          }
-                    });
+                }
+                else if(error.response.status === 403){
+                    MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
+                }
+          }); 
+    },
+    edit_cancel(comment){
+        axios.post("http://localhost/campus2/public/comments/comment/get", { id: comment.id,})
+             .then((response) => {
+                    this.the_switch = false;
+                    comment.content = response.data;
+            });
+    },
+    open_reply(comment){
+        this.the_reply = comment.id;
+    },  
+    sendReply(data){
+        axios.post("http://localhost/campus2/public/comments/replies/create", { comment_id: data.id, product_id: this.product_id, reply_content: data.text })
+             .then((response) => {
+                  this.the_reply = false;
+                  this.comments = response.data;})
+             .catch((error) => {
+               if(error.response.status === 404){
+                    switch(response.data){
+                        case "商品已不存在於平台":
+                          MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
+                        break;
+                        case "找不到此留言":
+                          MessageObject.ErrorMessage('回覆失敗','留言可能已被刪除,系統將在您按下確認後進行重新整理');
+                        break;
+                    }
+                }
+                else if(error.response.status === 403){
+                    MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
                 }
            });
         },
-        deleteReply(ids){
-            
-            swal.fire({
+    deleteReply(ids){
+        swal.fire({
                     title: '確定要刪除此留言嗎?',
                     icon: 'warning',
                     showCancelButton: true,
@@ -231,27 +185,34 @@
                     cancelButtonText: '取消',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                     axios.post(`http://localhost/campus2/public/comments/replies/${ids.id}`, {
-                            id: ids.id,
-                            product_id: ids.product_id,
-                          }).then((response) => {
-                        this.comments = response.data;
-                 }).catch((error)=> {
-                    if(error.response.status === 404){
-
-                      MessageObject.ErrorMessage("刪除失敗","留言可能遭刪除,系統將在您按下確認後進行自動重整");
-                    }
-
-                 });
-              }
-          });
-        },
-        cancelReply(close){
-           
+                     axios.post(`http://localhost/campus2/public/comments/replies/${ids.id}`, { id: ids.id, product_id: ids.product_id, comment_id:ids.comment_id })
+                          .then((response) => {
+                              this.comments = response.data;
+                        }).catch((error)=> {
+                          if(error.response.status === 404){
+                              switch(response.data){
+                                  case "商品已不存在於平台":
+                                      MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
+                                  break;
+                                  case "找不到此留言":
+                                      MessageObject.ErrorMessage('刪除失敗','留言可能已被刪除,系統將在您按下確認後進行重新整理');
+                                  break;
+                                  case "找不到此回覆":
+                                      MessageObject.ErrorMessage('刪除失敗','回覆可能已被刪除,系統將在您按下確認後進行重新整理');
+                                  break;
+                              }
+                          }
+                          else if(error.response.status === 403){
+                              MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
+                          }
+                      });
+                  }
+            });
+    },
+    cancelReply(close){
            this.the_reply = close;
-
-        },    
-       deleteComment(comment){
+    },    
+    deleteComment(comment){
          swal.fire({
                     title: '確定要刪除此留言嗎?',
                     icon: 'warning',
@@ -261,65 +222,55 @@
                     cancelButtonText: '取消',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                     axios.post(`http://localhost/campus2/public/comments/${comment.id}`, {
-                          id:comment.id,
-                          product_id: comment.product_id,
-                      }).then((response) => {
-                        this.comments = response.data;
-                  }).catch((error) => {
-                             if(error.response.status === 404){
-                                swal.fire({
-                                  icon: 'error',
-                                  title: '刪除失敗',
-                                  text: '留言已遭刪除,系統將在您按下確認後進行自動重整',
-                                  confirmButtonText: '確認',
-                                  allowOutsideClick: false,      
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                    swal.fire({
-                                    title: '系統重新整理中,請稍候',
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                      swal.showLoading()
-                                    },
-                                    willClose: () => {
-                                      window.location.reload();
-                                    }
-                              })
-                          }
-                       });
-                    }   
-                });  
-              }
-          });
-       }
-    },
-}
+                     axios.post(`http://localhost/campus2/public/comments/${comment.id}`, { id:comment.id, product_id: comment.product_id })
+                          .then((response) => {
+                                this.comments = response.data;})
+                          .catch((error) => {
+                              if(error.response.status === 404){
+                                  switch(response.data){
+                                      case "商品已不存在於平台":
+                                        MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
+                                      break;
+                                      case "找不到此留言":
+                                        MessageObject.ErrorMessage('刪除失敗','留言可能已被刪除,系統將在您按下確認後重新整理頁面');
+                                      break;
+                                  }
+                              }
+                              else if(error.response.status === 403){
+                                    MessageObject.ErrorMessage(error.response.data,'系統將在您按下確認後跳至首頁', '../');
+                              }                        
+                        });  
+                    }
+               });
+            }
+        },
+    }
 </script>
 <style lang="scss" scoped>
-.input_style{
+  .input_style{
     width: 50%;
     border-radius: 30px !important;
-}
-
-.reply{
+  }
+  .reply{
     height: 40%;
     width: 80%;    
     background: rosybrown;    
     border-radius: 15px;
     padding: 8px;
-.user-reply{
-    height: inherit;
-    text-align: initial;
-            }
-}
-
-.reply-cancel{
-cursor: pointer;
-}
-
-
+    .user-reply{
+        height: inherit;
+        text-align: initial;
+    }
+  }
+  .reply-cancel{
+    cursor: pointer;
+  }
+  .dot{
+      background: none;
+  }
+  .dot:hover{
+      background: #f1f3f4;
+  }
 </style>
 
 <!-- <div class="reply-input ml-4 mb-4">

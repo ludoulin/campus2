@@ -35,11 +35,19 @@ class CheckOutController extends Controller
 
             if(!$product){
 
-                return abort(403);
+                return response()->view('errors.404', ['message' => '找不到你要買的商品'], 404);
 
-            }elseif(!$product->is_stock){
+            }elseif($product->status===0){
 
-                return redirect()->route('cart')->with('danger',"很抱歉您要買的商品已遭下架");
+                return response()->view('errors.404', ['message' => '很抱歉你要買的商品已下架'], 404);
+
+            }elseif($product->status===2){
+
+                return redirect()->route('cart')->with('waring',"很抱歉您要買的商品已被別人搶先一步下單");
+
+            }elseif($product->status===3){
+
+                return redirect()->route('cart')->with('danger',"很抱歉您要買的商品已售出");
             }
 
             $users[$key] = $product->user->id;
@@ -97,15 +105,23 @@ class CheckOutController extends Controller
 
             foreach($p_ids as $key => $p_id){
 
-                $product = Product::findOrFail($p_id);
+                $product = Product::find($p_id);
 
                 if(!$product){
 
-                    return abort(403);
-
-                }elseif(!$product->is_stock){
-
-                    return redirect()->route('cart')->with('danger',"很抱歉您要買的商品已遭下架");
+                    return response()->view('errors.404', ['message' => '找不到你要買的商品'], 404);
+    
+                }elseif($product->status===0){
+    
+                    return response()->view('errors.404', ['message' => '抱歉你要買的商品已下架'], 404);
+    
+                }elseif($product->status===2){
+    
+                    return redirect()->route('cart')->with('waring',"很抱歉您要買的商品已被別人搶先一步下單");
+    
+                }elseif($product->status===3){
+    
+                    return redirect()->route('cart')->with('danger',"很抱歉您要買的商品已售出");
                 }
 
                 $users[$key] = $product->user->id;
@@ -156,7 +172,15 @@ class CheckOutController extends Controller
 
         if(!$product) {
 
-            return abort(404);
+            return response()->view('errors.404', ['message' => '抱歉這個商品已被移除平台'], 404);
+
+        }elseif($product->status===0){
+
+            return response()->view('errors.404', ['message' => '很抱歉你要買的商品已下架'], 404);
+
+        }elseif($product->status===3){
+
+            return redirect()->back()->with('danger',"很抱歉您要買的商品已售出");
         }
 
         if(!Auth::check()){
@@ -221,7 +245,7 @@ class CheckOutController extends Controller
 
             if(!$LineRecord){
 
-                return abort(404);
+                return response()->view('errors.404', ['message' => '找不到此筆交易紀錄'], 404);;
             }
 
             $this->authorize('operate', $LineRecord);

@@ -44,19 +44,61 @@
                 <h4 class="title" style="text-align:center"><b>{{ $product->name }}</b></h4>
                 <hr class="hr-text" data-content="詳細資訊"> 
                 <div class="inner-detail">
-                    <div class="mb-3">     
-                        <span style="font-size:18px">種類：{{Product::PRODUCT_TYPES[$product->type]}}</span>
-                        <span style="font-size:14px;float:right;"><p class="text-muted">瀏覽次數：{{ $product->visits()->count() }}</p></span>
+                    <div class="mb-3">
+                        <span>商品狀態： 
+                                <span class="badge
+                                        @if($product->status===0)
+                                            badge-secondary
+                                        @elseif($product->status===1)
+                                            badge-success
+                                        @elseif($product->status===2)
+                                            badge-info
+                                        @elseif($product->status===3)
+                                            badge-danger
+                                        @endif ">
+                                        {{Product::PRODUCT_STATUS[$product->status]}}
+                                </span>  
+                        </span>
+                        <span style="float:right;"><p class="text-muted">瀏覽次數：{{ $product->visits()->count() }}</p></span>
                     </div>
+                    <div class="d-flex flex-column mb-3">
+                      <span class="mb-3">種類：
+                            <span class="badge
+                                    @if($product->type===1)
+                                        badge-secondary
+                                    @elseif($product->type===2)
+                                        badge-success
+                                    @elseif($product->type===3)
+                                        badge-primary
+                                    @endif ">
+                                {{Product::PRODUCT_TYPES[$product->type]}}
+                            </span>  
+                      </span>  
                     @if(!empty($product->isbn))  
-                      <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">ISBN：{{$product->isbn}}</p>
+                      <span class="mb-3 text-uppercase">ISBN：{{$product->isbn}}</span>
                     @endif
                     @if(!empty($product->author))  
-                      <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">作者：{{$product->author}}</p>
+                        <span class="mb-3 text-uppercase">作者：{{$product->author}}</span>
                     @endif
-                    <p class="mb-3 mt-2 text-uppercase" style="font-size:18px">課程分類：{{Product::COURSE_TYPES[$product->course_type]}}</p>
-                    <p class="mb-3 mt-2" style="font-size:18px;color:#ff5353">二手價：<b style="font-size:22px">NT${{ $product->price }}</b></p>
-                    <p class="mb-3 mt-2" style="font-size:16px">書況：{!! $product->content !!}</p>
+                        <span class="mb-3">課程分類：
+                                <span class="badge
+                                    @if($product->course_type===1)
+                                            badge-primary
+                                    @elseif($product->course_type===2)
+                                            badge-success
+                                    @elseif($product->course_type===3)
+                                            badge-info
+                                    @elseif($product->course_type===4)
+                                            badge-danger
+                                    @elseif($product->course_type===5)
+                                            badge-secondary        
+                                    @endif ">
+                                    {{Product::COURSE_TYPES[$product->course_type]}}
+                                </span>  
+                        </span>
+                        <span class="mb-3" style="color:#ff5353">二手價：<b style="font-size:22px">NT${{ $product->price }}</b></span>
+                        <span class="mb-3">書況：{!! $product->content !!}</span>
+                    </div>    
                     <hr>
                     <div class="mb-3 mt-2" style="font-size:16px">
                         <p>可付款方式：</p>
@@ -81,7 +123,7 @@
                     </div>
                     <hr>
                     <div class="mt-2">
-                        <p style="font-size:16px">適用系所:</p>
+                        <p>適用系所:</p>
                             <div class="row">
                                 @foreach ($product->tags as $index => $tag)
                                    @if($index<=2)
@@ -117,10 +159,11 @@
                     </div>
                     @if($product->user->id!==Auth::id())     
                     <hr class="hr-text" data-content="決定一下吧！">
-                    <favorite-button :login="{{ Auth::check() ? 1 : 0 }}" :product={{ $product->id }} :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}></favorite-button>
+                    <favorite-button :login="{{ Auth::check() ? 1 : 0 }}" :product={{ $product->id }} :status={{ $product->status }} :favorited={{ !$product->favorited->isEmpty() ? 'true' : 'false' }}></favorite-button>
                     <div>
                         <cart-button
                             :product={{ $product->id }}
+                            :status={{ $product->status }}
                             :carted={{ !$product->carted->isEmpty() ? 'true' : 'false' }}>
                         </cart-button>
                     </div>
@@ -128,7 +171,7 @@
                         <form action="{{route('checkout.payment')}}" name="pay_product" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
                             <input id="p_d" name="p_d" type="hidden" value="{{$product->id}}" autocomplete="off">
                               @csrf
-                            <button type="submit" class="btn buy">立即購買</button>
+                            <button type="submit" class="btn buy" {{$product->status!==1 ?'disabled':''}} >立即購買</button>
                         </form>
                     </div>
                     @endif
@@ -180,7 +223,7 @@
                 :product_data="{{$product}}" :auth="{{Auth::check()?Auth::user():0}}">
                 </comment-board>
               </div>
-          </div> 
+          </div>
       </div>
 </div>   
 
@@ -283,8 +326,8 @@ function DeleteConfirm(title){
                     if (result.isConfirmed) {
                         check = true;
                  }
-              });
-  return check;
+                 return check;
+        });
 }
 </script>
 

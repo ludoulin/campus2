@@ -107,14 +107,15 @@ Route::get('/products', 'ProductsController@index')->name('products.index');
 Route::get('/products/create', 'ProductsController@create')->name('products.create');
 Route::get('/products/search', 'ProductsController@search')->name('products.search');
 Route::post('/products/create', 'ProductsController@store')->name('products.store');
-Route::get('/products/add-to-cart', 'ProductsController@addToCart')->name('products.add');
 Route::get('/products/{product}', 'ProductsController@show')->name('products.show');
 Route::get('/products/{product}/edit', 'ProductsController@edit')->name('products.edit');
 Route::patch('/products/{product}', 'ProductsController@update')->name('products.update');
+Route::patch('/products/{product}/publish', 'ProductsController@publish')->name('products.publish');
 Route::delete('/products/{product}', 'ProductsController@destroy')->name('products.destroy');
 Route::delete('/products/product_images/{product_image}', 'ProductsController@imageremove')->name('image.destory');
-Route::middleware('auth')->post('/favorite/{product}', 'ProductsController@favoriteProduct');
-Route::post('/unfavorite/{product}', 'ProductsController@unFavoriteProduct')->name('products.unfavorite');; 
+Route::get('/favorite', 'ProductsController@favoriteProduct');
+Route::get('/add-to-cart', 'ProductsController@addToCart')->name('products.add');
+Route::delete('/unfavorite', 'ProductsController@unFavoriteProduct')->name('products.unfavorite');
 Route::delete('/remove-from-cart', 'ProductsController@removeCart');
 
 // Route::resource('comments', 'CommentsController', ['only' => ['store', 'update', 'edit', 'destroy']]);

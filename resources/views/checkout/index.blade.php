@@ -49,16 +49,6 @@
     
                                 </div>
     
-                                {{-- <div class="form-group">
-                                    <label class="d-block" >付款方式:</label>
-                                    @foreach($p_type as $type)
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="payment{{$type["id"]}}" name="payment" class="custom-control-input" value="{{$type["id"]}}">
-                                        <label class="custom-control-label" for="payment{{$type["id"]}}">{{$type["name"]}}</label>
-                                        </div>
-                                    @endforeach      
-                                </div> --}}
-    
                                 <div class="form-group">
                                     <label>信箱:</label>
                                     <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}" disabled>
@@ -144,7 +134,7 @@
                     },
                     data: form.serialize(), // serializes the form's elements.
                     success: function(response){
-                                text=response.message==="面交付費下單成功"? "訂單" : "付款";
+                                text=(response.message==="面交付費下單成功") ? "訂單" : "付款";
                                     swal.close();
                                         swal.fire({
                                             icon:'success',
@@ -167,11 +157,9 @@
 
                                 },
                         error: function (error) {
-
-                        MessageObject.VaildSubmitMessage("發生錯誤","表單提交失敗");
-
-                        return false
-
+                            console.log(error);
+                            MessageObject.ErrorMessage('下單失敗',`${error.responseText},系統將在您按下確認後跳至首頁`,'{{route("root")}}');
+                            return false
                         }       
                   });
             }); 
