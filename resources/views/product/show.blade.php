@@ -181,13 +181,9 @@
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-lg btn-outline-dark" role="button">
                                 <i class="far fa-edit"></i> 編輯
                             </a>
-                            <form action="{{ route('products.destroy', $product->id) }}" method="post" style="display: inline-block;" onsubmit="return DeleteConfirm('您確定要刪除嗎？');">
-                              {{ csrf_field() }}
-                              {{ method_field('DELETE') }}
-                                <button type="submit" class="btn btn-lg btn-outline-danger ml-3">
-                                    <i class="far fa-trash-alt"></i> 刪除
-                                </button>
-                            </form>
+                        <a href="javascript:void(0)" class="btn btn-lg btn-outline-danger ml-3" data-product="{{$product->id}}" onclick="DeleteConfirm(this)">
+                                <i class="far fa-trash-alt"></i> 刪除
+                            </a>
                         </div>
                     @endcan
                 </div>
@@ -311,23 +307,34 @@ function SeeMore(el){
     return
 }     
 
-function DeleteConfirm(title){
-
-  let check = false;
+function DeleteConfirm(el){
 
     swal.fire({
-              title: title,
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#DD6B55',
-              confirmButtonText: '確定',
-              cancelButtonText: '取消',
-              }).then((result) => {
+                icon:  'warning',
+                width:  '50rem',
+                title: `確定要刪除這個商品嗎?`,
+                html: ` <p class="text-danger"><b>提醒:若是刪除商品,商品將從平台上移除</b></p>
+                        <form id="DeleteProduct" name="DeleteProduct" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        </form>`,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: '確定',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                focusConfirm: false,
+                allowOutsideClick: false,  
+                didOpen:() => {
+                    let url = '{{route("products.destroy",":id")}}';
+                    url = url.replace(':id',$(el).data().product);
+                    document.getElementById("DeleteProduct").action = url;
+                }
+                }).then((result) => {
                     if (result.isConfirmed) {
-                        check = true;
-                 }
-                 return check;
-        });
+                        document.getElementById("DeleteProduct").submit();
+                }
+            })
+    return
 }
 </script>
 
