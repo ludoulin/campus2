@@ -25,6 +25,12 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('admin.news.index') }}">
+                <span class="icon"><i class="fas fa-broadcast-tower"></i></span>
+                <span class="text">消息管理</span>
+            </a>
+        </li>
+        <li>
             <a href="#">
                 <span class="icon"><i class="fas fa-question-circle"></i></span>
                 <span class="text">問題回報管理</span>
@@ -32,7 +38,7 @@
         </li>
         <li>
             <a href="#">
-                <span class="icon"><i class="fas fa-bullhorn"></i></i></span>
+                <span class="icon"><i class="fas fa-bullhorn"></i></span>
                 <span class="text">推播管理</span>
             </a>
         </li>

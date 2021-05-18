@@ -22,6 +22,9 @@ Route::get('/cart', 'CartController@getCart')->name('cart');
 
 Route::get('/activities/{activity}', 'PagesController@activities')->name('activity.show');
 
+Route::get('/news', 'NewsController@index')->name('news.index');
+Route::get('/news/{news}', 'PagesController@news')->name('news.show');
+
 
 // 用戶身份驗證相關路由
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -75,7 +78,12 @@ Route::patch('/admin/activity/{activity}', 'BackEnd\ActivityController@update')-
 Route::patch('/admin/activity/{activity}/publish', 'BackEnd\ActivityController@publish')->name('admin.activity.publish');
 Route::delete('/admin/activity/{activity}', 'BackEnd\ActivityController@destroy')->name('admin.activity.destroy');
 
-
+Route::get('admin/news', 'BackEnd\NewsController@index')->name('admin.news.index');
+Route::get('admin/news/create', 'BackEnd\NewsController@create')->name('admin.news.create');
+Route::post('admin/news/create', 'BackEnd\NewsController@store')->name('admin.news.store');
+Route::get('admin/news/{news}/edit', 'BackEnd\NewsController@edit')->name('admin.news.edit');
+Route::patch('admin/news/{news}', 'BackEnd\NewsController@update')->name('admin.news.update');
+Route::delete('admin/news/{news}', 'BackEnd\NewsController@destroy')->name('admin.news.destroy');
 
 Route::get('/chathome', 'UsersController@index')->name('users.home');
 Route::get('/favorites', 'UsersController@getFavorites')->name('users.favorite');

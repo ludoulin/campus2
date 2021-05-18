@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\College;
 use App\Models\Product;
+use App\Models\News;
 
 class PagesController extends Controller
 {
@@ -15,8 +16,9 @@ class PagesController extends Controller
         $colleges = College::with('departments')->get();
         $activities = Activity::where('publish', true)->orderBy('id','desc')->take(10)->get();
         $most_views = $product->visits()->top(8);
-
-        return view('pages.root',compact('products','colleges','most_views','activities'));
+        $newsCollection = News::orderBy('sticky_flag', 'desc')->orderBy('publish_date', 'desc')->where('start_date', '<=', date("Y-m-d"))->where('end_date', '>=', date("Y-m-d"))->get();
+        $newsCollections = News::groupBy('type')->orderBy('sticky_flag', 'desc')->orderBy('publish_date', 'desc')->where('start_date', '<=', date("Y-m-d"))->where('end_date', '>=', date("Y-m-d"))->get();
+        return view('pages.root',compact('products','colleges','most_views','activities','newsCollections','newsCollection'));
     }
 
     public function test(){
@@ -29,6 +31,14 @@ class PagesController extends Controller
 
 
         return view('pages.activity',compact('activity'));
+    }
+
+
+    public function news(News $news){
+
+        $activities = Activity::where('publish', true)->orderBy('id','desc')->take(10)->get();
+
+        return view('pages.news',compact('news','activities'));
     }
 
 

@@ -37,6 +37,8 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/backend/product/index.scss', 'public/css/backend/product')
    .sass('resources/sass/checkout/confirm.scss', 'public/css/checkout')
    .sass('resources/sass/backend/activity/index.scss', 'public/css/backend/activity')
+   .sass('resources/sass/backend/news/index.scss', 'public/css/backend/news')
+   .sass('resources/sass/news/index.scss', 'public/css/news')
    .version();
 
 

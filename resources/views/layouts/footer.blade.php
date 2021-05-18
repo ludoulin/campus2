@@ -6,5 +6,5 @@
   
       <p class="float-right"><a href="mailto:name@email.com">聯絡我們</a></p>
     </div>
-  </footer>
+</footer>
   
