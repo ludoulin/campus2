@@ -2,7 +2,7 @@
     use Carbon\Carbon;
 @endphp
 @extends('layouts.control_panel')
-@section('title', '活動管理')
+@section('title', '後台活動管理')
 
 @section('sass_backend')
 <link href="{{ asset('css/backend/activity/index.css') }}" rel="stylesheet">

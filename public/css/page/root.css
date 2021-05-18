@@ -182,7 +182,7 @@ a {
 }
 
 .department-list .college {
-  height: 360px;
+  height: 400px;
   padding: 10px;
 }
 
@@ -253,6 +253,22 @@ a {
   background-color: #fff;
   border-radius: 10px;
   padding: 10px;
+}
+
+.news-list-container {
+  font-size: 20px;
+  background-color: white;
+  box-shadow: 2px 5px 7px rgba(0, 0, 0, 0.15);
+  border: 0px solid rgba(0, 0, 0, 0.0625);
+}
+
+.news-list-container .year-th {
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.news-list-container .badge-salmon {
+  background: #ff5959;
 }
 
 @media screen and (max-width: 768px) {

@@ -20,6 +20,7 @@ a{
   text-decoration:none;
 }
 
+
 .product-card{
   position:relative;
   margin-bottom:26px;
@@ -174,7 +175,7 @@ a{
 .department-list{
     min-height: 100%;
   .college{
-    height: 360px;
+    height: 400px;
     padding: 10px;
     .inner-college{
         color:#fff;
@@ -242,7 +243,23 @@ a{
      padding: 10px;
    }
  }
+ 
+ .news-list-container {
+  font-size: 20px;
+  background-color: white;
+  box-shadow: 2px 5px 7px rgba(0, 0, 0, 0.15);
+  border: 0px solid rgba(0,0,0,.0625);
 
+  .year-th {
+      white-space: nowrap;
+      vertical-align: middle;
+  }
+
+  .badge-salmon{
+     background: #ff5959;
+  }
+}
+ 
  @media screen and (max-width: 768px) {
     .department-list{
         min-height: 100%;

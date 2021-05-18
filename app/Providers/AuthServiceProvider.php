@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Activity;
 use App\Models\Comment;
 use App\Models\LinePayTradeRecord;
+use App\Models\News;
 use App\Models\Reply;
 use App\Models\user;
 use App\Models\order;
@@ -18,6 +19,7 @@ use App\Policies\ReplyPolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\RecordPolicy;
 use App\Policies\ActivityPolicy;
+use App\Policies\NewsPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         Reply::class => ReplyPolicy::class,
         Order::class => OrderPolicy::class,
         Activity::class => ActivityPolicy::class,
+        News::class => NewsPolicy::class,
         LinePayTradeRecord::class => RecordPolicy::class,
 
     ];

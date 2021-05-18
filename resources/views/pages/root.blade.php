@@ -1,3 +1,6 @@
+@php
+   use App\Models\News;
+@endphp
 @extends('layouts.basic')
 @section('title', '首頁')
 
@@ -6,145 +9,168 @@
 @endsection
 
 @section('content')
-<div class="container my-3">
-<div class="row">
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @foreach ($activities as $index => $activity)
-            <li data-target="#carouselExampleControls" data-slide-to="{{$index}}" class="@if($index===0) active @endif"></li>
-            @endforeach
-          </ol>
-        <div class="carousel-inner">
-            @foreach ($activities as $index => $activity)
-              <div class="carousel-item @if($index===0) active @endif">
-                <a href="{{route("activity.show",$activity->id)}}">
-                  <img class="d-block w-100" src="{{asset($activity->avatar)}}" alt="{{$activity->name}}">
-                </a>
+
+@include('pages.banner',['activities' => $activities] )
+
+<div class="container mt-3">
+  <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
+          <div class="inner-news shadow-sm">
+            <h6 class="border-bottom border-gray pb-2 mb-0">最近成交動態</h6>
+            
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@username</strong>
+                
+              </p>
+            </div>
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@username</strong>
+               
+              </p>
+            </div>
+            <div class="media text-muted pt-3">
+              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                <strong class="d-block text-gray-dark">@username</strong>
+              </p>
+            </div>
+            <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">@username</strong>
+                </p>
               </div>
-            @endforeach
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
-  <div class="inner-news shadow-sm">
-  <h6 class="border-bottom border-gray pb-2 mb-0">拍賣置頂公告</h6>
-  <div class="media text-muted pt-3">
-    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-      <strong class="d-block text-gray-dark">@username</strong>
-      
-    </p>
-  </div>
-  <div class="media text-muted pt-3">
-    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-      <strong class="d-block text-gray-dark">@username</strong>
-     
-    </p>
-  </div>
-  <div class="media text-muted pt-3">
-    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-      <strong class="d-block text-gray-dark">@username</strong>
-    </p>
-  </div>
-  <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@username</strong>
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">@username</strong>
-        </p>
-      </div>
-  <small class="d-block text-right mt-3">
-    <a href="#">All updates</a>
-  </small>
-  </div>
-</div>
+              <div class="media text-muted pt-3">
+                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@username</strong>
+                  </p>
+                </div>  
+            <small class="d-block text-right mt-3">
+              <a href="#">All updates</a>
+            </small>
+          </div>
+          </div>
 
-<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
-  <div class="inner-news shadow-sm">
-    <h6 class="border-bottom border-gray pb-2 mb-0">最近成交動態</h6>
-    
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@username</strong>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
+              <div class="inner-news shadow-sm">
+                <h6 class="border-bottom border-gray pb-2 mb-0">最近成交動態</h6>
+                
+                <div class="media text-muted pt-3">
+                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@username</strong>
+                    
+                  </p>
+                </div>
+                <div class="media text-muted pt-3">
+                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@username</strong>
+                   
+                  </p>
+                </div>
+                <div class="media text-muted pt-3">
+                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@username</strong>
+                  </p>
+                </div>
+                <div class="media text-muted pt-3">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@username</strong>
+                    </p>
+                  </div>
+                  <div class="media text-muted pt-3">
+                      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                        <strong class="d-block text-gray-dark">@username</strong>
+                      </p>
+                    </div>  
+                <small class="d-block text-right mt-3">
+                  <a href="#">All updates</a>
+                </small>
+              </div>
+              </div>
         
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@username</strong>
-       
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-        <strong class="d-block text-gray-dark">@username</strong>
-      </p>
-    </div>
-    <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">@username</strong>
-        </p>
-      </div>
-      <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">@username</strong>
-          </p>
-        </div>  
-    <small class="d-block text-right mt-3">
-      <a href="#">All updates</a>
-    </small>
+          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
+            <div class="inner-news shadow-sm">
+              <h6 class="border-bottom border-gray pb-2 mb-0">願望清單</h6>
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">@username</strong>
+                  
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">@username</strong>
+                 
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                  <strong class="d-block text-gray-dark">@username</strong>
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">@username</strong>
+                  </p>
+                </div>
+                <div class="media text-muted pt-3">
+                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong class="d-block text-gray-dark">@username</strong>
+                    </p>
+                  </div> 
+              <small class="d-block text-right mt-3">
+                <a href="#">All updates</a>
+              </small>
+            </div>
+            </div>
   </div>
-  </div>
+</div>  
+        <div class="container mt-3">
+            <h2><i class="fas fa-bullhorn pr-2"></i>消息公告</h2>
+            <table class="table news-list-container mt-3">
+              <thead>
+                  <tr>
+                      <th scope="col">發布日期</th>
+                      <th scope="col">標題</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach ($newsCollection as $news)
+                    <tr>
+                        <th class="year-th align-middle">
+                              {{ $news->publish_date->toDateString() }}
+                        </th>
+                        <td class="align-middle">
+                          <div class="d-flex nowrap">
+                            @if ($news->sticky_flag)
+                                <span class="badge badge-salmon text-white p-2 mr-1">置頂</span>
+                            @endif
 
-  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
-    <div class="inner-news shadow-sm">
-      <h6 class="border-bottom border-gray pb-2 mb-0">願望清單</h6>
-      <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">@username</strong>
-          
-        </p>
-      </div>
-      <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">@username</strong>
-         
-        </p>
-      </div>
-      <div class="media text-muted pt-3">
-        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong class="d-block text-gray-dark">@username</strong>
-        </p>
-      </div>
-      <div class="media text-muted pt-3">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong class="d-block text-gray-dark">@username</strong>
-          </p>
-        </div>
-        <div class="media text-muted pt-3">
-            <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-              <strong class="d-block text-gray-dark">@username</strong>
-            </p>
-          </div> 
-      <small class="d-block text-right mt-3">
-        <a href="#">All updates</a>
-      </small>
-    </div>
-    </div>
+                            @if ($news->type)
+                                <span class="badge badge-info text-white p-2 mr-1">{{News::NEWS_TYPES[$news->type]}}</span>
+                            @endif
+                            
+                            <a href="{{route("news.show",$news->id)}}" class="text-primary">
+                                <b>[{{ $news->name }}]</b>
+                            </a>
+                          </div>
+                        </td>
+                    </tr>
+                  @endforeach
+                  @if($newsCollection->isEmpty())
+                    <tr>
+                        <td colspan="999">尚無最新消息</td>
+                    </tr>
+                  @endif
+            </tbody>
+        </table>
+        <div class="text-right mr-2">
+        <a href="{{route('news.index')}}">查看所有消息</a>
+        </div> 
+    </div> 
 
-</div>
-</div>
 
-<div class="container department-list my-3 ">
+<div class="container department-list mt-3">
    <h2><i class="fas fa-university mr-2"></i>哪個是你的學院呢</h2>
      <div class="row">  
       @foreach ($colleges as $key => $college)
@@ -267,6 +293,7 @@
 @section('script')
 <script>
    $(document).ready(function(){
+
     $('#carouselExampleIndicators').carousel({
         interval: false
       })
@@ -314,5 +341,19 @@
       ]
       });
     });
+
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
 </script>
 @endsection
