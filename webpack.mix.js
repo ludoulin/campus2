@@ -39,6 +39,7 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/backend/activity/index.scss', 'public/css/backend/activity')
    .sass('resources/sass/backend/news/index.scss', 'public/css/backend/news')
    .sass('resources/sass/news/index.scss', 'public/css/news')
+   .sass('resources/sass/backend/home.scss', 'public/css/backend')
    .version();
 
 
