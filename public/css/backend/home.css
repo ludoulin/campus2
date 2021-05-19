@@ -1,0 +1,40 @@
+.card-block.card-height {
+  height: calc(100% - 30px);
+}
+
+.card-block.card-stretch {
+  align-items: stretch;
+}
+
+.card-block {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+}
+
+.card .card-body {
+  padding: 20px;
+}
+
+.card .card-body .bg-primary {
+  color: #fff;
+  background: #1e7fe4;
+}
+
+.card .card-body .card-icon {
+  height: 66px;
+  width: 66px;
+  display: inline-block;
+  line-height: 66px;
+  text-align: center;
+  font-size: 22px;
+}
+

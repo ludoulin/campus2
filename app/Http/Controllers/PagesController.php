@@ -6,6 +6,9 @@ use App\Models\Activity;
 use App\Models\College;
 use App\Models\Product;
 use App\Models\News;
+use App\Models\Order;
+use App\Models\User;
+
 
 class PagesController extends Controller
 {
@@ -17,8 +20,15 @@ class PagesController extends Controller
         $activities = Activity::where('publish', true)->orderBy('id','desc')->take(10)->get();
         $most_views = $product->visits()->top(8);
         $newsCollection = News::orderBy('sticky_flag', 'desc')->orderBy('publish_date', 'desc')->where('start_date', '<=', date("Y-m-d"))->where('end_date', '>=', date("Y-m-d"))->get();
-        $newsCollections = News::groupBy('type')->orderBy('sticky_flag', 'desc')->orderBy('publish_date', 'desc')->where('start_date', '<=', date("Y-m-d"))->where('end_date', '>=', date("Y-m-d"))->get();
-        return view('pages.root',compact('products','colleges','most_views','activities','newsCollections','newsCollection'));
+
+        $counter = [
+            "users" => User::count(),
+            "products" => Product::count(),
+            "sales" => Product::where('status',3)->count(),
+            "orders" => Order::count()
+        ];
+
+        return view('pages.root',compact('products','colleges','most_views','activities','newsCollection','counter'));
     }
 
     public function test(){
