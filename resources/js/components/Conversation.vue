@@ -2,24 +2,23 @@
     <div class="conversation">
         <div class="select">
             <div class="contact-profile">
-            <img v-if="contact" :src="contact.avatar" class="m-r-10">
-            <p>{{ contact ? contact.name : 'Select a Contact' }}</p>
-            <div class="social-media">
-			   <a><i class="fa fa-trash" aria-hidden="true"></i></a>
-			   <a><i class="fas fa-copy"></i></a>
-                        <a href="" data-toggle="dropdown" aria-hidden="true">
-                            <i class="fa fa-sort"></i>
-                        </a>
-            
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li>
-                                <a href="">Latest</a>
-                            </li>
-                            <li>
-                                <a href="">Oldest</a>
-                            </li>
-                        </ul>        
-			</div>
+                <img v-if="contact" :src="contact.avatar" class="m-r-10">
+                <p>{{ contact ? contact.name : 'Select a Contact' }}</p>
+                <div class="social-media">
+			        <a href="javascript:void(0)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			        <a href="javascript:void(0)"><i class="fas fa-copy"></i></a>
+                    <a class="btn" href="javascript:void(0)" data-toggle="dropdown" aria-hidden="true">
+                        <i class="fa fa-sort"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li>
+                            <a class="dropdown-item" href="javascript:void(0)">Latest</a>
+                        </li>
+                         <li>
+                            <a class="dropdown-item" href="javascript:void(0)">Oldest</a>
+                        </li>
+                    </ul>        
+			    </div>
             </div>
         </div>
         <MessagesFeed :contact="contact" :user="user" :messages="messages"/>

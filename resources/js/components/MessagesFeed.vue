@@ -1,12 +1,12 @@
 <template>
     <div class="feed" ref="feed">
         <ul v-if="contact">
-            <li v-for="message in messages" :class="`message${message.to == contact.id ? ' sent' : ' received'}`" :key="message.id">
+            <li v-for="message in messages" :class="`message${message.to == contact.id ? ' sent' : ' received'}`" :key="message.id" :data-aos="`${message.to == contact.id ? 'fade-right': 'fade-left'}`">
                 <div>
-                <img :src="`${message.to == contact.id ? user.avatar : contact.avatar}`"/>
-                <div class="text"> 
+                    <img :src="`${message.to == contact.id ? user.avatar : contact.avatar}`"/>
+                    <div class="text"> 
                     {{ message.text }}
-                </div>
+                    </div>
                 </div>
                 <span class="time">{{message.created_at}}</span>
             </li>

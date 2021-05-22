@@ -26,6 +26,8 @@ Route::get('/news', 'NewsController@index')->name('news.index');
 Route::get('/news/{news}', 'PagesController@news')->name('news.show');
 
 
+Route::post('/callback', 'LineHookController@hooks')->name('linetbot.hooks');
+
 // 用戶身份驗證相關路由
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');

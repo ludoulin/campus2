@@ -15,15 +15,15 @@
                             </a>
                             <span class="text-secondary"> • </span>
                             <span class="meta text-secondary" :title="comment.created_at">{{ moment(comment.created_at).fromNow()}}</span>
-                            <div class="float-right" v-if="auth_check!==0">
+                            <div class="float-right" v-if="comment.user_id == user_id || seller == user_id">
                                  <div class="dropdown">
                                     <button class="btn btn-lg dot" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                        <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" @click="open_reply(comment)" href="javascript:void(0)" v-if="author == user_id && the_reply!==comment.id"><i class="fas fa-reply pr-2"></i>回覆</a>
+                                        <a class="dropdown-item" @click="open_reply(comment)" href="javascript:void(0)" v-if="seller == user_id && the_reply!==comment.id"><i class="fas fa-reply pr-2"></i>回覆</a>
                                         <a class="dropdown-item" @click="open(comment)" href="javascript:void(0)" v-if="comment.user_id == user_id && the_switch!==comment.id"><i class="fas fa-edit pr-2"></i>編輯</a>
-                                        <a class="dropdown-item" @click="deleteComment(comment)" href="javascript:void(0)" v-if="comment.user_id == user_id && the_switch!==comment.id || author == user_id && the_reply!==comment.id"><i class="fas fa-trash-alt pr-2"></i>刪除</a>
+                                        <a class="dropdown-item" @click="deleteComment(comment)" href="javascript:void(0)" v-if="comment.user_id == user_id && the_switch!==comment.id || seller == user_id && the_reply!==comment.id"><i class="fas fa-trash-alt pr-2"></i>刪除</a>
                                     </div>
                                 </div>
                                 <!-- <span class="meta" v-if="author==user_id&&the_reply!==comment.id">
@@ -65,7 +65,7 @@
                   <div class="user-reply" role="textbox" contenteditable style="outline: none; background:gray">
                   </div>
                   </div> -->
-                <reply-board :reply_comment="comment"  :reply_user="auth_check" :product_author="author" @send="sendReply" @reply_delete="deleteReply" @reply_cancel="cancelReply" :open="the_reply" :replies="comment.replies"></reply-board>
+                <reply-board :reply_comment="comment"  :reply_user="auth_check" :productSeller="seller" @send="sendReply" @reply_delete="deleteReply" @reply_cancel="cancelReply" :open="the_reply" :replies="comment.replies"></reply-board>
             </div>
         </ul>
         <div class="alert alert-secondary text-center" role="alert" v-else>
@@ -83,14 +83,14 @@
  let moment = require('moment');
  import ReplyBoard from './ReplyBoard'
  export default {
-    props:['_comments','product_data','auth'],
+    props:['Comments','product','auth'],
     components:{ReplyBoard},
     data(){
       return{
-        user_id:this.auth!==0?this.auth.id:0,
-        author:this.product_data.seller_id,
-        product_id:this.product_data.id,
-        comments:this._comments,
+        user_id:this.auth!== 0 ? this.auth.id : 0,
+        seller:this.product.seller_id,
+        product_id:this.product.id,
+        comments:this.Comments,
         auth_check: this.auth,
         the_switch:false,
         the_reply:false,

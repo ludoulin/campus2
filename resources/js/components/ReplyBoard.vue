@@ -16,16 +16,18 @@
                             <span class="text-secondary"> • </span>
                             <span class="meta text-secondary" :title="reply.created_at">{{ moment(reply.created_at).fromNow()}}</span>
                             <div class="float-right">
-                                <div class="dropdown">
+
+                                <div class="dropdown" v-if="(reply_comment.user_id == reply_user.id || reply_user.id == productSeller ) && the_switch!==reply.id">
                                     <button class="btn btn-lg dot" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" @click="reply_open(reply)" href="javascript:void(0)" v-if="reply_comment.user_id == reply_user.id && reply.user_id!==reply_user.id || reply_user.id == product_author && reply.user_id!==product_author"><i class="fas fa-reply pr-2"></i>回覆</a>
+                                        <a class="dropdown-item" @click="reply_open(reply)" href="javascript:void(0)" v-if="(reply_comment.user_id == reply_user.id && reply.user_id!==reply_user.id )|| (reply_user.id == productSeller && reply.user_id!== productSeller )"><i class="fas fa-reply pr-2"></i>回覆</a>
                                         <a class="dropdown-item" @click="edit(reply)" href="javascript:void(0)" v-if="reply.user_id == reply_user.id && the_switch!==reply.id"><i class="fas fa-edit pr-2"></i>編輯</a>
                                         <a class="dropdown-item" @click="reply_delete(reply)" href="javascript:void(0)" v-if="reply.user_id == reply_user.id && the_switch!==reply.id"><i class="fas fa-trash-alt pr-2"></i>刪除</a>
                                     </div>
                                 </div>
+
                              <!-- <span class="meta" v-if="reply_comment.user_id==reply_user.id&&reply.user_id!==reply_user.id||reply_user.id==product_author&&reply.user_id!==product_author">
                                 <button @click="reply_open(reply)" class="btn btn-primary btn-xs pull-left">
                                  <i class="fas fa-reply mr-2"></i>回覆
@@ -90,7 +92,7 @@
 <script>
 let moment = require('moment');
  export default {
-props:['reply_comment','open','replies','reply_user','product_author'],
+props:['reply_comment','open','replies','reply_user','productSeller'],
  data(){
       return{
         reply_message:"",
