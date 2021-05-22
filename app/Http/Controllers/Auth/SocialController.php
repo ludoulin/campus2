@@ -46,6 +46,7 @@ class SocialController extends Controller
         if(!empty($s_u)){
             $login_user = $s_u->user;
         }else{
+
             if (empty($socialite_user->email)) {
                 return Redirect::route('login')->withErrors([
                     'msg' => '很抱歉，我們無法從您的' . $provider . '帳號抓到信箱，請用其他方式註冊帳號謝謝!'
@@ -68,7 +69,8 @@ class SocialController extends Controller
                         'provider' => $provider,
                         'user_id' => $login_user->id
                     ]);
-				}
+                }
+                
 			}else{
 				$login_user = UserEloquent::create([
 					'email' => $socialite_user->email,
@@ -87,14 +89,12 @@ class SocialController extends Controller
 			}
         }
 
-
         if(!is_null($login_user)){
 
-           
             Auth::login($login_user);
 
-            if (Session::has('cart'))
-            {
+            if (Session::has('cart')){
+
                 $carts = session()->get('cart');
 
                 foreach($carts as $cart){
@@ -104,20 +104,13 @@ class SocialController extends Controller
                     $result = CartItem::where('user_id', $login_user->id)->where('product_id', $id)->count();
                      
                     if($result==0){
-                    
-                    $cart_item = new CartItem();
-                    $cart_item->product_id = $cart["product_id"];
-                    $cart_item->user_id = $login_user->id;
-                    $cart_item->save();
-
+                        $cart_item = new CartItem();
+                        $cart_item->product_id = $cart["product_id"];
+                        $cart_item->user_id = $login_user->id;
+                        $cart_item->save();
                     }
-                    
-                    
                 }
-
             }
-
-
             return $this->authenticated($request, $this->guard()->user())
             ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
         }

@@ -5,11 +5,11 @@
 @endsection
 @section('script')
 <script>
-  $("#profile-img").click(function() {
+	
+AOS.init();
+$("#profile-img").click(function() {
 	$("#status-options").toggleClass("active");
 });
-
-
 
 $("#status-options ul li").click(function() {
 	$("#profile-img").removeClass();

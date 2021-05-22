@@ -1,7 +1,7 @@
 <template>
     <div class="composer">
         <textarea v-model="message" placeholder="請輸入訊息...." class="input"></textarea>
-        <button @click="send"><i class="fa fa-paper-plane-o"></i></button>
+        <button @click="send"><i class="fas fa-paper-plane"></i></button>
     </div>
 </template>
 

@@ -2828,16 +2828,16 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['_comments', 'product_data', 'auth'],
+  props: ['Comments', 'product', 'auth'],
   components: {
     ReplyBoard: _ReplyBoard__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
       user_id: this.auth !== 0 ? this.auth.id : 0,
-      author: this.product_data.seller_id,
-      product_id: this.product_data.id,
-      comments: this._comments,
+      seller: this.product.seller_id,
+      product_id: this.product.id,
+      comments: this.Comments,
       auth_check: this.auth,
       the_switch: false,
       the_reply: false,
@@ -3112,7 +3112,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MessagesFeed__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MessagesFeed */ "./resources/js/components/MessagesFeed.vue");
 /* harmony import */ var _MessageComposer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MessageComposer */ "./resources/js/components/MessageComposer.vue");
-//
 //
 //
 //
@@ -4417,10 +4416,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['reply_comment', 'open', 'replies', 'reply_user', 'product_author'],
+  props: ['reply_comment', 'open', 'replies', 'reply_user', 'productSeller'],
   data: function data() {
     return {
       reply_message: "",
@@ -72997,7 +72998,8 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm.auth_check !== 0
+                          comment.user_id == _vm.user_id ||
+                          _vm.seller == _vm.user_id
                             ? _c("div", { staticClass: "float-right" }, [
                                 _c("div", { staticClass: "dropdown" }, [
                                   _vm._m(0, true),
@@ -73012,7 +73014,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm.author == _vm.user_id &&
+                                      _vm.seller == _vm.user_id &&
                                       _vm.the_reply !== comment.id
                                         ? _c(
                                             "a",
@@ -73062,7 +73064,7 @@ var render = function() {
                                       _vm._v(" "),
                                       (comment.user_id == _vm.user_id &&
                                         _vm.the_switch !== comment.id) ||
-                                      (_vm.author == _vm.user_id &&
+                                      (_vm.seller == _vm.user_id &&
                                         _vm.the_reply !== comment.id)
                                         ? _c(
                                             "a",
@@ -73186,7 +73188,7 @@ var render = function() {
                   attrs: {
                     reply_comment: comment,
                     reply_user: _vm.auth_check,
-                    product_author: _vm.author,
+                    productSeller: _vm.seller,
                     open: _vm.the_reply,
                     replies: comment.replies
                   },
@@ -73437,27 +73439,52 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "social-media" }, [
-      _c("a", [
+      _c("a", { attrs: { href: "javascript:void(0)" } }, [
         _c("i", {
           staticClass: "fa fa-trash",
           attrs: { "aria-hidden": "true" }
         })
       ]),
       _vm._v(" "),
-      _c("a", [_c("i", { staticClass: "fas fa-copy" })]),
+      _c("a", { attrs: { href: "javascript:void(0)" } }, [
+        _c("i", { staticClass: "fas fa-copy" })
+      ]),
       _vm._v(" "),
       _c(
         "a",
         {
-          attrs: { href: "", "data-toggle": "dropdown", "aria-hidden": "true" }
+          staticClass: "btn",
+          attrs: {
+            href: "javascript:void(0)",
+            "data-toggle": "dropdown",
+            "aria-hidden": "true"
+          }
         },
         [_c("i", { staticClass: "fa fa-sort" })]
       ),
       _vm._v(" "),
       _c("ul", { staticClass: "dropdown-menu dropdown-menu-right" }, [
-        _c("li", [_c("a", { attrs: { href: "" } }, [_vm._v("Latest")])]),
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "dropdown-item",
+              attrs: { href: "javascript:void(0)" }
+            },
+            [_vm._v("Latest")]
+          )
+        ]),
         _vm._v(" "),
-        _c("li", [_c("a", { attrs: { href: "" } }, [_vm._v("Oldest")])])
+        _c("li", [
+          _c(
+            "a",
+            {
+              staticClass: "dropdown-item",
+              attrs: { href: "javascript:void(0)" }
+            },
+            [_vm._v("Oldest")]
+          )
+        ])
       ])
     ])
   }
@@ -73620,7 +73647,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("button", { on: { click: _vm.send } }, [
-      _c("i", { staticClass: "fa fa-paper-plane-o" })
+      _c("i", { staticClass: "fas fa-paper-plane" })
     ])
   ])
 }
@@ -73657,7 +73684,12 @@ var render = function() {
                 key: message.id,
                 class:
                   "message" +
-                  (message.to == _vm.contact.id ? " sent" : " received")
+                  (message.to == _vm.contact.id ? " sent" : " received"),
+                attrs: {
+                  "data-aos":
+                    "" +
+                    (message.to == _vm.contact.id ? "fade-right" : "fade-left")
+                }
               },
               [
                 _c("div", [
@@ -73675,7 +73707,7 @@ var render = function() {
                     _vm._v(
                       " \n                " +
                         _vm._s(message.text) +
-                        "\n            "
+                        "\n                "
                     )
                   ])
                 ]),
@@ -75146,82 +75178,90 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "float-right" }, [
-                    _c("div", { staticClass: "dropdown" }, [
-                      _vm._m(0, true),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "dropdown-menu dropdown-menu-right",
-                          attrs: { "aria-labelledby": "dropdownMenuButton" }
-                        },
-                        [
-                          (_vm.reply_comment.user_id == _vm.reply_user.id &&
-                            reply.user_id !== _vm.reply_user.id) ||
-                          (_vm.reply_user.id == _vm.product_author &&
-                            reply.user_id !== _vm.product_author)
-                            ? _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "javascript:void(0)" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.reply_open(reply)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "fas fa-reply pr-2" }),
-                                  _vm._v("回覆")
-                                ]
-                              )
-                            : _vm._e(),
+                    (_vm.reply_comment.user_id == _vm.reply_user.id ||
+                      _vm.reply_user.id == _vm.productSeller) &&
+                    _vm.the_switch !== reply.id
+                      ? _c("div", { staticClass: "dropdown" }, [
+                          _vm._m(0, true),
                           _vm._v(" "),
-                          reply.user_id == _vm.reply_user.id &&
-                          _vm.the_switch !== reply.id
-                            ? _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "javascript:void(0)" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.edit(reply)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "fas fa-edit pr-2" }),
-                                  _vm._v("編輯")
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          reply.user_id == _vm.reply_user.id &&
-                          _vm.the_switch !== reply.id
-                            ? _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "javascript:void(0)" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.reply_delete(reply)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fas fa-trash-alt pr-2"
-                                  }),
-                                  _vm._v("刪除")
-                                ]
-                              )
-                            : _vm._e()
-                        ]
-                      )
-                    ])
+                          _c(
+                            "div",
+                            {
+                              staticClass: "dropdown-menu dropdown-menu-right",
+                              attrs: { "aria-labelledby": "dropdownMenuButton" }
+                            },
+                            [
+                              (_vm.reply_comment.user_id == _vm.reply_user.id &&
+                                reply.user_id !== _vm.reply_user.id) ||
+                              (_vm.reply_user.id == _vm.productSeller &&
+                                reply.user_id !== _vm.productSeller)
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "javascript:void(0)" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.reply_open(reply)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-reply pr-2"
+                                      }),
+                                      _vm._v("回覆")
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              reply.user_id == _vm.reply_user.id &&
+                              _vm.the_switch !== reply.id
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "javascript:void(0)" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.edit(reply)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-edit pr-2"
+                                      }),
+                                      _vm._v("編輯")
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              reply.user_id == _vm.reply_user.id &&
+                              _vm.the_switch !== reply.id
+                                ? _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "javascript:void(0)" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.reply_delete(reply)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-trash-alt pr-2"
+                                      }),
+                                      _vm._v("刪除")
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 ]
               ),
@@ -88883,14 +88923,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/js/components/MessagesFeed.vue ***!
   \**************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MessagesFeed_vue_vue_type_template_id_4b6ab3f5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MessagesFeed.vue?vue&type=template&id=4b6ab3f5&scoped=true& */ "./resources/js/components/MessagesFeed.vue?vue&type=template&id=4b6ab3f5&scoped=true&");
 /* harmony import */ var _MessagesFeed_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MessagesFeed.vue?vue&type=script&lang=js& */ "./resources/js/components/MessagesFeed.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _MessagesFeed_vue_vue_type_style_index_0_id_4b6ab3f5_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MessagesFeed.vue?vue&type=style&index=0&id=4b6ab3f5&lang=scss&scoped=true& */ "./resources/js/components/MessagesFeed.vue?vue&type=style&index=0&id=4b6ab3f5&lang=scss&scoped=true&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _MessagesFeed_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _MessagesFeed_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _MessagesFeed_vue_vue_type_style_index_0_id_4b6ab3f5_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MessagesFeed.vue?vue&type=style&index=0&id=4b6ab3f5&lang=scss&scoped=true& */ "./resources/js/components/MessagesFeed.vue?vue&type=style&index=0&id=4b6ab3f5&lang=scss&scoped=true&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -88922,7 +88963,7 @@ component.options.__file = "resources/js/components/MessagesFeed.vue"
 /*!***************************************************************************!*\
   !*** ./resources/js/components/MessagesFeed.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

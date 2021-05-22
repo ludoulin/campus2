@@ -215,8 +215,8 @@
           <div class="col-lg-12 col-lg-12 col-md-12 card mt-3 product-comment">
               <div class="card-body">
                 <comment-board 
-                :_comments="{{$product->comments()->with(['user','replies'=> function($query){$query->with("user");}])->get()}}" 
-                :product_data="{{$product}}" :auth="{{Auth::check()?Auth::user():0}}">
+                :Comments="{{$product->comments()->with(['user','replies'=> function($query){$query->with("user");}])->get()}}" 
+                :product="{{$product}}" :auth="{{Auth::check()?Auth::user():0}}">
                 </comment-board>
               </div>
           </div>

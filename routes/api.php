@@ -31,4 +31,4 @@ Route::get('/search', function(Request $request){
     return response()->json($merged);
    });
 
-
+Route::post('/callback', 'LineHookController@hooks')->name('linetbot.hooks');
