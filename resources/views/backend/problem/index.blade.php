@@ -65,7 +65,7 @@
                                                 data-toggle="tooltip"
                                                 data-placement="bottom"
                                                 onclick="DeleteProblem(this)"
-                                                data-news="{{$problem->id}}"
+                                                data-problem="{{$problem->id}}"
                                                 title="刪除">
                                                 <i class="far fa-trash-alt trash-btn"></i>
                                             </a>
@@ -74,7 +74,7 @@
                                 @endforeach
                                 @if ($problemsList->isEmpty())
                                     <tr>
-                                        <td colspan="5" class="text-center">目前尚無消息</td>
+                                        <td colspan="6" class="text-center">目前尚無問題</td>
                                     </tr>
                                 @endif
                             </tbody>

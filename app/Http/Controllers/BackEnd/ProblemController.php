@@ -37,17 +37,6 @@ class ProblemController extends Controller
      */
     public function destroy(Problem $problem)
     {  
-        if($problem->file){
-            if(file_exists(public_path($problem->avatar))){
-
-                unlink(public_path($problem->avatar));
-
-            }else{
-
-                dd('檔案不存在');
-            }
-        }
-
         $problem->delete();
         
         return redirect()->back();

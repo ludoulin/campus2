@@ -34,11 +34,13 @@
                             <textarea id="problem-content" class="form-control"
                                 name="content" style="height:300px" disabled>{{ old('content', $problem->content) }}</textarea>
                         </div>
+                        @if($problem->file)
                         <div class="col-md-12 mt-2">
                             <label for="problem-content">附件</label>
                             <br>
                             <img class="img-fluid rounded" width="1024" height="380" src="{{asset($problem->file)}}">
                       </div>
+                      @endif
                       <div class="col-md-12 mt-2 text-right">
                             <a class="btn btn-secondary" href="{{ route('admin.problem.index') }}">返回</a>
                      </div>

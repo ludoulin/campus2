@@ -23,8 +23,10 @@ class ProblemController extends Controller
         $user_email = $request->user_email;
         $content = $request->content;
         $order_number = $request->order_number;
-        $file = $request->file;
-        $imagePath = Storage::disk('problems')->put(Problem::PROBLEM_TYPES[$request->type], $file);
+        if($request->file){
+            $file = $request->file;
+            $imagePath = Storage::disk('problems')->put(Problem::PROBLEM_TYPES[$request->type], $file);
+        }
 
         Problem::create([
             'title' => $title,
@@ -32,7 +34,7 @@ class ProblemController extends Controller
             'user_email' => $user_email,
             'content' => $content,
             'order_number' => $order_number,
-            'file' =>  '/problems/' .$imagePath
+            'file' =>  $request->file ? '/problems/' .$imagePath : null,
         ]);
       return redirect()->back()->with('success','問題提交成功');
     }
