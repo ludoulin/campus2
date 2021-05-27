@@ -26,4 +26,19 @@ class Problem extends Model
         'user_email', // 信箱
         'order_number', // 訂單編號
     ];
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($problem) {
+            
+        if(file_exists(public_path($problem->file))){
+            unlink(public_path($problem->file));
+            }else{
+                 dd('image does not exists.');
+            }
+        });
+    }
 }
