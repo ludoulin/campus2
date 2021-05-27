@@ -9,51 +9,6 @@ use Carbon\Carbon;
 
 class DepartmentController extends Controller
 {
-//     public function show(Department $department , Request $request)
-//     {
-
-//         $builder = Product::with(['images'])->where(function($query) use ($department) {
-//             $query->whereHas('tags',function ($query) use ($department) {
-//                             $query->where('department_id', '=', $department->id);
-//                     });
-//         });
-    
-
-//         if ($search = $request->input('search', '')) {
-//             $like = '%'.$search.'%';
-    
-            
-//             $builder->where(function($query) use ($like) {
-//                 $query->where('name', 'like', $like)
-//                     ->orWhereHas('user', function ($query) use ($like) {
-//                         $query->where('name', 'like', $like);
-//                     });
-                
-//             });
-
-//         }
-
-//         if ($order = $request->input('order', '')) {
-//             if (preg_match('/^(.+)_(asc|desc)$/', $order, $m)) {
-//                 if (in_array($m[1], ['price', 'created_at'])) {
-
-//                     $builder->orderBy($m[1], $m[2]);
-
-//                 }
-//             }
-//         }
-     
-//         $filters= [
-//             'search' => $search,
-//             'order'  => $order,
-//         ] ;
-
-
-//         $products = $builder->get();
-
-//         return view('department.index', compact('department','products','filters'));
-//     }
-// }
     public function show(Department $department){
         
         return view('department.index', compact('department'));
@@ -61,6 +16,7 @@ class DepartmentController extends Controller
     }
 
     public function search(Request $request){
+        
         $id = $request->department;
         $builder = Product::with(['images','user','favorited','carted'])->where(function($query) use ($id) {
             $query->whereHas('tags',function ($query) use ($id) {
@@ -86,7 +42,6 @@ class DepartmentController extends Controller
         if ($order = $request->input('order', '')) {
             if (preg_match('/^(.+)_(asc|desc|month|week|day|hour|)$/', $order, $m)) {
                 if (in_array($m[1], ['price', 'created_at'])) {
-
 
                     if($m[2]==='week'){
                         $week = Carbon::now()->subWeek(); 
@@ -119,12 +74,3 @@ class DepartmentController extends Controller
 
     }
 }
-
-// var filters = {!! json_encode($filters) !!};
-//     $(document).ready(function () {
-//       $('.search-form input[name=search]').val(filters.search);
-//       $('.search-form select[name=order]').val(filters.order);
-//       $('.search-form select[name=order]').on('change', function() {
-//         $('.search-form').submit();
-//       });
-//     })

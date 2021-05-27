@@ -38,8 +38,10 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/checkout/confirm.scss', 'public/css/checkout')
    .sass('resources/sass/backend/activity/index.scss', 'public/css/backend/activity')
    .sass('resources/sass/backend/news/index.scss', 'public/css/backend/news')
+   .sass('resources/sass/backend/problem/index.scss', 'public/css/backend/problem')
    .sass('resources/sass/news/index.scss', 'public/css/news')
    .sass('resources/sass/backend/home.scss', 'public/css/backend')
+   .sass('resources/sass/contact_us/index.scss', 'public/css/contact_us')
    .version();
 
 

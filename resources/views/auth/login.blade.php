@@ -12,11 +12,11 @@
           </header>
           <hr class="hr-text" data-content="二手書平台會員登入">
           <section>
-            <form method="POST" action="{{ route('login') }}" class="login-form">
+            <form method="POST" action="{{ route('login') }}" class="login-form" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return LoginValid()">
               @csrf
               <div class="input-group">
                 <label for="email">{{ __('E-Mail Address') }}</label>
-                    <input id="email" type="email" class=" {{ !$errors->has('email') ? : 'is-invalid' }}" name="email" value="{{ old('email') }}" placeholder="請輸入會員信箱" required autocomplete="email" autofocus>
+                    <input id="email" type="email" class="necessary{{ !$errors->has('email') ? '' : 'is-invalid' }}" name="email" value="{{ old('email') }}" placeholder="請輸入會員信箱" autofocus>
                     <div class="text-danger">
                         @if ($errors->has('email'))
                             <span><strong>{{ $errors->first('email') }}</strong></span>
@@ -25,13 +25,12 @@
               </div>
               <div class="input-group">
                 <label for="password">{{ __('Password') }}</label>
-                    <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" placeholder="請輸入會員密碼" required autocomplete="current-password">
-
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                    <input id="password" type="password" class="necessary{{ !$errors->has('password') ? '' : 'is-invalid' }}" name="password" placeholder="請輸入會員密碼" autocomplete="current-password">
+                    <div class="text-danger">
+                            @if ($errors->has('password'))
+                                <span><strong>{{ $errors->first('password') }}</strong></span>
+                            @endif
+                    </div>
               </div>
               <div class="input-group">
                  <button type="submit">{{ __('Login') }}</button>
@@ -51,6 +50,47 @@
           </section>
         </div>
       </section>
+@endsection
+
+
+@section('script')
+<script>
+    function LoginValid(){
+        return ValidateForm() && EmailVaild() && PasswordValid()
+    }
+    function EmailVaild(){
+
+        let EmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+        let email = document.getElementById("email").value;
+
+        if(!EmailRegex.test(email)){
+
+        MessageObject.VaildSubmitMessage("驗證錯誤","請輸入正確的email格式");
+
+        return false
+
+        }
+
+        return true
+    }
+    function PasswordValid(){
+
+        let PasswordRegex = /^(?=.*[a-z])(?=.*\d)[a-z\d]{8,12}$/;
+
+        let password = document.getElementById("password").value;
+
+        if(!PasswordRegex.test(password)){
+
+            MessageObject.VaildSubmitMessage('驗證錯誤','密碼欄位不能在不符合規則下按下送出');
+
+           return false
+        }
+
+        return true
+    }
+
+</script>
 @endsection
 
 {{-- 舊的login --}}

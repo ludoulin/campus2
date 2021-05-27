@@ -117,7 +117,7 @@ function ValidateInput() {
   var count = 0;
 
   for (var i = 0; i < lists.length; i++) {
-    if (lists[i].value.trim() == "" || lists[i].value === "error") {
+    if (lists[i].value === "" || lists[i].value === "error") {
       lists[i].classList.add("is-invalid");
       count++;
     } else {
@@ -144,7 +144,12 @@ function ValidateRadio() {
     $(".type-block").addClass("error");
   }
 
-  count = Valid === true ? 0 : 1;
+  if (radios.length > 0) {
+    count = Valid === true ? 0 : 1;
+  } else {
+    count = 0;
+  }
+
   return count;
 }
 

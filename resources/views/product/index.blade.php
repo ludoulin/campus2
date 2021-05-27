@@ -15,8 +15,4 @@
 </script>
 @endsection
 
-{{-- <div class="d-block">
-        <span>
-        </span>    
-</div>     --}}
 
