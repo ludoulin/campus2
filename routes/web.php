@@ -25,6 +25,9 @@ Route::get('/activities/{activity}', 'PagesController@activities')->name('activi
 Route::get('/news', 'NewsController@index')->name('news.index');
 Route::get('/news/{news}', 'PagesController@news')->name('news.show');
 
+Route::get('/ContactUs', 'ProblemController@index')->name('problem.index');
+Route::post('/ContactUs/store', 'ProblemController@store')->name('problem.store');
+
 
 Route::post('/callback', 'LineHookController@hooks')->name('linetbot.hooks');
 
@@ -86,6 +89,10 @@ Route::post('admin/news/create', 'BackEnd\NewsController@store')->name('admin.ne
 Route::get('admin/news/{news}/edit', 'BackEnd\NewsController@edit')->name('admin.news.edit');
 Route::patch('admin/news/{news}', 'BackEnd\NewsController@update')->name('admin.news.update');
 Route::delete('admin/news/{news}', 'BackEnd\NewsController@destroy')->name('admin.news.destroy');
+
+Route::get('admin/problems', 'BackEnd\ProblemController@index')->name('admin.problem.index');
+Route::get('admin/problems/{problem}', 'BackEnd\ProblemController@show')->name('admin.problem.show');
+Route::delete('admin/problems/{problem}', 'BackEnd\ProblemController@destroy')->name('admin.problem.destroy');
 
 Route::get('/chathome', 'UsersController@index')->name('users.home');
 Route::get('/favorites', 'UsersController@getFavorites')->name('users.favorite');

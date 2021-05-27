@@ -1,0 +1,33 @@
+.problem-card {
+  background: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+}
+
+.problem-card .problem-card-header {
+  padding: 20px;
+  margin-bottom: 0;
+  align-items: center !important;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.problem-card .problem-card-header .problem-card-header-title .card-title {
+  margin-bottom: 0;
+}
+
+.problem-card .problem-card-body {
+  padding: 20px;
+}
+
+@media (max-width: 479px) {
+  .jumbotron-fluid h1 {
+    font-size: 40px;
+  }
+
+  .jumbotron-fluid p {
+    font-size: 18px;
+  }
+}
+

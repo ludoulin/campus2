@@ -64,7 +64,58 @@
             </div>
         </div>
     </div>
-  </div> 
+    <div class="col-md-12">
+        <div class="product-card product-card-block product-card-stretch product-card-height">
+           <div class="product-card-header d-flex justify-content-between align-items-center position-relative mb-0 last-detail">
+              <div class="product-header-title">
+                 <h4 class="card-title mb-0">最新商品</h4>
+              </div>
+              <div class="product-card-header-toolbar d-flex align-items-center">
+              <a href="{{route('products.index')}}" class="btn btn-sm btn-primary view-more">查看更多</a>
+              </div>
+           </div>                         
+           <div class="product-card-body last-contens">
+              <ul id="last-slider" class="list-inline p-0 mb-0 row">
+                @foreach ($products as $product)
+                 <li class="col-md-3">
+                    <div class="d-flex align-items-center">
+                       <div class="col-5 p-0 position-relative image-overlap-shadow">
+                       <a href="javascript:void();"><img class="img-fluid rounded w-100" src="{{asset($product->images[0]->path)}}" alt=""></a>
+                          <div class="view-book">
+                             <a href="{{route('products.show', $product->id)}}" class="btn btn-sm btn-white">前往商品頁面</a>
+                          </div>
+                       </div>
+                       <div class="col-7">
+                          <div class="mt-2">
+                          <p class="mb-1">書名:{{$product->name}}</p>
+                          <p class="font-size-13 line-height text-muted">賣家:{{$product->user->name}}</p>
+                          <p>
+                              <b class="text-danger">${{$product->price}}元</b>
+                          </p> 
+                          </div>
+                          <div class="product-action">
+                              <div class="row">
+                                  <div class="col-lg-12 col-md-12 col-sm-12 col-12 ">
+                                      <a href="javascript:void(0);" class="h-t">
+                                          <i class="far fa-heart heart"><span>收藏</span></i>
+                                      </a>      
+                                  </div>
+                                  <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
+                                      <a href="javascript:void(0);" class="c-t">
+                                          <i class="fas fa-cart-plus cart"><span>加入購物車</span></i>
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                       </div>
+                    </div>
+                 </li>
+                 @endforeach
+              </ul>
+           </div>
+        </div>
+     </div>
+  </div>
 </div> 
 
 @include('pages.banner',['activities' => $activities] )
@@ -346,15 +397,12 @@
               @endforeach
             </div>
           </div>
+
+
 @endsection
 @section('script')
 <script>
    $(document).ready(function(){
-
-    $('#carouselExampleIndicators').carousel({
-        interval: false
-      })
-
 
       $('.rank_autoplay').slick({
         arrows: true,
@@ -397,20 +445,41 @@
         },
       ]
       });
-    });
 
-function openCity(evt, cityName) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
+      $('#last-slider').slick({
+          dots: false,
+          arrows: false,
+          infinite: true,
+          speed: 300,
+          centerMode: false,
+          autoplay: true,
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                infinite: true,
+              }
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 576,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]
+        });
+    });
 </script>
 @endsection

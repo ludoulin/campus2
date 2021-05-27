@@ -6,7 +6,6 @@ window.ValidateForm = function(section = document){
     count += ValidateMulitSelector(section);
     count += ValidateFile(section);
     count += ValidateTextArea(section);
-
     if(count!=0){
         MessageObject.VaildSubmitMessage("驗證發生錯誤","必填欄位一定要填");
         return false
@@ -23,7 +22,7 @@ function ValidateInput(section = document){
     let count = 0;
 
     for(let i = 0; i < lists.length; i++){
-            if(lists[i].value.trim() == ""|| lists[i].value === "error"){
+            if(lists[i].value === ""|| lists[i].value === "error"){
                 lists[i].classList.add("is-invalid");
                 count++
             } else {
@@ -50,11 +49,13 @@ function ValidateRadio(section = document){
         $(".type-block").addClass("error");
     }
 
-    count = (Valid === true ) ? 0 : 1
+    if(radios.length>0){
+        count = (Valid === true ) ? 0 : 1
+    }else{
+        count = 0;
+    }
 
     return count;
-
-
 }
 function ValidateSelector(section = document){
         
@@ -74,7 +75,6 @@ function ValidateSelector(section = document){
                 selectors[i].classList.remove("is-invalid");
             }
          }
-
         return count;
  }
 
@@ -106,7 +106,6 @@ function ValidateMulitSelector(section = document){
                 }
 
              }
-
     return count;
 }
  
@@ -148,7 +147,5 @@ function ValidateTextArea(section = document){
             textareas[i].classList.remove("is-invalid");
         }
      }
-
-
     return count;
  }

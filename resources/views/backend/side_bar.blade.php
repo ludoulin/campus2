@@ -31,7 +31,7 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('admin.problem.index') }}">
                 <span class="icon"><i class="fas fa-question-circle"></i></span>
                 <span class="text">問題回報管理</span>
             </a>

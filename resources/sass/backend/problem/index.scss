@@ -1,4 +1,4 @@
-.news-manage-card{
+.problem-manage-card{
     background: #ffffff;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -8,7 +8,7 @@
     -webkit-box-shadow: 0px 4px 20px 0px rgb(44 101 144 / 10%);
     box-shadow: 0px 4px 20px 0px rgb(44 101 144 / 10%);
 
-    .news-manage-header{
+    .problem-manage-header{
         padding: 20px;
         margin-bottom: 0;
         -ms-flex-align: center !important;
@@ -16,14 +16,14 @@
         align-items: center !important;
         border-bottom: 1px solid #f1f1f1;
 
-        .news-manage-header-title{
+        .problem-manage-header-title{
 
             .card-title{
                 margin-bottom: 0;
             }
         }
     }
-    .news-manage-body{
+    .problem-manage-body{
         padding: 20px;        
       }
   

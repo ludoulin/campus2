@@ -88,7 +88,7 @@
             <form method="POST" action="{{ route('register') }}" class="login-form">
               @csrf
               <div class="input-group">
-                <label for="name">{{ __('Name') }}</label>
+                <label for="name">使用者名稱</label>
                 <input id="name" type="text"  class="@error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                 @error('name')
                     <span class="invalid-feedback" role="alert">

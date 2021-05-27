@@ -65,6 +65,12 @@ return [
             'url' => 'images',
         ],
 
+        'problems' => [
+            'driver' => 'local',
+            'root' => 'problems',
+            'url' => 'problems',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
