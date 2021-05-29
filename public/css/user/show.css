@@ -1,0 +1,209 @@
+.page-title-box {
+  padding-bottom: 1.25rem;
+}
+
+.page-title-box h4 {
+  font-weight: 600;
+  font-size: 18px !important;
+}
+
+.page-title-box .breadcrumb-item > a {
+  color: #495057;
+}
+
+.card-body .float-end {
+  float: right !important;
+}
+
+.card-body .avatar-lg {
+  height: 6rem;
+  width: 6rem;
+}
+
+.card-body h5 {
+  color: #495057;
+}
+
+.font-size-16 {
+  font-size: 16px !important;
+}
+
+.font-size-20 {
+  font-size: 20px !important;
+}
+
+.shop .nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #5b73e8;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.shop .nav-tabs-custom {
+  border-bottom: 2px solid #f6f6f6;
+}
+
+.shop .nav-tabs-custom .nav-item {
+  position: relative;
+  color: #343a40;
+}
+
+.shop .nav-tabs-custom .nav-item .nav-link {
+  border: none;
+}
+
+.shop .nav-tabs-custom .nav-item .nav-link::after {
+  content: "";
+  background: #5b73e8;
+  height: 2px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -2px;
+  transition: all 250ms ease 0s;
+  transform: scale(0);
+}
+
+.shop .nav-tabs-custom .nav-item .nav-link.active:after {
+  transform: scale(1);
+}
+
+.shop .nav-justified .nav-item,
+.shop .nav-justified > .nav-link {
+  flex-basis: 0;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.shop .nav-justified .nav-item .nav-link {
+  width: 100%;
+}
+
+.shop .nav-tabs .nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #ced4da #ced4da #fff;
+}
+
+.shop .nav-tabs .nav-link {
+  margin-bottom: -1px;
+  background: 0 0;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
+.shop .nav-tabs-custom .nav-item .nav-link.active {
+  color: #5b73e8;
+}
+
+.shop .nav-tabs > li > a {
+  color: #495057;
+  font-weight: 500;
+}
+
+.shop .nav-link:focus,
+.shop .nav-link:hover {
+  color: #1e3ed8;
+}
+
+.shop .pagination {
+  padding-bottom: 0.25rem !important;
+  margin-bottom: 1.5rem !important;
+  margin-top: 1rem !important;
+  justify-content: center !important;
+}
+
+.shop .pagination .page-link {
+  color: #74788d;
+  background-color: #fff;
+  border: 1px solid #ccd4da;
+  border-radius: 30px !important;
+  margin: 0 3px !important;
+  border: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  text-align: center;
+  line-height: 32px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.shop .pagination .page-link:hover {
+  z-index: 2;
+  color: #4458b8;
+  text-decoration: none;
+  background-color: #eff2f7;
+  border-color: #ced4da;
+}
+
+.shop .pagination .page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #556ee6;
+  border-color: #556ee6;
+}
+
+.shop .pagination .page-item.disabled .page-link {
+  color: #ced4da;
+  border-color: #ced4da;
+}
+
+.prooduct-details-box {
+  margin-bottom: 30px;
+}
+
+.prooduct-details-box .media {
+  border: 1px solid #d7e2e9;
+  border-radius: 10px;
+  padding: 15px 0;
+  width: 100%;
+  position: relative;
+}
+
+.prooduct-details-box .media .img-60 {
+  width: 60px !important;
+}
+
+.prooduct-details-box .media .media-body .product-name h6 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  font-size: 1rem;
+}
+
+.prooduct-details-box .media .media-body .product-name h6 a {
+  color: gray;
+}
+
+.prooduct-details-box .media .media-body .price .me-2 {
+  margin-right: 0.5rem !important;
+}
+
+.prooduct-details-box .media .media-body .avaiabilty .text-success {
+  color: #198754 !important;
+}
+
+.prooduct-details-box .media .media-body .btn-primary {
+  background-color: #5b73e8 !important;
+  border-color: #5b73e8 !important;
+}
+
+.prooduct-details-box .ms-3 {
+  margin-left: 1rem !important;
+}
+
+.alert-primary {
+  color: #5b73e8;
+  background-color: #dee3fa;
+  border-color: #ced5f8;
+}
+
+@media (max-width: 575.98px) {
+  .page-title-box .page-title-right {
+    display: none;
+  }
+}
+

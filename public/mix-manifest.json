@@ -1,7 +1,7 @@
 {
     "/js/AlertMessage.js": "/js/AlertMessage.js?id=a7dae50330e6552eafe4",
     "/js/Validation.js": "/js/Validation.js?id=b0e10e8ef13576de9a1e",
-    "/js/app.js": "/js/app.js?id=924250994cab563d1065",
+    "/js/app.js": "/js/app.js?id=c073cc6856406b4644f1",
     "/css/app.css": "/css/app.css?id=02786427bddc517c5fd5",
     "/css/login/login.css": "/css/login/login.css?id=215aeb2077a7333f3b07",
     "/css/register/register.css": "/css/register/register.css?id=a96042cca6203ef17574",
@@ -29,5 +29,6 @@
     "/css/backend/problem/index.css": "/css/backend/problem/index.css?id=1100dc6d00a68f26ef36",
     "/css/news/index.css": "/css/news/index.css?id=c7c5e6b0dac8f4dad795",
     "/css/backend/home.css": "/css/backend/home.css?id=7d13803c252712a60474",
-    "/css/contact_us/index.css": "/css/contact_us/index.css?id=be7138caf59d130180e7"
+    "/css/contact_us/index.css": "/css/contact_us/index.css?id=be7138caf59d130180e7",
+    "/css/user/show.css": "/css/user/show.css?id=95fea647002060000118"
 }
