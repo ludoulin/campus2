@@ -27,7 +27,17 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $selling = $user->products()->where('status', 1)->paginate(9);
+
+        $dealing = $user->products()->where('status', 3)->paginate(9);
+
+
+        $products = [
+            'selling' => $selling,
+            'dealing' => $dealing,
+        ];
+
+        return view('users.show', compact('user','products'));
     }
 
     public function edit(User $user)
