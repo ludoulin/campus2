@@ -4,9 +4,9 @@ use App\Models\Problem;
 @endphp
 @extends('layouts.basic')
 @section('title', '聯絡我們')
-<link href="{{ asset('css/contact_us/index.css') }}" rel="stylesheet">
-@section('basic')
 
+@section('basic')
+<link href="{{ asset('css/contact_us/index.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
