@@ -7,6 +7,7 @@ use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent;
 use App\Services\LineBot\LineBotService;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
 use LINE\LINEBot\Constant\HTTPHeader;
 
@@ -27,6 +28,8 @@ class LineHookController extends Controller
         $this->channel_secret = env('LINE_BOT_CHANNEL_SECRET');
     }
     public function hooks(Request $request){
+
+        Log::info(Session::all());
 
         $httpClient = new CurlHTTPClient($this->channel_access_token);
 
@@ -58,20 +61,50 @@ class LineHookController extends Controller
 
                     $response = $bot->replyText($event['replyToken'], "請輸入想找的商品");
 
+                    $reply = [
+                        $event['replyToken'] => [
+                             'bot'=>  "請輸入想找的商品",
+                             'usetId' => $event['source']['userId'],
+                        ]
+                   ];
+
+                    session()->put('bot', $reply);
+
+                    Log::info(Session::get('bot'));
+
                 }
 
-                if($message === "我想知道訂單進度"){
+               else if($message === "我想知道訂單進度"){
 
                     $response = $bot->replyText($event['replyToken'], "請輸入訂單編號");
 
+                    $reply = [
+                        $event['replyToken'] => [
+                             'bot'=>  "請輸入訂單編號",
+                             'usetId' => $event['source']['userId'],
+                        ]
+                   ];
+
+                    session()->put('bot',"請輸入訂單編號");
+
+                    Log::info(Session::get('bot'));
+
                 }
 
-                $response = $bot->replyMessage($event['replyToken'], $this->LineBotService->getProduct($message));
+              else {
+                    Log::info(Session::get('bot'));
+                    $response = $bot->replyMessage($event['replyToken'], $this->LineBotService->getProduct($message));
+                }
+                
+                Log::info(Session::all());
+                // else{
+                //     $response = $bot->replyText($event['replyToken'], "請點選單再操作");
+                // }
 
-            if ($response->isSucceeded()) {
-                logger('reply successfully');
-                return;
-            }
+                if ($response->isSucceeded()) {
+                    logger('reply successfully');
+                    return;
+                }
         }
         return response('anchor', 200);
     }

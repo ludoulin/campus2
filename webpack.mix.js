@@ -43,6 +43,7 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/backend/home.scss', 'public/css/backend')
    .sass('resources/sass/contact_us/index.scss', 'public/css/contact_us')
    .sass('resources/sass/user/show.scss', 'public/css/user')
+   .sass('resources/sass/checkout/index.scss', 'public/css/checkout')
    .version();
 
 
