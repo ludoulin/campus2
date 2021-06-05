@@ -9,7 +9,7 @@
     <all-product :login="{{ Auth::check() ? 1 : 0 }}"></all-product>
 @endsection
 
-@section('script')
+@section('FrontEnd_Script')
 <script>
     AOS.init();
 </script>

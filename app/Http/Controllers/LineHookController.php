@@ -7,15 +7,16 @@ use LINE\LINEBot;
 use LINE\LINEBot\Event\MessageEvent;
 use App\Services\LineBot\LineBotService;
 use LINE\LINEBot\HTTPClient\CurlHTTPClient;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use LINE\LINEBot\Constant\HTTPHeader;
+use Carbon\Carbon;
 
 class LineHookController extends Controller
 {
     private $channel_access_token;
     private $channel_secret;
-
+    protected $expiresAt;
     /**
      * @var LineBotService
      */
@@ -26,10 +27,9 @@ class LineHookController extends Controller
         $this->LineBotService = $LineBotService;
         $this->channel_access_token = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
         $this->channel_secret = env('LINE_BOT_CHANNEL_SECRET');
+        $this->expiresAt = Carbon::now()->addMinutes(3);
     }
     public function hooks(Request $request){
-
-        Log::info(Session::all());
 
         $httpClient = new CurlHTTPClient($this->channel_access_token);
 
@@ -51,63 +51,44 @@ class LineHookController extends Controller
            logger(json_encode($event));
            if($event['type'] != 'message') continue;
 
-            $messageType = $event['message']['type'];
             $message = $event['message']['text'];
+            $userId = $event['source']['userId'];
+            $previous = Cache::has($userId) ? Cache::get($userId) : array();
 
             // 不是文字訊息的類型先不處理
-            if($messageType != 'text') continue;
+            if($event['message']['type']!= 'text') continue;
 
                 if($message === "我想要找商品"){
 
                     $response = $bot->replyText($event['replyToken'], "請輸入想找的商品");
-
-                    $reply = [
-                        $event['replyToken'] => [
-                             'bot'=>  "請輸入想找的商品",
-                             'usetId' => $event['source']['userId'],
-                        ]
-                   ];
-
-                    session()->put('bot', $reply);
-
-                    Log::info(Session::get('bot'));
-
+                    $this->LineBotService->SaveBotReply($userId, $this->expiresAt, "請輸入想找的商品");
                 }
-
-               else if($message === "我想知道訂單進度"){
+                else if($message === "我想知道訂單進度"){
 
                     $response = $bot->replyText($event['replyToken'], "請輸入訂單編號");
-
-                    $reply = [
-                        $event['replyToken'] => [
-                             'bot'=>  "請輸入訂單編號",
-                             'usetId' => $event['source']['userId'],
-                        ]
-                   ];
-
-                    session()->put('bot',"請輸入訂單編號");
-
-                    Log::info(Session::get('bot'));
-
+                    $this->LineBotService->SaveBotReply($userId, $this->expiresAt, "請輸入訂單編號");
                 }
+                else if(count($previous)!== 0 && $previous[count($previous)-1] === "請輸入想找的商品"){
 
-              else {
-                    Log::info(Session::get('bot'));
                     $response = $bot->replyMessage($event['replyToken'], $this->LineBotService->getProduct($message));
                 }
-                
-                Log::info(Session::all());
-                // else{
-                //     $response = $bot->replyText($event['replyToken'], "請點選單再操作");
-                // }
+                else if(count($previous)!== 0 && $previous[count($previous)-1] === "請輸入訂單編號"){
+                    $response = $bot->replyText($event['replyToken'], $this->LineBotService->getOrder($message));
+                }
+                else{
+
+                    $response = $bot->replyText($event['replyToken'], "請點選menu選單中您要的服務");
+                }
+                    Log::info(Cache::get($event['source']['userId']));  
 
                 if ($response->isSucceeded()) {
                     logger('reply successfully');
-                    return;
+                    break;
                 }
         }
-        return response('anchor', 200);
+        return response('成功', 200);
     }
+
 }
 
  // $match = preg_match('/台灣|臺灣|Taiwan|taiwan|韓總/', $message);

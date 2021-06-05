@@ -120,120 +120,7 @@
 
 @include('pages.banner',['activities' => $activities] )
 
-<div class="container mt-3">
-  <div class="row">
-      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
-          <div class="inner-news shadow-sm">
-            <h6 class="border-bottom border-gray pb-2 mb-0">最近成交動態</h6>
-            
-            <div class="media text-muted pt-3">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-                
-              </p>
-            </div>
-            <div class="media text-muted pt-3">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-               
-              </p>
-            </div>
-            <div class="media text-muted pt-3">
-              <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                <strong class="d-block text-gray-dark">@username</strong>
-              </p>
-            </div>
-            <div class="media text-muted pt-3">
-                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                  <strong class="d-block text-gray-dark">@username</strong>
-                </p>
-              </div>
-              <div class="media text-muted pt-3">
-                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                    <strong class="d-block text-gray-dark">@username</strong>
-                  </p>
-                </div>  
-            <small class="d-block text-right mt-3">
-              <a href="#">All updates</a>
-            </small>
-          </div>
-          </div>
-
-          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
-              <div class="inner-news shadow-sm">
-                <h6 class="border-bottom border-gray pb-2 mb-0">最近成交動態</h6>
-                
-                <div class="media text-muted pt-3">
-                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                    <strong class="d-block text-gray-dark">@username</strong>
-                    
-                  </p>
-                </div>
-                <div class="media text-muted pt-3">
-                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                    <strong class="d-block text-gray-dark">@username</strong>
-                   
-                  </p>
-                </div>
-                <div class="media text-muted pt-3">
-                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                    <strong class="d-block text-gray-dark">@username</strong>
-                  </p>
-                </div>
-                <div class="media text-muted pt-3">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                    </p>
-                  </div>
-                  <div class="media text-muted pt-3">
-                      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                        <strong class="d-block text-gray-dark">@username</strong>
-                      </p>
-                    </div>  
-                <small class="d-block text-right mt-3">
-                  <a href="#">All updates</a>
-                </small>
-              </div>
-              </div>
-        
-          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-3 rounded news">
-            <div class="inner-news shadow-sm">
-              <h6 class="border-bottom border-gray pb-2 mb-0">願望清單</h6>
-              <div class="media text-muted pt-3">
-                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                  <strong class="d-block text-gray-dark">@username</strong>
-                  
-                </p>
-              </div>
-              <div class="media text-muted pt-3">
-                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                  <strong class="d-block text-gray-dark">@username</strong>
-                 
-                </p>
-              </div>
-              <div class="media text-muted pt-3">
-                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                  <strong class="d-block text-gray-dark">@username</strong>
-                </p>
-              </div>
-              <div class="media text-muted pt-3">
-                  <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                    <strong class="d-block text-gray-dark">@username</strong>
-                  </p>
-                </div>
-                <div class="media text-muted pt-3">
-                    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-                      <strong class="d-block text-gray-dark">@username</strong>
-                    </p>
-                  </div> 
-              <small class="d-block text-right mt-3">
-                <a href="#">All updates</a>
-              </small>
-            </div>
-            </div>
-  </div>
-</div>  
-        <div class="container mt-3">
+    <div class="container mt-3">
             <h2><i class="fas fa-bullhorn pr-2"></i>消息公告</h2>
             <table class="table news-list-container mt-3">
               <thead>
@@ -400,7 +287,7 @@
 
 
 @endsection
-@section('script')
+@section('FrontEnd_Script')
 <script>
    $(document).ready(function(){
 

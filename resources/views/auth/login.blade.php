@@ -53,7 +53,7 @@
 @endsection
 
 
-@section('script')
+@section('FrontEnd_Script')
 <script>
     function LoginValid(){
         return ValidateForm() && EmailVaild() && PasswordValid()

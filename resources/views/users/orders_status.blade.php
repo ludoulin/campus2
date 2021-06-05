@@ -196,7 +196,7 @@
       
 @endsection
 
-@section('script')  
+@section('FrontEnd_Script')  
 
 
 <script>

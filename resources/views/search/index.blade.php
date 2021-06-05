@@ -82,7 +82,7 @@
                     </div>
 </div>
 @endsection
-@section('script')
+@section('FrontEnd_Script')
 <script>
    $(document).ready(function(){
     $('.autoplay').slick({

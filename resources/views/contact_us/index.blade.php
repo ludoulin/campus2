@@ -112,7 +112,7 @@ use App\Models\Problem;
 @endsection
 
 
-@section('script')
+@section('FrontEnd_Script')
 <script>
 $(document).ready(function() {
     $('select[name="type"]').on("change",function(){

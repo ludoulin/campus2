@@ -19,7 +19,7 @@
   <product-item :login="{{ Auth::check() ? 1 : 0 }}" :user_id="{{Auth::check() ? Auth::id() : 0 }}" :department={{ $department->id }}></product-item>    
 @endsection
 
-@section('script')
+@section('FrontEnd_Script')
 <script>
 AOS.init();
 
