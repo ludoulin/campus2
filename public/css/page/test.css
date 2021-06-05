@@ -55,11 +55,276 @@
   color: #1e7fe4 !important;
 }
 
+.campus-sidebar .campus-sidebar-logo a:hover,
+.campus-sidebar .campus-sidebar-logo a:focus {
+  text-decoration: none;
+}
+
 .campus-sidebar .campus-sidebar-logo img {
   height: 45px;
 }
 
-.campus-sidebar .campus-sidebar-logo .wrapper-menu {
+.campus-sidebar .campus-sidebar-menu {
+  position: relative;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li {
+  list-style-type: none;
+  position: relative;
+  white-space: nowrap;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li li {
+  margin: 0;
+  background: transparent !important;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li li a {
+  font-size: 16px;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li a[aria-expanded=true] {
+  color: #1e7fe4;
+  text-decoration: none;
+  border-radius: 0;
+  transition: none;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li a[aria-expanded=true] .campus-arrow-right {
+  transform: rotate(90deg);
+  transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  -ms-transition: all 0.3s ease-in-out 0s;
+  -o-transition: all 0.3s ease-in-out 0s;
+  -webkit-transition: all 0.3s ease-in-out 0s;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li a {
+  font-size: 16px;
+  white-space: nowrap;
+  display: block;
+  color: #777D74;
+  position: relative;
+  padding: 15px 20px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 0px;
+  text-transform: capitalize;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li a .campus-arrow-right {
+  margin-right: 0px;
+  margin-left: auto;
+  transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  -ms-transition: all 0.3s ease-in-out 0s;
+  -o-transition: all 0.3s ease-in-out 0s;
+  -webkit-transition: all 0.3s ease-in-out 0s;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li a i {
+  font-size: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+  width: 20px;
+  display: inline-block;
+  float: left;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li a span {
+  white-space: nowrap;
+  padding: 0;
+  display: inline-block;
+  float: left;
+  transition: all 0.3s ease-in-out 0s;
+  transition: none;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li ul {
+  padding-left: 0;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li ul li a {
+  padding-left: 40px;
+}
+
+.campus-sidebar .campus-sidebar-menu .campus-menu li.active a[aria-expanded=true] {
+  background: rgba(30, 127, 228, 0.1);
+}
+
+.campus-sidebar .scrollbar-track {
+  position: absolute;
+  opacity: 0;
+  z-index: 1;
+  background: rgba(222, 222, 222, 0.75);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  transition: opacity 0.5s 0 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s 0 0.5s ease-in-out;
+}
+
+.campus-sidebar .scrollbar-track .scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+.campus-sidebar .scrollbar-track-x {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+}
+
+.campus-sidebar .scrollbar-track-y {
+  bottom: 0;
+  left: 0;
+  width: 8px;
+  height: 100%;
+}
+
+.rippleEffect {
+  -webkit-animation: rippleDrop 0.6s linear;
+          animation: rippleDrop 0.6s linear;
+  -webkit-animation-duration: 0.6s;
+          animation-duration: 0.6s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
+  -webkit-animation-fill-mode: none;
+          animation-fill-mode: none;
+  -webkit-animation-play-state: running;
+          animation-play-state: running;
+  -webkit-animation-name: rippleDrop;
+          animation-name: rippleDrop;
+}
+
+.ripple {
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(30, 61, 115, 0.1);
+  transform: scale(0);
+  position: absolute;
+  opacity: 1;
+}
+
+.campus-sidebar .campus-sidebar-logo {
+  float: none;
+  width: 100%;
+}
+
+.campus-sidebar-logo a {
+  display: flex;
+  align-items: flex-start;
+}
+
+.campus-sidebar #sidebar-scrollbar {
+  margin-top: 15px;
+}
+
+#sidebar-scrollbar {
+  height: 100vh;
+}
+
+#sidebar-scrollbar {
+  overflow-y: auto;
+  scrollbar-color: rgba(30, 61, 115, 0.1) #fbfcff;
+  scrollbar-width: thin;
+}
+
+.scroll-content {
+  transform: translate3d(0, 0, 0);
+}
+
+[data-scrollbar] {
+  display: block;
+  position: relative;
+}
+
+.campus-sidebar-menu .campus-menu li.active > a::before {
+  opacity: 1;
+  height: 75%;
+}
+
+.campus-sidebar-menu .campus-menu li > a::before {
+  content: "";
+  width: 3px;
+  height: 0px;
+  display: inline-block;
+  background: #1e7fe4;
+  position: absolute;
+  top: 7px;
+  right: 0px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s;
+}
+
+.campus-sidebar-menu .campus-menu > li.active > a {
+  color: #1e7fe4;
+  text-decoration: none;
+  background: #fbfcff;
+}
+
+.campus-sidebar-menu .campus-menu li a[aria-expanded=true] i.campus-arrow-left,
+.campus-sidebar-menu .campus-menu li.active > a > i.campus-arrow-left {
+  color: #1e7fe4;
+}
+
+.campus-sidebar-menu .campus-menu li.active .campus-submenu li.active > a {
+  color: #1e7fe4;
+  border-radius: 0;
+}
+
+.campus-sidebar-menu .campus-menu li.active .campus-submenu li > a,
+.campus-sidebar-menu .campus-menu li .campus-submenu li a:hover {
+  background: transparent;
+}
+
+.campus-sidebar-menu .campus-menu li ul a:hover {
+  color: #1e7fe4;
+  text-decoration: none;
+  background: transparent;
+}
+
+.campus-sidebar-menu .campus-menu li a:hover {
+  color: #1e7fe4;
+}
+
+.collapse:not(.show) {
+  display: none;
+}
+
+@media (min-width: 1300px) {
+  .logo-tite {
+    white-space: nowrap;
+  }
+}
+
+.wrapper-menu {
   font-size: 30px;
   text-align: center;
   line-height: 15px;
@@ -82,219 +347,401 @@
   -moz-border-radius: 5px;
 }
 
-.campus-sidebar #sidebar-scrollbar {
-  margin-top: 15px;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content {
-  transform: translate3d(0, 0, 0);
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu {
-  position: relative;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li {
-  list-style-type: none;
-  position: relative;
-  white-space: nowrap;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li li {
-  margin: 0;
-  background: transparent !important;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li li a {
-  font-size: 16px;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a[aria-expanded=true] {
-  color: #1e7fe4;
-  text-decoration: none;
-  border-radius: 0;
-  transition: none;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a[aria-expanded=true] .campus-arrow-right {
-  transform: rotate(90deg);
-  transition: all 0.3s ease-in-out 0s;
-  -moz-transition: all 0.3s ease-in-out 0s;
-  -ms-transition: all 0.3s ease-in-out 0s;
-  -o-transition: all 0.3s ease-in-out 0s;
-  -webkit-transition: all 0.3s ease-in-out 0s;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a {
-  font-size: 16px;
-  white-space: nowrap;
-  display: block;
-  color: #777D74;
-  position: relative;
-  padding: 15px 20px;
-  line-height: 18px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 0px;
-  text-transform: capitalize;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a .campus-arrow-right {
-  margin-right: 0px;
-  margin-left: auto;
-  transition: all 0.3s ease-in-out 0s;
-  -moz-transition: all 0.3s ease-in-out 0s;
-  -ms-transition: all 0.3s ease-in-out 0s;
-  -o-transition: all 0.3s ease-in-out 0s;
-  -webkit-transition: all 0.3s ease-in-out 0s;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a i {
-  font-size: 20px;
-  margin-right: 10px;
-  vertical-align: middle;
-  width: 20px;
-  display: inline-block;
-  float: left;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a span {
-  white-space: nowrap;
-  padding: 0;
-  display: inline-block;
-  float: left;
-  transition: all 0.3s ease-in-out 0s;
-  transition: none;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a .rippleEffect {
-  -webkit-animation: rippleDrop 0.6s linear;
-          animation: rippleDrop 0.6s linear;
-  -webkit-animation-duration: 0.6s;
-          animation-duration: 0.6s;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-delay: 0s;
-          animation-delay: 0s;
-  -webkit-animation-iteration-count: 1;
-          animation-iteration-count: 1;
-  -webkit-animation-direction: normal;
-          animation-direction: normal;
-  -webkit-animation-fill-mode: none;
-          animation-fill-mode: none;
-  -webkit-animation-play-state: running;
-          animation-play-state: running;
-  -webkit-animation-name: rippleDrop;
-          animation-name: rippleDrop;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li a .ripple {
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(30, 61, 115, 0.1);
-  transform: scale(0);
-  position: absolute;
-  opacity: 1;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li ul {
-  padding-left: 0;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li ul li a {
-  padding-left: 40px;
-}
-
-.campus-sidebar #sidebar-scrollbar .scroll-content .campus-sidebar-menu .campus-menu li.active a[aria-expanded=true] {
-  background: rgba(30, 127, 228, 0.1);
-}
-
-.campus-sidebar #sidebar-scrollbar .scrollbar-track {
-  position: absolute;
-  opacity: 0;
-  z-index: 1;
-  background: rgba(222, 222, 222, 0.75);
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  transition: opacity 0.5s 0 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s 0 0.5s ease-in-out;
-}
-
-.campus-sidebar #sidebar-scrollbar .scrollbar-track .scrollbar-thumb {
-  position: absolute;
+.campus-top-navbar {
+  padding: 0 15px 0 30px;
+  min-height: 73px;
+  position: fixed;
   top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  background: rgba(0, 0, 0, 0.5);
-  border-radius: 4px;
+  left: auto;
+  right: 0;
+  width: calc(100% - 300px);
+  display: inline-block;
+  z-index: 99;
+  background: #fbfcff;
+  border-bottom: 1px solid #ededf0;
+  margin: 0;
+  transition: all 0.45s ease 0s;
 }
 
-.campus-sidebar #sidebar-scrollbar .scrollbar-track-x {
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 8px;
-}
-
-.campus-sidebar #sidebar-scrollbar .scrollbar-track-y {
-  bottom: 0;
-  left: 0;
-  width: 8px;
-  height: 100%;
-}
-
-.campus-sidebar .campus-sidebar-logo {
-  float: none;
-  width: 100%;
-}
-
-#sidebar-scrollbar {
-  height: 100vh;
-}
-
-[data-scrollbar] {
-  display: block;
-  position: relative;
-}
-
-.campus-sidebar-menu .campus-menu > li.active > a {
-  color: #1e7fe4;
-  text-decoration: none;
-  background: rgba(30, 127, 228, 0.1);
-}
-
-.campus-sidebar-menu .campus-menu li a[aria-expanded=true] i.campus-arrow-left,
-.campus-sidebar-menu .campus-menu li.active > a > i.campus-arrow-left {
-  color: #1e7fe4;
-}
-
-.campus-sidebar-menu .campus-menu li.active .campus-submenu li.active > a {
-  color: #1e7fe4;
-  border-radius: 0;
-}
-
-.campus-sidebar-menu .campus-menu li.active .campus-submenu li > a {
-  background: transparent;
-}
-
-.collapse:not(.show) {
+.campus-top-navbar .campus-navbar-custom .campus-menu-bt {
   display: none;
 }
 
+.campus-top-navbar .campus-navbar-custom .navbar-breadcrumb {
+  display: block;
+  margin-left: 0px;
+  padding: 20px 0;
+}
+
+.campus-top-navbar .campus-navbar-custom .navbar-breadcrumb h5 {
+  font-size: 1.2em;
+}
+
+.campus-top-navbar .navbar-expand-lg {
+  justify-content: space-between !important;
+}
+
+.campus-top-navbar .navbar-collapse {
+  flex-grow: unset;
+}
+
+.campus-top-navbar .campus-search-box {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  transform: translateY(100%);
+  background-color: #ffffff;
+  transition: all 0.3s;
+  padding: 15px;
+  box-shadow: 0px 0px 20px 0px rgba(44, 101, 144, 0.1);
+  transition: all 0.3s ease-out 0s;
+  -webkit-animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+.campus-top-navbar .campus-sub-dropdown {
+  width: 300px;
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  -webkit-animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in-bottom 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  transform: translateY(100%);
+  background-color: var(--iq-white);
+  transition: all 0.3s;
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px 0px rgba(44, 101, 144, 0.1);
+  transition: all 0.3s ease-out 0s;
+}
+
+.campus-top-navbar .campus-sub-dropdown .campus-card-body div {
+  border-radius: 5px 5px 0 0;
+}
+
+.campus-navbar-logo {
+  padding: 20px;
+  width: auto;
+  position: relative;
+  background: var(--iq-white);
+  transition: all 0.3s ease-out 0s;
+  background: transparent;
+}
+
+.campus-navbar-logo a {
+  display: flex;
+  align-items: flex-start;
+}
+
+.campus-navbar-logo a span {
+  margin-left: 10px;
+  font-size: 19px;
+  line-height: 42px;
+  font-weight: 600;
+  color: #777D74;
+  text-transform: uppercase;
+  flex: 1;
+  transition: all 0.3s ease-out 0s;
+}
+
+.campus-navbar-logo img {
+  height: 45px;
+}
+
+.campus-navbar-logo .text-primary {
+  color: #1e7fe4 !important;
+}
+
+.campus-search-bar {
+  padding: 0 15px;
+}
+
+.campus-search-bar .campus-searchbox {
+  width: 480px;
+  position: relative;
+}
+
+.campus-search-bar .campus-search-input {
+  width: 100%;
+  height: 40px;
+  padding: 5px 15px 5px 40px;
+  font-size: 13px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+}
+
+.campus-search-bar .campus-search-input:focus {
+  outline: none;
+}
+
+.campus-search-bar .campus-search-link {
+  position: absolute;
+  left: 15px;
+  top: 5px;
+  font-size: 16px;
+  color: #777D74;
+}
+
+.navbar-light .navbar-toggler {
+  color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.navbar-list {
+  margin: 0;
+  padding: 0;
+  float: right;
+}
+
+.navbar-list li {
+  float: left;
+  list-style-type: none;
+  position: relative;
+}
+
+.navbar-list li .campus-sub-dropdown .campus-sub-card {
+  font-size: inherit;
+  padding: 15px;
+  line-height: normal;
+  color: inherit;
+  border-bottom: 1px solid #fbfcff;
+  display: inline-block;
+  width: 100%;
+}
+
+.navbar-list li.nav-item.nav-icon > a {
+  color: #ffffff;
+  padding: 0;
+  height: 35px;
+  width: 30px;
+  text-align: center;
+  font-size: 20px;
+  line-height: 35px;
+  margin: 25px 10px;
+}
+
+.navbar-list li > a {
+  font-size: 18px;
+  padding: 0 15px;
+  color: #1e7fe4;
+  display: block;
+}
+
+.campus-waves-effect {
+  position: relative;
+}
+
+.text-gray {
+  color: #777D74 !important;
+}
+
+.campus-search-box .campus-search-input {
+  width: 300px;
+  height: 50px;
+  padding: 0 1em 0 40px;
+  border: 1px solid #fbfcff;
+  background-color: #fbfcff;
+  opacity: 1;
+  border-radius: 5px;
+}
+
+.campus-search-box .campus-search-link {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+}
+
+@-webkit-keyframes shadow-pulse-dots {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 177, 255, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 0 0 15px rgba(0, 177, 255, 0);
+  }
+}
+
+@keyframes shadow-pulse-dots {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 177, 255, 0.2);
+  }
+
+  100% {
+    box-shadow: 0 0 0 15px rgba(0, 177, 255, 0);
+  }
+}
+
+@-webkit-keyframes fade-in-bottom {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-bottom {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.nav-item span.dots {
+  height: 6px;
+  width: 6px;
+  font-size: 0;
+  text-align: center;
+  padding: 0;
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  border: 0;
+  -webkit-animation: shadow-pulse-dots 1s infinite;
+  animation: shadow-pulse-dots 1s infinite;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+}
+
+.campus-card {
+  background: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+}
+
+.campus-card .campus-card-body {
+  padding: 20px;
+}
+
+.campus-card .campus-card-body .bg-primary {
+  color: #ffffff;
+  background: #1e7fe4;
+}
+
+.campus-card .campus-card-body .avatar-40 {
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  line-height: 40px;
+}
+
+.campus-card .campus-card-body .font-size-12 {
+  font-size: 12px !important;
+}
+
+.show .campus-sub-dropdown {
+  display: inline-block;
+}
+
+.navbar-list li:last-child > a {
+  padding-right: 0;
+}
+
+.navbar-list li > a > img {
+  width: 50px;
+  height: 50px;
+}
+
+.navbar-list li a:hover {
+  text-decoration: none;
+}
+
+.navbar-list li .caption {
+  line-height: 16px;
+}
+
+.navbar-list li .caption p {
+  color: var(--iq-body-text);
+  font-size: 12px;
+}
+
+.campus-sub-dropdown .campus-card-icon {
+  width: 45px;
+  height: 45px;
+  line-height: 40px;
+  font-size: 22px;
+}
+
+.campus-user-dropdown {
+  width: 350px;
+}
+
+.campus-card-icon {
+  height: 66px;
+  width: 66px;
+  display: inline-block;
+  line-height: 66px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.campus-bg-primary {
+  background: #fbfcff !important;
+  color: #1e7fe4 !important;
+}
+
+.campus-sign-btn {
+  display: inline-block;
+  text-align: center;
+  border: 1px solid transparent;
+  padding: 0.375rem 1rem;
+  border-radius: 5px;
+  line-height: normal;
+}
+
 @media (min-width: 1300px) {
-  .logo-tite {
-    white-space: nowrap;
+  .campus-top-navbar .campus-navbar-custom .campus-menu-bt {
+    display: none !important;
+  }
+
+  .campus-top-navbar .campus-navbar-custom .campus-menu-bt .wrapper-menu {
+    display: none;
+  }
+
+  .campus-top-navbar .campus-navbar-custom .campus-navbar-logo {
+    display: block !important;
+    padding: 0;
+    margin: 0 !important;
+  }
+
+  .campus-top-navbar .campus-navbar-logo {
+    display: none !important;
+  }
+
+  .camus-top-navbar .nav-item .campus-search-box {
+    padding: 0px;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-expand-lg .navbar-toggler {
+    display: none;
+  }
+
+  .navbar-expand-lg .navbar-collapse {
+    display: flex !important;
+    flex-basis: auto;
+  }
+
+  .navbar-expand-lg .navbar-nav {
+    flex-direction: row;
+  }
+
+  .navbar-list li.search-content {
+    display: none;
   }
 }
 

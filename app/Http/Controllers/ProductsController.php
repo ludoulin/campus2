@@ -10,6 +10,7 @@ use App\Models\College;
 use App\Models\Department;
 use App\Models\ProductTag;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Auth;
 use Storage;
 
@@ -351,6 +352,8 @@ class ProductsController extends Controller
 
                 session()->put('cart', $cart);
 
+                Log::info(session()->get('reply'));
+
                 return response("加入購物車成功", 200);
             }
 
@@ -370,6 +373,8 @@ class ProductsController extends Controller
                 ];
 
                 session()->put('cart', $cart);
+
+                Log::info(session()->get('reply'));
 
                 return response("加入購物車成功", 200);
             }

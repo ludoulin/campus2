@@ -203,7 +203,7 @@ use App\Models\User;
 
 @endsection
 
-@section('script')
+@section('FrontEnd_Script')
     <script type="text/javascript">
         $(".remove-from-cart").click(function (e) {
             e.preventDefault();

@@ -192,7 +192,7 @@
 @endsection
 
 
-@section('script')
+@section('FrontEnd_Script')
 
 @include('JS_Views.product.create_and_edit')
 

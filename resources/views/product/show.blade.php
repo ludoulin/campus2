@@ -6,39 +6,35 @@
 
 @section('basic')
 <link href="{{ asset('css/product/show.css') }}" rel="stylesheet">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 @endsection
 
 @section('content')
-<div class="container my-3 product">
+<div class="container mb-3 product">
     <div class="row">
         <div class="col-xl-6 col-lg-6 col-md-6 left">
             @foreach($product->images as $key => $picture)
                 <div class="big-image">
-                <img src="{{ url($picture->path) }}" id="picture_{{$key}}" alt="圖片{{$key}}" onclick="showModal(this)">
+                    <img src="{{ url($picture->path) }}" id="picture_{{$key}}" alt="圖片{{$key}}" onclick="showModal(this)">
                 </div>
             @endforeach
-            <div id ="ImgModal" class="modal">
+                <div id ="ImgModal" class="modal">
                     <span class="close" onclick="closeModal()">&times;</span>
                     <img class="modal-content" id="modal-image">
                     <div id="modal-caption"></div>
-            </div>     
-            <div class="prev" onclick="plusDiv(-1)">&#10094;</div>
-            <div class="next" onclick="plusDiv(1)">&#10095;</div>
-
-            <div class="caption-container">
-                <p id="caption" style="margin-top:10px"></p>
-            </div>    
-            
-            <div class="row image-row">
-                  @foreach($product->images as $key => $picture) 
-                    <div class="small-image">
-                        <img src="{{ url($picture->path) }}" class="demo cursor" alt="圖片{{$key+1}}" onclick="currentDiv({{$key+1}})">
-                    </div>
+                </div>     
+                <div class="prev" onclick="plusDiv(-1)">&#10094;</div>
+                <div class="next" onclick="plusDiv(1)">&#10095;</div>
+                <div class="caption-container">
+                    <p id="caption" style="margin-top:10px"></p>
+                </div>    
+                <div class="row image-row">
+                    @foreach($product->images as $key => $picture) 
+                        <div class="small-image">
+                            <img src="{{ url($picture->path) }}" class="demo cursor" alt="圖片{{$key+1}}" onclick="currentDiv({{$key+1}})">
+                        </div>
                   @endforeach
-            </div>
+                </div>
         </div>
-
         <div class="col-xl-6 col-lg-6 col-md-6 mt-md-0 mt-3 right">
             <div class="product-name">
                 <h4 class="title" style="text-align:center"><b>{{ $product->name }}</b></h4>
@@ -102,11 +98,11 @@
                     <hr>
                     <div class="mb-3 mt-2" style="font-size:16px">
                         <p>可付款方式：</p>
-                            <div class="row">
+                        <div class="row">
                             @foreach($product->user->payment_types as $type)
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                                    <h3>
-                                        <span class="badge
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                                        <h3>
+                                            <span class="badge
                                                 @if($type->id===1)
                                                     badge-primary
                                                 @elseif($type->id===2)
@@ -115,11 +111,11 @@
                                                     badge-secondary
                                                 @endif ">
                                                 {{$type->name}}
-                                        </span>  
-                                    <h3>
-                                </div>
-                              @endforeach  
-                          </div>
+                                            </span>  
+                                        </h3>
+                                    </div>
+                             @endforeach  
+                        </div>
                     </div>
                     <hr>
                     <div class="mt-2">
@@ -127,7 +123,7 @@
                             <div class="row">
                                 @foreach ($product->tags as $index => $tag)
                                    @if($index<=2)
-                                   <div class="col-xl-3 col-lg-3 col-md-4 col-6 mt-3">
+                                    <div class="col-xl-3 col-lg-3 col-md-4 col-6 mt-3">
                                         <div class="mdc-chip mr-1" role="row" style="color:#6129d6;background-color:#dfd4f7">
                                             <div class="mdc-chip__ripple"></div>
                                             <span role="gridcell">
@@ -137,20 +133,20 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                        </div>     
-                                  </div>
+                                        </div>
+                                    </div>
                                   @else
                                   <div class="col-xl-3 col-lg-3 col-md-4 col-6 mt-3"> 
-                                      <div class="mdc-chip mr-1" role="row" style="color:#6129d6;background-color:#dfd4f7" data-departments="{{$product->tags}}" onclick="SeeMore(this)" >
+                                        <div class="mdc-chip mr-1" role="row" style="color:#6129d6;background-color:#dfd4f7" data-departments="{{$product->tags}}" onclick="SeeMore(this)" >
                                           <div class="mdc-chip__ripple"></div>
-                                              <span role="gridcell">
-                                                    <span role="button" tabindex="0" class="mdc-chip__primary-action">
-                                                         <span class="mdc-chip__text">
-                                                                查看全部({{count($product->tags)}})
-                                                        </span>
+                                             <span role="gridcell">
+                                                <span role="button" tabindex="0" class="mdc-chip__primary-action">
+                                                     <span class="mdc-chip__text">
+                                                        查看全部({{count($product->tags)}})
                                                     </span>
+                                                </span>
                                             </span>
-                                      </div>    
+                                        </div>    
                                   </div>
                                   @break
                                   @endif
@@ -181,7 +177,7 @@
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-lg btn-outline-dark" role="button">
                                 <i class="far fa-edit"></i> 編輯
                             </a>
-                        <a href="javascript:void(0)" class="btn btn-lg btn-outline-danger ml-3" data-product="{{$product->id}}" onclick="DeleteConfirm(this)">
+                             <a href="javascript:void(0)" class="btn btn-lg btn-outline-danger ml-3" data-product="{{$product->id}}" onclick="DeleteConfirm(this)">
                                 <i class="far fa-trash-alt"></i> 刪除
                             </a>
                         </div>
@@ -189,6 +185,7 @@
                 </div>
             </div>
           </div>
+
           <div class="col-lg-12 col-md-12 col-sm-12 col-12 mt-3 user">
               <div class="user-data">
                   <div class="user-avatar">
@@ -220,12 +217,14 @@
                 </comment-board>
               </div>
           </div>
-      </div>
+
+        </div>
+    </div>  
 </div>   
 
 @endsection
 
-@section('script')
+@section('FrontEnd_Script')
 <script>
 $(function(){
     init();

@@ -1,36 +1,24 @@
 <template>
     <div>
-        <div class="dropdown-item" :class='{"unread":unread.read_at==null}' v-on:click="select(unread)"> 
-            <div class="media">
-                <div class="media-left">
-                    <a>
-                      <img class="media-object mr-3" alt="" :src="image" style="width:48px;height:48px;" />
-                    </a>
-                </div>
-                <div class="media-body" v-if="unread.data.hasOwnProperty('reply_id')==true">
-                    <div class="media-heading mt-0 mb-1 text-secondary">
-                        <a>{{ unread.data.user_name }}</a>
-                          回覆了您的
-                        <a >{{ unread.data.product_name }}</a>
-                    </div>
-                    <div class="reply-content">
-                        {{unread.data.reply_content}}
-                    </div>
-                </div>
-                <div class="media-body" v-if="unread.data.hasOwnProperty('comment_reply_id')==true">
-                    <div class="media-heading mt-0 mb-1 text-secondary">
-                        <a>{{ unread.data.user_name }}</a>
-                          回覆了您在
-                        <a>{{ unread.data.product_name }}</a>
-                          底下的留言
-                    </div>
-                    <div class="reply-content">
-                        {{unread.data.content}}
-                    </div>
-                </div>
-            </div>
+      <a href="javascript:void(0)" class="campus-sub-card" :class='{"unread":unread.read_at==null}' v-on:click="select(unread)">
+        <div class="media align-items-center">
+          <div>
+            <img class="avatar-40 rounded" :src="image" alt="">
+          </div>
+          <div class="media-body ml-3" v-if="unread.data.hasOwnProperty('reply_id')==true">
+            <h6 class="mb-0">{{ unread.data.user_name }}</h6>
+            <small class="float-right font-size-12">Just Now</small>
+            <p class="mb-0">回覆了您的 {{ unread.data.product_name }}</p>
+             <p class="mb-0">{{unread.data.reply_content}}</p>
+          </div>
+          <div class="media-body ml-3" v-if="unread.data.hasOwnProperty('comment_reply_id')==true">
+            <h6 class="mb-0">{{ unread.data.user_name }}</h6>
+            <small class="float-right font-size-12">Just Now</small>
+            <p class="mb-0">回覆了您的 {{ unread.data.product_name }}</p>
+             <p class="mb-0"> {{unread.data.content}}</p>
+          </div>
         </div>
-      <hr>
+      </a>
   </div>
 </template>
 <script>

@@ -63,23 +63,6 @@
     </div>
   </div>
 </nav>
- {{-- <button class="btn btn-secondary dropdown-toggle badge-{{ Auth::user()->notification_count > 0 ? 'hint' : 'secondary' }}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell"></i> {{ Auth::user()->notification_count }}</button> 
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              @php
-                  $notifications = Auth::user()->notifications()->take(4)->get();
-              @endphp  
-              @if ($notifications->count()) 
-                @foreach ($notifications as $notification)
-                @include('notifications.header.' . Str::snake(class_basename($notification->type)))
-                @endforeach
-                <hr/>
-                <div class="dropdown-item full-replay" onclick="location.href='{{ route('notifications.index') }}'"> 
-                 查看所有回覆  
-                </div>
-                @else
-               <a class="empty-block">沒有消息通知！</a>
-                @endif 
-              </div> --}}
 
 
 

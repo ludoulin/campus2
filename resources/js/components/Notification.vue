@@ -1,14 +1,30 @@
 <template>
    <div>
-      <button class="btn btn-secondary dropdown-toggle notif" @click="markNotificationAsRead" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="far fa-bell mr-1"></i><a class="count">{{ notification_count }}</a></button>  
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton"> 
-         <notification-item v-for="unread in unreadNotifications" :unread="unread" :key="unread.id"></notification-item>
-         <div class="dropdown-item full-replay"><a href="http://localhost/campus2/public/notifications/index">查看所有回覆</a></div>
-      </div>
+      <li class="nav-item nav-icon" @click="markNotificationAsRead">
+         <a href="javascript:void(0)" class="search-toggle campus-waves-effect text-gray rounded">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-danger count-notify rounded-circle">{{ notification_count }}</span>
+         </a>
+         <div class="campus-sub-dropdown">
+            <div class="campus-card shadow-none m-0">
+               <div class="campus-card-body p-0">
+                  <div class="bg-primary p-3">
+                     <h5 class="mb-0 text-white">所有提醒<small class="badge  badge-light float-right pt-1">{{ unreadNotifications.length }}</small></h5>
+                  </div>
+                  <div style="overflow:scroll;max-height:280px;">
+                      <notification-item v-for="unread in unreadNotifications" :unread="unread" :key="unread.id"></notification-item>
+                  </div>
+                  <div class="d-flex align-items-center text-center p-3">
+                     <a class="btn btn-primary mr-2 campus-sign-btn" href="#" role="button">查看全部</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </li>
    </div>
 </template>
 <script>
-//  import ReadNotification from './ReadNotification'
+
  import NotificationItem from './NotificationItem'
  export default {
   props:['unreads', 'userid', 'reads', 'counts',],
@@ -89,12 +105,4 @@
  }
 </script>
 
-
-<style lang="scss" scoped>
-.dropdown-menu {
-  max-height:500px; 
-  overflow: scroll;
-
-}
-</style>
 

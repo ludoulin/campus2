@@ -203,6 +203,6 @@
 </div>            
 @endsection
 
-@section('script')
+@section('sFrontEnd_Script')
 @include('JS_Views.checkout.index')
 @endsection    
