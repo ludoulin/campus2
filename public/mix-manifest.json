@@ -1,10 +1,9 @@
 {
     "/js/AlertMessage.js": "/js/AlertMessage.js?id=a7dae50330e6552eafe4",
-    "/js/Validation.js": "/js/Validation.js?id=b0e10e8ef13576de9a1e",
-    "/js/app.js": "/js/app.js?id=a023ad53522cb662f3a1",
+    "/js/Validation.js": "/js/Validation.js?id=d19e5b8fab08daa3ea11",
+    "/js/app.js": "/js/app.js?id=453665e39803e9ddbd75",
     "/css/app.css": "/css/app.css?id=d14b20c5526b5d5d9c07",
-    "/css/login/login.css": "/css/login/login.css?id=215aeb2077a7333f3b07",
-    "/css/register/register.css": "/css/register/register.css?id=a96042cca6203ef17574",
+    "/css/auth/login_and_register.css": "/css/auth/login_and_register.css?id=de886c18f7d68e0e23f7",
     "/css/backend/control_panel.css": "/css/backend/control_panel.css?id=80332c22ac5f97f84060",
     "/css/backend/user/index.css": "/css/backend/user/index.css?id=8a0e0d98f76d7a6ae48b",
     "/css/backend/user/edit.css": "/css/backend/user/edit.css?id=75dc33e8aa9a5f8be60b",
@@ -32,5 +31,5 @@
     "/css/contact_us/index.css": "/css/contact_us/index.css?id=be7138caf59d130180e7",
     "/css/user/show.css": "/css/user/show.css?id=95fea647002060000118",
     "/css/checkout/index.css": "/css/checkout/index.css?id=176bc80155f79479bf26",
-    "/css/wrapper/index.css": "/css/wrapper/index.css?id=999ef8006c6084789432"
+    "/css/wrapper/index.css": "/css/wrapper/index.css?id=e32a2ac8f938fec4dc4e"
 }

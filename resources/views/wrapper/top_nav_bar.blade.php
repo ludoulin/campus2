@@ -95,7 +95,7 @@
                                     <div class="d-inline-block w-100 text-center p-3">
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
-                                            <button class="btn bg-primary campus-sign-btn" type="submit"><i class="fas fa-sign-out-alt ml-2"></i>登出</button>
+                                            <button class="btn bg-primary campus-sign-btn" type="submit"><i class="fas fa-sign-out-alt mr-2"></i>登出</button>
                                         </form>
                                     </div>
                                 </div>
