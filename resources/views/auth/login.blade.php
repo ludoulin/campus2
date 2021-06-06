@@ -1,59 +1,103 @@
-@extends('layouts.basic')
+@extends('layouts.app')
 
 @section('sass')
-<link href="{{ asset('css/login/login.css') }}" rel="stylesheet">
+<link href="{{ asset('css/auth/login_and_register.css') }}" rel="stylesheet">
 @endsection
 
-@section('content')
-<section class="wrapper">
-        <div class="content">
-          <header>
-            <h3>歡迎回來！快點登入吧</h3>
-          </header>
-          <hr class="hr-text" data-content="二手書平台會員登入">
-          <section>
-            <form method="POST" action="{{ route('login') }}" class="login-form" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return LoginValid()">
-              @csrf
-              <div class="input-group">
-                <label for="email">{{ __('E-Mail Address') }}</label>
-                    <input id="email" type="email" class="necessary{{ !$errors->has('email') ? '' : 'is-invalid' }}" name="email" value="{{ old('email') }}" placeholder="請輸入會員信箱" autofocus>
-                    <div class="text-danger">
-                        @if ($errors->has('email'))
-                            <span><strong>{{ $errors->first('email') }}</strong></span>
-                        @endif
-                    </div>
-              </div>
-              <div class="input-group">
-                <label for="password">{{ __('Password') }}</label>
-                    <input id="password" type="password" class="necessary{{ !$errors->has('password') ? '' : 'is-invalid' }}" name="password" placeholder="請輸入會員密碼" autocomplete="current-password">
-                    <div class="text-danger">
-                            @if ($errors->has('password'))
-                                <span><strong>{{ $errors->first('password') }}</strong></span>
-                            @endif
-                    </div>
-              </div>
-              <div class="input-group">
-                 <button type="submit">{{ __('Login') }}</button>
-                 </div>
-              <div class="input-group">
-                @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                        {{ __('Forgot Your Password?') }}
+@section('view')
+<div class="account-pages my-5 pt-sm-5" id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <a href="{{url('/')}}" class="mb-5 d-block campus-logo text-muted">
+                        <img src="https://slc.ntut.edu.tw/var/file/45/1045/img/taipeitechsllogo.png" height="22" class="logo logo-dark pr-2">北科大二手書交易平台
                     </a>
-                @endif
-            </div>
-            </form>
-            <hr class="hr-text" data-content="其他方式登入">
-            <div class="social-login">
-                    <button onclick="location.href='{{ route('social.redirect', ['provider' => 'google']) }}'"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="google" width="20"><span href="{{ route('social.redirect', ['provider' => 'google']) }}">使用 Google 登入</span></button>
                 </div>
-          </section>
+            </div>
         </div>
-      </section>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="card">
+                   
+                    <div class="card-body p-4"> 
+                        <div class="text-center mt-2">
+                            <h5 class="text-primary">歡迎回來！</h5>
+                            <p class="text-muted">快點登入北科二手書交易平台吧</p>
+                        </div>
+                        <div class="p-2 mt-4">
+                            <form method="POST" action="{{ route('login') }}" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return LoginValid()">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label" for="email">{{ __('E-Mail Address') }}</label>
+                                    <input type="text" class="form-control necessary {{ !$errors->has('email') ? '' : 'is-invalid' }}" name="email" value="{{ old('email') }}" id="email" placeholder="請輸入使用者信箱">
+                                    @if ($errors->has('email'))
+                                    <div class="text-danger">
+                                        <span><strong>{{ $errors->first('email') }}</strong></span>
+                                    </div>
+                                    @endif
+                                </div>
+        
+                                <div class="mb-3">
+                                    <div class="float-end">
+                                        @if (Route::has('password.request'))
+                                        <a href="{{ route('password.request') }}" class="text-muted">{{ __('Forgot Your Password?') }}</a>
+                                        @endif
+                                    </div>
+                                    <label class="form-label" for="password">{{ __('Password') }}</label>
+                                    <input type="password" id="password" type="password" class="form-control necessary {{ !$errors->has('password') ? '' : 'is-invalid' }}" name="password" placeholder="請輸入使用者密碼" autocomplete="current-password">
+                                    @if($errors->has('password'))
+                                    <div class="text-danger">
+                                        <span><strong>{{ $errors->first('password') }}</strong></span>
+                                    </div>
+                                    @endif
+                                </div>
+        
+                                {{-- <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="auth-remember-check">
+                                    <label class="form-check-label" for="auth-remember-check">Remember me</label>
+                                </div> --}}
+                                
+                                <div class="mt-3 text-end">
+                                    <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">登入</button>
+                                </div>
+    
+                                
+
+                                <div class="mt-4 text-center">
+                                    <div class="signin-other-title">
+                                        <h5 class="font-size-14 mb-3 title">其他方式登入</h5>
+                                    </div>
+                                    
+    
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="{{ route('social.redirect', ['provider' => 'google']) }}" class="btn social-list-item">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="mr-2" alt="google" width="20">使用 Google 登入
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="mt-4 text-center">
+                                    <p class="mb-0">還沒有帳號嗎 ? <a href="{{ route('register') }}" class="fw-medium text-primary"> 馬上註冊</a> </p>
+                                </div>
+                            </form>
+                        </div>
+    
+                    </div>
+                </div>
+                <div class="mt-5 text-center">
+                    <p>© 2021 北科大二手書交易平台 <i class="fas fa-heart text-danger"></i> by 北科大團隊</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 
-@section('FrontEnd_Script')
+@section('script')
 <script>
     function LoginValid(){
         return ValidateForm() && EmailVaild() && PasswordValid()
@@ -93,86 +137,3 @@
 </script>
 @endsection
 
-{{-- 舊的login --}}
-
-{{-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" sty>{{ __('Login') }}</div>
-
-                <div class="card-body" style="background-color: #f0f0f0;">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-2 text-center">
-                                    <p>其他登入方式</p>
-                                    <a href="{{ route('social.redirect', ['provider' => 'google']) }}" class="btn google-button"> <span class="google-button__icon">
-                                            <svg viewBox="0 0 366 372" xmlns="http://www.w3.org/2000/svg"><path d="M125.9 10.2c40.2-13.9 85.3-13.6 125.3 1.1 22.2 8.2 42.5 21 59.9 37.1-5.8 6.3-12.1 12.2-18.1 18.3l-34.2 34.2c-11.3-10.8-25.1-19-40.1-23.6-17.6-5.3-36.6-6.1-54.6-2.2-21 4.5-40.5 15.5-55.6 30.9-12.2 12.3-21.4 27.5-27 43.9-20.3-15.8-40.6-31.5-61-47.3 21.5-43 60.1-76.9 105.4-92.4z" id="Shape" fill="#EA4335"/><path d="M20.6 102.4c20.3 15.8 40.6 31.5 61 47.3-8 23.3-8 49.2 0 72.4-20.3 15.8-40.6 31.6-60.9 47.3C1.9 232.7-3.8 189.6 4.4 149.2c3.3-16.2 8.7-32 16.2-46.8z" id="Shape" fill="#FBBC05"/><path d="M361.7 151.1c5.8 32.7 4.5 66.8-4.7 98.8-8.5 29.3-24.6 56.5-47.1 77.2l-59.1-45.9c19.5-13.1 33.3-34.3 37.2-57.5H186.6c.1-24.2.1-48.4.1-72.6h175z" id="Shape" fill="#4285F4"/><path d="M81.4 222.2c7.8 22.9 22.8 43.2 42.6 57.1 12.4 8.7 26.6 14.9 41.4 17.9 14.6 3 29.7 2.6 44.4.1 14.6-2.6 28.7-7.9 41-16.2l59.1 45.9c-21.3 19.7-48 33.1-76.2 39.6-31.2 7.1-64.2 7.3-95.2-1-24.6-6.5-47.7-18.2-67.6-34.1-20.9-16.6-38.3-38-50.4-62 20.3-15.7 40.6-31.5 60.9-47.3z" fill="#34A853"/></svg>
-                                          </span>
-                                          <span class="google-button__text">Sign in with Google</span></a>
-                                </div>
-                            </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}

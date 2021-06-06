@@ -719,6 +719,11 @@ body.sidebar-main .campus-top-navbar {
   line-height: 16px;
 }
 
+.navbar-list li .caption h6 {
+  font-size: 1em;
+  color: #11141b;
+}
+
 .navbar-list li .caption p {
   color: var(--iq-body-text);
   font-size: 12px;

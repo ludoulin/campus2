@@ -1,0 +1,102 @@
+body {
+  background-color: rgba(91, 140, 232, 0.25);
+  font-size: 0.9rem;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.account-pages .logo {
+  line-height: 70px;
+}
+
+.account-pages .float-end {
+  float: right !important;
+}
+
+.account-pages .w-sm {
+  min-width: 95px;
+}
+
+.account-pages .waves-effect {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.account-pages .btn-primary {
+  color: #fff;
+  background-color: #5b73e8;
+  border-color: #5b73e8;
+}
+
+.account-pages .text-end {
+  text-align: right !important;
+}
+
+.account-pages .signin-other-title {
+  position: relative;
+}
+
+.account-pages .signin-other-title .title {
+  display: inline-block;
+  position: relative;
+  z-index: 9;
+  background-color: #fff;
+  padding: 2px 16px;
+}
+
+.account-pages .signin-other-title h5 {
+  color: #adb5bd;
+}
+
+.account-pages .signin-other-title .font-size-14 {
+  font-size: 14px !important;
+}
+
+.account-pages .signin-other-title:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  left: 0;
+  right: 0;
+  background-color: #f5f6f8;
+  top: 10px;
+}
+
+.account-pages .fw-medium {
+  font-weight: 500;
+}
+
+.account-pages .text-primary {
+  color: #5b73e8 !important;
+}
+
+.account-pages .social-list-item {
+  display: block;
+  border: 1px solid #adb5bd;
+  color: #adb5bd;
+  text-align: center;
+  transition: all 0.4s;
+}
+
+.account-pages .text-danger {
+  color: #f46a6a !important;
+}
+
+.account-pages .error {
+  border: 1px solid #dc3545;
+}
+
+.campus-logo .logo {
+  margin: 0 auto;
+}
+

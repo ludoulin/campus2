@@ -98,6 +98,7 @@ window.ValidateForm = function () {
   var count = 0;
   count += ValidateInput(section);
   count += ValidateRadio(section);
+  count += ValidateCheckBox(section);
   count += ValidateSelector(section);
   count += ValidateMulitSelector(section);
   count += ValidateFile(section);
@@ -145,6 +146,31 @@ function ValidateRadio() {
   }
 
   if (radios.length > 0) {
+    count = Valid === true ? 0 : 1;
+  } else {
+    count = 0;
+  }
+
+  return count;
+}
+
+function ValidateCheckBox() {
+  var section = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document;
+  var checkboxs = section.getElementsByClassName("necessaryCheckBox");
+  var Valid = false;
+
+  for (var i = 0; i < checkboxs.length; i++) {
+    if (checkboxs[i].checked == true) {
+      Valid = true;
+      $(".check-block").removeClass("error");
+    }
+  }
+
+  if (!Valid) {
+    $(".check-block").addClass("error");
+  }
+
+  if (checkboxs.length > 0) {
     count = Valid === true ? 0 : 1;
   } else {
     count = 0;

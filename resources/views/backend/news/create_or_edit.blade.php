@@ -125,7 +125,7 @@
                                             type="text" name="end_date" value="{{ $value }}" autocomplete="off" required>
                                     <div class="invalid-feedback">
                                         @if ($errors->has('end_date'))
-                                        <span>{{ $errors->first('end_date') }}</span> required
+                                        <span>{{ $errors->first('end_date') }}</span> 
                                          @endif
                                     </div>
                                 </div>
