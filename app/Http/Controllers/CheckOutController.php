@@ -43,7 +43,7 @@ class CheckOutController extends Controller
 
             }elseif($product->status===2){
 
-                return redirect()->route('cart')->with('waring',"很抱歉您要買的商品已被別人搶先一步下單");
+                return redirect()->route('cart')->with('warning',"很抱歉您要買的商品已被別人搶先一步下單");
 
             }elseif($product->status===3){
 
@@ -117,7 +117,7 @@ class CheckOutController extends Controller
     
                 }elseif($product->status===2){
     
-                    return redirect()->route('cart')->with('waring',"很抱歉您要買的商品已被別人搶先一步下單");
+                    return redirect()->route('cart')->with('warning',"很抱歉您要買的商品已被別人搶先一步下單");
     
                 }elseif($product->status===3){
     

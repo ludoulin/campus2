@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Crypt;
 
 class Authenticate extends Middleware
 {
-
-
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *

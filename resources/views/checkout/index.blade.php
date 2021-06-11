@@ -124,8 +124,6 @@
                                                         <i class="fas fa-hand-holding-usd d-block h2 mb-3"></i>
                                                         @elseif($type->id===2)
                                                         <i class="fab fa-line d-block h2 mb-3"></i>
-                                                        @elseif($type->id===3)
-                                                        <i class="fab fa-alipay d-block h2 mb-3"></i>
                                                         @endif
                                                         {{$type->name}}
                                                     </span>
@@ -149,7 +147,7 @@
                 </div> <!-- end col -->
                 <div class="col">
                     <div class="text-end mt-2 mt-sm-0">
-                        <a href="javscript:void(0)" class="btn btn-confirm"  onclick="Pay()">
+                        <a href="javascript:void(0)" class="btn btn-confirm"  onclick="Pay()">
                             <i class="fas fa-check me-1"></i>
                                 確認完成
                         </a>
@@ -203,6 +201,6 @@
 </div>            
 @endsection
 
-@section('sFrontEnd_Script')
+@section('FrontEnd_Script')
 @include('JS_Views.checkout.index')
 @endsection    

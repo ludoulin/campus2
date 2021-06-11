@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Models\CartItem;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use DebugBar\DebugBar;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Crypt;
 
 class LoginController extends Controller
 {
@@ -23,7 +24,6 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers;
 
     /**
@@ -43,41 +43,46 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
-       
-        if(!session()->has('url.intended'))
-        {
-            session(['url.intended' => url()->previous()]);
+        if(!session()->has('url.intended')){
+
+          session(['path' => url()->previous()]);
+
+          if(session()->has('key')){
+
+            Session::forget('key');
+          }
+
+        }else{
+
+            session(['path' => session('url.intended')]);
+            Session::forget('url.intended');
         }
+
+
+        $encrypted = $request->input('linkToken') ? $request->input('linkToken') : null;
         
         return view('auth.login',compact('encrypted'));
-
-         // $encrypted = null;
-
-        // if(Session::get('key')){
-
-        //  $encrypted = Crypt::encrypt(Session::get('key'));
-
-        //  }
 
     }   
 
     protected function sendLoginResponse(Request $request)
     {   
         
-
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
 
         $user = Auth::user();
 
-        if($user->is_admin){
-           
-            return redirect()->route('backend');
+        if($request->lineToken && !$user->line_user_id){
+            $user->nonce = Str::random(16);
+            $user->save();
+            return response()->view('auth.connect',['linkToken' => $request->lineToken , 'nonce' => $user->nonce]);
+        }
 
-        }else{
+        if(!$user->is_admin){
 
             if (Session::has('cart'))
             {
@@ -109,7 +114,22 @@ class LoginController extends Controller
 
 
         return $this->authenticated($request, $this->guard()->user())
-        ?: redirect()->intended($this->redirectPath())->with('success', '您已成功登入！');
+        ?: redirect()->intended($this->redirectPath());
                 
     }
+
+
+    public function redirectTo()
+    {
+        if (Auth::user()->is_admin === true) {
+            return route('backend');
+        }
+
+        return session('path');
+    }
 }
+
+// if(!session()->has('url.intended'))
+// {
+//     session(['url.intended' => url()->previous()]);
+// }
