@@ -3586,8 +3586,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['unreads', 'userid', 'reads', 'counts'],
@@ -73727,64 +73725,62 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "li",
-      {
-        staticClass: "nav-item nav-icon",
-        on: { click: _vm.markNotificationAsRead }
-      },
-      [
-        _c(
-          "a",
-          {
-            staticClass: "search-toggle campus-waves-effect text-gray rounded",
-            attrs: { href: "javascript:void(0)" }
-          },
-          [
-            _c("i", { staticClass: "far fa-bell" }),
+  return _c(
+    "li",
+    {
+      staticClass: "nav-item nav-icon",
+      on: { click: _vm.markNotificationAsRead }
+    },
+    [
+      _c(
+        "a",
+        {
+          staticClass: "search-toggle campus-waves-effect text-gray rounded",
+          attrs: { href: "javascript:void(0)" }
+        },
+        [
+          _c("i", { staticClass: "far fa-bell" }),
+          _vm._v(" "),
+          _c(
+            "span",
+            { staticClass: "badge badge-danger count-notify rounded-circle" },
+            [_vm._v(_vm._s(_vm.notification_count))]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "campus-sub-dropdown" }, [
+        _c("div", { staticClass: "campus-card shadow-none m-0" }, [
+          _c("div", { staticClass: "campus-card-body p-0" }, [
+            _c("div", { staticClass: "bg-primary p-3" }, [
+              _c("h5", { staticClass: "mb-0 text-white" }, [
+                _vm._v("所有提醒"),
+                _c(
+                  "small",
+                  { staticClass: "badge  badge-light float-right pt-1" },
+                  [_vm._v(_vm._s(_vm.unreadNotifications.length))]
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c(
-              "span",
-              { staticClass: "badge badge-danger count-notify rounded-circle" },
-              [_vm._v(_vm._s(_vm.notification_count))]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "campus-sub-dropdown" }, [
-          _c("div", { staticClass: "campus-card shadow-none m-0" }, [
-            _c("div", { staticClass: "campus-card-body p-0" }, [
-              _c("div", { staticClass: "bg-primary p-3" }, [
-                _c("h5", { staticClass: "mb-0 text-white" }, [
-                  _vm._v("所有提醒"),
-                  _c(
-                    "small",
-                    { staticClass: "badge  badge-light float-right pt-1" },
-                    [_vm._v(_vm._s(_vm.unreadNotifications.length))]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticStyle: { overflow: "scroll", "max-height": "280px" } },
-                _vm._l(_vm.unreadNotifications, function(unread) {
-                  return _c("notification-item", {
-                    key: unread.id,
-                    attrs: { unread: unread }
-                  })
-                }),
-                1
-              ),
-              _vm._v(" "),
-              _vm._m(0)
-            ])
+              "div",
+              { staticStyle: { overflow: "scroll", "max-height": "280px" } },
+              _vm._l(_vm.unreadNotifications, function(unread) {
+                return _c("notification-item", {
+                  key: unread.id,
+                  attrs: { unread: unread }
+                })
+              }),
+              1
+            ),
+            _vm._v(" "),
+            _vm._m(0)
           ])
         ])
-      ]
-    )
-  ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {

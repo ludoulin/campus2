@@ -59,7 +59,7 @@ Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->na
 Route::post('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
 
-Route::get('/admin', 'BackEnd\HomeController@landingPage')->name('backend');
+Route::get('admin', 'BackEnd\HomeController@landingPage')->name('backend');
 Route::get('/admin/users', 'BackEnd\UsersController@IndexPage')->name('admin.users');
 Route::get('/admin/users/{user}/edit', 'BackEnd\UsersController@AdminEdit')->name('admin.users.edit');
 Route::patch('/admin/users/{user}', 'BackEnd\UsersController@AdminUpdate')->name('admin.users.update');

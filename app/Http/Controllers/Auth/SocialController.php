@@ -12,7 +12,7 @@ use App\Models\SocialUser as SocialUserEloquent;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Session;
 use App;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Config;
 use Redirect;
 use Socialite;
@@ -116,4 +116,14 @@ class SocialController extends Controller
         }
         return App::abort(500);
     }
+
+    public function redirectTo()
+    {
+        if (Auth::user()->is_admin === true) {
+            return route('backend');
+        }
+
+        return session('path');
+    }
+
 }

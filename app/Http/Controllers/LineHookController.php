@@ -49,42 +49,103 @@ class LineHookController extends Controller
 
         foreach ($events as $event) {
            logger(json_encode($event));
-           if($event['type'] != 'message') continue;
 
-            $message = $event['message']['text'];
-            $userId = $event['source']['userId'];
+           $userId = $event['source']['userId'];
+
+           if($event['type'] === 'message'){
+
             $previous = Cache::has($userId) ? Cache::get($userId) : array();
 
-            // 不是文字訊息的類型先不處理
-            if($event['message']['type']!= 'text') continue;
+            switch ($event['message']['type']) {
 
-                if($message === "我想要找商品"){
+                case 'text':
+                        $message = $event['message']['text'];
 
-                    $response = $bot->replyText($event['replyToken'], "請輸入想找的商品");
-                    $this->LineBotService->SaveBotReply($userId, $this->expiresAt, "請輸入想找的商品");
-                }
-                else if($message === "我想知道訂單進度"){
+                        if($message === "我想要找商品"){
 
-                    $response = $bot->replyText($event['replyToken'], "請輸入訂單編號");
-                    $this->LineBotService->SaveBotReply($userId, $this->expiresAt, "請輸入訂單編號");
-                }
-                else if(count($previous)!== 0 && $previous[count($previous)-1] === "請輸入想找的商品"){
+                            $response = $bot->pushMessage($userId, $this->LineBotService->TextReply("請輸入想找的商品"));
+                            $this->LineBotService->SaveBotReply($userId, $this->expiresAt, "請輸入想找的商品");
+                        }
+                        else if($message === "我想知道訂單進度"){
 
-                    $response = $bot->replyMessage($event['replyToken'], $this->LineBotService->getProduct($message));
-                }
-                else if(count($previous)!== 0 && $previous[count($previous)-1] === "請輸入訂單編號"){
-                    $response = $bot->replyText($event['replyToken'], $this->LineBotService->getOrder($message));
-                }
-                else{
+                            $response = $bot->pushMessage($userId, $this->LineBotService->TextReply("請輸入訂單編號"));
+                            $this->LineBotService->SaveBotReply($userId, $this->expiresAt, "請輸入訂單編號");
+                        }
+                        else if($message === "我想要將Line與Campus帳號做綁定"){
 
-                    $response = $bot->replyText($event['replyToken'], "請點選menu選單中您要的服務");
-                }
-                    Log::info(Cache::get($event['source']['userId']));  
+                            $response = $bot->createLinkToken($event['source']['userId']);
+                            
+                            logger($response->getJSONDecodedBody());
+
+                            $result = $response->getJSONDecodedBody();
+
+                            $bot->pushMessage($userId, $this->LineBotService->TextReply(route('login').'?linkToken='.$result["linkToken"]));
+
+                        }
+                        else if(count($previous)!== 0 && $previous[count($previous)-1] === "請輸入想找的商品"){
+
+                            $response = $bot->pushMessage($userId, $this->LineBotService->getProduct($message));
+                        }
+                        else if(count($previous)!== 0 && $previous[count($previous)-1] === "請輸入訂單編號"){
+                            $response = $bot->pushMessage($userId, $this->LineBotService->getOrder($message, $userId));
+                        }
+                        else{
+
+                            $response = $bot->pushMessage($userId, $this->LineBotService->TextReply("請點選menu選單中您要的服務"));
+                        }
+                            Log::info(Cache::get($event['source']['userId']));
+
+                    break;
+
+                case 'sticker':    
+
+                        $response = $bot->pushMessage($userId, $this->LineBotService->TextReply("請不要使用貼圖"));
+
+                    break;
+                }           
+                    
 
                 if ($response->isSucceeded()) {
                     logger('reply successfully');
                     break;
                 }
+
+            }
+            
+            if($event['type'] === 'accountLink'){
+
+                $this->LineBotService->ConnectUser($userId, $event['link']['nonce']);
+
+                $bot->linkRichMenu($event['source']['userId'], "richmenu-492805d6d3ee189f23339fc9f6bb870e");
+
+                $response = $bot->pushMessage($userId,  $this->LineBotService->TextReply("綁定成功"));
+
+                if ($response->isSucceeded()) {
+                    logger('reply successfully');
+                    break;
+                }
+               
+            }
+
+            if($event['type'] === 'postback'){
+
+                if($event['postback']['data']==='action=CheckConnect'){
+
+                    $user = $this->LineBotService->CheckLineConnect($userId);
+
+                    $text = !$user ? "綁定中斷" : "Hello,".$user->name.",你已經綁定成功囉!趕快選擇選單服務吧~";
+
+                    $response = $bot->pushMessage($userId, $this->LineBotService->TextReply($text));
+
+                    if ($response->isSucceeded()) {
+                        logger('reply successfully');
+                        break;
+                    }
+
+                }
+
+            }
+
         }
         return response('成功', 200);
     }

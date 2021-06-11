@@ -28,6 +28,9 @@
                         <div class="p-2 mt-4">
                             <form method="POST" action="{{ route('login') }}" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="return LoginValid()">
                                 @csrf
+                                @if(isset($encrypted))
+                                <input type="hidden" id="lineToken" name="lineToken" value="{{$encrypted}}">
+                                @endif
                                 <div class="mb-3">
                                     <label class="form-label" for="email">{{ __('E-Mail Address') }}</label>
                                     <input type="text" class="form-control necessary {{ !$errors->has('email') ? '' : 'is-invalid' }}" name="email" value="{{ old('email') }}" id="email" placeholder="請輸入使用者信箱">

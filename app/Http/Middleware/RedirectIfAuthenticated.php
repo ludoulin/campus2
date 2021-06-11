@@ -19,6 +19,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+
+            if(Auth::user()->is_admin === true){
+                return redirect()->route('backend');
+            }
+
             return redirect(RouteServiceProvider::HOME);
         }
 

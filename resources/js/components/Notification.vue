@@ -1,5 +1,4 @@
 <template>
-   <div>
       <li class="nav-item nav-icon" @click="markNotificationAsRead">
          <a href="javascript:void(0)" class="search-toggle campus-waves-effect text-gray rounded">
             <i class="far fa-bell"></i>
@@ -21,7 +20,6 @@
             </div>
          </div>
       </li>
-   </div>
 </template>
 <script>
 
