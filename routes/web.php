@@ -116,6 +116,9 @@ Route::get('/contacts', 'ContactsController@get');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
 Route::post('/conversation/send', 'ContactsController@send');
 
+
+Route::get('/college/{college}', 'CollegeController@show')->name('college.show');
+
 Route::get('/department/{department}', 'DepartmentController@show')->name('department.show');
 Route::get('/department/get/{id}', 'ProductsController@getDepartment');
 Route::get('/department/products/search','DepartmentController@search');

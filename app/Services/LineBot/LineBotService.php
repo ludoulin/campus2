@@ -70,6 +70,22 @@ class LineBotService
     return $messageBuilder;
 
   }
+
+  public function MultiReply(){
+
+    $messageBuilder = new \LINE\LINEBot\MessageBuilder\MultiMessageBuilder();
+
+    return $messageBuilder;
+
+  }
+
+  public function StickerReply($package_Id, $sticker_Id){
+
+    $sticker = new \LINE\LINEBot\MessageBuilder\StickerMessageBuilder($package_Id, $sticker_Id);
+
+    return $sticker;
+
+  }
   public function SaveBotReply($user_id, $time, $text){
 
       if (Cache::has($user_id)) {                      
