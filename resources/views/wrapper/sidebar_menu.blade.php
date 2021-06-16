@@ -104,6 +104,45 @@
 					</li>
 					@endif
 					<li>
+						<a href="#college" class="campus-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
+							<i class="fas fa-university campus-arrow-left"></i>
+							<span>六大學院</span>
+							<i class="fas fa-chevron-right campus-arrow-right"></i>
+						</a>
+						<ul id="college" class="campus-submenu collapse" data-parent="#campus-sidebar-toggle">
+							<li>
+								<a href="{{ route('college.show', 1) }}">
+									<i class="fas fa-cogs"></i>機電學院
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('college.show', 2) }}">
+									<i class="fas fa-hard-hat"></i>工程學院
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('college.show', 3) }}">
+									<i class="fas fa-poll"></i>管理學院
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('college.show', 4) }}">
+									<i class="fas fa-pencil-ruler"></i>設計學院
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('college.show', 5) }}">
+									<i class="fas fa-language"></i>人文與社會科學學院學院
+								</a>
+							</li>
+							<li>
+								<a href="{{ route('college.show', 6) }}">
+									<i class="fas fa-bolt"></i>電資學院
+								</a>
+							</li>
+						</ul>		
+					</li>
+					<li>
 						<a href="#problem" class="campus-waves-effect collapsed" data-toggle="collapse" aria-expanded="false">
 							<i class="fas fa-exclamation-circle campus-arrow-left"></i>
 							<span>疑難排解</span>

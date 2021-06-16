@@ -11,14 +11,33 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\CartItem;
 use App\Models\LinePayTradeRecord;
+use LINE\LINEBot;
+use LINE\LINEBot\HTTPClient\CurlHTTPClient;
+use App\Services\LineBot\LineBotService;
 use Auth;
 
 
 class OrderController extends Controller
 {
-    public function __construct()
+    private $channel_access_token;
+    private $channel_secret;
+    private $httpClient;
+    private $bot;
+     /**
+     * @var LineBotService
+     */
+    protected $LineBotService;
+
+    public function __construct(LineBotService $LineBotService)
     {
         $this->middleware('auth');
+        $this->LineBotService = $LineBotService;
+        $this->channel_access_token = env('LINE_BOT_CHANNEL_ACCESS_TOKEN');
+        $this->channel_secret = env('LINE_BOT_CHANNEL_SECRET');
+        $this->httpClient = new CurlHTTPClient($this->channel_access_token);
+        $this->bot = new LINEBot($this->httpClient, [
+            'channelSecret' => $this->channel_secret
+        ]);
     }
 
      public function create(Request $request)
@@ -80,8 +99,6 @@ class OrderController extends Controller
 
         $seller_id = $users[count($users)-1];
 
-
-        // $payment_status = $request->payment === 2 || $request->payment === 3 ? 1 : 0;
 
         $order = Order::create([
             'order_number'      =>  'ORD-'.strtoupper(uniqid()),
@@ -145,8 +162,24 @@ class OrderController extends Controller
 
         }else{
 
+            $seller = User::findOrFail($order["seller_id"]);
 
-        return response()->json(['message' => '面交付費下單成功'], 200);
+            if($seller->line_user_id){
+
+                
+                $messageBuilder = $this->LineBotService->MultiReply();
+
+                $messageBuilder->add($this->LineBotService->TextReply("買家 ".auth()->user()->name."在剛剛跟您下單了商品,請趕緊去確認訂單吧!"));
+
+                $messageBuilder->add($this->LineBotService->TextReply("此筆訂單號碼為: ".$order->order_number));
+
+                $messageBuilder->add($this->LineBotService->StickerReply('6362', '11087940'));
+
+                $this->bot->pushMessage($seller->line_user_id,  $messageBuilder);
+
+            }
+
+            return response()->json(['message' => '面交付費下單成功'], 200);
 
         }
 
@@ -263,6 +296,21 @@ class OrderController extends Controller
 
         $order->save();
 
+        $seller = User::findOrFail($order->seller_id);
+
+        if($seller->line_user_id){
+
+            $messageBuilder = $this->LineBotService->MultiReply();
+
+            $messageBuilder->add($this->LineBotService->TextReply("買家 ".auth()->user()->name."在剛剛跟您取消了".$order->order_number."這筆訂單!"));
+
+            $messageBuilder->add($this->LineBotService->StickerReply('1070', '17858'));
+
+            $this->bot->pushMessage($seller->line_user_id, $messageBuilder);
+
+        }
+
+        
         $order->delete();
 
 		return redirect()->route('users.orders_status',auth()->user()->id)->with('success', '訂單成功取消');

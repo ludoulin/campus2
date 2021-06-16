@@ -1,0 +1,45 @@
+#college{
+
+    .page-title-box {
+        padding-bottom: 1.25rem;
+    }
+
+    .card {
+        margin-bottom: 1.25rem;
+        -webkit-box-shadow: 0 2px 4px rgb(15 34 58 / 12%);
+        box-shadow: 0 2px 4px rgb(15 34 58 / 12%);
+    }
+    .me-4 {
+        margin-right: 1.5rem!important;
+    }
+    .font-size-16 {
+        font-size: 16px!important;
+    }
+    .avatar-sm {
+        height: 3rem;
+        width: 3rem;
+        .avatar-title {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            background-color: #5b73e8;
+            color: #fff;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            font-weight: 500;
+            height: 100%;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .bg-soft-primary {
+            color: #5b73e8;
+            background-color: rgba(91,115,232,.18);
+        }
+        .text-primary {
+            color: #5b73e8!important;
+        }
+    }
+}
