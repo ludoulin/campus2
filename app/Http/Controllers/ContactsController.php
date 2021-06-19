@@ -65,4 +65,12 @@ class ContactsController extends Controller
 
         return response()->json($message);
     }
+
+    public function read($id)
+    {
+        // mark all messages with the selected contact as read
+        Message::where('from', $id)->where('to', auth()->id())->update(['read' => true]);
+
+        return response()->json('已讀', 200);
+    }
 }

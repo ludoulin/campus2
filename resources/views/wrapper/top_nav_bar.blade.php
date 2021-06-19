@@ -58,7 +58,15 @@
                     </li>
                     <li class="line-height pt-3">
                         <a href="#" class="search-toggle campus-waves-effect d-flex align-items-center">
+                            @if(Auth::user()->avatar)
                             <img class="img-fluid rounded-circle mr-3" src="{{asset(Auth::user()->avatar)}}">
+                            @else
+                            <div class="avatar-xs mt-2 mr-3">
+                                <span class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            @endif    
                             <div class="caption">
                               <h6 class="mb-1 line-height">{{ Auth::user()->name }}</h6>
                             </div>

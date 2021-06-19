@@ -114,6 +114,7 @@ Route::post('/chatmessages', 'ChatController@sendMessage');
 
 Route::get('/contacts', 'ContactsController@get');
 Route::get('/conversation/{id}', 'ContactsController@getMessagesFor');
+Route::get('/conversation/read/{id}', 'ContactsController@read');
 Route::post('/conversation/send', 'ContactsController@send');
 
 

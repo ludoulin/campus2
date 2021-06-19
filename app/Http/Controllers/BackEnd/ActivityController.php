@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Activity\StoreAndUpdateActivity;
 use App\Http\Requests\Activity\PublishActivity;
 use Storage;
+use Illuminate\Support\Str ;
 
 
 class ActivityController extends Controller
@@ -47,14 +48,15 @@ class ActivityController extends Controller
             $end_date = $request->end_date;
             $content = $request->content;
             $avatar = $request->avatar;
-            $imagePath = Storage::disk('activities')->put($year, $avatar);
+            $str = Str::random(60);
+            Storage::disk('activities')->put($str, $avatar->get());
 
             Activity::create([
                 'name' => $name,
                 'year' => $year,
                 'end_date' => $end_date,
                 'content' => $content,
-                'avatar' =>  '/activities/' .$imagePath
+                'avatar' =>  'storage/activities/' .$str 
             ]);
             
         return redirect()->route('admin.activity.index');
