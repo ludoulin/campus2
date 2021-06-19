@@ -1,5 +1,5 @@
 <template>
-    <div class="chat-app">
+   <div class="d-lg-flex mb-4">
         <ContactsList :contacts="contacts" :user="user" @selected="startConversationWith" ref="contactlist"/>
         <Conversation :contact="selectedContact" :messages="messages" :user="user" @new="saveNewMessage"/>
     </div>
@@ -53,6 +53,10 @@
             hanleIncoming(message) {
                 if (this.selectedContact && message.from == this.selectedContact.id) {
                     this.saveNewMessage(message);
+                      axios.get(`conversation/read/${message.from}`)
+                        // .then((response) => {
+                        //      console.log(response.data);
+                        // })
                     return;
                 }
 
@@ -76,17 +80,3 @@
         components: {Conversation, ContactsList}
     }
 </script>
-
-
-<style lang="scss" scoped>
-// body{
-//  height: 100%;
-
-// }
-.chat-app {
-    display: flex;
-    // position: absolute;
-    height: 100%;
-    // width: 100%;
-}
-</style>

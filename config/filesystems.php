@@ -55,7 +55,7 @@ return [
 
         'activities' => [
             'driver' => 'local',
-            'root' => 'activities',
+            'root' => storage_path('app/public/activities'),
             'url' => 'activities',
         ],
 

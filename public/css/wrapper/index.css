@@ -588,6 +588,35 @@ body.sidebar-main .campus-top-navbar {
   left: 15px;
 }
 
+.avatar-xs {
+  height: 2rem;
+  width: 2rem;
+}
+
+.avatar-xs .avatar-title {
+  align-items: center;
+  background-color: #5b73e8;
+  color: #fff;
+  display: flex;
+  font-weight: 500;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.avatar-xs .bg-soft-primary {
+  color: #5b73e8;
+  background-color: rgba(91, 115, 232, 0.18);
+}
+
+.avatar-xs .bg-soft-primary {
+  background-color: rgba(91, 115, 232, 0.25) !important;
+}
+
+.avatar-xs .text-primary {
+  color: #5b73e8 !important;
+}
+
 @-webkit-keyframes shadow-pulse-dots {
   0% {
     box-shadow: 0 0 0 0px rgba(0, 177, 255, 0.2);

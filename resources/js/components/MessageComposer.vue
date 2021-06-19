@@ -1,7 +1,15 @@
 <template>
-    <div class="composer">
-        <textarea v-model="message" placeholder="請輸入訊息...." class="input"></textarea>
-        <button @click="send"><i class="fas fa-paper-plane"></i></button>
+    <div class="p-3 chat-input-section">
+        <div class="row">
+            <div class="col">
+                <div class="position-relative">
+                    <input type="text" class="form-control chat-input rounded"  v-model="message" placeholder="請輸入訊息....">            
+                </div>
+            </div>
+            <div class="col-auto">
+                <button @click="send" class="btn btn-primary chat-send w-md waves-effect waves-light"><span class="d-none d-sm-inline-block me-2">Send</span> <i class="fas fa-share"></i></button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -17,6 +25,7 @@
                 e.preventDefault();
                 
                 if (this.message == '') {
+                     MessageObject.VaildSubmitMessage('留言驗證錯誤','請勿無填寫內容或是少於兩字下按下送出喔');
                     return;
                 }
 
@@ -26,43 +35,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-.composer {
-    // box-shadow: 0 -20px 20px -5px #fff;
-    //  margin-top: 30px;
-    position: relative;
-    border-top: 1px solid lightgray;
-    background: #f8f8f8;
-  textarea {
-    width: 90%;
-    border-radius: 15px !important;
-    font-size: 15px;
-    border: 0;
-    padding: 15px 20px;
-    margin: 15px 15px;
-    resize: none;
-    height: 60px;
-    background: #E6EAEA;
-  }
-  textarea:focus { 
-    outline: none !important;
-    border-color:none;
-}
-  button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 0;
-    height: 100%;
-    width: 60px;
-    font-size: 25px;
-     color: #f5f5f5;
-    background: #32465a;
-    cursor: pointer;
-  }
-  button:hover {
-     background: #435f7a;
-}
-}
-</style>

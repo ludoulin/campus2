@@ -1,16 +1,32 @@
 <template>
-    <div class="feed" ref="feed">
-        <ul v-if="contact">
-            <li v-for="message in messages" :class="`message${message.to == contact.id ? ' sent' : ' received'}`" :key="message.id" :data-aos="`${message.to == contact.id ? 'fade-right': 'fade-left'}`">
-                <div>
-                    <img :src="`${message.to == contact.id ? user.avatar : contact.avatar}`"/>
-                    <div class="text"> 
-                    {{ message.text }}
-                    </div>
-                </div>
-                <span class="time">{{message.created_at}}</span>
-            </li>
-        </ul>
+     <div class="px-lg-2"  style="height:455px;">
+        <div class="chat-conversation p-3" ref="feed" style="overflow:scroll;max-height: 455px;">
+            <ul v-if="contact" class="list-unstyled mb-0">
+                <!-- <li class="chat-day-title"> 
+                    <div class="title">Today</div>
+                </li> -->
+                <li v-for="message in messages" :class="`${message.to == contact.id ? ' sent' : ' right'}`" :key="message.id">
+                    <div class="conversation-list">
+                        <div class="ctext-wrap">
+                            <div class="ctext-wrap-content">
+                                 <h5 class="font-size-14 conversation-name"><a href="#" class="text-dark">{{ message.to == contact.id ? '你' : contact.name }}</a> <span class="d-inline-block font-size-12 text-muted ms-2">{{ dateFormat(message.created_at)}}</span></h5>
+                                 <p class="mb-0">
+                                    {{ message.text }}
+                                </p>
+                            </div>
+                            <div class="dropdown align-self-start">
+                                <a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">刪除</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>           
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -34,6 +50,13 @@
                 setTimeout(() => {
                     this.$refs.feed.scrollTop = this.$refs.feed.scrollHeight - this.$refs.feed.clientHeight;
                 }, 50);
+            },
+            dateFormat(time) {
+                let date=new Date(time);
+                let hours = date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+                let minutes = date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+                let seconds =date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+                return hours+":"+minutes+":"+seconds;
             }
         },
         watch: {
@@ -46,68 +69,3 @@
         }
     }
 </script>
-
-<style lang="scss" scoped>
-.feed {
-    height: 100%;
-    background: #E6EAEA;
-    overflow: scroll;
-
-    ul {
-        list-style-type: none;
-        padding: 20px;
-
-        li {
-            &.message {
-                margin: 10px 0;
-                width: 100%;
-
-                .text {
-                    max-width: 200px;
-                    border-radius: 10px;
-                    padding: 12px;
-                    display: inline-block;
-                }
-
-                &.received {
-                    text-align: right;
-
-                    img {
-                    float: right;
-                    margin: 6px 0 0 8px;
-                    }
-
-                    .text {
-                        background: #f5f5f5;
-                    }
-                }
-
-                &.sent {
-                    text-align: left;
-
-                    img {
-                    margin: 6px 8px 0 0;
-                    }
-
-                    .text {
-                        background: #32465a;
-                        color: whitesmoke;
-                    }
-                }
-            }
-            img {
-              width: 35px;
-              border-radius: 50%;
-              float: left;
-                }
-
-            span.time{
-              color: #747474;
-              display: block;
-              font-size: 12px;
-              margin: 8px 0 0;
-                }
-        }
-    }
-}
-</style>
