@@ -15,7 +15,7 @@ class OrdersController extends Controller
 
     public function index()
     {
-        $orders = Order::with(['user','items'=> function($query){$query->with(["product"=> function($query){$query->with("user");}]);}])->get();
+        $orders = Order::withTrashed()->with(['user','items'=> function($query){$query->with(["product"=> function($query){$query->with(["user","images"]);}]);}])->get();
 
         return view('backend.order.index',compact('orders'));
 

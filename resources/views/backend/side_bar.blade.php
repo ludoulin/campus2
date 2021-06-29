@@ -36,11 +36,11 @@
                 <span class="text">問題回報管理</span>
             </a>
         </li>
-        <li>
+        {{-- <li>
             <a href="#">
                 <span class="icon"><i class="fas fa-bullhorn"></i></span>
                 <span class="text">推播管理</span>
             </a>
-        </li>
+        </li> --}}
     </ul>
     </div>

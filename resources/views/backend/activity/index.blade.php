@@ -54,6 +54,7 @@
                                                             {{ $activity->end_date->toDateString() }}
                                                         </td>
                                                         <td class="align-middle">
+                                                            @if($activity->end_date > Carbon::now())
                                                                 <a  class="btn @if($activity->publish)
                                                                                 btn-danger
                                                                                 @else
@@ -67,6 +68,9 @@
                                                                     >
                                                                     {{ $activity->publish ? '取消發布': '發布活動'}}
                                                                 </a>
+                                                            @else 
+                                                            <span class="badge badge-primary"><h5>此活動已結束</h5></span>
+                                                            @endif
                                                         </td>
                                                         <td class="align-middle" style="font-size: 18px">
                                                             <a  class="mr-2" 

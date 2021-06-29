@@ -34,7 +34,7 @@
 @endsection
 
 
-@section('FrontEnd_Script')
+@section('script')
 <script>
 function Confirm(){
 

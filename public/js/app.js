@@ -2017,83 +2017,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['login'],
@@ -2121,7 +2044,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchProducts: function fetchProducts() {
       var _this = this;
 
-      axios.get('http://localhost/campus2/public/products/search').then(function (response) {
+      axios.get('./products/search').then(function (response) {
         _this.products = response.data.data;
         _this.pagination = response.data;
         console.log(response.data);
@@ -2136,7 +2059,7 @@ __webpack_require__.r(__webpack_exports__);
     searchProducts: function searchProducts() {
       var _this2 = this;
 
-      axios.get('http://localhost/campus2/public/products/search', {
+      axios.get('./products/search', {
         params: {
           keywords: this.keywords,
           order: this.order,
@@ -2159,7 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       console.log(this.pagination.current_page);
-      axios.get('http://localhost/campus2/public/products/search?page=' + this.pagination.current_page, {
+      axios.get('./products/search?page=' + this.pagination.current_page, {
         params: {
           keywords: this.keywords,
           order: this.order,
@@ -2171,6 +2094,48 @@ __webpack_require__.r(__webpack_exports__);
         _this3.pagination = response.data;
         console.log(response.data);
       });
+    },
+    productType: function productType(type) {
+      var name = null;
+
+      switch (type) {
+        case 1:
+          name = "參考書";
+          break;
+
+        case 2:
+          name = "講義";
+          break;
+
+        case 3:
+          name = "筆記";
+          break;
+      }
+
+      return name;
+    },
+    productStatus: function productStatus(status) {
+      var name = null;
+
+      switch (status) {
+        case 0:
+          name = "下架";
+          break;
+
+        case 1:
+          name = "上架中";
+          break;
+
+        case 2:
+          name = "進入交易程序";
+          break;
+
+        case 3:
+          name = "已售出";
+          break;
+      }
+
+      return name;
     }
   }
 });
@@ -2370,10 +2335,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -3365,10 +3326,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 // let Swal = require("sweetalert2");
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['product', 'favorited', 'login'],
@@ -4340,10 +4297,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['login', 'department'],
@@ -4405,6 +4358,48 @@ __webpack_require__.r(__webpack_exports__);
           _this2.no_result = false;
         }
       });
+    },
+    productType: function productType(type) {
+      var name = null;
+
+      switch (type) {
+        case 1:
+          name = "參考書";
+          break;
+
+        case 2:
+          name = "講義";
+          break;
+
+        case 3:
+          name = "筆記";
+          break;
+      }
+
+      return name;
+    },
+    productStatus: function productStatus(status) {
+      var name = null;
+
+      switch (status) {
+        case 0:
+          name = "下架";
+          break;
+
+        case 1:
+          name = "上架中";
+          break;
+
+        case 2:
+          name = "進入交易程序";
+          break;
+
+        case 3:
+          name = "已售出";
+          break;
+      }
+
+      return name;
     }
   }
 });
@@ -8722,25 +8717,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--37-2!./node_modules/sass-loader/dist/cjs.js??ref--37-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".product-action a[data-v-0964f9b9] {\n  border: 1px solid grey;\n  border-radius: 12px;\n  font-size: 20px;\n}\n.product-action a .heart[data-v-0964f9b9] {\n  padding: 5px;\n  color: gray;\n}\n.product-action a .heart span[data-v-0964f9b9] {\n  display: inline-block;\n  margin-left: 0.3rem;\n}\n.product-action a .cart[data-v-0964f9b9] {\n  padding: 5px;\n  color: gray;\n}\n.product-action a .cart span[data-v-0964f9b9] {\n  display: inline-block;\n  margin-left: 0.3rem;\n}\n.product-action a.h-t[data-v-0964f9b9]:hover {\n  border: 1px solid indianred;\n}\n.product-action a.h-t:hover .heart[data-v-0964f9b9] {\n  color: indianred;\n}\n.product-action a.c-t[data-v-0964f9b9]:hover {\n  border: 1px solid #4279ff;\n}\n.product-action a.c-t:hover .cart[data-v-0964f9b9] {\n  color: #4279ff;\n}\n@media (max-width: 720px) {\n.product-action a[data-v-0964f9b9] {\n    font-size: 16px;\n}\n}\n@media (max-width: 580px) {\n.product-action a[data-v-0964f9b9] {\n    font-size: 12px;\n}\n.product-action a .cart span[data-v-0964f9b9] {\n    display: inline-block;\n    margin-left: 1px;\n}\n}", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AutoSearch.vue?vue&type=style&index=0&id=7aaea962&lang=scss&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--37-2!./node_modules/sass-loader/dist/cjs.js??ref--37-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AutoSearch.vue?vue&type=style&index=0&id=7aaea962&lang=scss&scoped=true& ***!
@@ -8772,7 +8748,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".select-btn[data-v-7f6ae384] {\n  border-radius: 32px;\n  text-align: center;\n  white-space: nowrap;\n  display: inline-flex;\n  justify-content: center;\n  align-items: center;\n  color: #fff;\n  font-weight: 600;\n  background-color: #0f61f4;\n  box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);\n  transform: translateY(-3px);\n  box-sizing: border-box;\n  padding: 0 2.5em;\n  height: 40px;\n  text-transform: uppercase;\n  letter-spacing: 2px;\n  font-size: 10px;\n}", ""]);
+exports.push([module.i, ".btn-cart-select[data-v-7f6ae384] {\n  background-color: #1761fd;\n  color: #fff;\n}", ""]);
 
 // exports
 
@@ -8810,7 +8786,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".select-icon-btn[data-v-5f58da92] {\n  color: #fff;\n  text-decoration: none;\n  height: 40px;\n  width: 40px;\n  min-height: 40px;\n  min-width: 40px;\n  background-color: #fa5050;\n  border-radius: 100%;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n  box-shadow: 0 2px 5px 2px rgba(251, 105, 105, 0.6);\n  transform: translateY(-3px);\n}", ""]);
+exports.push([module.i, ".btn-favorite-select[data-v-5f58da92] {\n  background-color: #ff173c;\n  color: #fff;\n}", ""]);
 
 // exports
 
@@ -67053,36 +67029,6 @@ runtime.setup(pusher_Pusher);
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--37-2!./node_modules/sass-loader/dist/cjs.js??ref--37-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--37-2!../../../node_modules/sass-loader/dist/cjs.js??ref--37-3!../../../node_modules/vue-loader/lib??vue-loader-options!./AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AutoSearch.vue?vue&type=style&index=0&id=7aaea962&lang=scss&scoped=true&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--37-2!./node_modules/sass-loader/dist/cjs.js??ref--37-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AutoSearch.vue?vue&type=style&index=0&id=7aaea962&lang=scss&scoped=true& ***!
@@ -71609,10 +71555,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true& ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9& ***!
+  \*************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -71625,436 +71571,411 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "container-fluid my-3" }, [
+    _c("div", { staticClass: "container my-3" }, [
       _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12" }, [
+          _c("div", { staticClass: "product-transparent mb-0" }, [
+            _c("div", { staticClass: "d-block text-center" }, [
+              _c("h2", { staticClass: "mb-3" }, [_vm._v("瀏覽全部商品")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-100 product-search-filter" }, [
+                _c(
+                  "ul",
+                  {
+                    staticClass:
+                      "list-inline p-0 m-0 row justify-content-center search-menu-options"
+                  },
+                  [
+                    _c("li", { staticClass: "search-menu-opt" }, [
+                      _c("div", { staticClass: "product-dropdown" }, [
+                        _c("div", { staticClass: "form-group mb-0" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.productTypes,
+                                  expression: "productTypes"
+                                }
+                              ],
+                              staticClass:
+                                "form-control form-search-control bg-white border-0",
+                              attrs: { id: "FormControlSelect1" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.productTypes = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("請選擇拍賣類型")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "1" } }, [
+                                _vm._v("參考書")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "2" } }, [
+                                _vm._v("講義")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "3" } }, [
+                                _vm._v("筆記")
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "search-menu-opt" }, [
+                      _c("div", { staticClass: "product-dropdown" }, [
+                        _c("div", { staticClass: "form-group mb-0" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.courseTypes,
+                                  expression: "courseTypes"
+                                }
+                              ],
+                              staticClass:
+                                "form-control form-search-control bg-white border-0",
+                              attrs: { id: "FormControlSelect2" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.courseTypes = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("請選擇課程分類")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "1" } }, [
+                                _vm._v("專業科目")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "2" } }, [
+                                _vm._v("共同科目")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "3" } }, [
+                                _vm._v("通識課程")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "4" } }, [
+                                _vm._v("語言相關")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "5" } }, [
+                                _vm._v("其他")
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "search-menu-opt" }, [
+                      _c("div", { staticClass: "product-dropdown" }, [
+                        _c("div", { staticClass: "form-group mb-0" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.order,
+                                  expression: "order"
+                                }
+                              ],
+                              staticClass:
+                                "form-control form-search-control bg-white border-0",
+                              attrs: { id: "FormControlSelect3" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.order = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("排序方式")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "price_asc" } }, [
+                                _vm._v("價格低到高")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "price_desc" } }, [
+                                _vm._v("價格高到低")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "created_at_hour" } },
+                                [_vm._v("過去一小時")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "created_at_day" } },
+                                [_vm._v("過去一天")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "created_at_week" } },
+                                [_vm._v("過去一星期")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "created_at_month" } },
+                                [_vm._v("過去一個月")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "created_at_desc" } },
+                                [_vm._v("刊登時間新到舊")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "created_at_asc" } },
+                                [_vm._v("刊登時間舊到新")]
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "search-menu-opt" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "product-search-bar search-book d-flex align-items-center"
+                        },
+                        [
+                          _c("div", { staticClass: "searchbox" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.keywords,
+                                  expression: "keywords"
+                                }
+                              ],
+                              staticClass: "text search-input",
+                              attrs: {
+                                type: "text",
+                                placeholder: "可搜尋書名、賣家"
+                              },
+                              domProps: { value: _vm.keywords },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.keywords = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm._m(0)
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary search-data ml-2",
+                              on: { click: _vm.searchProducts }
+                            },
+                            [_vm._v("搜尋")]
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
         _c(
           "div",
-          { staticClass: "col-lg-12" },
+          { staticClass: "col-12" },
           [
-            _c("div", { staticClass: "product-transparent mb-0" }, [
-              _c("div", { staticClass: "d-block text-center" }, [
-                _c("h2", { staticClass: "mb-3" }, [_vm._v("瀏覽全部商品")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-100 product-search-filter" }, [
-                  _c(
-                    "ul",
-                    {
-                      staticClass:
-                        "list-inline p-0 m-0 row justify-content-center search-menu-options"
-                    },
+            _c(
+              "div",
+              { staticClass: "row" },
+              [
+                _vm._l(_vm.products, function(product) {
+                  return _c(
+                    "div",
+                    { key: product.id, staticClass: "col-md-3 mt-2" },
                     [
-                      _c("li", { staticClass: "search-menu-opt" }, [
-                        _c("div", { staticClass: "product-dropdown" }, [
-                          _c("div", { staticClass: "form-group mb-0" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.productTypes,
-                                    expression: "productTypes"
-                                  }
-                                ],
-                                staticClass:
-                                  "form-control form-search-control bg-white border-0",
-                                attrs: { id: "FormControlSelect1" },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.productTypes = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }, [
-                                  _vm._v("請選擇拍賣類型")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("參考書")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("講義")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "3" } }, [
-                                  _vm._v("筆記")
-                                ])
-                              ]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "search-menu-opt" }, [
-                        _c("div", { staticClass: "product-dropdown" }, [
-                          _c("div", { staticClass: "form-group mb-0" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.courseTypes,
-                                    expression: "courseTypes"
-                                  }
-                                ],
-                                staticClass:
-                                  "form-control form-search-control bg-white border-0",
-                                attrs: { id: "FormControlSelect2" },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.courseTypes = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }, [
-                                  _vm._v("請選擇課程分類")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "1" } }, [
-                                  _vm._v("專業科目")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "2" } }, [
-                                  _vm._v("共同科目")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "3" } }, [
-                                  _vm._v("通識課程")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "4" } }, [
-                                  _vm._v("語言相關")
-                                ]),
-                                _vm._v(" "),
-                                _c("option", { attrs: { value: "5" } }, [
-                                  _vm._v("其他")
-                                ])
-                              ]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "search-menu-opt" }, [
-                        _c("div", { staticClass: "product-dropdown" }, [
-                          _c("div", { staticClass: "form-group mb-0" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.order,
-                                    expression: "order"
-                                  }
-                                ],
-                                staticClass:
-                                  "form-control form-search-control bg-white border-0",
-                                attrs: { id: "FormControlSelect3" },
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.order = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }, [
-                                  _vm._v("排序方式")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "price_asc" } },
-                                  [_vm._v("價格低到高")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "price_desc" } },
-                                  [_vm._v("價格高到低")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "created_at_hour" } },
-                                  [_vm._v("過去一小時")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "created_at_day" } },
-                                  [_vm._v("過去一天")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "created_at_week" } },
-                                  [_vm._v("過去一星期")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "created_at_month" } },
-                                  [_vm._v("過去一個月")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "created_at_desc" } },
-                                  [_vm._v("刊登時間新到舊")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "created_at_asc" } },
-                                  [_vm._v("刊登時間舊到新")]
-                                )
-                              ]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "search-menu-opt" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "product-search-bar search-book d-flex align-items-center"
-                          },
-                          [
-                            _c("div", { staticClass: "searchbox" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.keywords,
-                                    expression: "keywords"
-                                  }
-                                ],
-                                staticClass: "text search-input",
+                      _c("div", { staticClass: "card" }, [
+                        _c("div", { staticClass: "card-body" }, [
+                          _c(
+                            "a",
+                            { attrs: { href: "./products/" + product.id } },
+                            [
+                              _c("img", {
+                                staticClass: "d-block mx-auto my-4",
                                 attrs: {
-                                  type: "text",
-                                  placeholder: "可搜尋書名、賣家"
-                                },
-                                domProps: { value: _vm.keywords },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.keywords = $event.target.value
-                                  }
+                                  src: "./" + product.images[0].path,
+                                  alt: "",
+                                  height: "150"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            { staticClass: "title-text overflow-ellipsis" },
+                            [_vm._v("書名:" + _vm._s(product.name))]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "title-text" }, [
+                            _vm._v("賣家:" + _vm._s(product.user.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row my-4" }, [
+                            _c("div", { staticClass: "col" }, [
+                              _c("h4", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-primary mb-2" },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.productType(product.type))
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("h4", [
+                                _c(
+                                  "span",
+                                  { staticClass: "badge badge-success mb-2" },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.productStatus(product.status))
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-auto" }, [
+                              _c("h5", { staticClass: "text-muted mt-0" }, [
+                                _vm._v("$" + _vm._s(product.price))
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "d-flex justify-content-center" },
+                            [
+                              _c("favorite-circle", {
+                                attrs: {
+                                  login: _vm.login,
+                                  product: product.id,
+                                  favorited: product.favorited.length
+                                    ? true
+                                    : false
                                 }
                               }),
                               _vm._v(" "),
-                              _vm._m(0)
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary search-data ml-2",
-                                on: { click: _vm.searchProducts }
-                              },
-                              [_vm._v("搜尋")]
-                            )
-                          ]
-                        )
+                              _c("cart-item", {
+                                attrs: {
+                                  product: product.id,
+                                  carted: product.carted.length ? true : false
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
                       ])
                     ]
                   )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "product-card" }, [
-              _c("div", { staticClass: "product-card-body" }, [
-                _c(
-                  "div",
-                  { staticClass: "row" },
-                  _vm._l(_vm.products, function(product) {
-                    return _c(
-                      "div",
-                      {
-                        key: product.id,
-                        staticClass: "col-sm-6 col-md-4 col-lg-3",
-                        attrs: { "data-aos": "fade-down" }
-                      },
-                      [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "product-card product-card-block product-card-stretch product-card-height search-bookcontent"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "product-card-body p-0" },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "d-flex align-items-center" },
-                                  [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "col-6 p-0 position-relative image-overlap-shadow"
-                                      },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href: "javascript:void(0);"
-                                            }
-                                          },
-                                          [
-                                            _c("img", {
-                                              staticClass:
-                                                "img-fluid rounded w-100",
-                                              attrs: {
-                                                src:
-                                                  "../public" +
-                                                  product.images[0].path,
-                                                alt: ""
-                                              }
-                                            })
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "view-book" },
-                                          [
-                                            _c(
-                                              "a",
-                                              {
-                                                staticClass:
-                                                  "btn btn-sm btn-white",
-                                                attrs: {
-                                                  href:
-                                                    "http://localhost/campus2/public/products/" +
-                                                    product.id
-                                                }
-                                              },
-                                              [_vm._v("前往商品頁面")]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "col-6" }, [
-                                      _c("div", { staticClass: "mb-2" }, [
-                                        _c("p", { staticClass: "mb-1" }, [
-                                          _vm._v(_vm._s(product.name))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "p",
-                                          {
-                                            staticClass:
-                                              "line-height mb-1 text-muted"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "賣家:" +
-                                                _vm._s(product.user.name)
-                                            )
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "price d-flex align-items-center"
-                                        },
-                                        [
-                                          _c("p", [
-                                            _c(
-                                              "b",
-                                              { staticClass: "text-danger" },
-                                              [
-                                                _vm._v(
-                                                  "$" +
-                                                    _vm._s(product.price) +
-                                                    "元"
-                                                )
-                                              ]
-                                            )
-                                          ])
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm._m(1, true)
-                                    ])
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                ),
+                }),
                 _vm._v(" "),
                 this.initResult === true
-                  ? _c("div", { staticClass: "row" }, [_vm._m(2)])
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "col-sm-12 col-md-12 col-lg-12",
+                        attrs: { "data-aos": "fade-down" }
+                      },
+                      [_vm._m(1)]
+                    )
                   : _vm._e(),
                 _vm._v(" "),
                 this.searchResult === true
-                  ? _c("div", { staticClass: "row" }, [_vm._m(3)])
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "col-sm-12 col-md-12 col-lg-12",
+                        attrs: { "data-aos": "fade-down" }
+                      },
+                      [_vm._m(2)]
+                    )
                   : _vm._e()
-              ])
-            ]),
+              ],
+              2
+            ),
             _vm._v(" "),
             _vm.pagination.last_page > 0 && _vm.pagination.total > 0
               ? _c("pagination-component", {
@@ -72086,73 +72007,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-action" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12 col-12 " }, [
-          _c(
-            "a",
-            { staticClass: "h-t", attrs: { href: "javascript:void(0);" } },
-            [
-              _c("i", { staticClass: "far fa-heart heart" }, [
-                _c("span", [_vm._v("收藏")])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-12 col-md-12 col-sm-12 col-12 mt-2" },
-          [
-            _c(
-              "a",
-              { staticClass: "c-t", attrs: { href: "javascript:void(0);" } },
-              [
-                _c("i", { staticClass: "fas fa-cart-plus cart" }, [
-                  _c("span", [_vm._v("加入購物車")])
-                ])
-              ]
-            )
-          ]
-        )
-      ])
+    return _c("h1", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "far fa-frown pr-2" }),
+      _vm._v("目前沒有任何書品上架")
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "col-sm-12 col-md-12 col-lg-12",
-        attrs: { "data-aos": "fade-down" }
-      },
-      [
-        _c("h1", { staticClass: "text-center" }, [
-          _c("i", { staticClass: "far fa-frown pr-2" }),
-          _vm._v("目前沒有任何書品上架")
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "col-sm-12 col-md-12 col-lg-12",
-        attrs: { "data-aos": "fade-down" }
-      },
-      [
-        _c("h1", { staticClass: "text-center" }, [
-          _c("i", { staticClass: "far fa-frown pr-2" }),
-          _vm._v("沒有任何您要查詢的結果")
-        ])
-      ]
-    )
+    return _c("h1", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "far fa-frown pr-2" }),
+      _vm._v("沒有任何您要查詢的結果")
+    ])
   }
 ]
 render._withStripped = true
@@ -72343,10 +72210,9 @@ var render = function() {
   return _c("div", [
     _vm.isCarted
       ? _c(
-          "a",
+          "button",
           {
-            staticClass: "product-card__btn select-btn mr-3",
-            attrs: { href: "javascript:void(0)" },
+            staticClass: "btn btn-cart-select ml-2 mr-2",
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -72354,13 +72220,15 @@ var render = function() {
               }
             }
           },
-          [_vm._v("\n           已加入購物車\n    ")]
+          [
+            _c("i", { staticClass: "fas fa-cart-plus pr-2" }),
+            _vm._v("已加入購物車")
+          ]
         )
       : _c(
-          "a",
+          "button",
           {
-            staticClass: "product-card__btn mr-3",
-            attrs: { href: "javascript:void(0)" },
+            staticClass: "btn btn-cart ml-2 mr-2",
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -72368,7 +72236,10 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-plus pr-2" }, [_vm._v("加入購物車")])]
+          [
+            _c("i", { staticClass: "fas fa-cart-plus pr-2" }),
+            _vm._v("加入購物車")
+          ]
         )
   ])
 }
@@ -73533,10 +73404,9 @@ var render = function() {
   return _c("div", [
     _vm.isFavorited
       ? _c(
-          "a",
+          "button",
           {
-            staticClass: "select-icon-btn",
-            attrs: { href: "javascript:void(0)" },
+            staticClass: "btn btn-favorite-select ml-2",
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -73544,13 +73414,12 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-heart" })]
+          [_c("i", { staticClass: "far fa-heart pr-2" }), _vm._v("已收藏")]
         )
       : _c(
-          "a",
+          "button",
           {
-            staticClass: "product-card__icon-btn",
-            attrs: { href: "javascript:void(0)" },
+            staticClass: "btn btn-favorite ml-2",
             on: {
               click: function($event) {
                 $event.preventDefault()
@@ -73558,7 +73427,7 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-heart" })]
+          [_c("i", { staticClass: "far fa-heart pr-2" }), _vm._v("加入收藏")]
         )
   ])
 }
@@ -75031,96 +74900,111 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "row row-eq-height" },
-        _vm._l(_vm.products, function(product) {
-          return _c(
-            "div",
-            {
-              key: product.id,
-              staticClass: "col-12 col-md-6 col-lg-4 col-xl-3 mb-5",
-              attrs: { "data-aos": "zoom-in" }
-            },
-            [
-              _c("div", { staticClass: "product-card h-100 mb-0" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "product-card__content",
-                    attrs: {
-                      href:
-                        "http://localhost/campus2/public/products/" + product.id
-                    }
-                  },
-                  [
-                    _c("span", {
-                      staticClass: "product-card__img",
-                      style: {
-                        backgroundImage:
-                          "url('" + "../" + product.images[0].path + "')"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "product-card__title" }, [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(product.name) +
-                          "\n                  "
-                      )
+        { staticClass: "row" },
+        [
+          _vm._l(_vm.products, function(product) {
+            return _c(
+              "div",
+              { key: product.id, staticClass: "col-md-3 mt-2" },
+              [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("a", { attrs: { href: "../products/" + product.id } }, [
+                      _c("img", {
+                        staticClass: "d-block mx-auto my-4",
+                        attrs: {
+                          src: "../" + product.images[0].path,
+                          alt: "",
+                          height: "150"
+                        }
+                      })
                     ]),
                     _vm._v(" "),
-                    _c("span", { staticClass: "product-card__price" }, [
-                      _vm._v(
-                        "\n                    $" +
-                          _vm._s(product.price) +
-                          "\n                  "
-                      )
+                    _c("p", { staticClass: "title-text overflow-ellipsis" }, [
+                      _vm._v("書名:" + _vm._s(product.name))
                     ]),
                     _vm._v(" "),
-                    _c("span", { staticClass: "product-card__title" }, [
-                      _vm._v(
-                        "\n                    賣家:" +
-                          _vm._s(product.user.name) +
-                          " \n                 "
-                      )
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "product-card__actions" },
-                  [
-                    _c("cart-item", {
-                      attrs: {
-                        product: product.id,
-                        carted: product.carted.length ? true : false
-                      }
-                    }),
+                    _c("p", { staticClass: "title-text" }, [
+                      _vm._v("賣家:" + _vm._s(product.user.name))
+                    ]),
                     _vm._v(" "),
-                    _c("favorite-circle", {
-                      attrs: {
-                        login: _vm.login,
-                        product: product.id,
-                        favorited: product.favorited.length ? true : false
-                      }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ]
-          )
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _vm.no_products === true
-        ? _c("div", { attrs: { "data-aos": "zoom-in" } }, [_vm._m(0)])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.no_result === true
-        ? _c("div", { attrs: { "data-aos": "zoom-in" } }, [_vm._m(1)])
-        : _vm._e()
+                    _c("div", { staticClass: "row my-4" }, [
+                      _c("div", { staticClass: "col" }, [
+                        _c("h4", [
+                          _c(
+                            "span",
+                            { staticClass: "badge badge-primary mb-2" },
+                            [_vm._v(_vm._s(_vm.productType(product.type)))]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("h4", [
+                          _c(
+                            "span",
+                            { staticClass: "badge badge-success mb-2" },
+                            [_vm._v(_vm._s(_vm.productStatus(product.status)))]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-auto" }, [
+                        _c("h5", { staticClass: "text-muted mt-0" }, [
+                          _vm._v("$" + _vm._s(product.price))
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "d-flex justify-content-center" },
+                      [
+                        _c("favorite-circle", {
+                          attrs: {
+                            login: _vm.login,
+                            product: product.id,
+                            favorited: product.favorited.length ? true : false
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("cart-item", {
+                          attrs: {
+                            product: product.id,
+                            carted: product.carted.length ? true : false
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _vm.no_products === true
+            ? _c(
+                "div",
+                {
+                  staticClass: "col-sm-12 col-md-12 col-lg-12",
+                  attrs: { "data-aos": "zoom-in" }
+                },
+                [_vm._m(0)]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.no_result === true
+            ? _c(
+                "div",
+                {
+                  staticClass: "col-sm-12 col-md-12 col-lg-12",
+                  attrs: { "data-aos": "zoom-in" }
+                },
+                [_vm._m(1)]
+              )
+            : _vm._e()
+        ],
+        2
+      )
     ])
   ])
 }
@@ -75129,18 +75013,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h1", [
+    return _c("h1", { staticClass: "text-center" }, [
       _c("i", { staticClass: "far fa-frown pr-2" }),
-      _vm._v("目前沒有二手書上架")
+      _vm._v("目前沒有任何書品上架")
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h1", [
+    return _c("h1", { staticClass: "text-center" }, [
       _c("i", { staticClass: "far fa-frown pr-2" }),
-      _vm._v("抱歉...沒有您要查詢的結果")
+      _vm._v("沒有任何您要查詢的結果")
     ])
   }
 ]
@@ -87989,11 +87873,9 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _AllProduct_vue_vue_type_template_id_0964f9b9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true& */ "./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true&");
+/* harmony import */ var _AllProduct_vue_vue_type_template_id_0964f9b9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllProduct.vue?vue&type=template&id=0964f9b9& */ "./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&");
 /* harmony import */ var _AllProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AllProduct.vue?vue&type=script&lang=js& */ "./resources/js/components/AllProduct.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _AllProduct_vue_vue_type_style_index_0_id_0964f9b9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true& */ "./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -88001,13 +87883,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _AllProduct_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _AllProduct_vue_vue_type_template_id_0964f9b9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _AllProduct_vue_vue_type_template_id_0964f9b9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _AllProduct_vue_vue_type_template_id_0964f9b9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AllProduct_vue_vue_type_template_id_0964f9b9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "0964f9b9",
+  null,
   null
   
 )
@@ -88033,35 +87915,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true& ***!
-  \**********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_37_2_node_modules_sass_loader_dist_cjs_js_ref_37_3_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_style_index_0_id_0964f9b9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--37-2!../../../node_modules/sass-loader/dist/cjs.js??ref--37-3!../../../node_modules/vue-loader/lib??vue-loader-options!./AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=style&index=0&id=0964f9b9&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_37_2_node_modules_sass_loader_dist_cjs_js_ref_37_3_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_style_index_0_id_0964f9b9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_37_2_node_modules_sass_loader_dist_cjs_js_ref_37_3_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_style_index_0_id_0964f9b9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_37_2_node_modules_sass_loader_dist_cjs_js_ref_37_3_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_style_index_0_id_0964f9b9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_37_2_node_modules_sass_loader_dist_cjs_js_ref_37_3_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_style_index_0_id_0964f9b9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_37_2_node_modules_sass_loader_dist_cjs_js_ref_37_3_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_style_index_0_id_0964f9b9_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9& ***!
+  \*******************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_template_id_0964f9b9_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_template_id_0964f9b9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_template_id_0964f9b9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AllProduct.vue?vue&type=template&id=0964f9b9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AllProduct.vue?vue&type=template&id=0964f9b9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_template_id_0964f9b9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_template_id_0964f9b9_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AllProduct_vue_vue_type_template_id_0964f9b9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

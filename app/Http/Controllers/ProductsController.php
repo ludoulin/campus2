@@ -79,7 +79,7 @@ class ProductsController extends Controller
             }
         }
      
-        $products = $builder->where('is_stock',true)->paginate(8);
+        $products = $builder->where('status', 1)->paginate(8);
 
         return response()->json($products);
     }

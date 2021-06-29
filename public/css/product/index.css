@@ -61,85 +61,52 @@
   height: 45px;
 }
 
-.product-card {
-  background: #ffffff;
-  border-radius: 5px;
-  margin-bottom: 30px;
-  border: none;
-  box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
+.title-text {
+  width: 150px;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 6px 0 3px;
+  color: #2c3652;
+  text-shadow: 0 0 1px rgba(241, 245, 250, 0.1);
+  font-family: "Roboto", sans-serif;
 }
 
-.product-card .product-card-body {
-  padding: 20px;
+.btn-favorite {
+  background-color: #f0c7ce;
+  color: #852234;
 }
 
-.product-card .product-card-body .product-card.search-bookcontent {
-  background: transparent !important;
-  box-shadow: none;
-  transition: all 0.5s ease-out 0s;
+.btn-favorite:hover {
+  background-color: #ff173c;
+  color: #fff;
 }
 
-.product-card .product-card-body .product-card-block.product-card-height {
-  height: calc(100% - 30px);
+.btn-cart {
+  background-color: rgba(23, 97, 253, 0.1);
+  color: #1761fd;
 }
 
-.product-card .product-card-body .product-card-block.product-card-stretch {
-  align-items: stretch;
+.btn-cart:hover {
+  background-color: #1761fd;
+  color: #fff;
 }
 
-.product-card .product-card-body .product-card-block {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-}
-
-.product-card .product-card-body .search-bookcontent p {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 22px;
+.overflow-ellipsis {
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
 }
 
-.product-card .product-card-body .font-size-16 {
-  font-size: 16px !important;
+.badge-primary {
+  background-color: rgba(23, 97, 253, 0.1);
+  color: #1761fd;
 }
 
-.product-card .product-card-body .line-height {
-  line-height: normal !important;
-}
-
-.product-card .product-card-body .product-action {
-  border-radius: 12px;
-  font-size: 26px;
-  line-height: 20px;
-}
-
-.product-card .product-card-body .view-book .btn-white {
-  font-size: 24px;
-  background-color: #ffffff;
-  border-color: #ffffff;
-  color: #1e7fe4;
-}
-
-.product-card .product-card-body .view-book .btn-white:hover {
-  font-size: 24px;
-  background-color: #1e7fe4;
-  border-color: #1e7fe4;
-  color: #ffffff;
-  transition: all 0.5s ease-out 0s;
-}
-
-@media (max-width: 720px) {
-  .product-card .product-card-body .view-book .btn-white {
-    font-size: 12px;
-  }
-
-  .product-card .product-card-body .search-bookcontent p {
-    font-size: 18px;
-  }
+.new-item {
+  background: #ffffff;
+  border: 1px solid #ced3e0;
 }
 
 .product-search-bar .searchbox {
@@ -155,42 +122,6 @@
   border-radius: 5px;
   border: none;
   box-shadow: 0px 4px 20px 0px rgba(44, 101, 144, 0.1);
-}
-
-.search-bookcontent .image-overlap-shadow:before,
-li .image-overlap-shadow:before {
-  content: "";
-  border-radius: 5px;
-  height: 100%;
-  left: 0;
-  top: 0px;
-  position: absolute;
-  transition: all 0.3s ease-out 0s;
-  width: 100%;
-}
-
-.search-bookcontent:hover .image-overlap-shadow:before,
-li:hover .image-overlap-shadow:before {
-  background: rgba(0, 0, 0, 0.7);
-  transition: all 0.3s ease-out 0s;
-}
-
-.search-bookcontent .view-book,
-li .image-overlap-shadow .view-book {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  text-align: center;
-  top: 40%;
-  opacity: 0;
-  transition: all 0.3s ease-out 0s;
-}
-
-.search-bookcontent:hover .view-book,
-li:hover .image-overlap-shadow .view-book {
-  opacity: 1;
-  transition: all 0.3s ease-out 0s;
 }
 
 @media (max-width: 359px) {

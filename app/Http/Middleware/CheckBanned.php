@@ -20,7 +20,7 @@ class CheckBanned
         
             Auth::logout();
 
-            $message = '因您違反相關規定招人檢舉,所以從即日起帳號被停權,請寄信和管理人員聯繫';
+            $message = '因您違反相關規定遭人檢舉，所以從即日起帳號被停用，請寄信和管理人員聯繫';
 
             return redirect()->route('login')->with('danger', $message);
         }

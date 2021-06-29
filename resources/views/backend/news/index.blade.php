@@ -43,13 +43,13 @@
                                         </td>
                                         <td class="align-middle">
                                             @if ($news->sticky_flag)
-                                            <span class="badge badge-warning text-white p-2 mr-1">置頂</span>
+                                            <span class="badge text-white p-2 mr-1" style="background: #cd5a3c">置頂</span>
                                             @endif
                                             @if ($news->type)
                                             <span class="badge badge-info text-white p-2 mr-1">{{News::NEWS_TYPES[$news->type]}}</span>
                                             @endif
                                             <span>
-                                                <a href="javascript:void(0)">{{ $news->name }}</a>
+                                                <a href="javascript:void(0)" class="text-dark">{{ $news->name }}</a>
                                             </span>
                                         </td>
                                         <td class="align-middle" style="font-size: 18px">

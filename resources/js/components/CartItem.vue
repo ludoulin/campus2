@@ -1,11 +1,7 @@
 <template>
     <div>
-        <a class="product-card__btn select-btn mr-3" v-if="isCarted" @click.prevent="unCart(product)" href="javascript:void(0)">
-               已加入購物車
-        </a>
-          <a class="product-card__btn mr-3" v-else @click.prevent="cart(product)" href="javascript:void(0)">
-            <i class="fas fa-plus pr-2">加入購物車</i>
-        </a>
+          <button class="btn btn-cart-select ml-2 mr-2" v-if="isCarted" @click.prevent="unCart(product)"><i class="fas fa-cart-plus pr-2"></i>已加入購物車</button>
+          <button class="btn btn-cart ml-2 mr-2" v-else @click.prevent="cart(product)"><i class="fas fa-cart-plus pr-2"></i>加入購物車</button>
     </div>
 </template>
 <script>
@@ -96,27 +92,9 @@ export default {
         }
 </script>
 <style lang="scss" scoped>
-$primary:#0f61f4;
-$white:#fff;
-.select-btn{
-   border-radius:32px;
-    text-align:center;
-    white-space:nowrap;
-    display:inline-flex;
-    justify-content:center;
-    align-items:center;
-    color:$white;
-    font-weight:600;
-     background-color:#0f61f4;
-     box-shadow:0 2px 10px 2px rgba(0,0,0,.1);
-    transform:translateY(-3px);
-    box-sizing:border-box;
-    padding:0 2.5em;
-    height:40px;
-    text-transform:uppercase;
-    letter-spacing:2px;
-    font-size:10px;
-   
-}
+    .btn-cart-select{
+        background-color: #1761fd;
+        color: #fff;
+    }
 </style>
 

@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="navbar-breadcrumb">
-                <h5 class="mb-0">Shop</h5>
+                <h5 class="mb-0">Welcome</h5>
             </div>
             <div class="campus-search-bar">
                 <form action="{{ route('search') }}" class="campus-searchbox">
