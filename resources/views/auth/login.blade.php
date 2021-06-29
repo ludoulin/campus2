@@ -14,12 +14,12 @@
                         <img src="https://slc.ntut.edu.tw/var/file/45/1045/img/taipeitechsllogo.png" height="22" class="logo logo-dark pr-2">北科大二手書交易平台
                     </a>
                 </div>
+                @include('shared.messages')
             </div>
         </div>
         <div class="row align-items-center justify-content-center">
             <div class="col-md-8 col-lg-6 col-xl-5">
                 <div class="card">
-                   
                     <div class="card-body p-4"> 
                         <div class="text-center mt-2">
                             <h5 class="text-primary">歡迎回來！</h5>

@@ -1,11 +1,7 @@
 <template>
     <div>
-        <a class="select-icon-btn" v-if="isFavorited" @click.prevent="unFavorite(product)" href="javascript:void(0)">
-                <i class="fas fa-heart"></i>
-        </a>
-          <a class="product-card__icon-btn" v-else @click.prevent="favorite(product)" href="javascript:void(0)">
-            <i class="fas fa-heart"></i>
-        </a>
+        <button class="btn btn-favorite-select ml-2" v-if="isFavorited" @click.prevent="unFavorite(product)"><i class="far fa-heart pr-2"></i>已收藏</button>
+        <button class="btn btn-favorite ml-2" v-else @click.prevent="favorite(product)"><i class="far fa-heart pr-2"></i>加入收藏</button>
     </div>
 </template>
 <script>
@@ -111,21 +107,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$primary:#fb6969;
-$white:#fff;
-.select-icon-btn{
-    color:$white;
-    text-decoration:none;
-    height:40px;
-    width:40px;
-    min-height:40px;
-    min-width:40px;
-    background-color:darken($primary, 5%);
-    border-radius:100%;
-    justify-content:center;
-    align-items:center;
-    display:flex;
-    box-shadow:0 2px 5px 2px transparentize($primary,.4);
-    transform:translateY(-3px);
+.btn-favorite-select{
+   background-color: #ff173c;
+  color: #fff;
 }
 </style>

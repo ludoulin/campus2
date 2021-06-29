@@ -91,7 +91,7 @@ class OrderController extends Controller
                 
                 if($users[$id+1] !== $users[$id]){
 
-                        response('抱歉請不要惡意操作', 403);
+                        return response('抱歉請不要惡意操作', 403);
                     } 
                 }
 
@@ -162,20 +162,22 @@ class OrderController extends Controller
 
         }else{
 
+             //line 回覆
+
             $seller = User::findOrFail($order["seller_id"]);
 
             if($seller->line_user_id){
 
                 
-                $messageBuilder = $this->LineBotService->MultiReply();
+                // $messageBuilder = $this->LineBotService->MultiReply();
 
-                $messageBuilder->add($this->LineBotService->TextReply("買家 ".auth()->user()->name."在剛剛跟您下單了商品,請趕緊去確認訂單吧!"));
+                // $messageBuilder->add($this->LineBotService->TextReply("買家 ".auth()->user()->name."在剛剛跟您下單了商品,請趕緊確認訂單吧!"));
 
-                $messageBuilder->add($this->LineBotService->TextReply("此筆訂單號碼為: ".$order->order_number));
+                // $messageBuilder->add($this->LineBotService->FlexReply($order));
 
-                $messageBuilder->add($this->LineBotService->StickerReply('6362', '11087940'));
+                // $messageBuilder->add($this->LineBotService->StickerReply('6362', '11087940'));
 
-                $this->bot->pushMessage($seller->line_user_id,  $messageBuilder);
+                $this->bot->pushMessage($seller->line_user_id, $this->LineBotService->FlexReply($order));
 
             }
 
@@ -274,6 +276,16 @@ class OrderController extends Controller
         $order->cancel_reason = $request->order_cancel;
 
         $order->save();
+
+        //line 回覆
+
+        $seller = User::find($order->seller_id);
+
+        if($seller->line_user_id){
+
+            $this->bot->pushMessage($seller->line_user_id, $this->LineBotService->ApplyFlexReply($order));
+
+        }
 
         return redirect()->route('users.orders_status',auth()->user()->id)->with('info', '申請訂單取消中');
     }

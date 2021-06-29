@@ -15,9 +15,9 @@ class PagesController extends Controller
     
     public function root(Product $product)
     {
-        $products = Product::where('is_stock',true)->orderBy('id','desc')->with('images','user','favorited')->take(10)->get();
+        $products = Product::where('status', 1)->orderBy('id','desc')->with('images','user','favorited')->take(10)->get();
         $colleges = College::with('departments')->get();
-        $activities = Activity::where('publish', true)->orderBy('id','desc')->take(10)->get();
+        $activities = Activity::where('publish', true)->where('end_date', '>=', date("Y-m-d"))->orderBy('id','desc')->take(10)->get();
         $most_views = $product->visits()->top(8);
         $newsCollection = News::orderBy('sticky_flag', 'desc')->orderBy('publish_date', 'desc')->where('start_date', '<=', date("Y-m-d"))->where('end_date', '>=', date("Y-m-d"))->get();
 

@@ -59,10 +59,20 @@ class UsersController extends Controller
         return redirect()->route('admin.users');
     }
 
-    public function publish(ForbidRequest $request , User $user)
+    public function block(ForbidRequest $request , User $user)
     {
        
-        $user->is_banned = !!$request->publish;
+        $user->is_banned = !$request->publish;
+
+        $user->save();
+
+        return redirect()->back();
+    }
+
+    public function assign(ForbidRequest $request , User $user)
+    {
+       
+        $user->is_admin = !$request->publish;
 
         $user->save();
 

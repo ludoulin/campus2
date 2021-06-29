@@ -5,7 +5,7 @@
         {{ session()->get($msg) }}
       </p>
     </div> --}}
-    <div class="alert alert-{{ $msg }} alert-dismissible fade show" role="alert" style="width:20%">
+    <div class="alert alert-{{ $msg }} alert-dismissible fade show" role="alert">
         {{ session()->get($msg) }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>

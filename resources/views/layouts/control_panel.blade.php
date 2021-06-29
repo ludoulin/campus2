@@ -9,7 +9,7 @@
 
 <div class="wrapper hover_collapse" id="app">
 	<div class="top_navbar">
-		<div class="logo">後端管理</div>
+		<div class="logo">後台管理</div>
 		<div class="menu">
 			<div class="hamburger">
 				<i class="fas fa-bars"></i>

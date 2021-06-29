@@ -144,6 +144,44 @@ class LineHookController extends Controller
 
                 }
 
+                else if(strpos($event['postback']['data'],'confirm')!==false){
+
+                    $str_sec = explode("=", $event['postback']['data']);
+
+                    Log::info($str_sec[1]);
+
+                    $check = $this->LineBotService->UpdateOrder($str_sec[1]);
+
+                    $text = ($check===null) ? "這筆訂單已被取消" : (!$check ? "這筆訂單你已經確認過囉" : "確認完畢,那下一個階段就是和買家面交交貨囉,請不要放鴿子喔");
+
+                    $response = $bot->pushMessage($userId, $this->LineBotService->TextReply($text));
+
+                    if ($response->isSucceeded()) {
+                        logger('reply successfully');
+                        break;
+                    }
+
+                }
+
+                else if(strpos($event['postback']['data'],'apply')!==false){
+
+                    $str_sec = explode("=", $event['postback']['data']);
+
+                    Log::info($str_sec[1]);
+
+                    $check = $this->LineBotService->CancelOrder($str_sec[1]);
+
+                    $text = !$check ? "這筆訂單已經取消囉" : "成功取消";
+
+                    $response = $bot->pushMessage($userId, $this->LineBotService->TextReply($text));
+
+                    if ($response->isSucceeded()) {
+                        logger('reply successfully');
+                        break;
+                    }
+
+                }
+
             }
 
         }

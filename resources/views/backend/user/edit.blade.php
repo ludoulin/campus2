@@ -114,7 +114,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="font-weight-bold">個人賣場簡介</label>
+                                    <label class="font-weight-bold">個人賣場簡介</label>
                                 </td>
                                 <td>
                                     <div class="form-group">

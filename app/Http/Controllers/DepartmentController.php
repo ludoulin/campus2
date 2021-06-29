@@ -18,7 +18,7 @@ class DepartmentController extends Controller
     public function search(Request $request){
         
         $id = $request->department;
-        $builder = Product::with(['images','user','favorited','carted'])->where(function($query) use ($id) {
+        $builder = Product::where('status', 1)->with(['images','user','favorited','carted'])->where(function($query) use ($id) {
             $query->whereHas('tags',function ($query) use ($id) {
                             $query->where('department_id', '=', $id);
                     });

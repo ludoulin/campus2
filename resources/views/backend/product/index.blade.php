@@ -38,9 +38,11 @@
                             <tbody>
                                 @foreach ($products as $product)
                                     @if($product->status===0)
-                                    <tr class="text-center tbody-danger" role="row">
+                                    <tr class="text-center" role="row" style="background: silver">
                                     @elseif($product->status===2)
-                                    <tr class="text-center tbody-success" role="row">     
+                                    <tr class="text-center" role="row" style="background: #c2d9fe">
+                                    @elseif($product->status===3)
+                                    <tr class="text-center tbody-danger" role="row">              
                                     @else  
                                     <tr class="text-center" role="row">
                                     @endif  
@@ -48,7 +50,7 @@
                                         <td>{{ $product->id }}</td>
                                         <td>
                                             <div class="flex align-items-center list-product-action">
-                                                <a class="btn bg-primary" data-toggle="tooltip" data-placement="top" title="編輯" href="{{ route('products.show', $product->id) }}">
+                                                <a class="btn bg-primary" data-toggle="tooltip" data-placement="top" title="查看" href="{{ route('products.show', $product->id) }}">
                                                     <i class="far fa-eye"></i>
                                                 </a>
                                                 @if($product->status!==2 || $product->status!==3)
@@ -83,7 +85,7 @@
                                                 @elseif($product->status===1)
                                                     badge-success
                                                 @elseif($product->status===2)
-                                                    badge-info
+                                                    badge-info text-white
                                                 @elseif($product->status===3)
                                                     badge-danger
                                                 @endif ">
@@ -109,18 +111,18 @@
 $(function(){
     $('[data-toggle="tooltip"]').tooltip();
     $("#admin_products_table").DataTable({
-        responsive:true,
+        responsive:false,
         "sDom": "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>"+"<'clear'>",
         "bSort": true,
         "aaSorting": [],
         "oLanguage": {
             "sProcessing": "處理中...",
             "sLengthMenu": "顯示 _MENU_ 項結果",
-            "sZeroRecords": "沒有匹配記錄",
+            "sZeroRecords": "沒有符合的資料",
             "sInfo": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
             "sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
             "sInfoFiltered": "(從 _MAX_ 項結果過濾)",
-            "sSearch": "搜索:",
+            "sSearch": "搜尋:",
             "oPaginate": {
                 "sFirst": "首頁",
                 "sPrevious": "上頁",

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container-fluid my-3">
+        <div class="container my-3">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="product-transparent mb-0">
@@ -66,9 +66,149 @@
                             </div>    
                         </div>
                     </div>
-                    <div class="product-card">
-                        <div class="product-card-body"> 
-                            <div class="row">
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-3 mt-2" v-for="product in products" :key="product.id">
+                            <div class="card">
+                                <div class="card-body">
+                                    <a :href="`./products/${product.id}`">
+                                        <img :src="'./'+product.images[0].path" alt class="d-block mx-auto my-4" height="150">
+                                    </a>
+                                    <p class="title-text overflow-ellipsis">書名:{{product.name}}</p>
+                                    <p class="title-text">賣家:{{product.user.name}}</p>
+                                    <div class="row my-4">
+                                        <div class="col">
+                                            <h4><span class="badge badge-primary mb-2">{{productType(product.type)}}</span></h4>
+                                            <h4><span class="badge badge-success mb-2">{{productStatus(product.status)}}</span></h4>  
+                                        </div>
+                                        <div class="col-auto">
+                                            <h5 class="text-muted mt-0">${{product.price}}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <favorite-circle :login="login" :product="product.id" :favorited="product.favorited.length ? true : false "></favorite-circle>
+                                        <cart-item :product="product.id" :carted="product.carted.length ? true : false "></cart-item>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-aos="fade-down" class="col-sm-12 col-md-12 col-lg-12"  v-if="this.initResult===true">
+                            <h1 class="text-center"><i class="far fa-frown pr-2"></i>目前沒有任何書品上架</h1>
+                        </div>
+                        <div data-aos="fade-down" class="col-sm-12 col-md-12 col-lg-12"  v-if="this.searchResult===true">
+                            <h1 class="text-center"><i class="far fa-frown pr-2"></i>沒有任何您要查詢的結果</h1>
+                        </div>
+                    </div>
+                    <pagination-component v-if="pagination.last_page > 0 && pagination.total > 0" :pagination="pagination" :offset="5" @paginate="changePage()"></pagination-component> 
+                </div>    
+            </div>
+        </div>
+    </div>    
+</template>
+<script>
+import PaginationComponent from './PaginationComponent';
+export default {
+ props: ['login'],
+ components:{ PaginationComponent },
+ data(){
+     return{
+            products:{},
+            pagination: {
+            'current_page': 1
+            },
+            keywords:'',
+            order:'',
+            productTypes:'',
+            courseTypes:'',
+            initResult:false,
+            searchResult:false,
+            }
+    },
+created(){
+   this.fetchProducts();
+    },
+methods: {
+        fetchProducts() {
+                axios.get('./products/search').then(response => {
+                    this.products = response.data.data;
+                    this.pagination = response.data;
+                    console.log(response.data)
+                    if(this.products.length==0){
+                        this.initResult = true;
+                    }else{
+                        this.initResult = false;
+                    }
+            });
+        },
+        
+        searchProducts(){
+
+           axios.get('./products/search', {params:{keywords: this.keywords, order:this.order, product_type:this.productTypes, course_type:this.courseTypes}}).then(search => {
+                    this.products = search.data.data;
+                    this.pagination = search.data;
+                    console.log(search.data)
+                    if(this.products.length==0){
+                        this.searchResult = true;
+                    }else{
+                        this.searchResult = false;
+                    }
+                });
+
+        },
+
+        changePage(){
+            console.log(this.pagination.current_page);
+            axios.get('./products/search?page=' + this.pagination.current_page , {params:{keywords: this.keywords, order:this.order, product_type:this.productTypes, course_type:this.courseTypes}}).then(response => {
+                    this.products = response.data.data;
+                    this.pagination = response.data;
+                    console.log(response.data)
+                });
+        },
+
+       productType(type){
+
+           let name = null;
+
+           switch (type) {
+            case 1:
+                name = "參考書"
+                break;
+            case 2:
+                name = "講義"
+                break
+            case 3:
+                name ="筆記"
+                break;
+            }
+            return name;
+       },
+
+       productStatus(status){
+
+           let name = null;
+
+           switch (status) {
+            case 0:
+                name = "下架"
+                break;
+            case 1:
+                name = "上架中"
+                break
+            case 2:
+                name ="進入交易程序"
+                break;
+            case 3:
+                name ="已售出"
+                break;    
+            }
+            return name;
+       } 
+    }        
+}
+</script>
+
+<!--<div class="row">
                                 <div data-aos="fade-down" class="col-sm-6 col-md-4 col-lg-3" v-for="product in products" :key="product.id" >
                                     <div class="product-card product-card-block product-card-stretch product-card-height search-bookcontent">
                                         <div class="product-card-body p-0">
@@ -111,137 +251,3 @@
                                     </div>    
                                 </div> 
                             </div> 
-                            <div class="row" v-if="this.initResult===true"> 
-                                <div data-aos="fade-down" class="col-sm-12 col-md-12 col-lg-12">
-                                     <h1 class="text-center"><i class="far fa-frown pr-2"></i>目前沒有任何書品上架</h1>
-                                </div>
-                            </div> 
-                            <div class="row" v-if="this.searchResult===true"> 
-                                <div data-aos="fade-down" class="col-sm-12 col-md-12 col-lg-12">
-                                     <h1 class="text-center"><i class="far fa-frown pr-2"></i>沒有任何您要查詢的結果</h1>
-                                </div>
-                            </div>   
-                        </div>
-                    </div>
-                    <pagination-component v-if="pagination.last_page > 0 && pagination.total > 0" :pagination="pagination" :offset="5" @paginate="changePage()"></pagination-component>  
-                </div>    
-            </div>
-        </div>
-    </div>
-</template>
-<style lang="scss" scoped>
-    .product-action {
-       a {  
-         border: 1px solid grey; 
-         border-radius: 12px;  
-         font-size: 20px;
-            .heart{
-                padding: 5px;
-                color:gray;
-                span {
-                    display: inline-block;
-                    margin-left: 0.3rem;
-                }
-            }
-            .cart{
-                padding: 5px;
-                color:gray;
-                span {
-                    display: inline-block;
-                    margin-left: 0.3rem;
-                }
-            }
-       }
-
-       a.h-t:hover{
-           border: 1px solid indianred;
-           .heart{
-            color:indianred;
-            }
-        }
-        a.c-t:hover{
-           border: 1px solid #4279ff;
-           .cart{
-            color: #4279ff;
-            }
-        }
-       @media(max-width: 720px) {
-                a{
-                    font-size: 16px;
-                }
-            }
-        @media(max-width: 580px) {
-            a{
-                font-size: 12px;
-            .cart{
-                    span {
-                        display: inline-block;
-                        margin-left: 1px;
-                    }
-                }
-            }
-        }
-    }
-</style>
-<script>
-import PaginationComponent from './PaginationComponent';
-export default {
- props: ['login'],
- components:{ PaginationComponent },
- data(){
-     return{
-            products:{},
-            pagination: {
-            'current_page': 1
-            },
-            keywords:'',
-            order:'',
-            productTypes:'',
-            courseTypes:'',
-            initResult:false,
-            searchResult:false,
-            }
-    },
-created(){
-   this.fetchProducts();
-    },
-methods: {
-        fetchProducts() {
-                axios.get('http://localhost/campus2/public/products/search').then(response => {
-                    this.products = response.data.data;
-                    this.pagination = response.data;
-                    console.log(response.data)
-                    if(this.products.length==0){
-                        this.initResult = true;
-                    }else{
-                        this.initResult = false;
-                    }
-            });
-        },
-        
-        searchProducts(){
-
-           axios.get('http://localhost/campus2/public/products/search', {params:{keywords: this.keywords, order:this.order, product_type:this.productTypes, course_type:this.courseTypes}}).then(search => {
-                    this.products = search.data.data;
-                    this.pagination = search.data;
-                    console.log(search.data)
-                    if(this.products.length==0){
-                        this.searchResult = true;
-                    }else{
-                        this.searchResult = false;
-                    }
-                });
-
-        },
-
-        changePage(){
-            console.log(this.pagination.current_page);
-            axios.get('http://localhost/campus2/public/products/search?page=' + this.pagination.current_page , {params:{keywords: this.keywords, order:this.order, product_type:this.productTypes, course_type:this.courseTypes}}).then(response => {
-                    this.products = response.data.data;
-                    this.pagination = response.data;
-                    console.log(response.data)
-                });
-            }
-    }        
-}
-</script>

@@ -63,7 +63,8 @@ Route::get('admin', 'BackEnd\HomeController@landingPage')->name('backend');
 Route::get('/admin/users', 'BackEnd\UsersController@IndexPage')->name('admin.users');
 Route::get('/admin/users/{user}/edit', 'BackEnd\UsersController@AdminEdit')->name('admin.users.edit');
 Route::patch('/admin/users/{user}', 'BackEnd\UsersController@AdminUpdate')->name('admin.users.update');
-Route::patch('/admin/users/{user}/publish', 'BackEnd\UsersController@publish')->name('admin.users.publish');
+Route::patch('/admin/users/{user}/block', 'BackEnd\UsersController@block')->name('admin.users.block');
+Route::patch('/admin/users/{user}/assign', 'BackEnd\UsersController@assign')->name('admin.users.assign');
 
 Route::get('/admin/products', 'BackEnd\ProductsController@index')->name('admin.products.index');
 Route::get('/admin/products/{product}/edit', 'BackEnd\ProductsController@edit')->name('admin.products.edit');
